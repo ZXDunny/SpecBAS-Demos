@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG sombrero
+10 SCREEN LOCK: RADIANS: 
+	m=9: 
+	window origin 0,0,0 to 800,480:
+	FOR y=-240 TO 239 STEP 4: 
+	   MOVE TO 0,y+240: 
+				FOR x=-400 TO 399 STEP 4: 
+				   r=PYTH(x,y)/15: 
+							z=(y+240)+90*EXP(-r/m)*COS r: 
+							DRAW TO 400+x,480-z: 
+				NEXT x:  
+	NEXT y

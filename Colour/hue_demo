@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG demos:colour/hue_demo
+CHANGED FALSE
+10 FOR f=1 TO 255: PALETTE HSV f,f*(360/255),255,255: NEXT f: DEGREES
+20 LET r=239,xc=SCRw/2,yc=SCRh/2
+30 FOR y=-r TO r: LET x1=SQR(r*r-y*y): FOR x=-x1 TO x1: PLOT INK int(1+POLAR(x,y)*(255/360));x+xc,y+yc: NEXT x: NEXT y

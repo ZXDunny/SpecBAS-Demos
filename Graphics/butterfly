@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG butterfly
+10 REM Mathematical Butterfly
+20 LET scl=60: LET ofsx=SCRw/2: LET ofsy=(SCRh/2)-(SCRh/9): LET flag=0: LET a=100*PI
+30 DO 
+50 LET cv1=RND*5: LET cm1=INT(RND*50): LET sp1=INT(RND*10): LET sd1=RND*100
+80 FOR theta=0 TO a STEP 0.01
+90 LET r=EXP(COS theta)-cv1*COS(cm1*theta)+(SIN(theta/sd1))^sp1: LET x=r*COS theta: LET y=r*SIN theta: LET yy=(x*scl)+ofsy: LET xx=(y*scl)+ofsx
+100 IF theta=0 THEN LET oldx=xx: LET oldy=yy ELSE DRAW oldx,oldy TO xx,yy: LET oldx=xx: LET oldy=yy
+110 NEXT theta
+120 PAUSE 0: CLS 
+130 LOOP 

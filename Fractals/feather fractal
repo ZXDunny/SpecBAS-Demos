@@ -1,0 +1,4 @@
+ZXASCII
+AUTO -1
+PROG feather fractal
+10 sc,n=1,aa=-.48,b=.93,c=2-2*aa,x=3,y=0,w=aa*x+c*x*x/(1+x*x): DO 400000: n+=1: PLOT x*25*sc+400,y*25*sc+270: z=x,x=b*y+w,u=x*x,w=aa*x+c*u/(1+u),y=w-z: LOOP 

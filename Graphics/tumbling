@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG tumbling
+10 REM Tumbling
+20 WINDOW DEPTH 0,32: DEGREES: DEF FN x=phase+x/c*360+y/c*360
+30 LET c=20,st=MIN(SCRw-40,SCRh-40)/c,cx=(SCRw-40)/st,phase=0,d=c/2
+40 CLS 0: INC phase,5: FOR y=1 TO c: FOR x=1 TO cx
+50 LET xp=x*st+d,yp=y*st+d,xs=c*SIN FN x,ys=c*COS FN x
+60 CIRCLE INK RGBtoINT(x*st/SCRw*255,128,255-y*st/SCRh*255);xp+xs,yp+ys,4 FILL 
+70 NEXT x: NEXT y: WAIT SCREEN: GO TO 40

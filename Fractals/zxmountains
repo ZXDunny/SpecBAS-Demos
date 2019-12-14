@@ -1,0 +1,193 @@
+ZXASCII
+AUTO -1
+PROG zxmountains
+10 REM Landscape, diamond-square algorithm
+     sz=size, ft=feature size,
+     w=water line, gl=grass line, sl=snowline, slev=smoothing level
+     tl=treeline, tlh=treeline height, th=max tree height
+20 sz=256,ft=2,w=0,gl=.25,sl=.45,tl=.2,th=.125,tlh=.25,slev=6,
+ z=sz-1,zs=sz*2-1,fs=sz/ft,wl=w,flg=0:
+ DIM m(sz*2,sz) BASE 0:
+ dim t(sz*2,sz) base 0
+30 DEF FN p(x,y)=m(x & zs,y & z)
+40 DEF FN sq(x,y,s,f)=(FN p(x-s,y-s)+FN p(x+s,y-s)+FN p(x-s,y+s)+FN p(x+s,y+s))/4+f
+50 DEF FN di(x,y,s,f)=(FN p(x-s,y)+FN p(x+s,y)+FN p(x,y+s)+FN p(x,y-s))/4+f
+60 DEF FN r=RND-.5
+70 DEF FN l(a)=(EXP a-1)/1.71828182845
+80 def fn s(i,j)=(fn p(i-1,j)+fn p(i,j-1)+fn p(i+1,j)+fn p(i,j+1)+
+               fn p(i-1,j-1)+fn p(i+1,j-1)+fn p(i-1,j+1)+fn p(i+1,j+1))/8
+90 def fn wt(x,y)=1-(sin(x*2.1+y)*4.5+
+                   sin(x*1.72+y*1.21)*4+
+                   sin(x*2.221+y*0.437)*5+
+                   sin(x*3.1122+y*4.269)*2.5)*.06
+95 go to 320
+100 st=1: go sub 410:
+ o=sz*flg,p=sz:
+ for x=o+fs to sz*2 step fs;y=0 to sz step fs:
+    m(x & zs,y & z)=rnd:
+ Next y;x
+110 sc=3.5,ss=fs:
+ do while ss>1:
+    hs=ss/2:
+    for y=hs to sz+hs step ss;x=hs TO sz+hs+p STEP ss:
+       if m(x & zs,y & z)=0 THEN
+          m(x & zs,y & z)=FN sq(x,y,hs,fn r*sc):
+       END IF:
+    NEXT x;y:
+    FOR y=0 TO sz step ss;x=0 to sz+p step ss:
+       if m((x+hs) & zs,y & z)=0 THEN
+          m((x+hs) & zs,y & z)=FN di(x+hs,y,hs,fn r*sc):
+       END IF:
+       IF m(x & zs,(y+hs) & z)=0 THEN
+          m(x & zs,(y+hs) & z)=FN di(x,y+hs,hs,fn r*sc):
+       END IF:
+    next x;y:
+    ss,sc/=2:
+ loop:
+120 st=2: go sub 410:
+ maxl=0,sc=200:
+ for x=0 to zs;y=0 to z:
+    maxl=max(maxl,m(x,y)):
+ next y;x:
+ for i=1 to slev;x=0 to zs;y=0 to z:
+    if ((m(x,y)<maxl*tl) and m(x,y)>wl) or y=0 then
+       m(x,y)=fn s(x,y)
+130 next y;x;i:
+140 st=3: go sub 410:
+ tth=th*maxl:
+ for x=0 to zs;y=1 to z:
+    if m(x,y)>=maxl*tl and m(x,y)<maxl*(tl+tlh) then
+       m(x,y)+=(rnd*tth)-(tth/2):
+150 next y;x:
+ mat t()=m()
+160 st=4: go sub 410:
+ r=maxl,maxl=0:
+ for x=0 to zs;y=0 to z:
+    m(x,y)=max(wl,sc*fn l(fn l(m(x,y)/r)))-wl,
+    maxl=max(maxl,m(x,y)):
+ next y;x:
+ wl=0
+170 st=5: go sub 410:
+ for x=0 to zs;y=0 to z:
+    m(x,y)=fn s(x,y):
+ next y;x
+180 st=6: go sub 410:
+ cls 255:
+ yp=sh/3,
+ xm=sw/z,ym=sh/sz
+190 wline=maxl*wl,
+ sline=maxl*sl,
+ gline=maxl*gl,
+ muddle=32
+200 FOR y=0 TO z-1;x=sz TO zs-1:
+    lv=(m(x,y)+m(x+1,y)+m(x,y+1)+m(x+1,y+1))/4,
+    a=x,b=y,
+    rx1=(x-sz)*xm,
+    ry1=ym*y+yp-m(a,b):
+    go sub 280
+210    shade1=shade:
+    a=x+1,
+    rx2=rx1+xm,
+    ry2=ym*y+yp-m(a,b):
+    GO sub 280:
+220    shade2=shade,
+    a=x,b=y+1,
+    ry3=ym*b+yp-m(a,b):
+    GO sub 280
+230    shade3=shade,
+    a=x+1,
+    ry4=ym*b+yp-m(a,b):
+    go sub 280
+240    shade4=shade,
+    a=x+.5,b=y+.5:
+    rx=xm*(a-sz),
+    ry=(ym*b+yp)-lv:
+250    POLYGON INK shade1;rx,ry TO rx1,ry1 TO rx2,ry2 FILL:
+    POLYGON INK shade2;rx,ry TO rx2,ry2 TO rx2,ry4 FILL:
+    POLYGON INK shade3;rx,ry TO rx1,ry1 TO rx1,ry3 FILL:
+    POLYGON INK shade4;rx,ry TO rx1,ry3 TO rx2,ry4 FILL:
+260 NEXT x;y:
+270 st=7: go sub 410:
+ return
+280 c=x+1-(b-y),
+ d=y+(a-x),
+ xc=x+.5,
+ yc=y+.5,
+ xrun1=xc-a,
+ xrun2=xc-c,
+ yrun1=yc-b,
+ yrun2=yc-d,
+ rise1=lv-m(a,b),
+ rise2=lv-m(c,d),
+ yrise=ABS(rise1*xrun2-rise2*xrun1),
+ yrun=ABS(yrun1*xrun2-xrun1*yrun2):
+ IF yrun=yrise THEN yrun,yrise=0
+290 xrise=ABS(rise1*yrun2-rise2*yrun1),
+ xrun=ABS(xrun1*yrun2-yrun1*xrun2):
+ IF xrun=xrise THEN xrun,xrise=0
+300 xrise,yrise/=2,
+ shade=62*(1-ABS(xrise/(xrun+xrise)))*(1-ABS(yrise/(yrun+yrise)))+1,
+ r=(rnd*muddle)-(muddle/2),
+ wv=.25,
+ shade=IIF(lv>sline+(r/2),min(shade+128+rnd*7,191),
+       iif(int lv<=wline,max(192,min(shade+182+(rnd*30)-15-fn wt(y+t(x,y)/wv,x*wv)*60*(fn l(abs t(x,y))),254)),
+       iif(lv<gline+r,min(shade+64+rnd*15,127),min(shade+rnd*15,63))))
+310 return
+320 rem Set up buffers
+330 go sub 380:
+ paper 255:cls 0:
+ print scale 4,4;at 6,7;paper 0;ink 63;"PLEASE WAIT":
+ sw=scrw,sh=scrh:
+ window new status,2,2,60,8 transparent 255:
+ window status:cls 255: palette default:
+ st=7: go sub 410:
+ dim buf(2):
+ for f=1 to 2:
+    window new buf(f),0,0,sw,sh:
+    window hide buf(f):
+    window buf(f):
+    go sub 380:
+ next f:
+ buffer=0:
+ go sub 400:
+ xr=sw
+340 rem Start scrolling and copying
+350 on every 2
+    window scroll 0,-1,0:
+    window copy buf(buffer+1),xr,0,1,sh to 0,sw-1,0:
+    xr+=1
+360 if xr=sw then
+    xr=0:
+    go sub 390
+370 wait screen: go to 360
+380 for a=0 to 63:
+    palette a,(a/83)*255,(a/136)*255,(a/220)*255:
+    palette a+64,0,(a/155)*255,0:
+    palette a+128,(a/63)*255,(a/63)*255,(a/63)*255:
+    palette a+192,0,0,(.1875+(a/190))*255:
+ next a:
+ palette 255,0,64,128:
+ return
+390 buffer=1-buffer
+400 window buf((1-buffer)+1):
+ flg=1,wl=w:
+ mat m()=zer:
+ for x1=sz to (sz*2)-1;y1=0 to z:
+    m(x1-sz,y1)=t(x1,y1):
+ next y1;x1:
+ for y1=0 to z:
+    m(sz,y1)=m(sz-1,y1):
+ next y1:
+ go sub 100:
+ return
+410 wn=cwin:
+ window status:
+ if st<7 then
+    text move (st-1)*9,0;ink st+1;#243
+ else
+    for f=0 to 5:
+       text move f*9,0;ink 16;#243:
+    next f:
+ end if:
+ window wn:
+ return

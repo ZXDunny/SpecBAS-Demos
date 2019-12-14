@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG fractal star
+10 REM Fractal Star
+20 DEF PROC star(x,y,d,o,c)
+30 IF c<1 THEN EXIT PROC 
+40 LOCAL st=360/o: LOCAL f=0: FOR f=1 TO o: LOCAL xc=x+d*SIN(f*st): LOCAL yc=y+d*COS(f*st): DRAW INK c;x,y TO xc,yc: PROC star(xc,yc,d/3,o,c-1): NEXT f
+50 END PROC
+60 LET dist=160,order=7,complexity=7
+70 DEGREES: CLS 0: PROC star(SCRw/2,SCRh/2,dist,order,complexity)

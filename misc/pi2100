@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG demos:misc/pi2100
+CHANGED FALSE
+1 t=msecs:DIM Z(331);Y(331):
+	W=0:
+	GO SUB 4:
+	FOR D=0 TO 100:
+				FOR n=331 TO 2 STEP -1:
+							c=(Z(n)+W),Q=INT (c/Y(n)),Z(n)=10*(c-(Q*Y(n))),W=Q*(n-1):
+				NEXT n:
+				Q=Z(1)+W,Z(1)=10*(Q-INT (Q/10)*10):
+				IF Q>99 THEN
+							PRINT CHR$ 8;L+1;:
+							Q=0
+2    L=INT (Q/10):
+				PRINT L;:
+				IF D=0 THEN
+							PRINT ".";
+3 NEXT D: print 'msecs-t;"ms":
+	STOP
+4 FOR n=1 TO 331:
+	   Y(n)=(n-1)*2+1,Z(n)=20:
+	NEXT n:
+	RETURN
+5 REM Pi to 100dp by Johnny McGibbits: Oct 27, 2019.

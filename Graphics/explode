@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG explode
+10 LET np=1000: DIM p(np,4)
+20 FOR f=1 TO np: LET p(f,1)=SCRw/2: LET p(f,2)=SCRh/2: LET p(f,3)=(RND*4)-2: LET p(f,4)=(RND*4)-2: NEXT f
+30 REM main loop
+40 PAPER 0: CLS: INK 15: SCREEN LOCK 
+50 FOR f=1 TO np: PLOT p(f,1),p(f,2): INC p(f,1),p(f,3): INC p(f,2),p(f,4): INC p(f,4),0.01: NEXT f
+60 WAIT SCREEN: CLS: GO TO 50

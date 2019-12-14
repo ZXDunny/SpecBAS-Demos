@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/hill
+CHANGED FALSE
+10 REM Landscape outline
+20 DIM hil(1025) BASE 0
+30 PROC hill(0,512,1024)
+40 FOR i=0 TO 1024: draw to SCRw/2-512+i,SCRh/2-hil(i): NEXT i
+50 STOP
+60 DEF PROC hill(a,b,c)
+70 IF c-a<=1 THEN EXIT PROC
+80 LET hil(b)=(hil(a)+hil(c))/2+(RND-0.5)*(c-a)/2
+90 PROC hill(a,(a+b)/2,b)
+100 PROC hill(b,(b+c)/2,c)
+110 END PROC

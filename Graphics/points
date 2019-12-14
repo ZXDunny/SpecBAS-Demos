@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG points
+10 REM points demo
+20 RADIANS: PAPER 0: INK 10:window origin 0,0,0 to 800,480: CLS 
+30 FOR j=480 TO 80 STEP -4
+40 FOR m=1 TO 800
+50 LET y=INT(480/2+240*(COS(m*PI/j)))
+60 PLOT INK j MOD 255;m,y
+70 NEXT m
+80 NEXT j

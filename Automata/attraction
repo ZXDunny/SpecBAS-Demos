@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG attraction
+10 REM Particle attraction
+20 FOR f=1 TO 255: LET n=64+(f*0.75): PALETTE f,n,n,n: NEXT f: PAPER 0: CLS 
+30 LET np=2000,damp=0.999,ms=35: DIM p(np,5): CONST x=1,y=2,ox=3,oy=4,v=5
+40 FOR f=1 TO np: LET p(f,x)=RND*SCRw,p(f,y)=RND*SCRh,p(f,ox)=p(f,x),p(f,oy)=p(f,y): NEXT f
+50 FOR f=1 TO np
+60 LET dx=MOUSEx-p(f,x),dy=MOUSEy-p(f,y),d=SQR(dx*dx+dy*dy): INC p(f,x),dx/d: INC p(f,y),dy/d
+70 LET vx=(p(f,x)-p(f,ox))*damp,vy=(p(f,y)-p(f,oy))*damp,p(f,ox)=p(f,x),p(f,oy)=p(f,y),vx=IIF(ABS vx>ms,SGN vx*ms,vx),vy=IIF(ABS vy>ms,SGN vy*ms,vy): INC p(f,x),vx: INC p(f,y),vy: LET p(f,v)=SQR(vx*vx+vy*vy)*255
+80 DRAW INK p(f,v);p(f,x),p(f,y) TO p(f,ox),p(f,oy)
+90 NEXT f: WAIT SCREEN: CLS: GO TO 50

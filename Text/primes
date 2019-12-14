@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG primes
+10 LET m=mSECS
+20 LET nop=0: FOR x=3 TO 100000 STEP 2: FOR y=3 TO SQR(x) STEP 2: IF x MOD y<>0 THEN NEXT y: INC nop
+40 NEXT x
+50 PRINT (mSECS-m)/1000;" Seconds"'"Highest prime: ";nop

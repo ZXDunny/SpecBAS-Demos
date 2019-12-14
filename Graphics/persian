@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/persian
+CHANGED FALSE
+10 REM Persian Carpet
+20 DEF FN f(l,r,t,b,a)=((POINT(l,t)+POINT(r,t)+POINT(l,b)+POINT(r,b))/4+a) MOD 16
+30 DEF PROC dc(l,r,t,b,a)
+40 IF l<r-1 THEN LOCAL c=FN f(l,r,t,b,a),mc=int((l+r)/2),mr=int((t+b)/2): DRAW INK c;l+1,mr TO r-1,mr: DRAW INK c;mc,t+1 TO mc,b-1: PROC dc(l,mc,t,mr,a): PROC dc(mc,r,t,mr,a): PROC dc(l,mc,mr,b,a): PROC dc(mc,r,mr,b,a)
+50 END PROC
+60 bc=INT(RND*256),a=3,l=1,r=513,t=1,b=401: RECTANGLE INK bc;l,t TO r,b
+70 PROC dc(l,r,t,b,a)
+80 PAUSE 0: GO TO 60

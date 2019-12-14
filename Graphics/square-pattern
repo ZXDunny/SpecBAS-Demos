@@ -1,0 +1,5 @@
+ZXASCII
+AUTO -1
+PROG square-pattern
+10 LET a=0: FOR f=0 TO 255: PALETTE f,f,f,f: NEXT f
+20 FOR i=0 TO 255: PLOT INK i;400+SIN(a+i)*a,240+COS a*a: NEXT i: INC a,.02: GO TO 20

@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG curlicue2
+10 PALETTE 0,128,128,128: FOR f=1 TO 255: PALETTE f,(f*8) MOD 255,0,0: NEXT f: PAPER 0: CLS 
+20 LET x=SCRw/2,y=SCRh/2,seed=RND,df,f,i=0
+30 DO : LET df=df+seed*2*PI,f=f+df,x=x+COS f,y=y+SIN f,i=i+.01: PLOT INK MIN(POINT(x,y)+1,255);x,y: LOOP UNTIL INKEY$<>""
+40 CLS : RUN 

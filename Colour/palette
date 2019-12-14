@@ -1,0 +1,24 @@
+ZXASCII
+AUTO -1
+PROG demos:colour/palette
+CHANGED FALSE
+10 REM palette demo
+20 PALETTE DEFAULT: PAPER 0: CLS: INK 15
+30 PRINT SCALE 4,4;INK 10;'" The"'" SpecBAS"'" Palette"
+40 xs=50,ys=12,
+	xo=128+(SCRw/2)-((256 DIV 32)*xs)/2,yo=(SCRh/2)-(16*ys): 
+	FOR i=0 TO 255: 
+	   x=xo+(i DIV 32)*xs, 
+				y=yo+(i MOD 32)*ys: 
+				RECTANGLE INK i;x+1,y+1 TO x+xs-1,y+ys-1 FILL: 
+	NEXT i
+50 FOR i=0 TO 31: 
+	   PRINT MOVE xo-28,yo+(i*ys);i: 
+	NEXT i
+60 FOR i=0 TO 255 STEP 32: 
+	   i$=STR$(i),
+				x=-(LEN i$*FONTw/2)+xo+(xs/2)+(i DIV 32)*xs,
+				y=yo-20: 
+				PRINT MOVE x,y;i$;MOVE x-(4*(i<32)),32+y+32*ys;i+31: 
+	NEXT i
+70 PAUSE 0

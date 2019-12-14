@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG roman_fn
+10 REM Decimal to Roman Numerals
+20 DEF FN r$(r)=IIF$(r>=1000,"M"+FN r$(r-1000),IIF$(r>=900,"CM"+FN r$(r-900),IIF$(r>=500,"D"+FN r$(r-500),IIF$(r>=400,"CD"+FN r$(r-400),IIF$(r>=100,"C"+FN r$(r-100),IIF$(r>=90,"XC"+FN r$(r-90),IIF$(r>=50,"L"+FN r$(r-50),IIF$(r>=40,"XL"+FN r$(r-40),IIF$(r>=10,"X"+FN r$(r-10),IIF$(r>=9,"IX"+FN r$(r-9),IIF$(r>=5,"V"+FN r$(r-5),IIF$(r>=4,"IV"+FN r$(r-4),IIF$(r>=1,"I"+FN r$(r-1),"")))))))))))))
+30 INPUT "Decimal number: ";a
+40 PRINT FN r$(a)

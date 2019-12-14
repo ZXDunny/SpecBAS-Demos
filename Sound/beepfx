@@ -1,0 +1,4 @@
+ZXASCII
+AUTO -1
+PROG beepfx
+10 FOR f=0 TO 60: BEEP .005,f: BEEP .003,f+1: BEEP .004,f-2: NEXT f

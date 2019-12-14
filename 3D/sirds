@@ -1,0 +1,60 @@
+ZXASCII
+AUTO -1
+PROG demos:3d/sirds
+CHANGED FALSE
+10 REM Stereogram generator
+20 option "base",0:
+ eyesep=2.5:
+ strip_width=128*(eyesep/2.5):
+ def fn i(x,y)=gpoint(dm,x,y)/256:
+ def fn p(x,y)=gpoint(pt,x mod pw,y mod ph):
+ DEF FN s(z)=(1-mu*z)*e/(2-mu*z)
+30 graphic new dm load "demos:3d/skull_sirds.png":
+ graphic new pt load "demos:3d/pebbles_strip.png":
+ graphic scale pt,strip_width/gfxw pt:
+ graphic scale dm to scrw,scrh:
+ pw=gfxw pt,ph=gfxh pt,e=eyesep*pw,mu=1/3:
+ palette copy pt,0,256 to 0
+40 GO SUB 60
+50 PAUSE 0:
+ STOP
+60 REM Create autostereogram in current window
+70 FOR y=0 TO scrh-1:
+    DIM pix(scrw);same(scrw):
+    FOR x=0 TO scrw-1:
+       same(x)=x:
+    NEXT x:
+    FOR x=0 TO scrw-1:
+       s=FN s(fn i(x,y)),
+       lft=x-(s+(s&y&1))/2,rgt=lft+s:
+       IF NOT (lft>=0 AND rgt<scrw) THEN
+          GO TO 100
+80       t=1:
+       DO:
+          zt=fn i(x,y)+2*(2-mu*fn i(x,y))*t/(mu*e),
+          vis=fn i(x-t,y)<zt AND fn i(x+t,y)<zt:
+          t+=1:
+       LOOP UNTIL NOT (vis AND zt<1):
+       IF NOT vis THEN
+          GO TO 100
+90       l=same(lft):
+       DO WHILE l<>lft AND l<>rgt:
+          IF l<rgt THEN
+             lft=l,l=same(lft)
+          ELSE
+             same(lft)=rgt,lft=rgt,l=same(lft),rgt=l:
+          end if:
+       LOOP:
+       same(lft)=rgt
+100    NEXT x:
+    FOR x=scrw-1 TO 0 STEP -1:
+       pix(x)=IIF(same(x)=x,fn p(x,y),pix(same(x))):
+       PLOT INK pix(x);x,y:
+    NEXT x:
+ NEXT y:
+ i=rgbn($FFFFFF),j=rgbn(0):
+ circle ink i;(scrw-strip_width)/2,scrh-16,8 fill:
+ circle ink i;(scrw+strip_width)/2,scrh-16,8 fill:
+ circle ink j;(scrw-strip_width)/2,scrh-16,8:
+ circle ink j;(scrw+strip_width)/2,scrh-16,8:
+ RETURN

@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/truchet
+CHANGED FALSE
+10 REM Truchet Tiling
+20 LET sz=(INT(RND*192)*2)+8: DO: w=2+INT(RND*sz);sq=((sz/2)+(w/2))*0.7071: LOOP UNTIL sq-1<=sz-sq: DEGREES: SCREEN LOCK: CLS 0
+30 mp=sz/2;mw=w/2;gs=256/w;mn=mp-mw;mx=mp+mw: FOR x=0 TO mx-1;y=0 TO mx-1: LET a=SQR(x*x+y*y)
+40 IF a<=mn OR a>mx THEN LET l=0 ELSE LET l=(a-mn)*gs
+50 PLOT OVER 8;INK l;x,y;sz-x,sz-y;sz+sz-x,y;sz+x,sz-y
+60 NEXT y;x
+70 DIM g$(2): WINDOW GRAB g$(1),0,0,0,sz,sz;GRAB g$(2),0,sz,0,sz,sz
+80 LET p=RND*360: LET q=(2+INT(RND*2))*64: FOR f=0 TO 255: PALETTE HSV f,p,q,(SIN(f*(180/256))*255): NEXT f
+90 FOR x=0 TO SCRw STEP sz: FOR y=0 TO SCRh STEP sz: WINDOW PUT g$(INT(RND*2)+1),0,x,y: NEXT y: NEXT x: WAIT SCREEN: wait keydown: CLS 0: GO TO 20

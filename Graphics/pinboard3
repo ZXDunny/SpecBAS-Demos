@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG pinboard3
+10 FOR k=0 TO 64: PALETTE k,3*k+63,k*k*16/257,((768-9*k)*k SHR 8)+63: NEXT k: PALETTE 65,0,0,0: CLS 65
+20 RADIANS: LET b=9.587379924285257E-5: LET num=768: LET t=mSECS & 0xffff: LET a=SQR 2: LET b=SQR 7: LET sw=SCRw/2: LET sh=SCRh/2: LET rscale=MIN(sw,sh)/4
+30 LET lx=-1
+40 FOR i=0 TO num
+50 LET ntime=t*20*i+1/num
+60 LET r=(b*SIN(ntime*a))+1.2
+70 LET x=sw+SIN(ntime)*r*rscale: LET y=sh+COS(ntime)*-r*rscale
+80 LET z=64*ABS SIN(ntime*b)
+90 CIRCLE INK z;x,y,4 FILL 
+100 IF lx>0 THEN DRAW INK z;x,y TO lx,ly
+110 LET lx=x: LET ly=y
+120 NEXT i
+130 INC t,.001/num
+140 WAIT SCREEN : CLS 65: GO TO 40

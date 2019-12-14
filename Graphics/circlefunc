@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG circlefunc
+10 REM Circles
+20 nc=INT(RND*4)+2: DIM r(nc),s(nc): a=0,r(1)=150,s(1)=RND: IF nc>1 THEN FOR n=2 TO nc: r(n)=r(n-1)*.75,s(n)=1/(INT(RND*10)+1): NEXT n
+30 xc=400,yc=240: FOR n=1 TO nc: xc+=COS(a*s(n))*r(n),yc+=SIN(a*s(n))*r(n): NEXT n: PLOT xc,yc
+40 a+=.5: IF INKEY$="" THEN GO TO 30 ELSE RUN 

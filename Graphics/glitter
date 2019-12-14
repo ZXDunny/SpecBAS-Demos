@@ -1,0 +1,36 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/glitter
+CHANGED FALSE
+10 gw=20,gh=20:
+	dim grid(gw,gh,3) base 0:
+	i=min(scrw,scrh)-20,w=i/gw:
+	cx=(scrw-(gw*w))/2,cy=(scrh-(gh*w))/2
+20 for f=0 to 255:
+	   palette f,f,f,f:
+	next f:
+	screen lock:
+	for x=0 to gw-1:
+	   for y=0 to gh-1:
+				   grid(x,y,0)=10+rnd*200:
+				   GO SUb 100:
+				next y:
+	next x
+30 do:
+	   cls 64:
+	   for x=0 to gw-1:
+	      for y=0 to gh-1:
+	         rectangle ink grid(x,y,0);cx+x*w,cy+y*w,w,w fill:
+							   rectangle ink 0;cx+x*w,cy+y*w,w,w:
+							   grid(x,y,0)+=grid(x,y,2):
+							   if (grid(x,y,2)>0 and grid(x,y,0)>grid(x,y,1)) or
+							      (grid(x,y,2)<0 and grid(x,y,0)<grid(x,y,1)) then
+										   GO SUb 100:
+							   end if:
+				   next y:
+	   next x:
+				wait screen:
+	loop
+100 grid(x,y,1)=10+rnd*200,
+	grid(x,y,2)=(rnd*4)*iif(grid(x,y,1)<grid(x,y,0),-1,1):
+	return

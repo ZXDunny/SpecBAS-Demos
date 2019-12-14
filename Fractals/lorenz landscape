@@ -1,0 +1,6 @@
+ZXASCII
+AUTO -1
+PROG lorenz landscape
+10 REM Lorenz Landscape
+20 ORIGIN -1.75,-1.15 TO 1.75,1.15
+30 FOR t=0 TO 34000 STEP .08: PLOT SIN(t*0.99)-0.7*COS(t*3.01),COS(t*1.01)+0.1*SIN(t*15.03): NEXT t

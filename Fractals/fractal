@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG fractal
+1 REM Fractal posted to CSS by Matthew Westcott
+10 CLS: PLOT 200,350: LET a=16: LET x=2: LET y=2: GO SUB 20: PAUSE 0: STOP 
+20 IF a=0 THEN DRAW x,0: RETURN 
+30 LET a=a-1: GO SUB 20: GO SUB 40: LET a=a+1: RETURN 
+40 IF a=0 THEN DRAW 0,y: RETURN 
+50 LET a=a-1: LET y=-y: LET x=-x: GO SUB 20: LET y=-y: LET x=-x: GO SUB 40: LET a=a+1: RETURN 

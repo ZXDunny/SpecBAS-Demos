@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG automata maze
+10 REM Maze Automata
+20 LET xs=200: LET ys=120: LET is=5
+30 GRAPHIC NEW a,xs,ys: LET sc=MIN(SCRw/xs,SCRh/ys): LET xoff=(SCRw-(xs*sc))/2: LET yoff=(SCRh-(ys*sc))/2: PALETTE 0,128,128,128: PALETTE 1,0,0,0: WINDOW GRAPHIC a: PAPER 0: INK 1: CLS 
+40 FOR x=(xs/2)-is TO (xs/2)+is: FOR y=(ys/2)-is TO (ys/2)+is: PLOT INK INT(RND*2);x,y: NEXT y: NEXT x
+50 LET change=0: FOR x=1 TO xs-2: FOR y=1 TO ys-2
+60 LET n=POINT(x-1,y-1)+POINT(x,y-1)+POINT(x+1,y-1)+POINT(x-1,y)+POINT(x+1,y)+POINT(x-1,y+1)+POINT(x,y+1)+POINT(x+1,y+1)
+70 IF POINT(x,y)=1 AND (n<1 OR n>4) THEN PLOT INK 0;x,y: LET change=1: GO TO 90
+80 IF POINT(x,y)=0 AND n=3 THEN PLOT INK 1;x,y: LET change=1
+90 IF INKEY$="" THEN NEXT y: NEXT x: WINDOW PUT GRAPHIC a,0,xoff,yoff SCALE sc: IF change THEN GO TO 50
+100 IF change=0 THEN WINDOW 0: PRINT SCALE 2,2;CENTRE 1;"Press any key for a new maze": PAUSE 0
+110 DO : LOOP UNTIL INKEY$="": RUN 

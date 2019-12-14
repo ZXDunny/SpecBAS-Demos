@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG scrambler
+10 REM Sentence scrambler
+20 INPUT "Give me a sentence: ";a$: GO TO 20+(10*LEN a$>0)
+30 LET a$=LOW$ a$: DIM b$(SPLIT a$," ",",",";",":"): FOR f=1 TO ARSIZE b$(): LET f$="",c$=b$(f): DO WHILE NOT(c$(LEN c$) IN ["a" TO "z"]): LET f$=c$(LEN c$)+f$,c$=c$( TO LEN c$-1): LOOP: LET b$(f)=c$,f$=f$+(" " AND f$(LEN f$)<>" ")
+40 IF LEN c$>3 THEN LET d$=c$(1),e$=c$(LEN c$),c$=c$(2 TO LEN c$-1) ELSE PRINT c$;f$;" ";: NEXT f: GO TO 70
+50 DO WHILE LEN c$>0: LET a=INT(RND*(LEN c$))+1,d$=d$+c$(a),c$=c$( TO a-1)+c$(a+1 TO): LOOP 
+60 IF b$(f)=d$+e$ THEN GO TO 40 ELSE PRINT d$+e$+f$;" ";: NEXT f
+70 PAUSE 0: RUN 

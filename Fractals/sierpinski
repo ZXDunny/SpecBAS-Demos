@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG sierpinski
+10 DEGREES
+20 REM Create an array of points. After creation, scale the points to fill the screen.
+30 LET np=3: LET b=2: DIM x(np): DIM y(np)
+40 LET minx=SCRw: LET miny=SCRh: LET maxx=0: LET maxy=0: FOR f=1 TO np: LET x(f)=SIN(f*(360/np))*(SCRw/2)+SCRw/2: LET y(f)=SCRh-(COS(f*(360/np))*(SCRh/2)+SCRh/2)
+50 IF x(f)>maxx THEN LET maxx=x(f)
+60 IF y(f)>maxy THEN LET maxy=y(f)
+70 IF x(f)<minx THEN LET minx=x(f)
+80 IF y(f)<miny THEN LET miny=y(f)
+90 NEXT f: LET sx=SCRw/(maxx-minx): LET sy=SCRh/(maxy-miny): FOR f=1 TO np: LET x(f)=(x(f)-minx)*sx: LET y(f)=(y(f)-miny)*sy: NEXT f
+100 REM Plot the triangle. Choose a point a random, and plot a point halfway between that and the previous point. Rinse, repeat.
+110 LET ox=x(1): LET oy=y(1)
+120 LET pt=INT(RND*np)+1: LET nx=x(pt): LET ny=y(pt): LET nx=((nx-ox)/b)+ox: LET ny=((ny-oy)/b)+oy: PLOT nx,ny: LET ox=nx: LET oy=ny: GO TO 120

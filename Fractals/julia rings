@@ -1,0 +1,72 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/julia rings
+CHANGED FALSE
+10 REM Julia Rings
+20 WINDOW DEPTH 0,32: CLS 0
+30 dw=800,dh=480:
+	DIM lx(dw) BASE 0;ly(dh) BASE 0
+40 xmin=-2,xmax=2,ymin=-1.5,ymax=1.5
+50 deltax=(xmax-xmin)/(dw-1),deltay=(ymax-ymin)/(dh-1)
+60 FOR i=0 TO dw-1:
+	   lx(i)=xmin+i*deltax:
+	NEXT i:
+	FOR i=0 TO dh-1:
+	   ly(i)=ymin+i*deltay:
+	NEXT i:
+	i_last=0
+70 maxiter=20,maxsize=4,fr=0
+80 fr=(fr+1) & $7fffffff,theta=fr*PI/180,
+	p=COS(theta)*SIN(theta*.7)*.6,q=SIN(theta)+SIN(theta)*.6
+90 cmagsqr=(p*p+q*q),cmag=SQR(cmagsqr),
+	drad=.04,drad_l=(cmag-drad),drad_l=drad_l*drad_l,
+	drad_h=cmag+drad,drad_h=drad_h*drad_h
+100 FOR py=0 TO (dh/2):
+	   ty=ly(py):
+				FOR px=0 TO dw-1
+110       x=lx(px),y=ty,xsquare,ysquare,ztot,i=0
+120       DO WHILE i<maxiter AND (xsquare+ysquare)<maxsize
+130          xsquare=x*x,ysquare=y*y:
+										ytemp=x*y*2,x=xsquare-ysquare+p,
+										y=ytemp+q,zmag=(x*x+y*y)
+140          IF zmag<drad_h AND zmag>drad_l AND i>0 THEN
+										   ztot=ztot+(1-(ABS(zmag-cmagsqr)/drad)),i_last=i
+150          INC i
+160          IF zmag>4 THEN EXIT
+170       LOOP
+180       IF ztot>0 THEN
+							   i=INT(SQR ztot*500)
+							ELSE
+							   i=0
+190       IF i<256 THEN
+							   r=i
+							ELSE
+							   r=255
+200       IF i<512 AND i>255 THEN
+							   g=i-256
+							ELSE
+							   IF i>=512 THEN
+										   g=255
+										ELSE
+										   g=0
+210       IF i<=768 AND i>511 THEN
+							   b=i-512
+							ELSE
+							   IF i>=768 THEN
+										   b=255
+										ELSE
+										   b=0
+220       tmp=((r+g+b)*.33) & 255,
+							r=((r+g+tmp)*.33) & 255,
+							g=((g+b+tmp)*.33) & 255,
+							b=((b+r+tmp)*.33) & 255
+230       CASE i_last MOD 3
+240          WHEN 1:
+										   tmp=r,r=g,g=b,b=tmp
+250          WHEN 2:
+										   tmp=r,b=g,r=b,g=tmp
+260       END CASE
+270       PLOT INK (r SHL 16)+(g SHL 8)+b;px,py;dw-px-1,dh-py
+280    NEXT px:
+	NEXT py
+290 GO TO 80

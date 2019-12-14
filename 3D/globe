@@ -1,0 +1,24 @@
+ZXASCII
+AUTO -1
+PROG globe
+10 REM Fake sphere mapping
+20 GRAPHIC NEW t LOAD "earth.png":
+ gw=gfxw t,gh=gfxh t:
+ palette copy t,0,256 to 0:
+ paper rgbn(0):
+ cls:
+ screen lock
+30 r=scrh/2.1,xc=SCRw/2,yc=SCRh/2,xo=0:
+ do:
+    for y=-r+1 to r-1:
+       x1=sqr(r*r-y*y),
+       tv=(asn(y/r)+1.5)/3:
+       for x=-x1 to x1:
+          tu=(asn(x/x1)+1.5)/6:
+          plot ink gpoint(t,(xo+tu*gw) mod gw,tv*gh);x+xc,y+yc:
+       next x:
+    next y:
+    xo+=3,xo%=gw:
+    wait screen:
+    cls:
+ loop

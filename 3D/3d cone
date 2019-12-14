@@ -1,0 +1,8 @@
+ZXASCII
+AUTO -1
+PROG 3D Cone
+10 REM Fake 3D Cone
+20 DEGREES: LET np=24: LET tn=360/np: LET x=SCRw/2: LET y=SCRh/2: LET ya=y-120: LET a=0
+30 PAPER 15: INK 1: CLS 
+40 FOR f=0 TO np: LET ab=a+tn*f: LET ax=x+100*COS ab: LET ay=y-50*SIN ab: IF f<np THEN DRAW x,ya TO ax,ay: DRAW ax,ay TO x,240+ya: END IF: IF f>0 THEN DRAW ox,oy TO ax,ay: END IF: LET ox=ax: LET oy=ay: NEXT f
+70 INC a: WAIT SCREEN: CLS: GO TO 40

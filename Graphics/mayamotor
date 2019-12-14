@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG mayamotor
+10 REM MayaMotor
+20 PAPER 0: CLS 
+30 LET angle=0: LET x1=SCRw/2: LET y1=SCRh/2
+40 FOR i=1 TO 9: LET x2=x1+COS(angle/9)*90: LET y2=y1+SIN(angle*9)*90: CIRCLE INK 0;x2,y2,9 FILL: CIRCLE INK 13;x2,y2,9: DEC angle,20: NEXT i: WAIT SCREEN: GO TO 40

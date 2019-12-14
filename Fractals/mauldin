@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG mauldin
+10 REM Mauldin fractal
+20 WINDOW ORIGIN 0,0,0 TO 1920,1024: FOR f=0 TO 255: PALETTE f,f,f,f: NEXT f: CLS 0
+30 LET x=.5,y=.75,a,b=0,s1=1800,s2=s1*1024/1920
+40 FOR n=1 TO 10000000: LET a=RND,xr=COS(2*PI/3)*x-SIN(2*PI/3)*y,yr=COS(2*PI/3)*y+SIN(2*PI/3)*x,x2=xr*xr-yr*yr,y2=2*xr*yr: LET k=INT(RND*3)
+50 CASE k
+60 WHEN 0: LET xa=(SQR(3)-1)*x+1,ya=(SQR(3)-1)*y,xb=-x+(SQR(3)+1),yb=-y
+70 WHEN 1: LET xa=(SQR(3)-1)*xr+1,ya=(SQR(3)-1)*yr,xb=-xr+(SQR(3)+1),yb=-yr
+80 WHEN 2: LET xa=(SQR(3)-1)*x2+1,ya=(SQR(3)-1)*y2,xb=-x2+(SQR(3)+1),yb=-y2
+90 END CASE
+100 LET xc=xb/(xb*xb+yb*yb),yc=-yb/(xb*xb+yb*yb),x1=xa*xc-ya*yc,y1=xa*yc+xc*ya,x=x1*SQR(1.5),y=y1*SQR(1.5): PLOT INK 1;OVER 2;1920/2+s1*x-900,1024/2+s2*y
+110 NEXT n

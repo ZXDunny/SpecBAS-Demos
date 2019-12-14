@@ -1,0 +1,24 @@
+ZXASCII
+AUTO -1
+PROG henon anim
+10 DEGREES: PAPER 0: CLS:
+ s=3,a=(scrh/scrw)*s: 
+ window origin 0,-s,-a to s,a:
+ for f=1 to 255:
+    palette hsv f,f*1.4,255,255:
+ next f:
+ SCREEN LOCK
+30 FOR a=-180 TO 180 STEP .01: 
+    CLS: 
+    FOR x=-.1 TO .8 STEP .05;y=-.1 TO .8 STEP .05: 
+       lx=x,ly=y: 
+       FOR n=1 TO 80: 
+          xx=lx*COS a-(ly-lx*lx)*SIN a,
+          ly=lx*SIN a+(ly-lx*lx)*COS a,
+          lx=xx: 
+          PLOT INK x*y*768;ly,lx: 
+       NEXT n;y;x: 
+    if inkey$<>"" then a+=.1
+35    wait screen:
+ NEXT a
+40 GO TO 30

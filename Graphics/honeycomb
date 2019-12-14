@@ -1,0 +1,22 @@
+ZXASCII
+AUTO -1
+PROG honeycomb
+10 cls:
+ a=3.5,b=-3,x=3.21,y=6.54,
+ sw=scrw/2,sh=scrh/2:
+ go sub 20:
+ for n=0 to 10000: 
+    plot x+sw,y+sh:
+    z=x,x=y+w:
+    go sub 20:
+    y=w-z:
+ next n:
+ stop
+20 if x>1 then 
+    w=a*x+b*(x-1)
+ else
+    if x<-1 then 
+       w=a*x+b*(x+1)
+    else
+       w=a*x
+30 return

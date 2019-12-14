@@ -1,0 +1,6 @@
+ZXASCII
+AUTO -1
+PROG ackerman
+10 REM Ackerman function
+20 DEF FN a(m,n)=IIF(m=0,n+1,IIF(n=0,FN a(m-1,1),FN a(m-1,FN a(m,n-1))))
+30 PRINT FN a(3,7)

@@ -1,0 +1,86 @@
+ZXASCII
+AUTO -1
+PROG demos:3d/raytrace_large
+CHANGED FALSE
+10 PAPER 0: INK 15: CLS: so=32,ss=(256-so),hh=ss*0.0666667:
+ palette so,255,255,255:
+ palette so+hh,0,192,255:
+ palette 255,0,0,192:
+ rainbow so to so+hh:
+ rainbow so+hh to 255
+20 graphic new gfx load "demos:3d/checks.gif":
+ palette copy gfx,0,so-1 to 0:
+ graphic remap gfx:
+ gw=gfxw gfx,gh=gfxh gfx:
+ graphic new main,scrw*20,scrh*20:
+ Window graphic main
+30 read spheres:t=msecs:
+ DIM c(spheres,3),r(spheres),q(spheres): dim cl(so) base 0:
+ for f=0 to so-1:
+    c=rgb f:
+    c=rgbtoint(red c/2, green c/2, blue c/2):
+    cl(f)=rgbn(c):
+ next f:
+ w=scrw/2,h=scrh/2,s=0,sh=scrh/480
+40 FOR k=1 TO spheres:
+    READ c(k,1),c(k,2),c(k,3),r:
+    r(k)=r,q(k)=r*r:
+ NEXT k
+50 data 6:
+ DATA -0.3,-0.8,3,0.6
+60 DATA 0.9,-1.4,3.5,0.35:
+ data 0.7,-0.45,2.5,0.4:
+ data -0.5,-0.3,1.5,0.15:
+ DATA 1.0,-0.2,1.5,0.1:
+ DATA -0.1,-0.2,1.25,0.2
+70 FOR i=1 TO scrh:
+    window 0:
+    print at 0,0;using$("###.##",(i/(h*2))*100);"%   ":
+    window graphic main:
+    FOR j=0 TO scrw-1
+80       x=0.3,y=-0.5,z=0,ba=0:
+       dx=j-w,dy=h-i,dz=sh*600,
+       dd=dx*dx+dy*dy+dz*dz
+90       n=-(y>=0 OR dy<=0):
+       IF n=0 THEN
+          s=-y/dy
+100       FOR k=1 TO spheres:
+          px=c(k,1)-x,py=c(k,2)-y,pz=c(k,3)-z,
+          pp=px*px+py*py+pz*pz,
+          sc=px*dx+py*dy+pz*dz:
+          IF sc<=0 THEN
+             GO TO 130
+110          bb=sc*sc/dd,
+          aa=q(k)-pp+bb:
+          IF aa<=0 THEN
+             GO TO 130
+120          sc=(SQR bb-SQR aa)/SQR dd:
+          IF sc<s OR n<0 THEN
+             n=k,s=sc
+130       NEXT k
+140       IF n<0 THEN
+          plot ink int(so+(dy*dy/dd)*ss);j,scrh-i:
+          go to 200
+150       dx=dx*s,dy=dy*s,dz=dz*s,dd=dd*s*s,
+       x+=dx,y+=dy,z+=dz:
+       IF n<>0 THEN
+           nx=x-c(n,1),ny=y-c(n,2),nz=z-c(n,3),
+          nn=nx*nx+ny*ny+nz*nz,
+          l=2*(dx*nx+dy*ny+dz*nz)/nn,
+          dx=dx-nx*l,dy=dy-ny*l,dz=dz-nz*l:
+          GO TO 90
+160       FOR k=1 TO spheres:
+          u=c(k,1)-x,
+          v=c(k,3)-z:
+          IF u*u+v*v<=q(k) THEN
+             ba=1:
+             go to 180
+170       NEXT k
+180       ik=gpoint(gfx,(x*gw) mod gw,(z*gh) mod gh):
+       if ba then
+          ik=cl(ik)
+190       plot ink ik;j,scrh-i
+200    NEXT j:
+ NEXT i:
+ save "/render.png" graphic main
+210 window 0:print at 0,0;transparent 1;ink 0;"Time: ";(msecs-t)/1000;" secs"

@@ -1,0 +1,24 @@
+ZXASCII
+AUTO -1
+PROG bbc_balls
+10 REM Ball example from R.T.Russel's BBC BASIC for Windows
+20 GRAPHIC NEW ball load "ball_plasma.png" transparent 0:
+	palette copy ball,0,256 to 0:
+	screen lock
+30 t=0,nb=200,ti=3/nb,si=1/nb,a=0:
+	degrees:
+	Do:
+	   cls:
+				s=.5*(sin a+.5):
+    FOR i=1 TO nb:
+       x=380+180*SIN(t/3+i)*COS(t+8*i),
+       y=220+180*COS(t/4+2*i)*SIN(t+10*i),
+       t+=ti,
+							s+=si:
+							if s>0.00001 then
+							   window put graphic ball,0,x,y scale s:
+							end if:
+    NEXT i:
+				a+=1:
+	   wait screen:
+	loop

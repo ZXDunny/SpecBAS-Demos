@@ -1,0 +1,19 @@
+ZXASCII
+AUTO -1
+PROG points_extra
+10 REM points demo
+20 RADIANS: PAPER 0: INK 10: CLS: window origin 0,0,0 to 800,480
+25 DIM p((logh/4)*logw,3): LET i=1: LET sw=logw/2: LET sh=logh/2
+30 FOR j=logh TO 80 STEP -4
+40 FOR m=1 TO logw
+50 LET y=INT(logh/2+240*(COS(m*PI/j)))
+60 LET p(i,1)=m-sw: LET p(i,2)=y-sh: LET p(i,3)=j MOD 255: INC i
+70 NEXT m
+80 NEXT j
+90 DEGREES: LET angle=0: SCREEN LOCK
+100 TRANSFORM2D p() TO d() ROTATE angle MOVE sw,sh
+110 PLOT d()
+120 WAIT SCREEN
+130 INC angle,1,0 TO 359
+140 CLS
+150 GO TO 100

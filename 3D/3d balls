@@ -1,0 +1,19 @@
+ZXASCII
+AUTO -1
+PROG 3d balls
+10 REM OVER 8 demo with 3D Balls
+20 PAPER 0: INK 15: OVER 8: CLS: SCREEN LOCK 
+30 FOR f=1 TO 255: PALETTE HSV f,360-(f*1.4),255,255: NEXT f
+40 LET bsize=7: LET bstep=2/(bsize-1): LET ov=8: DIM ov$="None","Exclusive Or","Add","Subtract","And","Or","Not","Average","Maximum","minimum","Multiply" BASE 0: LET pozx,pozy=0: LET xc=SCRw/2: LET yc=SCRh/2
+50 LET m=mSECS: LET sa=SIN(pozx): LET ca=COS(pozx): LET sb=SIN(pozy): LET cb=COS(pozy)
+60 FOR x=-1 TO 1 STEP bstep: FOR y=-1 TO 1 STEP bstep: FOR z=-1 TO 1 STEP bstep
+70 LET y2=y: LET x2=x*ca-y2*sa: LET y3=x*sa+y2*ca: LET y2=y3: LET y3=y2*cb-z*sb: LET z2=y2*sb+z*cb
+80 LET sx=xc+x2*(z2+2)*50: LET sy=yc+y3*(z2+2)*50: LET sz=(z2+2)*6
+90 CIRCLE INK sz*11;sx,sy,sz FILL 
+100 NEXT z: NEXT y: NEXT x
+101 LET a$=INKEY$: IF a$<>"" THEN GO SUB 120
+110 LET l=mSECS-m: WAIT SCREEN: LET b=(mSECS-m)/1000: INC pozx,b: INC pozy,b: CLS: PALETTE SHL 1,1 TO 255: PRINT AT 0,0;OVER 0;"OVER ";ov;" - ";ov$(ov)'bsize;"x";bsize;"x";bsize;" (";bsize*bsize*bsize;" balls) - ";USING$("###",l);" ms"''"Press ""o"" to change blend mode"'"Press ""-"" or ""+"" to remove or add balls": GO TO 50
+120 IF a$="o" THEN INC ov,0 TO 10: OVER ov
+130 IF a$="-" THEN LET bsize=MAX(bsize-1,2): LET bstep=2/(bsize-1)
+140 IF a$="=" OR a$="+" THEN INC bsize: LET bstep=2/(bsize-1)
+150 DO: LOOP UNTIL INKEY$="": RETURN 

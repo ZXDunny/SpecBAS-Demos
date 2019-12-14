@@ -1,0 +1,6 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/hue rotate
+CHANGED FALSE
+10 FOR f=1 TO 16: PALETTE HSV f,((f+10)*(360/16)) MOD 360,255,255: NEXT f: o=0
+20 paper 0: cls: degrees: i=1: FOR f=1 TO 16: FOR g=1 TO 4*f: a=360/(4*f)*g+o*(f/3),xc=f*13*SIN a+400,yc=f*13*COS a+240: CIRCLE INK i;xc,yc,6 FILL: NEXT g: i+=1: NEXT f: WAIT SCREEN: INC o: CLS: GO TO 20

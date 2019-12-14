@@ -1,0 +1,8 @@
+ZXASCII
+AUTO -1
+PROG nubs
+10 REM Nubs demo
+20 SCREEN LOCK 
+30 MOUSE HIDE: FOR f=1 TO 2: SETNUB f,1: NEXT f
+40 DIM nx(2): DIM ny(2)
+50 FOR f=1 TO 2: LET nx(f)=(((NUBX f+32768)*(800/65535))+nx(f))/2: LET ny(f)=(((NUBY f+32768)*(480/65535))+ny(f))/2: TEXT MOVE nx(f),ny(f);INK f*2;"p": NEXT f: WAIT SCREEN: CLS: GO TO 50

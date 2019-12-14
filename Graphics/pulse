@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG pulse
+10 REM Pulse by B+
+20 FOR f=0 TO 255: PALETTE f,f,0,0: NEXT f: CLS 0
+30 LET cycle=0: DO: PROC p(0,0,479,cycle MOD 2): PAUSE 50: INC cycle: LOOP 
+40 DEF PROC p(x,y,sd,l): LOCAL s=sd/3,s2=s*2,s3=s*3: INK 255-l*50: RECTANGLE x+s,y,s,s FILL: RECTANGLE x,y+s TO x+s3,y+s2 FILL: RECTANGLE x+s,y+s2,s,s FILL 
+50 IF sd<10 THEN EXIT PROC ELSE INC l: PROC p(x,y,s,l): PROC p(x+s2,y,s,l): PROC p(x,y+s2,s,l): PROC p(x+s2,y+s2,s,l)
+60 END PROC

@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG super helix
+10 rem Super Helix
+20 r0=300,r1=30,r2=10,ctr=0
+30 paper 0: cls
+40 do 48000:
+    ctr+=1,
+    a0=ctr/r0/10,x0=r0*cos a0,y0=r0*sin a0,z0=ctr*.01:
+    plot ink 2;x0+scrw/2,z0:
+    a1=ctr/r1/2,x1=x0+r1*cos a1*cos a0,y1=y0+r1*cos a1*sin a0,z1=z0+r1*sin a1:
+    plot ink 1;x1+scrw/2,z1:
+    a2=ctr/r2,x2=x1+r2*cos a2*cos a1,y2=y1+r2*cos a2*sin a1,z2=z1+r2*sin a2:
+    plot ink 4;x2+scrw/2,z2:
+ loop

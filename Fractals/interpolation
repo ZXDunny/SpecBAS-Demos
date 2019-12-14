@@ -1,0 +1,27 @@
+ZXASCII
+AUTO -1
+PROG interpolation
+10 REM Interpolation of arrays demo
+11 PAPER 0: CLS: SCREEN LOCK 
+20 d=15000: dim p(d,3),np(d,3),m(d,3)
+30 GO SUB 60: 
+ MAT p()=np(): 
+ GO SUB 60
+40 for i=0 to 1 step .01:
+    mat m()=interp p(),np(),i:
+    plot m():
+    wait screen:
+    cls:
+ next i
+50 mat p()=np():
+ go sub 60:
+ go to 40
+60 xf=SCRw*.47,yf=SCRh*.5: 
+ FOR r=1 TO RND*5+1: 
+    a=RND,b=.9998,c=2-2*a,d=15000,x,j=0,y=RND*12+.1: 
+    FOR i=1 TO d: 
+       z=x,x=b*y+j,j=a*x+c*(x^2)/(1+x^2),
+       y=j-z: 
+       np(i,3)=i/1000,np(i,1)=x*20+xf,np(i,2)=y*20+yf: 
+    NEXT i;r:
+ return

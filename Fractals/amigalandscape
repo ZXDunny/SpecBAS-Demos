@@ -1,0 +1,105 @@
+ZXASCII
+AUTO -1
+PROG amigalandscape
+10 REM Landscape
+11 go sub 2010:paper 255: CLS:
+ xshift=0,
+ yp=70:
+ xw=512,yw=512,
+ xm=scrw/xw,ym=(scrh-yp)/(yw*0.7)
+20 OPTION "BASE",0: DIM lv(xw+2,yw+2)
+30 vmax=0.25+RND
+40 maxlv,minlv=0
+50 FOR iter=8 TO 1: 
+    sk=2^iter,
+    hl=sk/2: 
+    FOR y=0 TO yw STEP sk: 
+       FOR x=hl TO xw STEP sk: 
+          lv(x,y)=((lv(x-hl,y)+lv(x+hl,y))/2)+((RND-.5)*vmax*sk): 
+    NEXT x;y
+60    FOR x=0 TO xw STEP sk: 
+       FOR y=hl TO yw STEP sk: 
+          lv(x,y)=((lv(x,y-hl)+lv(x,y+hl))/2)+((RND-.5)*vmax*sk): 
+    NEXT y;x
+70    FOR x=hl TO xw STEP sk: 
+       FOR y=hl TO yw STEP sk: 
+          lv(x,y)=((((lv(x+hl,y-hl)+lv(x-hl,y+hl))/2)+((lv(x-hl,y-hl)+lv(x+hl,y+hl))/2))/2)+((RND-.5)*vmax*sk),
+          maxlv=MAX(lv(x,y),maxlv),
+          minlv=min(lv(x,y),minlv): 
+ NEXT y;x;iter
+80 snowline=60,
+ grassline=maxlv*.25,
+ waterline=-10,
+ muddle=32
+90 CLS
+100 FOR y=0 TO yw: 
+    FOR x=0 TO xw: 
+       lv=(lv(x,y)+lv(x+1,y)+lv(x,y+1)+lv(x+1,y+1))/4,
+       a=x,b=y,
+       rx1=xm*a+xshift*b,
+       ry1=ym*b+yp-lv(a,b):    
+       GO SUB 1000: 
+       shade1=shade: 
+       a=x+1,
+       rx2=xm*a+xshift*b,
+       ry2=ym*b+yp-lv(a,b): 
+       GO SUB 1000: 
+       shade2=shade,
+       a=x,b=y+1,
+       rx3=xm*a+xshift*b,
+       ry3=ym*b+yp-lv(a,b): 
+       GO SUB 1000: 
+       shade3=shade,
+       a=x+1,
+       rx4=xm*a+xshift*b,
+       ry4=ym*b+yp-lv(a,b): 
+       GO SUB 1000: 
+       shade4=shade,
+       a=x+.5,b=y+.5: 
+       rx=xm*a+xshift*b,
+       ry=ym*b+yp,
+       a=x,b=y,ry-=lv:
+       if lv(x,y)<=waterline then 
+          ry=ym*y+yp-waterline,
+          ry1=ry,ry2=ry,ry3=ry+1,ry4=ry+1
+110       POLYGON INK shade1;rx,ry TO rx1,ry1 TO rx2,ry2 FILL: 
+       POLYGON INK shade2;rx,ry TO rx2,ry2 TO rx4,ry4 FILL: 
+       POLYGON INK shade 3;rx,ry TO rx1,ry1 TO rx3,ry3 FILL: 
+       POLYGON INK shade 4;rx,ry TO rx3,ry3 TO rx4,ry4 FILL: 
+    NEXT x: 
+ NEXT y
+120 STOP 
+1000 c=x+1-(b-y), 
+ d=y+(a-x),
+ xc=x+.5: yc=y+.5,
+ xrun1=xc-a,
+ xrun2=xc-c,
+ yrun1=yc-b,
+ yrun2=yc-d,
+ rise1=lv-lv(a,b),
+ rise2=lv-lv(c,d),
+ yrise=ABS(rise1*xrun2-rise2*xrun1),
+ yrun=ABS(yrun1*xrun2-xrun1*yrun2): 
+ IF yrun=yrise THEN 
+    yrun,yrise=1
+1020 xrise=ABS(rise1*yrun2-rise2*yrun1),
+ xrun=ABS(xrun1*yrun2-yrun1*xrun2): 
+ IF xrun=xrise THEN 
+    xrun,xrise=1
+1030 xrise/=2,
+ yrise/=2,
+ xshade=1-ABS(xrise/(xrun+xrise)), 
+ yshade=1-ABS(yrise/(yrun+yrise)),
+ shade=62*xshade*yshade+1:
+ r=(rnd*muddle)-(muddle/2), 
+ shade=IIF(lv>snowline+r,shade+128,iif(lv<=waterline,shade+192,iif(lv<grassline+r,shade+64,shade)))
+1040 RETURN 
+2000 rem Palette
+2010 for a=0 to 63:
+    palette a,(a/63)*255,(a/96)*255,(a/200)*255:
+    palette a+64,0,(a/105)*255,0:
+    palette a+128,(a/63)*255,(a/63)*255,(a/63)*255:
+    palette a+192,0,0,(.25+(a/190))*255:
+ next a:
+ palette 255,0,64,128:
+ return

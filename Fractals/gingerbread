@@ -1,0 +1,4 @@
+ZXASCII
+AUTO -1
+PROG gingerbread
+10 m=12: FOR f=0 TO 2: READ x,y: DO 10000: ny=x,x=1-y+ABS x,y=ny: PLOT 400+x*m-y*m,120+x*m+y*m: LOOP: NEXT f: DATA 6.1,6,8.3,8.02,8.56,3.76

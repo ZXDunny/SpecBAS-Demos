@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG pickover
+10 REM Pickover Popcorn
+20 LET iters=100: LET h=INT(RND*100)/1000: LET d=5+(RND*30): DIM m=$ffff00,$ff00ff,$ffff BASE 0
+30 LET minx=-RND*10: LET maxx=-minx: LET miny=-(SCRh*((maxx-minx)/SCRw))/2: LET maxy=-miny: LET sx=d*((maxx-minx)/SCRw): LET sy=d*((maxy-miny)/SCRh)
+40 ORIGIN minx,miny TO maxx,maxy: WINDOW DEPTH 0,32: PAPER 0: CLS 
+50 LET rgbmode=0: LET ic=.75: FOR x=minx TO maxx STEP sx: FOR y=miny TO maxy STEP sy: LET rm=rgbmode*8: LET n=m(rgbmode)
+60 LET x1=x: LET y1=y: FOR i=1 TO iters: LET nx=x1-h*SIN(y1+TAN(3*y1)): LET ny=y1-h*SIN(x1+TAN(3*x1)): LET x1=nx: LET y1=ny: IF NOT(INRANGE(nx,minx TO maxx) OR INRANGE(ny,miny TO maxy)) THEN GO TO 80
+70 LET a=POINT(x1,y1): LET r=(((a SHR rm) & 255)+255)*ic: LET a=(a & n) | (r SHL rm): PLOT INK a;x1,y1
+80 NEXT i
+90 IF INKEY$="" THEN INC rgbmode,1,0 TO 2: NEXT y: NEXT x ELSE RUN 
+100 PAUSE 0: RUN 

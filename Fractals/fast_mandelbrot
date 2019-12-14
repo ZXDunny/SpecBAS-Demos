@@ -1,0 +1,42 @@
+ZXASCII
+AUTO -1
+PROG fast_mandelbrot
+10 PROC rain(2 SHL (INT(RND*8)+2))
+20 PROC makecursor
+30 LET xmin=-2.5: LET ymin=-1.325: LET xmax=1.5: LET ymax=1.325: LET maxiters=1023
+40 MOUSE HIDE : GO SUB 130: MOUSE SHOW: PROC getinput
+50 GO TO 40
+60 DEF PROC rain(bands)
+70 LET bandsize=256/bands: LET r1=MIN(INT(RND*5)*64,255): LET g1=MIN(INT(RND*5)*64,255): LET b1=MIN(INT(RND*5)*64,255): FOR i=0 TO bands-1
+80 LET r2=MIN(INT(RND*5)*64,255): LET g2=MIN(INT(RND*5)*64,255): LET b2=MIN(INT(RND*5)*64,255)
+90 LET k=0: FOR j=0 TO bandsize-1: LET r=r1+(k*((r2-r1)/bandsize)): LET g=g1+(k*((g2-g1)/bandsize)): LET b=b1+(k*((b2-b1)/bandsize)): PALETTE j+(i*bandsize),r,g,b: LET k=k+1: NEXT j
+100 LET r1=r2: LET g1=g2: LET b1=b2: NEXT i
+110 PALETTE 255,0,0,0
+120 END PROC
+130 PROC aspect(xmin,xmax,ymin,ymax)
+140 LET maxiters=INT(5*(1.5^(ABS(LN((xmax-xmin)/SCRw)))))
+160 INK 255: LET xs=(xmax-xmin)/SCRw: LET ys=(ymax-ymin)/SCRh
+170 LET y1=ymin: FOR y=0 TO SCRh-1: LET x1=xmin: FOR x=0 TO SCRw-1: PLOT INK (MANDEL(x1,y1,maxiters) MOD 255)-1;x,y: INC x1,xs: NEXT x: INC y1,ys: NEXT y
+270 RETURN 
+280 DEF PROC aspect(REF xmin,REF xmax,REF ymin,REF ymax)
+290 LET w=xmax-xmin: LET h=ymax-ymin
+300 LET aspect=SCRw/SCRh
+310 IF aspect>w/h THEN LET nw=h*aspect: DEC xmin,ABS(w-nw)/2: INC xmax,ABS(w-nw)/2 ELSE LET nh=w*aspect: DEC ymin,ABS(h-nh)/2: INC ymax,ABS(h-nh)/2
+320 END PROC
+330 DEF PROC getinput
+340 OVER 1: DO 
+350 IF INKEY$="p" THEN PROC rain(2 SHL INT(RND*4)): DO: LOOP UNTIL INKEY$<>"p"
+360 IF KEYST KEY_C THEN PALETTE SHL 1,0 TO 254: WAIT SCREEN 
+370 LOOP UNTIL MOUSEBTN=1
+380 LET x1=MOUSEx: LET y1=MOUSEy
+390 LET x2=MOUSEx: LET y2=MOUSEy: RECTANGLE x1,y1 TO x2,y2 FILL ""
+400 DO : WAIT SCREEN: LOOP UNTIL MOUSEdx<>0 OR MOUSEdy<>0 OR MOUSEBTN=0
+410 RECTANGLE x1,y1 TO x2,y2 FILL "": IF MOUSEBTN<>0 THEN GO TO 390
+420 IF xmin>xmax THEN SWAP xmin,xmax
+430 IF ymin>ymax THEN SWAP ymin,ymax
+440 LET xs=(xmax-xmin)/SCRw: LET ys=(ymax-ymin)/SCRh
+450 LET xa=xmin+(xs*x1): LET xmax=xmin+(xs*x2): LET xmin=xa: LET ya=ymin+(ys*y1): LET ymax=ymin+(ys*y2): LET ymin=ya
+460 OVER 0: END PROC
+470 DEF PROC makecursor
+480 GRAPHIC NEW CURS,15,15 TRANSPARENT 0: WINDOW GRAPHIC CURS: CLS 0: INK 255: PLOT 0,7: DRAW 15,0: PLOT 7,0: DRAW 0,15: WINDOW 0: MOUSE GRAPHIC CURS POINT 7,7
+490 END PROC

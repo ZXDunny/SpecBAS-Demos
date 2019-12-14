@@ -1,0 +1,27 @@
+ZXASCII
+AUTO -1
+PROG galaxy
+10 SCREEN LOCK : DEGREES: LET numstars=25000: DIM stars(numstars,4): LET sw=SCRw/2: LET sh=SCRh/2
+20 LET arms=4: LET spread=40: LET rot=2: LET range=100
+30 FOR i=1 TO numstars
+40 LET c=RND: IF c>0.9 THEN LET clr=2 ELSE IF c>0.7 THEN LET clr=6 ELSE IF c>0.5 THEN LET clr=1 ELSE LET clr=7
+50 LET angle=INT(FLOOR(i*1/(numstars/arms)))*(360/arms)
+60 IF RND>.5 THEN LET multi=(RND*.9)+.1 ELSE LET multi=RND+1
+70 LET dist=(RND*range)*((RND*RND*multi)+1)
+80 LET turb=RND*spread
+90 IF RND>.5 THEN LET turb=-turb
+100 LET lum=RND: IF dist>=range/2*lum THEN GO TO 120 ELSE IF lum>.75 THEN LET clr=7 ELSE IF lum>0.5 THEN LET clr=6 ELSE LET clr=2
+110 GO TO 130
+120 IF lum>0.75 THEN LET clr=1 ELSE IF lum>0.5 THEN LET clr=7
+130 LET mn=RND*RND*spread: LET mx=RND*RND*spread: LET x=dist*COS(angle+(dist*rot))+RND*(mn+mx)-mn
+140 LET mn=RND*RND*spread: LET mx=RND*RND*spread: LET z=dist*SIN(angle+(dist*rot))+RND*(mn+mx)-mn
+150 LET bulge=MIN(90,(PYTH(x,z)/(range/2)*180)/2)
+160 LET y=(COS(bulge)*((RND*(spread))-spread/2)/2)+(turb/20)
+170 LET stars(i,1)=x: LET stars(i,2)=y: LET stars(i,3)=z: LET stars(i,4)=clr
+180 NEXT i
+190 PAPER 0: INK 15: CLS 
+200 LET angle=0
+210 LET s=MAX(1+((10*SIN angle/0.3)),1): TRANSFORM3D stars() TO dst() ROTATE 0,360-(angle*4),0: PROJECT3D dst() TO pts() ROTATE angle,angle,angle SCALE s,s,s
+220 PLOT pts()
+230 INC angle,0.1,0 TO 359
+240 WAIT SCREEN : CLS: GO TO 210

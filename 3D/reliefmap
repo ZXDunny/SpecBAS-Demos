@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG reliefmap
+10 GRAPHIC new img load "demos:3d/horse.png"
+20 PAPER 0: INK 15: CLS 
+30 DIM h(scrw) base 0: mat h()=con scrh
+40 FOR y=scrh-1 TO 0 steP -2:
+    FOR x=0 TO scrw-1:
+       y1=y-(gpoint(img,x,y)/2): 
+       IF y1<=h(x) THEN 
+          h(x)=y1:
+          PLOT x,y1:
+90    NEXT x:
+ NEXT y

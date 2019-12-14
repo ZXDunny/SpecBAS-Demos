@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG fakecopper
+10 REM Fake copper effects
+30 screen lock:CLS 0: degrees
+40 numofbars=15,bs=32,numofstars=1000,sh=(scrh/2)-(bs/2),sc=bs/15,swc=scrh/400
+45 a=255: FOR f=1 TO bs: PALETTE f,a,a,a: a-=255/bs: NEXT f
+50 DIM s(numofstars,3),i=bs*.75,bs*.5,bs*.125: FOR f=1 TO numofstars: s(f,1)=RND*SCRw,s(f,2)=RND*SCRh,s(f,3)=RND*2+1: NEXT f
+60 CLS 0: FOR t=1 TO numofstars: PLOT INK i(s(t,3));s(t,1),s(t,2): s(t,1)-=s(t,3):if s(t,1)<0 then s(t,1)=scrw,s(t,2)=rnd*Scrh,s(t,3)=rnd*2+1
+70 next t
+80 for b=1 to numofbars: by=sh+sin(a+(b*10*swc))*50*swc:yy=by:for c=bs to 1 step -2: draw ink c;0,yy to scrw,yy:yy+=1:next c:for c=1 to bs step 2:draw ink c;0,yy to scrw,yy:yy+=1: next c:next b:a+=4
+90 WAIT SCREEN: GO To 60

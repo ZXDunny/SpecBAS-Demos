@@ -1,0 +1,48 @@
+ZXASCII
+AUTO -1
+PROG demos:games/3dmazeii
+CHANGED FALSE
+10 REM 3D Maze II - based on code by Lode Vandevenne
+20 DEGREES: SCREEN LOCK: GO SUB 390
+30 LET mw=91,mh=51: DIM mp(mw,mh) BASE 0: GO SUB 330
+40 LET px,py=1.5,rs=2,ms=.06,omx,omy,os,oh1,oh2=0,pla=IIF(mp(px+1,py)=0,0.001,90.001),mmw=13,mmh=13
+50 REM Engine
+60 RECTANGLE INK 5;0,0 TO SCRw-1,SCRh/2 FILL : RECTANGLE INK 6;0,SCRh/2 TO SCRw-1,SCRh-1 FILL
+70 FOR x=0 TO SCRw-1
+80 LET dx=COS pla,dy=SIN pla
+90 LET cx=2*x/SCRw-1,rx=px,ry=py,rdx=dx-dy*cx,rdy=dy+dx*cx,mx=INT rx,my=INT ry,ddx=SQR(1+(rdy*rdy)/(rdx*rdx)),ddy=SQR(1+(rdx*rdx)/(rdy*rdy))
+100 IF rdx<0 THEN LET stx=-1,sdx=(rx-mx)*ddx ELSE LET stx=1,sdx=(mx+1-rx)*ddx
+110 IF rdy<0 THEN LET sty=-1,sdy=(ry-my)*ddy ELSE LET sty=1,sdy=(my+1-ry)*ddy
+120 IF sdx<sdy THEN INC sdx,ddx: INC mx,stx: LET s=0 ELSE INC sdy,ddy: INC my,sty: LET s=1
+130 IF mx=mw THEN DRAW INK 0;x,oh1 TO x,oh2: LET oh1,oh2=SCRh/2: GO TO 210
+140 IF mp(mx,my)=0 THEN GO TO 120
+150 REM Hit a wall - which?
+160 IF s=0 THEN LET pwd=ABS((mx-rx+(1-stx)/2)/rdx): INC s,2*(rdx<0) ELSE LET pwd=ABS((my-ry+(1-sty)/2)/rdy): INC s,2*(rdy<0)
+170 LET ht=ABS(INT(SCRh/pwd)),h1=MAX(-ht/2+SCRh/2,0),h2=MIN(ht/2+SCRh/2,SCRh-1)
+180 REM Render the ray
+190 LET h=MAX(h1,oh1),j=MAX(h2,oh2): DRAW INK (s+1)*(((omx=mx OR omy=my) AND (os=s)) OR x=0);x,h TO x,j: IF h1<>0 AND x<>0 THEN DRAW INK 0;x,h1 TO x,oh1: DRAW INK 0;x,h2 TO x,oh2
+200 LET omx=mx,omy=my,os=s,oh1=h1*(x<SCRw-1),oh2=IIF(x=SCRw-1,SCRh,h2)
+210 NEXT x
+220 REM Minimap
+230 LET ax=MIN(MAX(0,INT px-INT(mmw/2)),mw-(mmw+1)),ay=MIN(MAX(0,INT py-INT(mmh/2)),mh-(mmh+1)): FOR fx=ax TO MIN(ax+mmw,mw-1): FOR fy=ay TO MIN(ay+mmh,mh-1): PRINT AT fy-ay+1,fx-ax+1;INK 7;PAPER 8*(fx=INT px AND fy=INT py);CHR$(mp(fx,fy)+32): NEXT fy: NEXT fx: LET qx=12+INT(px-ax)*8,qy=12+INT(py-ay)*8: DRAW INK 9;qx,qy TO qx+(dx*8),qy+(dy*8)
+240 DO : WAIT SCREEN: LOOP UNTIL INKEY$<>""
+250 IF px>=mw-.4 THEN GO TO 420
+260 REM Movement
+270 IF KEYST KEY_RIGHT THEN INC pla,rs
+280 IF KEYST KEY_LEFT THEN DEC pla,rs
+290 IF KEYST KEY_UP THEN INC px,IIF(mp(px+dx*2*ms,py)=0,dx*ms,0): INC py,IIF(mp(px,py+dy*2*ms)=0,dy*ms,0)
+300 IF KEYST KEY_DOWN THEN INC px,IIF(mp(px-dx*2*ms,py)=0,-dx*ms,0): INC py,IIF(mp(px,py-dy*2*ms)=0,-dy*ms,0)
+310 CLS : GO TO 60
+320 REM Generate maze
+330 LET m$="1"*mw*mh: LET b$="1"*mw+(("1"+(" "*(mw-2))+"1")*(mh-2))+("1"*mw): LET cc=mw+2: DIM of=-1,-mw,1,mw: LET m$(cc)="0": LET stk$=QCHR$ cc: DIM nb(4)
+340 LET nn=0: FOR n=1 TO 4: IF b$(cc+of(n))<>"1" THEN IF m$(cc+(of(n)*2))<>"0" THEN INC nn: LET nb(nn)=n
+350 NEXT n
+360 IF nn>0 THEN LET o=of(nb(INT(RND*nn)+1)): LET m$(cc+o)="0": LET m$(cc+(o*2))="0": LET stk$=(QCHR$(cc) AND nn>1)+stk$: INC cc,o*2: GO TO 340
+370 IF stk$<>"" THEN LET cc=QCODE stk$: LET stk$=stk$(5 TO): GO TO 340
+380 FOR n=0 TO LEN m$-1: LET mp(n MOD mw,n DIV mw)=VAL m$(n+1)*208: NEXT N: LET mp(mw-1,mh-2)=0: RETURN
+390 REM Set up palette
+400 PALETTE 3,128,80,0: PALETTE 1,192,128,0: PALETTE 2,80,80,0: PALETTE 4,192,192,0: PALETTE 6,0,128,0: PALETTE 8,255,0,0
+410 RETURN
+420 REM Win!
+430 PRINT TRANSPARENT 1;SCALE 5,5;CENTRE 17;"CONGRATULATIONS!"'SCALE 3,3;CENTRE 25;"Play again? (Y/N)"
+440 DO : WAIT SCREEN: LET a$=LOW$ INKEY$: LOOP UNTIL a$ IN ["y","n"]: IF a$="y" THEN RUN

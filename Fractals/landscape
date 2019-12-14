@@ -1,0 +1,76 @@
+ZXASCII
+AUTO -1
+PROG landscape
+10 REM Terrain Generator
+20 LET dy=400,nt=470: GO SUB 1000: GO TO 200
+30 LET n,p=0: IF x>=s AND y>=s THEN INC n,l(x-s,y-s): INC p
+40 IF x+s<=mx AND y>s THEN INC n,l(x+s,y-s): INC p
+50 IF x+s<=mx AND y+s<=mx THEN INC n,l(x+s,y+s): INC p
+60 IF x>=s AND y+s<=mx THEN INC n,l(x-s,y+s): INC p
+70 LET l(x,y)=(n/p)+o: RETURN 
+80 LET n,p=0: IF y>=s THEN INC n,l(x,y-s): INC p
+90 IF x+s<=mx THEN INC n,l(x+s,y): INC p
+100 IF y+s<=mx THEN INC n,l(x,y+s): INC p
+110 IF x>=s THEN INC n,l(x-s,y): INC p
+120 LET l(x,y)=(n/p)+o: RETURN 
+130 DEF PROC divide(d)
+140 IF d<2 THEN EXIT PROC 
+150 LET s=d/2: LET scl=roughness*d
+160 FOR y=s TO mx STEP d: FOR x=s TO mx STEP d: LET o=(RND*scl*2)-scl: GO SUB 30: INC pct: NEXT x: NEXT y
+170 FOR y=0 TO mx STEP s: FOR x=(y+s) MOD d TO mx STEP d: LET o=RND*scl*2-scl: GO SUB 80: INC pct: NEXT x: NEXT y
+180 PROC divide(s)
+190 END PROC
+200 LET detail=9: LET roughness=0.8: LET water=0.3: LET d$="d"
+210 PALETTE DEFAULT: CLS: IF LOW$ d$(1)="d" THEN LET paltype=dy ELSE LET paltype=nt
+220 LET sz=(2^detail)+1: LET mx=sz-1: DIM l(sz,sz) BASE 0: DIM n(4)
+230 LET l(0,0)=RND*mx: LET l(mx,mx)=RND*mx/12: LET l(mx,0)=RND*mx/2: LET l(0,mx)=RND*mx/2
+240 LET pct=0: LET mxp=sz*sz
+250 ON EVERY 10 RECTANGLE INK 2;50,SCRh/2-16 TO 50+((pct/mxp)*(SCRw-100)),SCRh/2+16 FILL : RECTANGLE INK 0;50,SCRh/2-16 TO SCRw-50,SCRh/2+16
+260 PROC divide(mx)
+270 LET pct=mxp: PAUSE 10: CLS 0: ON EVERY OFF: MENU HIDE: ON MENU HIDE OFF
+280 CLS 0
+290 REM Draw the landscape
+300 GO SUB paltype
+310 LET mxp=0: LET mn=9999: FOR x=0 TO mx: FOR y=0 TO mx: LET mn=MIN(l(x,y),mn),mxp=MAX(l(x,y),mxp): NEXT y: NEXT x: DEC mxp,mn: LET wl=mxp*water
+320 FOR x=0 TO mx: FOR y=0 TO mx: DEC l(x,y),mn: NEXT y: NEXT x
+330 LET ty=mx,tx=0,z=wl: GO SUB 390: IF paltype=dy THEN RECTANGLE INK 68;0,ry TO SCRw,SCRh FILL ELSE FOR f=1 TO 255: PLOT INK RND*255;RND*SCRw,RND*ry: NEXT f
+340 LET m=mx-1: FOR y=0 TO m: FOR x=0 TO m: LET tx=x,ty=y,z=MAX(wl,l(x,y)): GO SUB 390: LET tlx=rx,tly=ry,tx=x+1,ty=y+1,z=wl*0.75: GO SUB 390: LET brx=rx+(x/mx)+(y/mx),bry=ry
+350 GO SUB getpx
+360 RECTANGLE INK i;OVER o;tlx,tly TO brx,bry FILL 
+370 NEXT x: NEXT y
+380 GO TO 1020
+390 LET px=0.5*(sz+tx-ty),py=0.5*(tx+ty),x0=SCRw*0.5,y0=SCRh*0.5,z=sz*0.5-z+py*0.75,x1=(px-sz*0.5)*6,y1=(sz-py)*0.010+1,rx=x0+x1/y1,ry=y0+z/y1: RETURN 
+400 REM Set up daytime palette
+410 RESTORE 430: FOR f=0 TO 3: READ r1,g1,b1,r2,g2,b2: PALETTE f*64,r1,g1,b1: PALETTE (f*64)+63,r2,g2,b2: RAINBOW f*64 TO (f*64)+63: NEXT f: LET getpx=510
+420 PALETTE 0,55,64,128: RETURN 
+430 DATA 0,0,128,31,95,175
+440 DATA 0,14,0,40,127,40
+450 DATA 32,16,0,159,143,127
+460 DATA 32,32,32,159,159,159
+470 REM Set up nighttime palette
+480 FOR f=0 TO 255: PALETTE f,f,f,f: NEXT f: PALETTE 255,64,64,64: LET getpx=550
+490 RETURN 
+500 REM Get daytime colour
+510 LET o=0: LET b=IIF(l(x,y)<=wl,0,(INT(((l(x,y)-wl)/(mxp-wl))*3)+1)*64)
+520 LET i=192+(8*(x=m)): IF y<>m AND x<>m THEN LET i=MIN(MAX(b,b+(5+(l(x+1,y)-l(x,y)))*3),b+63): IF l(x,y)>wl*1.1 AND b<192 THEN LET h=FRAC((l(x,y)-wl)/(mxp-wl)*3): LET n=RND/1.5: IF n<h-.25 THEN INC i,64: END IF: ELSE INC i,2
+530 RETURN 
+540 REM Get Nighttime colour
+550 LET o=7*(y<>m AND x<>m): LET i=16+(16*(y=m)): IF x<m AND y<m THEN LET i=MIN(254,MAX(0,((l(x+1,y)-l(x,y))*50)+128)): IF l(x,y)<=wl THEN LET i=(384+i)/7
+560 RETURN 
+630 REM rotate
+640 DIM n(sz,sz) BASE 0: FOR x=0 TO mx: FOR y=0 TO mx: LET n(x,y)=l(sz-y-1,x): NEXT y: NEXT x: MAT l()=n(): GO TO 280
+1000 REM set up menu
+1010 MENU NEW mnu,"Landscape": MENU NEW sbm,"New","-","Rotate","Day","Night","-","Exit": MENU NEW ssb,"Day","Night": MENU ADD MENU mnu,1,sbm: MENU ADD MENU sbm,1,ssb: RETURN 
+1020 MENU mnu
+1030 ON MENU HIDE GO SUB 2000
+1040 WAIT SCREEN : GO TO 1040
+2000 IF LASTMI=0 THEN RETURN 
+2010 CASE LASTMI
+2020 WHEN 1: LET d$="d": LET b=POPLINE: GO TO 210
+2030 WHEN 2: LET d$="n": LET b=POPLINE: GO TO 210
+2040 WHEN 3: GO TO 630
+2050 WHEN 4: LET paltype=dy: LET b=POPLINE: GO TO 280
+2060 WHEN 5: LET paltype=nt: LET b=POPLINE: GO TO 280
+2070 WHEN 7: STOP 
+2080 END CASE
+2090 RETURN 

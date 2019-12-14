@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG mastermind
+10 REM Bulls + Cows
+20 gs=1: n$="0123456789",s$="": FOR f=1 TO 4: e=INT(RND*LEN n$)+1,s$=s$+n$(e),n$=n$( TO e-1)+n$(e+1 TO): NEXT f: IF s$(1)="0" THEN s$=s$(2 TO)+s$(1): END IF
+30 PRINT "Guess a four-digit number (no repeating digits)."
+40 INPUT "(0 quits) Enter your guess: ";ERROR REPEAT; FORMAT "####";g: g$=STR$(g),g$="0000"( TO 4-LEN g$)+g$: PRINT "You guessed: ";g$: IF g=0 THEN PRINT "Goodbye!": STOP ELSE IF LEN STR$ g<>4 THEN PRINT "Must be a four-digit number.": GO TO 40 ELSE IF g$=s$ THEN PRINT "You won after ";gs;IIF$(gs=1," guess!"," guesses!"): STOP 
+50 b=0,c=0,n$="0123456789": FOR f=1 TO 4: e=POS(g$(f),n$): IF e<1 THEN PRINT "Digits must not repeat in guess.": GO TO 40 ELSE n$=n$( TO e-1)+n$(e+1 TO)
+60 d=b,b+=(s$(f)=g$(f)),c+=(g$(f) IN s$) AND d=b: NEXT f: PRINT "You got ";b;" bulls and ";c;" cows.": GO TO 40

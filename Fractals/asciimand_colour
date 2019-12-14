@@ -1,0 +1,4 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/asciimand_colour
+1FOR y=-29TO 30;x=-10TO 89:m,r=0:FOR k=0TO 224:j=r^2-m^2-2+x/25,m=2*r*m+y/25,r=j,l=k,k=IIF(j^2+m^2>11,225,k):NEXT k:?INK l;"ð";:NEXT x;y

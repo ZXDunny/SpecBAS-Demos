@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG curiosity
+10 FOR f=0 TO 255: PALETTE f,f,f,f: NEXT f
+20 DEGREES: LET ang=0: LET sw=SCRw/2: LET sh=SCRh/2
+30 LET cs=COS(ang)*ABS(SIN(ang))*128
+40 LET ss=SIN(ang)*ABS(SIN(ang))*128
+50 FOR y=-sh TO sh-1 STEP FONTh: FOR x=-sw TO sw-1 STEP FONTw: TEXT INK ABS(((x*cs-y*ss) | (y*cs+x*ss))/256);MOVE x+sw,y+sh;"ð": NEXT x: NEXT y
+60 INC ang,0.8
+70 WAIT SCREEN : GO TO 30

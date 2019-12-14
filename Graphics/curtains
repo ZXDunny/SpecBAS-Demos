@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG curtains
+10 WINDOW DEPTH 0,32: DIM a(4): LET sz=SCRw*SCRh*4
+20 DEF FN r(m,n)=m+(RND*(n-m))
+30 LET a(1)=122: FOR i=2 TO 4: LET a(i)=(FN r(1,99)/100)^2: NEXT i
+40 LET c$="": FOR x=0 TO SCRw-1: LET c$=c$+QCHR$ RGBtoINT(a(1)+a(1)*SIN(a(2)*x),a(1)+a(1)*SIN(a(3)*x),a(1)+a(1)*SIN(a(4)*x)): NEXT x
+50 DO : LET c$=c$+c$: LOOP UNTIL LEN c$>=sz
+60 POKE$ 0,0,c$( TO sz)
+70 PAUSE 10: GO TO 30

@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG Sir Pinski
+10 REM Ugly Sir Pinski
+20 DIM p(480): DIM c(480): LET sc=3
+30 CLS : FOR i=1 TO 479: LET p(i)=1: LET c(i)=0: NEXT i
+40 FOR n=2 TO 479: FOR r=2 TO n: LET v=p(r)+p(r-1): LET c(r)=v MOD sc: IF c(r)=0 THEN PLOT r,n
+50 NEXT r: FOR i=1 TO 479: LET p(i)=c(i): NEXT i: NEXT n
+60 WAIT SCREEN : PAUSE 0: INC sc: GO TO 30

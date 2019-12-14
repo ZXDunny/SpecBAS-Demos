@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG woolball
+10 s=200:
+ origin -400,-240 to 400,240:
+ plot 0,0:
+ for a=0 to 126 step .000125:
+    draw to s*sin a,s*cos a*sin(a*.95):
+ next a

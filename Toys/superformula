@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG superformula
+10 REM SuperFormula by Johan Gielis
+20 DEF FN r(a,b,m,n1,n2,n3,phi)=((ABS(COS(m*phi/4)/a)^n2)+(ABS(SIN(m*phi/4)/b)^n3))
+21 LET maxsteps=14400: DIM rp(maxsteps)
+25 LET a,b=RND*4,n1,n2,n3=RND*20,m=RND*40
+30 LET i,maxr=0: FOR t=0 TO 2*PI STEP (2*PI)/maxsteps: INC i: LET rp(i)=FN r(a,b,m,n1,n2,n3,t),maxr=MAX(rp(i),maxr): NEXT t
+100 LET theta=0,thinc=(2*PI)/maxsteps: FOR t=1 TO maxsteps: LET r=rp(t)*(200/maxr),x=400+(r*COS theta),y=240+(r*SIN theta): INC theta,thinc: IF t=1 THEN PLOT x,y ELSE DRAW TO x,y
+110 NEXT t
+120 PAUSE 0: CLS: GO TO 25

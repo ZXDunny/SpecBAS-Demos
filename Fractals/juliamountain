@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG juliamountain
+10 REM Julia Mountains
+20 PAPER 0: INK 15: WINDOW ORIGIN 0,-3.3,-2 TO 3.3,2: SCREEN LOCK 
+30 yst=.05,xst=.05,mi=16,mxp=4/xst: DIM p(mxp,2)
+40 CLS: FOR y=-2 TO 2 STEP yst: xp=1: FOR x=-2 TO 2 STEP xst
+50 n=0,d=x*x+y*y,a=x,b=y: DO WHILE d<4 AND n<mi: c=a,a=c*c-b*b+MOUSEx,b=2*c*b-MOUSEy,d=a*a+b*b,n+=1: LOOP: n-=LN ABS LN d
+60 IF n>.5 THEN p(xp,1)=x,p(xp,2)=y-n/140: xp+=1: END IF: NEXT x: IF xp>1 AND xp<=mxp THEN FOR f=xp TO mxp: p(f,1)=p(f-1,1),p(f,2)=p(f-1,2): NEXT f
+70 IF xp>1 THEN POLYGON p() OPEN: END IF: NEXT y
+80 WAIT SCREEN: GO TO 40

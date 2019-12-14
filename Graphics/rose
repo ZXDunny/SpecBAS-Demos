@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/rose
+CHANGED FALSE
+10 REM Rose
+20 DEGREES:
+	s=MIN(SCRw,SCRh)/2: 
+	FOR n=1 TO 7: 
+	   FOR d=1 TO 9
+30       g=GCD(n,d),
+							nd=d/g,
+							l=180*nd*(EVEN(n/g*nd)+1)
+40       k=n/d: 
+	      FOR a=0 TO l: 
+	         x=s*COS(k*a)*COS a,
+				      y=s*COS(k*a)*SIN a: 
+				      IF a=0 THEN 
+				         PLOT x+SCRw/2,y+SCRh/2 
+				      ELSE 
+				         DRAW TO x+SCRw/2,y+SCRh/2: 
+				      END IF: 
+	      NEXT a: 
+	      wait keydown: 
+	      CLS: 
+	   NEXT d: 
+	NEXT n

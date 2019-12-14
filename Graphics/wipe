@@ -1,0 +1,5 @@
+ZXASCII
+AUTO -1
+PROG wipe
+10 INK 4: DIM a(SCRw,2): FOR f=1 TO SCRw: LET a(f,2)=1+(RND): NEXT f
+20 FOR f=1 TO SCRw*4: LET b=INT(RND*SCRw)+1: INC a(b,1),a(b,2): FOR g=a(b,1)-a(b,2) TO a(b,1): PLOT b,g: NEXT g: NEXT f: WAIT SCREEN: FOR f=1 TO SCRw: IF a(f,1)<SCRh THEN GO TO 20 ELSE NEXT f

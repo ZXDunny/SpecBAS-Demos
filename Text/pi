@@ -1,0 +1,6 @@
+ZXASCII
+AUTO -1
+PROG pi
+10 REM Calculate PI - slow!
+20 LET i=0: LET denominator=1: LET operation=1: LET pival=0
+30 LET pival=pival+(operation*(4/denominator)): LET operation=-operation: INC denominator,2: PRINT AT 0,0;pival: INC i: GO TO 30

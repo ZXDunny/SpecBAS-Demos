@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG b&w
+10 REM Black & White
+20 LET b1=-6: LET b2=6: LET g=157: LET a=2: LET m=3
+30 FOR i=0 TO SCRw-1: FOR j=0 TO SCRh-1: LET c=(a*(SIN(b1+g*i)+SIN(b2+g*j)))/m: IF c<ROUND(c,0) THEN PLOT i,j
+40 NEXT j: NEXT i

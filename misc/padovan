@@ -1,0 +1,21 @@
+ZXASCII
+AUTO -1
+PROG padovan
+10 REM Padovan Sequence
+20 print at 0,0;paper 5;
+ " The Padovan Sequence "''paper 8;
+ "P(n) = P(n-2) + P(n-3)"'
+ " with P(1)=P(2)=P(3)=1"''
+ "The first 124 values are:"''
+30 DIM p(): p(1),p(2),p(3)=1,a$=""
+40 FOR i=1 TO 124:
+    if i>3 then
+       p(i)=p(i-2)+p(i-3)
+50    b$=str$ p(i)+", ":
+    if len(a$+b$)<txtw then
+       a$=a$+b$
+    else
+       print a$:
+       a$=b$
+60 next i:
+ print a$+" ..."

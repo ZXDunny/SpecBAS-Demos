@@ -1,0 +1,27 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/halftone1
+CHANGED FALSE
+1 PAPER 7: INK 0: CLS
+100 DIM g(8,9)
+110 RESTORE 900
+120 FOR i=1 TO 8
+130 FOR j=1 TO 9
+140 READ g(i,j)
+150 NEXT j
+160 NEXT i
+161 nsx=-scrw/2,msx=-nsx,nsy=-scrh/2,msy=-nsy
+200 FOR y=nsy TO msy STEP 3
+210 FOR x=nsx TO msx STEP 3
+220 LET i=2*(x+msx)/scrw: LET j=2*(y+msy)/scrh: LET r=SIN (i*i)+COS (j*j): LET v=0.25*(2+SIN (14*i*r)+COS (7*j*r)): LET c=int (9.999*v)
+230 FOR h=0 TO 2: FOR v=0 TO 2: PLOT INVERSE g(int(i+1),3*h+v+1)<=c;x+h+msx,y+v+msy
+290 NEXT v: NEXT h: NEXT x: NEXT y
+800 STOP
+900 DATA 4,9,6,5,1,2,8,3,7
+910 DATA 2,3,8,4,9,1,5,7,6
+920 DATA 1,4,7,6,5,8,2,3,9
+930 DATA 7,9,2,1,3,4,6,5,8
+940 DATA 8,2,3,5,9,7,6,4,1
+950 DATA 4,7,6,1,8,5,9,2,3
+960 DATA 3,9,8,1,6,2,4,5,7
+970 DATA 9,5,7,4,6,8,2,1,3

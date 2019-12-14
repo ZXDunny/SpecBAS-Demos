@@ -1,0 +1,21 @@
+ZXASCII
+AUTO -1
+PROG planets
+10 PAPER 0: CLS: 
+ do 100: 
+    PLOT INK RND*16;RND*scrw,RND*scrh: 
+ loop
+20 do 10: 
+    r=RND*100,xc=RND*scrw,yc=RND*scrh: 
+    INK RND*16: 
+    GO SUB 500: 
+ loop: 
+ PAUSE 0: RUN
+500 CIRCLE INK 0;xc,yc,r FILL "": 
+ FOR y=-r TO r: 
+    LET x1=INT(SQR(r*r-y*y)): 
+    FOR x=-x1 TO x1:  
+       IF INT(RND*x1*2)+1<x1+x THEN 
+          PLOT x+xc,y+yc
+510    NEXT x: 
+ NEXT y: RETURN

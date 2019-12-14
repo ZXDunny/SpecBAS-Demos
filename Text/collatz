@@ -1,0 +1,8 @@
+ZXASCII
+AUTO -1
+PROG collatz
+10 REM The Collatz Conjecture
+20 LET s=1
+30 LET n=s: PRINT INK 2;n;" ";
+40 LET n=IIF(EVEN n,n/2,(n*3)+1): IF n<>1 THEN PRINT n;",";: GO TO 40
+50 PRINT n: INC s: PAUSE 0: CLS: GO TO 30

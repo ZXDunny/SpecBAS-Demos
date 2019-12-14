@@ -1,0 +1,5 @@
+ZXASCII
+AUTO -1
+PROG heptagram
+10 REM Heptagram
+20 ORIGIN -1.6,-1 TO 1.6,1:t=0: DO:a=t: PLOT COS a,SIN a: DO 8:x=COS a,y=SIN a: DRAW TO x,y:a+=2.692: LOOP:t+=.02: PAUSE 2: CLS: LOOP 

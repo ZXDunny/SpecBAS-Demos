@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG weaves
+10 degrees: s=scrw/scrh:
+ WINDOW ORIGIN 0,-s,-1 TO s,1:
+20 a,b=rnd*4:
+30 cls:
+ for i=0 to 360:
+    draw cos i,sin i
+         to
+         cos(a*i),sin(b*i):
+40 next i:
+ pause 0:
+ do while inkey$<>"":loop:
+ go to 20

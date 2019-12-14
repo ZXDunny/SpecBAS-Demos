@@ -1,0 +1,4 @@
+ZXASCII
+AUTO -1
+PROG tiles
+10 b1=INT(RND*6)+6*-1,b2=INT(RND*9)+12*-1,sc=1,g=INT(RND*260)+60,a=INT(RND*7)+4,m=INT(RND*4)+4: FOR i=0 TO SCRw-1;j=0 TO SCRh-1: x=b1+(g*i),y=b2+(g*j),z=a*(SIN x+SIN y),c=INT z: IF c MOD m=0 THEN PLOT i,j: END IF: NEXT j;i: PAUSE 0: RUN 

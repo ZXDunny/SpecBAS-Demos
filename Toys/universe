@@ -1,0 +1,41 @@
+ZXASCII
+AUTO -1
+PROG universe
+10 REM "MU" Model Universe
+20 REM (C) W.R.Masefield 1983
+30 REM Enhanced by ZXDunny 2012
+40 GO TO 300
+50 CLS: PRINT "MODEL UNIVERSE": PRINT 
+60 INPUT "First Body: Mass? ";m1,"Velocity? ";v1,"Angle? ";a1,"X Coord? ";x1,"Y Coord? ";y1,"Second body: Mass? ";m2,"Velocity? ";v2,"Angle? ";a2,"X Coord? ";x2,"Y Coord? ";y2,"Gravitational Constant? ";g: CLS 
+70 IF INKEY$<>"" THEN GO TO 70
+80 CLS: PRINT "MODEL UNIVERSE": PRINT: PRINT "M1=";m1'"V1=";v1'"A1=";a1'"X1=";x1'"Y1=";y1''"M2=";m2'"V2=";v2'"A2=";a2'"X2=";x2'"Y2=";y2'" G=";g
+90 LET dt=0.1: LET a1=a1*PI/180: LET a2=a2*PI/180
+100 CIRCLE x1,SCRh-y1,2: CIRCLE x2,SCRh-y2,2
+110 LET v1x=v1*COS a1: LET v2x=v2*COS a2
+120 LET v1y=v1*SIN a1: LET v2y=v2*SIN a2
+130 REM processing
+140 LET x21=x2-x1: LET y21=y2-y1: LET fg=g*m1*m2/(POWERTWO x21+POWERTWO y21)
+150 IF x2=x1 THEN LET phi=PI/2: GO TO 170
+160 LET phi=ATN ABS(y21/x21)
+170 LET f1x=fg*COS phi*SGN x21: LET f2x=-f1x
+180 LET f1y=fg*SIN phi*SGN y21: LET f2y=-f1y
+190 LET a1x=f1x/m1: LET a2x=f2x/m2
+200 LET s1x=v1x*dt+a1x*dt*dt/2: LET s2x=v2x*dt+a2x*dt*dt/2
+210 LET v1x=v1x+a1x*dt: LET v2x=v2x+a2x*dt
+220 LET a1y=f1y/m1: LET a2y=f2y/m2
+230 LET s1y=v1y*dt+a1y*POWERTWO dt/2: LET s2y=v2y*dt+a2y*POWERTWO dt/2
+240 LET v1y=v1y+a1y*dt: LET v2y=v2y+a2y*dt
+250 REM plot
+260 PLOT x1,SCRh-y1: DRAW s1x,-s1y: PLOT x2,SCRh-y2: DRAW s2x,-s2y
+270 LET x1=x1+s1x: LET x2=x2+s2x
+280 LET y1=y1+s1y: LET y2=y2+s2y
+290 WAIT SCREEN: IF INKEY$="" THEN GO TO 130
+300 REM Main Menu
+310 CLS: LET mnu=MENUBOX("A Model Universe","Small mass orbiting large mass","Small mass approaching large mass","Binary stars","Earth moon","Anti-gravity","Custom")
+320 IF mnu=-1 THEN STOP 
+330 IF mnu=1 THEN LET m1=1000: LET v1=0: LET a1=0: LET x1=SCRw/2: LET y1=SCRh/2: LET m2=1: LET v2=14.142: LET a2=0: LET x2=SCRw/2: LET y2=y1+50: LET g=10: GO TO 70
+340 IF mnu=2 THEN LET m1=100: LET v1=0: LET a1=0: LET x1=SCRw/2+55: LET y1=SCRh/2: LET m2=10: LET v2=2.5: LET a2=0: LET x2=x1-110: LET y2=y1+52: LET g=10: GO TO 70
+350 IF mnu=3 THEN LET m1=100: LET v1=1.49: LET a1=0: LET x1=SCRw/2: LET y1=SCRh/2+35: LET m2=50: LET v2=2.98: LET a2=180: LET x2=SCRw/2: LET y2=y1-70: LET g=10: GO TO 70
+360 IF mnu=4 THEN LET m1=100: LET v1=12.16: LET a1=0: LET x1=20: LET y1=SCRh/2+25: LET m2=600: LET v2=0.33: LET a2=0: LET x2=20: LET y2=y1-50: LET g=10: GO TO 70
+370 IF mnu=5 THEN LET m1=100: LET v1=4: LET a1=-45: LET x1=SCRw/2-70: LET y1=SCRh/2+60: LET m2=100: LET v2=4: LET a2=135: LET x2=x1+140: LET y2=y1-120: LET g=-7: GO TO 70
+380 IF mnu=6 THEN GO TO 50

@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG star chaser
+10 REM Star mouse chaser
+20 np=20: DIM x(np),y(np): FOR i=1 TO np: x(np)=SCRw,y(np)=SCRh: NEXT i: tw=0
+30 PAPER 0: INK 14: CLS: SCREEN LOCK 
+40 mx=MOUSEx,my=MOUSEy
+50 FOR i=1 TO np: tw+=1
+60 IF i=1 THEN dx=mx-x(i),dy=my-y(i),v=4 ELSE dx=x(i-1)-x(i),dy=y(i-1)-y(i),v=.6*v+.2*3*(2-i/np)
+70 r=SQR(dx^2+dy^2),dxn=dx/r,dyn=dy/r,x(i)=x(i)+v*dxn,y(i)=y(i)+v*dyn
+80 sp=(np+1-i)*2+3,s=5*(50^(1/np))^(np+1-i),t=x(i)+s*COS tw,u=y(i)+s*SIN tw,b=0
+90 FOR j=1 TO sp: b+=INT(sp/2)*TAU/sp,v1=x(i)+s*COS(b+tw),w=y(i)+s*SIN(b+tw): DRAW t,u TO v1,w: t=v1,u=w: NEXT j
+100 NEXT i: WAIT SCREEN: CLS: GO TO 40

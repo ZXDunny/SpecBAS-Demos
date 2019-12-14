@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG squares game
+10 REM Squares game
+20 SCREEN LOCK : DIM b(10,10) BASE 0: FOR a=0 TO 9: FOR b=0 TO 9: LET b(a,b)=INT(RND*2)+1: NEXT b: NEXT a
+30 LET c=0,sz=MIN(SCRw,SCRh)/12,bx=(SCRw-(sz*10))/2,by=(SCRh-(sz*10))/2,bw=bx+10*sz,bh=by+10*sz: CLS: FOR a=0 TO 9: FOR b=0 TO 9: RECTANGLE INK b(a,b);bx+a*sz,by+b*sz,sz-1,sz-1 FILL: INC c,b(a,b)<>8: NEXT b: NEXT a: GO SUB 140
+40 GO SUB 50: IF mx IN [bx TO bw] AND my IN [by TO bh] THEN GO TO 70 ELSE GO SUB 60: GO TO 40
+50 DO : WAIT SCREEN: LOOP UNTIL MOUSEBTN<>0: LET mx=MOUSEx,my=MOUSEy: RETURN 
+60 DO : WAIT SCREEN: LOOP UNTIL MOUSEBTN=0: RETURN 
+70 LET r=INT((my-by)/sz),c=INT((mx-bx)/sz),sx=bx+c*sz,sy=by+r*sz: RECTANGLE INK 6;sx,sy,sz-1,sz-1
+80 GO SUB 60: GO SUB 50: GO SUB 60: IF mx IN [sx TO sx+sz] AND my IN [sy TO sy+sz] THEN GO TO 30
+90 LET nr=INT((my-by)/sz),nc=INT((mx-bx)/sz): IF (nr<>r AND nc<>c) OR ABS(nr-r)>1 OR ABS(nc-c)>1 OR b(nc,nr)<>b(c,r) THEN GO TO 80
+100 IF c-nc=1 THEN WINDOW GRAB a$,0,0,sy,sx,sz: FOR f=1 TO sz STEP 3: WINDOW PUT a$,0,f,sy: WAIT SCREEN: NEXT f: FOR a=c TO 1: LET b(a,r)=b(a-1,r): NEXT a: LET b(0,r)=8: GO TO 30
+110 IF c-nc=-1 THEN WINDOW GRAB a$,0,sx+sz,sy,bw-sx,sz: FOR f=sz-1 TO 0 STEP -3: WINDOW PUT a$,0,sx+f,sy: WAIT SCREEN: NEXT f: FOR a=c TO 8: LET b(a,r)=b(a+1,r): NEXT a: LET b(9,r)=8: GO TO 30
+120 IF r-nr=-1 THEN WINDOW GRAB a$,0,sx,sy+sz,sz,bh-sy-sz+3: FOR f=sz-1 TO 0 STEP -3: WINDOW PUT a$,0,sx,sy+f: WAIT SCREEN: NEXT f: FOR a=r TO 8: LET b(c,a)=b(c,a+1): NEXT a: LET b(c,9)=8: GO TO 30
+130 IF r-nr=1 THEN WINDOW GRAB a$,0,sx,by-3,sz,sy-sz: FOR f=by TO by+sz-1 STEP 3: WINDOW PUT a$,0,sx,f: WAIT SCREEN: NEXT f: FOR a=r TO 1: LET b(c,a)=b(c,a-1): NEXT a: LET b(c,0)=8: GO TO 30
+140 PRINT SCALE 1,2;CENTRE 1;"SQUARE ELIMINATION: Click on two adjacent squares to merge them";CENTRE (SCRh/FONTh)-4;c;" Squares remaining": RETURN 

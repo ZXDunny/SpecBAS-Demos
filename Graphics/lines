@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG lines
+10 DEF FN rn(low,high)=INT((high-low+1)*RND+low)
+20 OPTION "base",0: CLS 0
+30 DIM x(4),y(4),dx(4),dy(4),dr=3,-3
+40 LET d=8+RND*10
+50 FOR i=0 TO 2 STEP 2
+60 LET x(i),x(i+1)=RND*SCRw,y(i),y(i+1)=RND*SCRh
+70 LET j=FN rn(0,1): LET k=FN rn(0,d-1): LET dx(i)=dr(j)-k
+80 LET j=FN rn(0,1): LET k=FN rn(0,d-1): LET dy(i)=dr(j)-k
+90 LET j=FN rn(0,1): LET k=FN rn(0,d-1): LET dx(i+1)=dr(j)-k
+100 LET j=FN rn(0,1): LET k=FN rn(0,d-1): LET dy(i+1)=dr(j)-k
+110 NEXT i
+120 FOR n=1 TO 50+RND*100
+130 IF n MOD 20=0 THEN INK RND*255
+140 FOR i=0 TO 2 STEP 2
+150 INC x(i),dx(i): INC y(i),dy(i): INC x(i+1),dx(i+1): INC y(i+1),dy(i+1)
+160 IF x(i)<=50 OR x(i)>=SCRw-50 THEN LET dx(i)=-dx(i)
+170 IF y(i)<=50 OR y(i)>=SCRh-50 THEN LET dy(i)=-dy(i)
+180 IF x(i+1)<=50 OR x(i+1)>=SCRw-50 THEN LET dx(i+1)=-dx(i+1)
+190 IF y(i+1)<=50 OR y(i+1)>=SCRh-50 THEN LET dy(i+1)=-dy(i+1)
+200 DRAW x(i),y(i) TO x(i+1),y(i+1): DRAW SCRw-x(i),SCRh-y(i) TO SCRw-x(i+1),SCRh-y(i+1): DRAW x(i),SCRh-y(i) TO x(i+1),SCRh-y(i+1): DRAW SCRw-x(i),y(i) TO SCRw-x(i+1),y(i+1)
+210 NEXT i
+220 NEXT n
+230 PAUSE 0: RUN 

@@ -1,0 +1,19 @@
+ZXASCII
+AUTO -1
+PROG hat
+10 PAPER 5: INK 0: CLS
+20 P=scrw/2,Q=scrh/2,XP=144^2,XR=1.5*PI,
+ YP=56,ZP=64
+30 FOR A=-ZP TO ZP-1 step .99:
+    ZT=A*2.25,
+    XL=.5+SQR(XP-ZT*ZT):
+    FOR B=-XL TO XL:
+       XT=SQR (B*B+ZT*ZT)*.03,
+       YY=(SIN XT+.4*SIN(3*XT))*YP,
+       X=(B+A)+P,
+       Y=-(YY-A)+Q:
+       PLOT X,Y:
+       draw ink 6;X,Y+1 to X,scrh:
+    NEXT B
+40 NEXT A:
+ fill ink getopt "CPAPER";scrw/2,scrh-1

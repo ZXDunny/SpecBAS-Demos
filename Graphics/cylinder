@@ -1,0 +1,31 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/cylinder
+CHANGED FALSE
+10 REM Sky Cylinder
+20 degrees:
+	GRAPHIC NEW s LOAD "sky.png": 
+	PALETTE COPY s,0,256 TO 0: 
+	gw=GFXw s,gh=GFXh s: 
+	WINDOW NEW sky,0,0,gw,gh: 
+	WINDOW HIDE sky: 
+	WINDOW PUT GRAPHIC s,sky,0,0: 
+	WINDOW 0
+30 fov=90,hw=SCRw/2,hh=SCRh/2,unit=hw/TAN(fov*.5): 
+	DIM ao(SCRw) BASE 0;ch(SCRw) BASE 0
+40 FOR x=0 TO hw-1: 
+	   ao(hw+x)=ATN(x/unit),
+				ao(hw-1-x)=-ao(hw+x),
+				ch(hw+x)=SCRh/COS ao(hw+x),
+				ch(hw-1-x)=ch(hw+x): 
+	NEXT x
+50 va=180: 
+	DO: 
+	   va+=1: 
+				FOR x=0 TO SCRw-1: 
+				   th=ch(x),th2=th/2,u=0: 
+							u+=va+ao(x):
+							WINDOW COPY sky,((u mod 360)/360)*gw,0,1,gh TO 0,x,hh-th2,1,hh+th2: 
+				NEXT x: 
+				WAIT SCREEN: 
+	LOOP

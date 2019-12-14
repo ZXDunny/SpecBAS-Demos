@@ -1,0 +1,24 @@
+ZXASCII
+AUTO -1
+PROG snake_demo
+10 rem Snake test
+20 degrees
+30 ns=50: DIM s(ns,2): d=10,da=0,sp=1:
+ for f=1 to ns:
+    s(f,1)=Mousex,s(f,2)=mousey:
+ next f
+40 FOR f=1 TO ns:
+    CIRCLE INK 1+(2*(f=1));s(f,1),s(f,2),d FILL:
+ NEXT f
+50 sp=(int pyth(mousex-s(1,1),mousey-s(1,2)))/10,
+ dx=sp*sin da,dy=sp*cos da,
+ s(1,1)+=dx,s(1,2)+=dy:
+ for f=2 to ns:
+    a=polar(s(f-1,2)-s(f,2),s(f-1,1)-s(f,1)),
+    sd=pyth(s(f-1,1)-s(f,1),s(f-1,2)-s(f,2)),
+    s(f,1)+=sin a*(sd-d*2),
+    s(f,2)+=cos a*(sd-d*2):
+ next f
+60 a=(POLAR(MOUSEy-s(1,2),MOUSEx-s(1,1))-da) MOD 360: a+=360*(a<0)
+70 IF a<180 THEN da+=MAX(3,a) ELSE da-=MAX(3,360-a)
+80 YIELD: WAIT SCREEN: CLS: GO TO 40

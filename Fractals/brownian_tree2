@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG brownian_tree2
+10 PAPER 0: INK 4: CLS:
+ def fn r(s)=1+(rnd*(s-2))
+20 PLOT scrw/2,scrh/2
+30 x=fn r(scrw),y=fn r(scrh)
+40 IF POINT(x-1,y-1)+point(x,y-1)+
+    point(x+1,y-1)+point(x-1,y)+
+    point(x+1,y)+point(x-1,y+1)+
+    point(x,y+1)+point(x+1,y+1)>0 THEN
+       plot x,y:
+       go to 30
+50 x,y+=RND*2-1:
+ go to 40-(10*(x<1 OR x>=scrw-1 OR y<1 OR y>scrh-1))

@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG menudemo
+10 REM Silly menu demo
+20 LET c$="": FOR f=0 TO 7: LET c$=c$+#16+QCHR$ RGB f+"ð": NEXT f
+30 MENU NEW m,"File","Edit","Search","Tools","Help": MENU NEW n,"New","-","Load","Save","-","Exit": MENU NEW s,c$,"another sub","yet more sub!"
+40 MENU ADD MENU m,1,n: MENU ADD MENU n,4,s: MENU FONT m,FONTBANK SCALE 2,2 ALL 
+50 ON MENUITEM PRINT AT 21,20;LASTM;",";LASTMI;" "*30
+60 ON MENU SHOW PRINT AT 20,20;"MENU OPEN!"
+70 ON MENU HIDE PRINT AT 20,20;"MENU GONE!": GO SUB 100
+80 MENU SHOW m
+90 WAIT SCREEN : GO TO 90
+100 IF LASTMI>0 THEN PRINT AT 21,20;"Selected Item ";LASTMI;" from menu ";LASTM ELSE PRINT AT 21,20;"Didn't select ANYTHING!    "
+110 RETURN 

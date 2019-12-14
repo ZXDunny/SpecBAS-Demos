@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG overdraw
+10 paper 0:window origin 0,0,0 to 1,1:
+ cls
+20 for c=0 to 7 step .1:
+    draw ink c;inverse rnd<.9;to rnd,rnd:
+ next c:
+ wait screen:
+ go to 20

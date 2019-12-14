@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG dragon32
+10 REM 32bit Dragon Curve - BASIC256 edition
+20 LET level=18: LET insize=247: LET x=292: LET y=194: LET iters=2^level: LET qiter=510/iters: LET sq=SQR 2: LET qpi=PI/4: LET rot=0: LET iter=0: LET rq=1: DIM rqs()
+30 WINDOW DEPTH 0,32: PAPER $808080: CLS 
+40 GO SUB 100: PAUSE 0: STOP 
+100 IF level>0 THEN GO TO 120
+110 LET yn=SIN rot*insize+y: LET xn=COS rot*insize+x: DRAW INK IIF(iter*2<iters,RGBtoINT(0,iter*qiter,255-iter*qiter),RGBtoINT(qiter*iter-255,(iters-iter)*qiter,0));x,y TO xn,yn: INC iter: LET x=xn: LET y=yn: RETURN 
+120 LET insize=insize/sq: INC rot,rq*qpi: DEC level: LET rqs(level)=rq: LET rq=1: GO SUB 100: DEC rot,rqs(level)*qpi*2: LET rq=-1: GO SUB 100: LET rq=rqs(level): INC rot,rq*qpi: INC level: LET insize=insize*sq: RETURN 

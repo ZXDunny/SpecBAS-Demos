@@ -1,0 +1,30 @@
+ZXASCII
+AUTO -1
+PROG rtype_demo
+10 PAPER 0: INK 7: CLS: PRINT MOVE SCRw/2-40,100;"Please Wait"
+20 REM RType 640 By Paul Dunn 2011
+30 GRAPHIC NEW shipgfx LOAD "rtype.png": PALETTE COPY shipgfx,0,16 TO 16: GRAPHIC REMAP shipgfx
+40 GRAPHIC NEW shipshot LOAD "rtypeshot.png": PALETTE COPY shipshot,0,7 TO 32: GRAPHIC REMAP shipshot
+50 DIM ship_anim$(5): FOR f=0 TO 4: GRAPHIC GRAB ship_anim$(f+1),shipgfx,(4-f)*32,0,32,15 TRANSPARENT 0: NEXT f: DIM shot_anim$(3): FOR f=0 TO 2: GRAPHIC GRAB shot_anim$(f+1),shipshot,f*16,0,16,14 TRANSPARENT 0: NEXT f
+60 LET x=32: LET y=(scrh/2)-8: LET nx=0: LET ny=0: DIM stars(150,4): FOR f=1 TO 150: LET stars(f,1)=RND*SCRw: LET stars(f,2)=RND*SCRh: LET stars(f,3)=(RND*4)+1: LET stars(f,4)=RND*32: NEXT f: LET pl_state=3: LET pl_movingx=0: LET pl_movingy=0: LET statecounter=0: LET shotx$="": LET shoty$="": LET canshoot=1: LET shotanim=0: SCREEN LOCK
+70 CLS 0: FOR f=1 TO 150: PLOT INK stars(f,4)+224;stars(f,1),stars(f,2): LET stars(f,1)=stars(f,1)-stars(f,3): IF stars(f,1)<0 THEN LET stars(f,1)=SCRw: LET stars(f,2)=RND*SCRh: LET stars(f,3)=1+RND*4: LET stars(f,4)=RND*32: END IF: NEXT f
+80 LET y=y+pl_movingy: LET x=x+pl_movingx
+90 GO SUB @drawship
+95 LET nx=(NUBX 1+nx)/2: LET ny=(NUBY 1+ny)/2
+100 IF NOT(KEYST(KEY_DOWN) OR KEYST(KEY_UP)) AND ABS(NUBY 1)<1000 THEN LET pl_movingy=0
+110 IF (KEYST(KEY_DOWN) OR NY>1000) AND y<SCRh-16 THEN LET pl_movingy=2*KEYST(KEY_DOWN)+NY/5000: LET statecounter=statecounter-1: IF statecounter<=0 THEN LET statecounter=3: INC pl_state: END IF: END IF: IF (KEYST(KEY_UP) OR NY<-1000) AND y>0 THEN LET pl_movingy=-2*KEYST(KEY_UP)+NY/5000: LET statecounter=statecounter-1: IF statecounter<=0 THEN LET statecounter=3: DEC pl_state
+120 LET pl_movingx=0: IF (KEYST(KEY_LEFT) OR NX>1000) AND x>0 THEN LET pl_movingx=-2*KEYST(KEY_LEFT)+NX/5000: END IF: IF (KEYST(KEY_RIGHT) OR NUBX 1<-1000) AND x<SCRw-50 THEN LET pl_movingx=2*KEYST(KEY_RIGHT)+NUBX 1/5000
+130 IF pl_movingy<=-1 AND y<=0 THEN LET pl_movingy=0: LET y=0
+140 IF pl_movingy>=1 AND y>=SCRh-16 THEN LET pl_movingy=0: LET y=SCRh-16
+150 IF (KEYST(KEY_END) OR KEYST(KEY_SPACE)) AND canshoot THEN LET canshoot=0: LET shottime=mSECS: LET shotx$=shotx$+DCHR$(x+32): LET shoty$=shoty$+DCHR$(y+2+pl_movingy*2): LET shotanim=2
+160 IF NOT canshoot THEN IF NOT(KEYST(KEY_END) OR KEYST(KEY_SPACE)) OR mSECS-shottime>60 THEN LET canshoot=1
+170 WAIT SCREEN : GO TO 70
+180 LABEL @drawship
+190 LET pl_state=MAX(MIN(pl_state,5),1)
+200 WINDOW PUT ship_anim$(pl_state),0,x,y
+210 IF shotanim>0 THEN WINDOW PUT shot_anim$(shotanim),0,x+32,y+3: DEC shotanim
+220 IF pl_state<>3 THEN IF pl_movingy=0 THEN DEC statecounter: IF statecounter<=0 THEN LET statecounter=3: IF pl_state<3 THEN INC pl_state ELSE DEC pl_state
+230 IF LEN shotx$=0 THEN RETURN
+240 LET tx$="": LET ty$="": FOR f=1 TO LEN shotx$ STEP 2: LET sx=DCODE(MID$(shotx$,f,2)): INC sx,12: LET sy=DCODE(MID$(shoty$,f,2)): WINDOW PUT shot_anim$(3),0,sx,sy: IF sx<SCRw THEN LET tx$=tx$+DCHR$(sx): LET ty$=ty$+DCHR$(sy)
+250 NEXT f: LET shotx$=tx$: LET shoty$=ty$
+260 RETURN

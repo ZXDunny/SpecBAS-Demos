@@ -1,0 +1,5 @@
+ZXASCII
+AUTO -1
+PROG ikeda attractor
+10 PAPER 0: INK 1: OVER 2: CLS: FOR f=1 TO 255: PALETTE f,f,f,0: NEXT f
+20 sc=125,ox=300,oy=170,x=0,y=0,p=7.7,mt=.4: DO: DO 1000000: t=mt-(p/(1+(x^2+y^2))),x1=.85+.9*x*COS t-.9*y*SIN t,y1=.9*x*SIN t+.9*y*COS t: PLOT y1*sc+ox*1.4,x1*sc+oy: x=x1,y=y1: LOOP: PRINT CENTRE 0;INK 255;"Any key to run again": PAUSE 0: p=7.2689+RND*2+RND,mt=RND: CLS: LOOP 

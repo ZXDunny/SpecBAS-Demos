@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG draw_bug
+1 window origin 0,0,0 to 800,480: 
+	SCREEN FULL: 
+	SCREEN LOCK
+10 FOR a=3 TO 1666 STEP 6: 
+	   FOR b=0 TO 3 STEP 3:
+				   plot 200,200:
+							DRAW 100,100,a+b
+30    NEXT b:
+				wait screen: 
+				CLS: 
+	NEXT a: 
+	GO TO 10

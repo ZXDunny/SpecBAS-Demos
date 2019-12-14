@@ -1,0 +1,36 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/starprocmany
+CHANGED FALSE
+10 REM Stars!
+20 DEF PROC star(cx,cy,inr,outr,np,ao,fl):
+	   al=180/np,outr-=inr,g=ao:
+				DIM p(np*2,2):
+				FOR i=1 TO np*2:
+				   r=inr+(outr*(i & 1)),p(i,1)=cx+r*COS g,p(i,2)=cy+r*SIN g,g+=al:
+				NEXT i:
+				POLYGON p() FILL:
+	END PROC
+50 ns=15:
+	PAPER 50: DEGREES:
+	DIM s(ns,5):
+	FOR f=1 TO ns:
+	   s(f,1)=RND*SCRw,s(f,2)=RND*SCRh,
+				s(f,3)=RND*100+10,s(f,4)=RND*100+s(f,3)+10,
+				s(f,5)=INT(3+RND*20):
+	NEXT f:
+	DO:
+	   FOR j=0 TO 359:
+				   FOR f=1 TO ns:
+							   INK f:
+										PROC star(s(f,1),s(f,2),s(f,3),s(f,4),s(f,5),j,1):
+							NEXT f:
+							WAIT SCREEN:
+							CLS:
+							IF INKEY$="" THEN
+							   NEXT j:
+										LOOP
+							ELSE
+							   DO:
+										LOOP UNTIL INKEY$="":
+										run

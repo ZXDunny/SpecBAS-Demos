@@ -1,0 +1,29 @@
+ZXASCII
+AUTO -1
+PROG /demos/fractals/riley_squares
+CHANGED FALSE
+10 rem Movement in Squares, Riley 1961
+20 rows=int(rnd*10)+10,
+	stps=int(rnd*18)+6,
+	fw=int(scrh/rows),
+	ctr=int(rnd*int(scrw/3))+int(scrw/3):
+	def fn w=int(fw/(max(stps-c,0)+1))
+30 rp=ctr,c=0:
+	do while rp<scrw:
+	   w=fn w:
+				proc column(rp,w,c):
+				rp+=w,c+=1:
+	loop:
+	lp=ctr,c=0:
+	do while lp>0:
+	   w=fn w:
+				proc column(lp-w,w,c+1):
+				lp-=w,c+=1:
+	loop
+40 def proc column(x,w,i):
+	   h=int(scrh/rows):
+				for j=0 to scrh-1 step h:
+				   rectangle ink ((i+(j/h)) mod 2)*15;x,j,w,h fill:
+				next j:
+	end proc
+50 WAIT KEYDOWN: GO To 10

@@ -1,0 +1,8 @@
+ZXASCII
+AUTO -1
+PROG logo
+10 DEGREES
+20 LET hexagon$="for f=1 to 8:rotate 45:draw 75:next f"
+30 LET rose$="for g=1 to 36:rotate 10:execute hexagon$:next g"
+40 PLOT SCRw/2,SCRh/2
+50 EXECUTE rose$

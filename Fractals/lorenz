@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG lorenz
+10 PAPER 0: PALETTE 1,32+RND*32,32+RND*32,32+RND*32: PALETTE 255,192+(RND*32),192+(RND*32),192+(RND*32): RAINBOW 1 TO 255
+20 LET x1=0.0001: LET y1=x1: LET z1=y1: LET t=0.01: LET tp=0: LET sw=SCRw/2: LET sh=SCRh/4
+30 LET dt=0.0001
+40 LET x=x1+(-10*x1+20*y1)*dt: LET y=y1+(28*x1-y1-x1*z1)*dt: LET z=z1+(-(8/3)*z1+x1*y1)*dt: INC t,dt
+50 LET xp=sw+(8*x): LET yp=sh+(6*z)
+60 PLOT INK MAX(MIN((POINT(xp,yp)+1),255),0);xp,yp
+70 LET x1=x: LET y1=y: LET z1=z
+80 GO TO 40

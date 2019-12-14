@@ -1,0 +1,20 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/gear
+CHANGED FALSE
+10 DIM e$=TOKEN$ "draw to x1,y1",
+	       TOKEN$ "plot x1,y1" BASE 0: 
+	r=170,ro=50,a1=0: 
+	DO: 
+	   FOR a=a1 TO TAU+a1 STEP .005: 
+				   t=r+ro*EVEN(INT(a/.314)),
+							x1=400+COS(a+a1)*t,
+							y1=240+SIN(a+a1)*t: 
+							EXECUTE e$(a=a1): 
+				NEXT a: 
+				CIRCLE 400,240,20: 
+				FILL 450,240: 
+				a1+=.005: 
+				WAIT SCREEN: 
+				CLS: 
+	LOOP

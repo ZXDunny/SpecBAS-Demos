@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG rainbow
+10 REM Rainbow!
+20 DIM c=10,202,14,12,9,17,3,0
+30 LET rx=SCRw/2: LET ry=SCRh
+40 CLS 0: FOR x=1 TO 8: INK c(x): ELLIPSE SCRw/2,SCRh,rx,ry FILL: DEC rx,SCRw/16: DEC ry,SCRh/8: NEXT x

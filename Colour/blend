@@ -1,0 +1,16 @@
+ZXASCII
+AUTO -1
+PROG blend
+10 PROC makepal(7): GRAPHIC NEW c1,100,100 TRANSPARENT 0: WINDOW GRAPHIC c1: CIRCLE INK 1;50,50,50 FILL "": WINDOW 0
+20 LET num=50: DIM xp(num): DIM yp(num): DIM xpct(num): DIM ypct(num): DIM i(num)
+30 CLS 0: OVER 2: SCREEN LOCK 
+40 FOR j=1 TO num: LET xp(j)=1+RND*(SCRw/2): LET yp(j)=1+RND*SCRh/2: LET i(j)=INT(RND*255): NEXT j
+50 FOR j=1 TO num: LET xpct(j)=(xp(j)*i(j))*0.0001: LET ypct(j)=(yp(j)*i(j))*0.0001: WINDOW PUT GRAPHIC c1,0,(SCRw/2)*SIN(xpct(j))+SCRw/2-25,(SCRh/2)*SIN(ypct(j))+SCRh/2-25: INC i(j): NEXT j
+60 PALETTE SHL 1,2 TO 255: WAIT SCREEN 
+70 IF INKEY$="" THEN GO TO 50 ELSE RUN 
+80 DEF PROC makepal(bands)
+90 LET bandsize=256/bands: LET r1=MIN(INT(RND*5)*64,255): LET g1=MIN(INT(RND*5)*64,255): LET b1=MIN(INT(RND*5)*64,255): FOR i=0 TO bands-1
+100 LET r2=MIN(INT(RND*5)*64,255): LET g2=MIN(INT(RND*5)*64,255): LET b2=MIN(INT(RND*5)*64,255)
+110 LET k=0: FOR j=0 TO bandsize-1: LET r=r1+(k*((r2-r1)/bandsize)): LET g=g1+(k*((g2-g1)/bandsize)): LET b=b1+(k*((b2-b1)/bandsize)): PALETTE j+(i*bandsize),r,g,b: LET k=k+1: NEXT j
+120 LET r1=r2: LET g1=g2: LET b1=b2: NEXT i
+130 END PROC

@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG sinc
+10 REM Sinc demonstration
+20 REM Z=Sinc(Sqr(X^2+y^2))
+25 SCREEN LOCK 
+30 LET np=200: DIM pts(np*np,3)
+40 LET a=0,f=1,xstep=20/np,ystep=20/np,xn=-10: FOR x=1 TO np: LET yn=-10: FOR y=1 TO np: LET pts(f,1)=x,pts(f,2)=y,n=PI*PYTH(xn,yn),pts(f,3)=SIN n/n: INC f: INC yn,ystep: NEXT y: INC xn,xstep: NEXT x
+50 PROJECT3D pts() TO dst() MOVE -np,-np,0 ROTATE a,a/2,a/3 SCALE 3,3,200: PLOT dst(): WAIT SCREEN: CLS: INC a,PI/180,0 TO 2*PI*3: GO TO 50

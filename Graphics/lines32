@@ -1,0 +1,16 @@
+ZXASCII
+AUTO -1
+PROG lines32
+10 WINDOW DEPTH 0,32
+20 CONST twopi=2*PI: CONST d2r=PI/180
+30 PAPER RGBtoINT(0,0,60): CLS 
+40 LET r=0: LET theta=0: LET ptype=INT(RND*5)+1: LET incr=(RND*5)+1: LET delta=((RND*50)+1)*d2r: LET maxsteps=1000
+50 LET cx=SCRw/2: LET cy=SCRh/2
+60 REM Draw
+70 PLOT cx,cy
+80 DO WHILE r<maxsteps
+90 INC r,incr: INC theta,delta
+100 LET rd=127.5*(1+COS theta): LET gr=127.5*(1+COS(theta+twopi/3)): LET bl=127.5*(1+COS(theta+2*twopi/3)): INK RGBtoINT(rd,gr,bl)
+110 FOR f=1 TO ptype-1: LET x1=cx+r*COS(theta+f*twopi/ptype): LET y1=cy+r*SIN(theta+f*twopi/ptype): DRAW TO x1,y1: NEXT f
+120 LOOP 
+130 PAUSE 50: RUN 

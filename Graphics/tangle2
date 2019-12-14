@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG tangle2
+10 PAPER 0: INK 7: CLS 
+20 d=15,y1=54,x1=123: DIM a(d,13)
+30 FOR b=1 TO d: DO: x=213-INT(RND*426),y=175-INT(RND*350): LOOP UNTIL x1+x<=213 AND y1+y<=168 AND x1+x>=38 AND y1+y>0: c=(6*RND*(1-2*(y>84 AND x<0 OR y1<84 AND x>0)))*2/(2+(ABS x>4)*(ABS x>20 OR ABS y>20)+2*(ABS x>50 OR ABS y>50)),x1+=x,y1+=y,a(b,1)=x,a(b,2)=y,a(b,3)=c: NEXT b
+40 CLS: FOR a=-1 TO 1 STEP 2: FOR c=-1 TO 1 STEP 2: PLOT 400,240: FOR b=1 TO d: DRAW INK b;a*a(b,1),c*a(b,2),a*c*a(b,3): NEXT b;c;a: PAUSE 0: RUN 

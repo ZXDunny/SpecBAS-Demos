@@ -1,0 +1,23 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/circle_illusion
+CHANGED FALSE
+10 paper 0: ink 15: cls:
+	np=8,i=0,cr=15,hh=scrh/2,hw=scrw/2,mr=hh-cr*2:
+	do:
+    circle ink 9;hw,hh,hh-8 fill:
+				for f=0 to np*2-1:
+       a=(pi/np)*f:
+       draw ink 1;mr*sin a+hw,mr*cos a+hh to hw,hh:
+    next f:
+	   for f=0 to np-1:
+	      a=(pi/np)*f,
+							r=sin(i+a)*mr,
+							x=r*sin a+hw,
+							y=r*cos a+mr+cr*2:
+							circle x,y,cr fill:
+				next f:
+				i+=.03:
+				wait screen:
+				cls:
+	loop

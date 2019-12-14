@@ -1,0 +1,29 @@
+ZXASCII
+AUTO -1
+PROG circling
+10 paper 0: cls: screen lock:
+ xc=scrw/2,yc=scrh/2,w,r,ww,w3=0
+20 do:
+  cls:
+  r += pi/180,
+  w += pi/72:
+  for i=1 to 12:
+    x=xc+200*cos(w+i*pi/6)*sin(r),
+    y=yc+200*sin(w+i*pi/6)*sin(r):
+    circle ink 6;x,y,40:
+    ww += pi/80:
+    for j=1 to 12:
+      xx=x+100*cos(ww + j*pi/6)*sin(r),
+      yy=y+100*sin(ww + j*pi/6)*sin(r):
+      circle ink 4;xx,yy,20:
+      w3 += pi/88:
+      for k=1 to 12:
+        x3=xx+50*cos(w3 + k*pi/6)*sin(r),
+        y3=yy+50*sin(w3 + k*pi/6)*sin(r):
+        circle ink 2;x3,y3,10:
+      next k:
+    next j:
+  next i:
+  WAIT SCREEN:
+LOOP
+

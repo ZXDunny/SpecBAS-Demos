@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG bfly
+10 a,i=0: 
+ RADIANS: 
+ DO: 
+    CLS 0: 
+    FOR i=0 TO 360 STEP .25: 
+       x=SIN(i+a)*25-COS(i-a)*i,y=COS(i+a)*25+SIN(i-a)*i/2: 
+       CIRCLE INK i;x+MOUSEx,y+MOUSEy,SIN i*10 FILL: 
+    NEXT i: 
+    a+=.03: 
+    WAIT SCREEN: 
+ LOOP 

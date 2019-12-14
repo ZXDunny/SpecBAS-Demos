@@ -1,0 +1,29 @@
+ZXASCII
+AUTO -1
+PROG code music
+10 REM Code Music
+20 LET sz=35*8192: SAMPLE NEW s RATE 8192 SIZE sz BITS 8: LET tune=0
+30 READ t$: IF t$="END" THEN STOP ELSE LET t$=TOKEN$ t$: INC tune
+40 FOR t=0 TO sz-1: POKE s,t,VAL t$ & 255: PRINT CENTRE 25;INT((t/sz)*100);"%": NEXT t: PRINT CENTRE 24;"Playing tune ";tune;".";CENTRE 25;"Any key for next tune."
+50 SAMPLE PLAY s CHANNEL c: PAUSE 0: CHANNEL STOP c: CLS: GO TO 30
+60 DATA "t*((t shr 12|t shr 8)&63&t shr 4)"
+70 DATA "(t*(t shr 5|t shr 8))shr(t shr 16)"
+80 DATA "t*((t shr 9|t shr 13)&25&t shr 6)"
+90 DATA "t*(t shr 11&t shr 8&123&t shr 3)"
+100 DATA "t*(t shr 8*(t shr 15|t shr 8)&(20|(t shr 19)*5 shr t|t shr 3))"
+110 DATA "((-t&4095)*(255&t*(t&t shr 13))shr 12)+(127&t*(234&t shr 8&t shr 3) shr (3 &t shr 14))"
+120 DATA "t*(t shr ((t shr 9|t shr 8))&63&t shr 4)"
+130 DATA "(t shr 6|t|t shr(t shr 16))*10+((t shr 11)&7)"
+140 DATA "(t|(t shr 9|t shr 7))*t&(t shr 11|t shr 9)"
+150 DATA "t*5&(t shr 7)|t*3&(t*4 shr 10)"
+160 DATA "(t shr 7|t|t shr 6)*10+4*(t&t shr 13|t shr 6)"
+170 DATA "(IIF(t&4096,((t*(t mod 255)|(t shr 4)) shr 1),(t shr 3)|(iif(t&8192,t shl 2,t))))"
+180 DATA "((t*(t shr 8|t shr 9)&46&t shr 8)) xor (t&t shr 13|t shr 6)"
+190 DATA "(t*5&t shr 7)|(t*3&t shr 10)"
+200 DATA "int(t/1e7*t*t+t)mod 127|t shr 4|t shr 5|t mod 127+(t shr 16)|t)"
+210 DATA "((t/2*(15&($234568a0 shr(t shr 8&28)))))|t/2 shr(t shr 11)xor t shr 12)+(t/16&t&24)"
+220 DATA "(t&t mod 255)-(t*3&t shr 13&t shr 6)"
+230 DATA "(t*9&t shr 4|t*5&t shr 7|t*3&t/1024)-1"
+240 DATA "((t*(t shr 12)&(201*t/100)&(199*t/100))&(t*(t shr 14)&(t*301/100)&(t*399/100)))+((t*(t shr 16)&(t*202/100)&(t*198/100))-(t*(t shr 17)&(t*302/100)&(t*298/100)))"
+250 DATA "t*(t xor t+(t shr 15|1) xor (t-1280 xor t) shr 10)"
+999 DATA "END"

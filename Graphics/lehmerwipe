@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG lehmerwipe
+10 l=scrw*scrh,
+ r=1+INT (RND*96000),
+ sp=2,m=l/(50*sp)
+20 FOR i=1 TO l:
+    s=r-1
+30    plot s mod scrw,s div scrw
+40    r=(r*1001) mod 96001:
+    if i mod m=0 then
+       wait screen
+50 NEXT i

@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG cwaves
+10 REM CWaves for SpecBAS - from the xscreensaver collection
+20 DEF FN br(n)=((RND*n)+(RND*n)+(RND*n))/3;r=INT(RND*5)*63.9
+30 nwaves=8: DIM waves(nwaves,3): SCREEN LOCK 
+35 b=1 SHL (INT(RND*3)+2),p,op=0: DO: PALETTE p,FN r,FN r,FN r: RAINBOW op TO p: op=p,p+=b: LOOP UNTIL p=256: PALETTE 255,RGB 0: RAINBOW op TO 255
+40 FOR i=1 TO nwaves: waves(i,1)=(RND*.03)+.005;waves(i,2)=RND*PI;waves(i,3)=(FN br(2)-1)/15: NEXT i
+50 FOR i=1 TO nwaves: waves(i,2)+=waves(i,3): NEXT i: FOR x=0 TO SCRw-1: v=0: FOR i=1 TO nwaves: v+=COS((x*waves(i,1))-waves(i,2)),v/=nwaves,j=255*(v/2+.5): NEXT i: DRAW INK j;x,0 TO x,SCRh-1: NEXT x
+60 WAIT SCREEN: IF INKEY$="" THEN GO TO 50 ELSE DO: LOOP UNTIL INKEY$="": GO TO 35

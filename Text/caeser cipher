@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG caeser
+10 REM Caesar Cypher
+20 INPUT "Text to encrypt: ";t$'"Delta: ";d
+30 LET t$=UP$ t$: LET r$="": FOR f=1 TO LEN t$: LET r$=r$+IIF$(t$(f) IN ["A" TO "Z"],CHR$(((CODE t$(f)-65+d) MOD 26)+65),t$(f)): NEXT f
+40 PRINT t$'r$

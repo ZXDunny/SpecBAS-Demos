@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG demos:3d/3dstars
+10 REM 3D Stars
+20 OVER 8:LET maxstars=2000
+30 LET lens=256: LET xmax=SCRw: LET ymax=SCRh: LET mousemod=8/xmax: LET xmid=xmax/2: LET ymid=ymax/2: LET anglez=0: OPTION "base",0: DIM stars(5,maxstars): FOR f=0 TO 255: PALETTE f,f,f,f: NEXT f
+40 LET xm=MAX(xmax,ymax): FOR f=0 TO maxstars-1: LET stars(0,f)=-xmid/2+INT(RND*xm): LET stars(1,f)=-xmid/2+INT(RND*xm): LET stars(2,f)=INT(RND*lens): LET stars(3,f)=2: NEXT f
+50 DO: LOOP UNTIL INKEY$=""
+60 SCREEN LOCK: DO: CLS 0
+70 INC anglez,mousemod*(MOUSEx-xmid): LET ranglez=anglez*#PI/180: LET cosz=COS(ranglez): LET sinz=SIN(ranglez)
+80 FOR f=0 TO maxstars-1: LET stars(2,f)=stars(2,f)+stars(3,f): IF stars(2,f)>255 THEN LET stars(2,f)=0: LET stars(0,f)=-xmid/2+INT(RND*xm): LET stars(1,f)=-xmid/2+INT(RND*xm)
+90 LET tsx=stars(0,f): LET tsy=stars(1,f): LET sz=stars(2,f): LET sx=(tsx*cosz)-(tsy*sinz): LET sy=(tsy*cosz)+(tsx*sinz): LET distance=lens-sz
+100 IF distance>0 THEN LET x=xmid+(lens*sx/distance): LET y=ymid-(lens*sy/distance): IF x>=0 AND x<xmax AND y>=0 AND y<ymax THEN CIRCLE INK sz;x,y,3+(sz*.01) FILL ""
+110 NEXT f
+120 IF INKEY$="" THEN WAIT SCREEN: LOOP

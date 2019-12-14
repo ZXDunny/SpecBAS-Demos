@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG timestables
+10 degrees:
+	paper 0: ink 6: cls:
+	r=SCRh/2.1,cx=SCRw/2,cy=SCRh/2,n=100,s=360/n
+20 for t=0 to 50 step .005:
+	   cls:
+				ellipse cx-1,cy,r+1,r+1:
+    for i=1 to n:
+	      a1=s*i,a2=s*i*t:
+	      draw cx+sin a1*r,cy+cos a1*r to cx+sin a2*r,cy+cos a2*r:
+	   next i:
+				for i=1 to n:
+				   circle ink 2;cx+sin(s*i)*r,cy+cos(s*i)*r,2 fill:
+				next i:
+				wait screen:
+	next t

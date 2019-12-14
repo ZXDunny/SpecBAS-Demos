@@ -1,0 +1,6 @@
+ZXASCII
+AUTO -1
+PROG lorenz curtain
+10 LET m=mSECS: RADIANS: PAPER 0: INK 15: CLS: ORIGIN -2,-1.25 TO 2,1.25
+20 FOR t=0 TO 7000 STEP .006: PLOT (SIN(0.99*t)-0.7*COS(3.01*t)),(COS(1.01*t)+0.1*SIN(15.03*t)): NEXT t
+30 ORIGIN OFF: PRINT AT 0,0;"Time: ";USING$("##.###",(mSECS-m)/1000);" Seconds."

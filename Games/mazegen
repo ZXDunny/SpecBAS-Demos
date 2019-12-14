@@ -1,0 +1,20 @@
+ZXASCII
+AUTO -1
+PROG demos:games/mazegen
+CHANGED FALSE
+10 LET w=400: LET h=400: LET cx=.75: LET dn=.75
+20 LET sw=(w DIV 2)*2+1: LET sh=(h DIV 2)*2+1: LET cx=INT(cx*(5*(sh+sw))): LET dn=INT(dn*((sh DIV 2)*(sw DIV 2)))
+30 DIM maze(sh,sw) BASE 0: FOR x=0 TO sw-1: LET maze(0,x)=1: LET maze(sh-1,x)=1: NEXT x: FOR y=0 TO sh-1: LET maze(y,0)=1: LET maze(y,sw-1)=1: NEXT y
+40 FOR i=0 TO dn-1: LET x=INT(RND*(sw DIV 2))*2: LET y=INT(RND*(sh DIV 2))*2: LET maze(y,x)=1: FOR j=0 TO cx-1
+50 LET nx$="": LET ny$=""
+60 IF x>1 THEN LET nx$=nx$+CHR$(x-2): LET ny$=ny$+CHR$ y
+70 IF x<sw-2 THEN LET nx$=nx$+CHR$(x+2): LET ny$=ny$+CHR$ y
+80 IF y>1 THEN LET nx$=nx$+CHR$ x: LET ny$=ny$+CHR$(y-2)
+90 IF y<sh-2 THEN LET nx$=nx$+CHR$ x: LET ny$=ny$+CHR$(y+2)
+100 IF LEN nx$>0 THEN LET nc=int(RND*LEN nx$): LET ny=CODE ny$(nc+1): LET nx=CODE nx$(nc+1): IF maze(ny,nx)=0 THEN LET maze(ny,nx)=1: LET maze(ny+(y-ny) DIV 2,nx+(x-nx) DIV 2)=1: LET x=nx: LET y=ny
+110 NEXT j: NEXT i
+190 REM Draw Maze
+200 GRAPHIC NEW m,sw,sh
+210 WINDOW GRAPHIC m: INK 0: PAPER 8: CLS: FOR x=0 TO sw-1: FOR y=0 TO sh-1: IF maze(y,x)=1 THEN PLOT x,y
+220 NEXT y: NEXT x: WINDOW PUT GRAPHIC m,0,0,0 SCALE MIN(SCRw/sw,SCRh/sh)
+230 PAUSE 0: RUN

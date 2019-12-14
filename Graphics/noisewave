@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG noisewave
+10 REM Waves
+20 DEF FN r(m,n)=(RND*(n-m))+m
+30 LET mn=-3: LET mx=3: LET st=(mx-mn)/SCRw: LET sty=1/(SCRh/2)
+40 DIM r(4): DIM a(4): DIM o(4): FOR f=1 TO 4: LET r(f)=FN r(1,10): LET a(f)=FN r(-1/r(f),1/r(f)): LET o(f)=FN r(0,2*PI): NEXT f
+50 FOR l=0 TO SCRw-1: LET x=mn+(l*st)
+60 LET y=a(1)*SIN(r(1)*(x+o(1)))-a(2)*SIN(r(2)*(x+o(2)))-a(3)*SIN(r(3)*(x+o(3)))+a(4)*SIN(r(4)*(x+o(4)))
+70 IF l=0 THEN PLOT l,240+(y/sty) ELSE DRAW TO l,240+(y/sty)
+80 NEXT l: PAUSE 0: CLS: RUN 

@@ -1,0 +1,29 @@
+ZXASCII
+AUTO -1
+PROG square_illusion
+10 REM Optical Illusion
+20 s=10,sz=20,sq=4,fg=6,bg=1
+30 for y=1 to s+1:
+    for x=1 to s+1:
+       x1=x*sz,y1=y*sz:
+       rectangle ink bg;x1,y1,sz,sz fill:
+       if x<=s and y<=s then
+          rectangle ink fg;x1+sz-sq-sq/2,y1+sq/2,sq,sq fill:
+          rectangle ink fg;x1+sq/2,y1+sz-sq-sq/2,sq,sq fill:
+       else
+          if x<=s or y<=s then
+             rectangle ink fg;x1+sq/2,y1+sq/2,sq,sq fill
+40       swap fg,bg:
+    next x:
+ next y
+50 w=sz*(s+.5)+1:
+ window grab g$,0,sz,sz,w,w:cls:
+ graphic new g,g$:
+ xo=scrw/2-w:
+ window put graphic g,0,xo,sz:
+ graphic mirror g:
+ Window put graphic g,0,xo+w,sz:
+ graphic flip g:
+ window put graphic g,0,xo+w,sz+w:
+ graphic mirror g:
+ window put graphic g,0,xo,sz+w

@@ -1,0 +1,27 @@
+ZXASCII
+AUTO -1
+PROG 3D Shapes
+10 REM 3D Shapes
+20 DEF PROC i(a,b,c): LET x=(a-c)*0.886,y=b-(a+c)*0.5: IF p=1 THEN DRAW ox+cx,oy-cy TO ox+x,oy-y
+30 LET cx=x,cy=y: END PROC
+40 DEGREES: LET ox=SCRw/2,oy=SCRh/2.5,cx,cy,p=1
+50 DEF PROC cone(l)
+60 LET r=l/2,p=0: FOR h=0 TO l STEP 10: FOR v=0 TO 360 STEP 20: PROC i((h/2)*COS v,h,(h/2)*SIN v): LET p=1: NEXT v: LET p=0: NEXT h
+70 FOR v=0 TO 360 STEP 20: FOR h=0 TO l STEP 10: PROC i((h/2)*COS v,h,(h/2)*SIN v): LET p=1: NEXT h: LET p=0: NEXT v
+80 END PROC
+90 DEF PROC ellipsoid(r1,r2,r3)
+100 LET p=0: FOR u=0 TO 360 STEP 20: FOR v=0 TO 180 STEP 20: LET l=r1*COS u*SIN v,m=r3*SIN u,n=r2*COS u*COS v: PROC i(100+l,-30+m,100+n): LET p=1: NEXT v: LET p=0: NEXT u
+110 FOR v=0 TO 180 STEP 20: FOR u=0 TO 360 STEP 20: LET l=r1*COS u*SIN v,m=r3*SIN u,n=r2*COS u*COS v: PROC i(100+l,-30+m,100+n): LET p=1: NEXT u: LET p=0: NEXT v
+120 END PROC
+130 DEF PROC cylinder(r,l)
+140 LET p=0: FOR h=0 TO l STEP 10: FOR v=0 TO 360 STEP 20: PROC i(120+r*COS v,-100+h,-120+r*SIN v): LET p=1: NEXT v: LET p=0: NEXT h
+150 FOR v=0 TO 360 STEP 20: FOR h=0 TO l STEP 10: PROC i(120+r*COS v,-100+h,-120+r*SIN v): LET p=1: NEXT h: LET p=0: NEXT v
+160 END PROC
+170 DEF PROC sphere(r)
+180 LET p=0: FOR u=0 TO 360 STEP 20: FOR v=0 TO 180 STEP 20: LET l=r*COS u*SIN v,m=r*SIN u,n=r*COS u*COS v: PROC i(-120+l,-100+m,120+n): LET p=1: NEXT v: LET p=0: NEXT u
+190 FOR v=0 TO 180 STEP 20: FOR u=0 TO 360 STEP 20: LET l=r*COS u*SIN v,m=r*SIN u,n=r*COS u*COS v: PROC i(-120+l,-100+m,120+n): LET p=1: NEXT u: LET p=0: NEXT v
+200 END PROC
+1000 PROC cone(70)
+1010 PROC ellipsoid(60,40,25)
+1020 PROC cylinder(30,90)
+1030 PROC sphere(40)

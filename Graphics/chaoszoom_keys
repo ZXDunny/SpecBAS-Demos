@@ -1,0 +1,34 @@
+ZXASCII
+AUTO -1
+PROG chaoszoom_keys
+10 FOR f=1 TO 255: 
+    PALETTE HSV f,f*1.3,255,255: 
+ NEXT f:
+ palette 0,0,0,0:
+ k$=""
+20 DIM buffer(2) BASE 0: 
+ FOR f=0 TO 1: 
+    WINDOW NEW buffer(f),0,-60,800,600: 
+ NEXT f: 
+ WINDOW HIDE buffer(1)
+30 LET sz=32,ps=0,xs=800/sz,ys=600/sz:  
+ WINDOW buffer(0)
+40 FOR y=298 TO 302;
+    x=284 TO 288: 
+       PLOT INK ps MOD 256;x,y: 
+    NEXT x;y
+50 i$=inkey$:
+ if i$<>"" and i$<>k$ then
+    print at 37,37;ink 0;scale 4,4#;transparent 1;i$:
+    k$=i$:
+ else
+    if i$="" Then
+       k$=""
+60 ps+=1,shift=BREV(ps,5)
+70 FOR y=0 TO ys-1;
+    x=0 TO xs-1: 
+       WINDOW COPY buffer(0),x*sz+shift+(16-y)-x,y*sz+shift+x+(16-y),sz,sz TO buffer(1),x*sz+shift,y*sz+shift+16: 
+    NEXT x;y: 
+ WINDOW COPY buffer(1),0,0,800,600 TO buffer(0),0,0
+80 wait screen:
+ go to 40

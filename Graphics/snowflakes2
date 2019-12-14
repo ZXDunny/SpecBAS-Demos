@@ -1,0 +1,42 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/snowflakes2
+CHANGED FALSE
+10 PAPER 0: INK 15: CLS: 
+	FOR f=1 TO 16: 
+	   a=8: 
+				PALETTE f,255-f*a,255-f*a,255-f*a: 
+	NEXT f
+20 flakes=50,sc=SCRw/2: 
+	DIM fl(flakes,7): 
+	FOR f=1 TO flakes: 
+	   GO SUB 70: 
+				fl(f,2)=RND*SCRh: 
+	NEXT f
+30 FOR f=1 TO flakes: 
+	   fl(f,4)+=fl(f,3),
+				fl(f,1)+=COS fl(f,4)+((MOUSEx-sc)/(sc/4))*fl(f,5)/4,
+				fl(f,2)+=fl(f,5): 
+				CIRCLE INK int fl(f,7);fl(f,1),fl(f,2),fl(f,6) FILL: 
+				IF RND>.9 THEN 
+				   fl(f,3)=(RND*.4)-.2,
+							fl(f,5)=2+RND*2
+40    IF fl(f,2)>=SCRh THEN 
+				   GO SUB 70
+50    IF fl(f,1)>SCRw THEN 
+				   fl(f,1)-=SCRw 
+				ELSE 
+				   IF fl(f,1)<0 THEN 
+							   fl(f,1)+=SCRw
+60 NEXT f: 
+	WAIT SCREEN: 
+	CLS: 
+	GO TO 30
+70 fl(f,1)=RND*SCRw,
+	fl(f,2)=-10,
+	fl(f,3)=(RND*.4)-.2,
+	fl(f,4)=0,
+	fl(f,5)=2+RND*2,
+	fl(f,6)=ABS fl(f,5)*1.5,
+	fl(f,7)=1+RND*16: 
+	RETURN

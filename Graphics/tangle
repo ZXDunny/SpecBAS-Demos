@@ -1,0 +1,8 @@
+ZXASCII
+AUTO -1
+PROG tangle
+10 mx=1000: OPTION "base",0:paper 8: ink 0: SCREEN LOCK
+20 DIM p(mx+1,2),p2(mx+1,2)
+30 t=mSECS/40,r=t/19: FOR a=0 TO mx: p(a,0)=COS r*60+200,p(a,1)=SIN r*60+200,r+=PI*2/mx: NEXT a: r=0
+40 FOR b=0 TO 5: FOR a=0 TO mx: c0=p(a,0),c1=p(a,1),d0=p((a+1) MOD mx,0),d1=p((a+1) MOD mx,1),x=c0-d0,y=c1-d1,r=POLAR(x,y)+t/31+b,x=COS r*17,y=SIN r*17,e=(1+SIN(a/mx*PI*2*(3+b)+t*b/21)*.8),p2(a,0)=c0+x*e,p2(a,1)=c1+y*e: NEXT a: MAT p()=p2(): NEXT b
+50 n=200: CLS: PLOT p(0,0)+50+n,p(0,1): FOR a=0 TO mx: DRAW TO p(a,0)+50+n,p(a,1): NEXT a: PLOT 350-p(0,0)+n,p(0,1): FOR a=0 TO mx: DRAW TO 350-p(a,0)+n,p(a,1): NEXT a: WAIT SCREEN: GO TO 30

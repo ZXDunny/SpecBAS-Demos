@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG tiffany
+10 REM Tiffany Spiral
+20 cx=SCRw/2,cy=SCRh/2,rd=PI/180,nc=100*((RND*5)+1),b=50*(scrh/500),a=3*b,nv=INT(RND*10)+2,ai=(360/nv)*rd,p,fl,fr=0
+30 RADIANS: PAPER 0: INK 1: OVER 8: PALETTE 1,192,192,160: PALETTE 2,64,64,64: PALETTE 0,255,255,192: SCREEN LOCK
+40 kd=1: IF fr>=7 THEN fl=1 ELSE IF fr<=-7 THEN fl=0
+50 IF NOT fl THEN fr+=.005 ELSE fr-=.005
+60 p+=.01*COS(50*fr*rd),st=ABS(COS(fr*rd))+.005
+70 FOR i=0 TO nc-1 STEP st: ag=i*ai*COS(fr*rd),h=a*SIN(i*rd),x=cx+(a-b)*COS ag+h*COS(p+(a-b)/b*ag),y=cy+(a-b)*SIN ag-h*SIN(p+(a-b)/b*ag): IF INKEY$="" THEN kd=0
+80 IF NOT i THEN PLOT INK 1;x,y ELSE DRAW TO x,y: END IF: CIRCLE INK 2;x,y,3 FILL
+90 NEXT i: WAIT SCREEN: CLS: IF INKEY$="" OR kd THEN GO TO 40 ELSE RUN

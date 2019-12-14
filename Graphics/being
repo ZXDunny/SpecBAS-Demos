@@ -1,0 +1,29 @@
+ZXASCII
+AUTO -1
+PROG being
+10 paper 60:
+ GRAPHIC NEW gfx LOAD "pumpkin.bmp" TRANSPARENT 0:
+ PALETTE COPY gfx,0,256 TO 0:
+ GRAPHIC REMAP gfx
+20 cells=1000:
+ SCREEN LOCK
+30 DIM p(cells,6):
+ headx=SCRw/2,heady=SCRh/2
+40 FOR i=1 TO cells:
+    p(i,3)=RND*14-7,
+    p(i,4)=RND*8-4,
+    p(i,6)=RND*18-9:
+ NEXT i
+50 FOR i=1 TO cells
+60    IF i=1 THEN
+       p(i,1)=headx+SIN(p(i,5))+p(i,3),
+       p(i,2)=heady+COS(p(i,5))+p(i,4)
+    ELSE
+       p(i,1)=p(i-1,1)+COS(p(i,5))*p(i,3),
+       p(i,2)=p(i-1,2)+SIN(p(i,5))*p(i,4)
+70    WINDOW PUT GRAPHIC gfx,0,p(i,1),p(i,2)
+80    p(i,5)+=DEGTORAD p(i,6)
+90 NEXT i
+100 WAIT SCREEN:
+ CLS:
+ GO TO 50

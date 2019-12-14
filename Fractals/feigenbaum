@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG feigenbaum
+10 SCREEN LOCK 
+20 w=480,d=800,b=1.14,t=1.71,ls=2.53,rs=2.586,v=90,iv=10,sc=(rs-ls)/w
+30 CLS: FOR r=0 TO w: k=ls+r*sc,p=.3: FOR i=0 TO iv: p+=k*p*(1-p): NEXT i: FOR i=0 TO v: PLOT (p-b)*d/(t-b),(k-ls)*w/(rs-ls): p+=k*p*(1-p): NEXT i;r
+40 WAIT SCREEN 
+50 DO: a$=LOW$ INKEY$: LOOP UNTIL a$<>""
+60 IF a$="a" THEN v+=5,iv-=5 ELSE IF a$="b" THEN v-=5,iv+=5 ELSE IF a$="c" THEN ls+=.01,rs+=.01 ELSE IF a$="d" THEN ls-=.01,rs-=.01 ELSE IF a$="e" THEN ls-=.001,rs+=.001,sc=(rs-ls)/w ELSE IF a$="f" THEN ls+=.001,rs-=.001,sc=(rs-ls)/w ELSE IF a$="g" THEN b+=.001,t+=.001 ELSE IF a$="h" THEN b-=.001,t-=.001
+70 GO TO 30

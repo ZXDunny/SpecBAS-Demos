@@ -1,0 +1,8 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/julia
+CHANGED FALSE
+10 REM Simple Julia set
+20 LET iter=256: LET ce=-.7: LET cm=.27015: LET nr,ne,oe,om,z=1: LET mx,my,z1,z2=0
+30 FOR x=0 TO SCRw: FOR y=0 TO SCRh: LET nr=1.5*(x-SCRw*.5)/(.5*z*SCRw)+mx: LET ne=(y-SCRh*.5)/(.5*z*SCRh)+my: FOR i=0 TO iter: LET oe=nr: LET om=ne: LET nr=oe*oe-om*om+ce: LET ne=2*oe*om+cm: IF ((nr*nr+ne*ne)>4) THEN GO TO 40 ELSE NEXT i
+40 PLOT INK i MOD 256;x,y: NEXT y: NEXT x

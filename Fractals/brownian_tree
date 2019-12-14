@@ -1,0 +1,20 @@
+ZXASCII
+AUTO -1
+PROG brownian_tree
+10 cls 0: ink 4:
+ PLOT SCRw/2,SCRh/2:
+ sw=scrw-2,sh=scrh-2
+20 a=rnd*360,
+ r=pyth(scrw,scrh),
+ dx=cos a,dy=sin a,
+ x=(scrw/2)+dx*r,
+ y=(scrh/2)+dy*r
+30 x-=dx,y-=dy: 
+ if point(x-1,y)+point(x-1,y-1)+
+    point(x,y-1)+point(x+1,y-1)+
+    point(x-1,y)+point(x+1,y)+
+    point(x-1,y+1)+point(x,y+1)+
+    point(x+1,y+1)>0 then 
+       PLOT x,y: 
+       go to 20
+40 go to 30

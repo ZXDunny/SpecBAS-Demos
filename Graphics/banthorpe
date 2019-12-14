@@ -1,0 +1,5 @@
+ZXASCII
+AUTO -1
+PROG banthorpe
+10 REM Banthorpe plot
+20 SCREEN LOCK: dv=4: DO: m1=720,v=620,x1=m1/2,x2=x1^2,y1=v/2,y2=v/4: FOR x5=0 TO x1: x4=x5^2,m=-Y1,a=SQR(x2-x4): FOR i1=-a TO a STEP 7: r1=SQR(x4+i1^2)/x1,f=(r1-1)*SIN(r1*12),r=INT(i1/dv+f*y2): IF r>m THEN m=r,r=y1-r: PLOT x1-x5+60,r;x1+x5+60,r: END IF: NEXT i1;x5: WAIT SCREEN: dv-=.01: CLS: LOOP 

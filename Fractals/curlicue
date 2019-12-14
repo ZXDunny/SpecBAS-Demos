@@ -1,0 +1,4 @@
+ZXASCII
+AUTO -1
+PROG curlicue
+10 LET x=SCRw/2: LET y=SCRh/2: FOR f=0 TO 500000 STEP 0.2: LET x=x+COS(f*f): LET y=y+SIN(f*f): PLOT INK f MOD 256;x,y: NEXT f

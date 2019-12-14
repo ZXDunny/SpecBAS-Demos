@@ -1,0 +1,6 @@
+ZXASCII
+AUTO -1
+PROG attractor
+10 REM Attractor
+15 WINDOW ORIGIN 0,-2,-2 TO 2,2
+20 LET c1,c2=RND,ff=2,x,y=1: FOR i=1 TO 100000: LET x1=TAN x*TAN x-SIN y*SIN y+c1,y=ff*TAN x*SIN y+c2,x=x1: PLOT x-1,y-1: NEXT i: PAUSE 0: CLS: RUN 

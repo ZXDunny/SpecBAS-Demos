@@ -1,0 +1,35 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/pinboard4
+CHANGED FALSE
+10 window origin 0,-15,0 to 270,175
+20 n=7: DIM u(n);v(n)
+30 x=128,y=87,c=80,a=TAU/n,e=COS a,f=SIN a
+40 u(1)=c,v(1)=0
+50 FOR i=2 TO n:
+	   u(i)=u(i-1)*e+v(i-1)*f,
+    v(i)=v(i-1)*e-u(i-1)*f:
+ NEXT i
+60 for f=.5 to 0 step -.5:
+	   cls:
+    FOR a=f TO f+.5 STEP .2/c:
+       b=1-a:
+       FOR i=1 TO n:
+          FOR k=1 TO n:
+             PLOT x+u(i)*a+u(k)*b,y+v(i)*a+v(k)*b:
+          NEXT k:
+				   NEXT i:
+	   wait screen:
+	   NEXT a:
+	next f
+70 CLS:
+ FOR z=1 TO c step 0.18:
+    a=.5*RND,b=1-a:
+    for i=1 TO n:
+       FOR k=1 TO n:
+          PLOT x+u(i)*a+u(k)*b,y+v(i)*a+v(k)*b:
+       NEXT k:
+				NEXT i:
+				wait screen:
+	NEXT z:
+ run

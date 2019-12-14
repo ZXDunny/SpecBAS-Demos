@@ -1,0 +1,6 @@
+ZXASCII
+AUTO -1
+PROG sierqueue
+10 REM Sierpinski
+20 d=7,il=SCRh/2,ml=il/(2 SHL d),n=LEN FCHR$ 0,s$=FCHR$(SCRw/2)+FCHR$(SCRh/2)+FCHR$ il
+30 x=FCODE s$( TO n),y=FCODE s$(n+1 TO n*2),l=FCODE s$(n*2+1 TO n*3),l1=l*0.6,s$=s$(n*3+1 TO): POLYGON x-l1,y TO x+l1,y TO x,y+l: l/=2: IF l>=ml THEN s$=s$+FCHR$(x)+FCHR$(y-l)+FCHR$(l)+FCHR$(x-l1)+FCHR$(y+l)+FCHR$(l)+FCHR$(x+l1)+FCHR$(y+l)+FCHR$(l): GO TO 30 ELSE IF s$<>"" THEN GO TO 30

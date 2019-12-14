@@ -1,0 +1,21 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/batman
+CHANGED FALSE
+10 rem Not the hero we deserve, but the hero we need
+20 paper 0: cls: ink 6:
+ ORIGIN -8,-4 TO 8,4
+30 s=0.00001:
+ FOR f=1 TO 5:
+    READ x1,x2,e$:
+    FOR x=x1+s TO x2-s STEP .00009:
+       y=-VAL e$:
+       plot x,y;-x,y:
+    NEXT x:
+ NEXT f:
+ rem fill 0,0
+40 DATA 4,7,TOKEN$("-3*sqr(1-(x/7)^2)*sqr(abs(abs x-4)/(abs x-4))")
+50 DATA 0,4,TOKEN$("abs(x/2)-0.0913722*x^2-3+sqr(1-(abs(abs x-2)-1)^2)")
+60 DATA 1,3,TOKEN$("(2.71052+1.5-0.5*abs x-1.35526*sqr(4-(abs x-1)^2))*sqr(abs(abs x-1)/(abs x-1))")
+70 DATA 3,7,TOKEN$("1.5*sqr((-ABS(ABS x-1))*ABS(3-ABS x)/((ABS x-1)*(3-ABS x)))*(1+ABS(ABS x-3)/(ABS x-3))*sqr(1-(x/7)^2)+(4.5+0.75*(ABS(x-0.5)+ABS(x+0.5))-2.75*(ABS(x-0.75)+ABS(x+0.75)))*(1+ABS(1-ABS x)/(1-ABS x))")
+80 DATA 0,1,e$

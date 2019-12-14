@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG ripples
+10 REM Wave interference
+20 SCREEN LOCK: FOR f=0 TO 255: PALETTE f,f,f,f: NEXT f: LET x1=SCRw/2: LET y1=SCRh: LET x2=0: LET y2=0: LET n=0
+30 FOR x=0 TO SCRw STEP 8: FOR y=0 TO SCRh STEP 8
+40 LET d1=((x-x1)^2+(y-y1)^2)^0.5: LET d2=((x-x2)^2+(y-y2)^2)^0.5: LET s1=60*SIN(d1/5-n): LET s2=60*SIN(d2/5-n): LET n5=5*n
+45 IF n5>=d2 THEN LET i=122+s2 ELSE LET i=122+s1
+46 IF n5>=d1 AND n5>=d2 THEN LET i=122+s1+s2
+47 IF n5<=d1 AND n5<=d2 THEN LET i=128
+50 CIRCLE INK i;x,y,8 FILL ""
+60 NEXT y: NEXT x: WAIT SCREEN: INC n,0.15: GO TO 30

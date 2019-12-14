@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG over_demo2
+10 PAPER 0: OVER 2: CLS: 
+ INK 1+(RND*15)
+30 DEF FN a=1+INT(RND*2): 
+ DEF FN b(a,b)=IIF(a>b OR a<0,-1,1)
+40 x,a,l=0,y,b=INT(RND*SCRh),
+ g,h,d=FN a,c=g
+70 do:
+    g*=FN b(a+g,SCRw),
+    c*=FN b(x+c,SCRw),
+    h*=FN b(b+h,SCRh),
+    d*=FN b(y+d,SCRh): 
+    a+=g,b+=h,x+=c,y+=d: 
+    DRAW a,b TO x,y:
+    l+=1:
+    if l=scrw then   
+       l=0:
+       wait screen:
+    end if:
+    if inkey$="" then 
+       LOOP 
+    else 
+       run
+  

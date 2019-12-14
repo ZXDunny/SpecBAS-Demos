@@ -1,0 +1,65 @@
+ZXASCII
+AUTO -1
+PROG demos:automata/efil
+CHANGED FALSE
+10 REM Efil remake from Your Sinclair
+20 LET sx=32,sy=24,cs=MIN(SCRw/(sx+3),SCRh/(sy+3)),hcs=cs/2.35,dmo=0,offx=hcs+((SCRw-(cs*sx))/2),offy=hcs+((SCRh-(cs*sy))/2): DIM af(8),cl(8),d(sx,sy),e(sx,sy),xo=-1,0,1,1,1,0,-1,-1: DIM yo=-1,-1,-1,0,1,1,1,0
+30 PAPER 0: CLS: RESTORE 220+(dmo*40): GO SUB 70: CLEAR d(),7
+40 EXECUTE e$
+50 LET xp=offx,yp=offy: FOR x=1 TO sx: FOR y=1 TO sy: CIRCLE INK e(x,y);xp,yp,hcs FILL: yp+=cs: NEXT y: xp+=cs,yp=offy: NEXT x: MAT d()=e(): WAIT SCREEN: IF INKEY$="" THEN GO TO 40
+60 DO: LOOP UNTIL INKEY$="": INC dmo,1,0 TO 9: GO TO 30
+70 LET c=0: FOR f=1 TO 8: READ a: LET af(f)=a,c+=(a>0): NEXT f: LET nr=1+(7*c)
+80 FOR f=1 TO 8: READ cl(f): NEXT f
+90 DIM rl(nr) BASE 0: FOR f=0 TO nr-1: READ rl(f): NEXT f
+100 DIM i$(9): RESTORE 130: FOR f=1 TO 9: READ x$,y$: LET a$="": FOR g=1 TO 8: READ n: LET n*=af(g),b$="",b$=IIF$(n=2,"d("+x$+"+"+STR$(xo(g))+","+y$+"+"+STR$(yo(g))+")",IIF$(n=1,IIF$(cl(g)<>0,VAL$("cl("+STR$ g+")"),""),"")),a$=a$+b$+IIF$(g<8 AND b$<>"","+",""): NEXT g: LET i$(f)="rl("+REPLACE$(REPLACE$(IIF$(a$(LEN a$)="+",a$( TO LEN a$-1),a$),"+0",""),"+-","-")+")": NEXT f
+110 LET e$=("e(1,1)="+i$(1)+",e("+STR$ sx+",1)="+i$(3)+",e(1,"+STR$ sy+")="+i$(7)+",e("+STR$ sx+","+STR$ sy+")="+i$(9)+":FOR x=2 TO "+STR$(sx-1)+":e(x,1)="+i$(2)+",e(x,sy)="+i$(8)+": NEXT x: FOR y=2 TO "+STR$(sy-1)+":e(1,y)="+i$(4)+",e(sx,y)="+i$(6)+": NEXT y:FOR x=2 TO "+STR$(sx-1)+": FOR y=2 TO "+STR$(sy-1)+":e(x,y)="+i$(5)+": NEXT y;x")
+120 RETURN
+130 DATA "1","1",1,1,0,2,2,2,0,1
+140 DATA "x","1",0,1,0,2,2,2,2,2
+150 DATA STR$ sx,"1",0,1,1,1,0,2,2,2
+160 DATA "1","y",0,2,2,2,2,2,0,1
+170 DATA "x","y",2,2,2,2,2,2,2,2
+180 DATA STR$ sx,"y",2,2,0,1,0,2,2,2
+190 DATA "1",STR$ sy,0,2,2,2,0,1,1,1
+200 DATA "x",STR$ sy,2,2,2,2,0,1,0,2
+210 DATA STR$ sx,STR$ sy,2,2,0,1,1,1,0,2
+220 REM demo 0
+230 DATA 1,1,1,1,1,1,1,1
+240 DATA 0,0,7,0,0,0,7,0
+250 DATA 7,6,0,0,0,0,0,0,1,1,1,1,1,2,1,2,2,3,2,3,2,3,2,3,3,4,3,4,3,4,3,4,4,5,4,5,4,5,4,5,5,6,5,6,5,6,5,6,6,7,6,7,6,7,6,7,7
+260 REM demo 1
+270 DATA 1,0,1,0,1,0,1,0
+280 DATA 7,0,0,0,7,0,0,0
+290 DATA 7,0,0,1,1,1,1,2,2,2,2,3,3,4,3,4,4,5,4,5,5,6,5,6,6,7,6,7,7
+300 REM demo 2
+310 DATA 1,1,1,0,1,1,1,0
+320 DATA 0,7,0,0,0,6,0,0
+330 DATA 0,0,0,1,0,0,1,1,2,2,1,1,2,2,3,3,2,2,3,4,3,4,3,4,4,5,4,5,4,5,5,6,5,6,5,6,6,7,6,7,6,7,7
+340 REM demo 3
+350 DATA 0,1,0,0,1,1,1,0
+360 DATA 0,0,0,0,0,0,0,0
+370 DATA 7,0,0,1,1,1,1,2,2,2,2,3,4,3,4,4,5,4,5,5,6,5,5,6,6,6,6,7,7
+380 REM demo 4
+390 DATA 0,1,0,1,0,1,0,1
+400 DATA 0,0,0,0,0,7,0,0
+410 DATA 7,7,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,5,4,5,5,6,5,6,6,7,6,7,7
+420 REM demo 5
+430 DATA 1,1,0,0,1,0,0,1
+440 DATA 0,7,0,0,0,0,0,1
+450 DATA 7,0,0,1,1,1,1,2,2,2,2,3,4,3,3,7,1,4,4,5,6,5,5,6,7,6,6,7,7
+460 REM demo 6
+470 DATA 1,1,1,1,1,1,1,1
+480 DATA 0,0,0,0,0,0,0,0
+490 DATA 0,0,0,0,0,0,3,1,1,1,1,1,1,0,1,1,0,0,0,0,0,0,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,7,7
+500 REM demo 7
+510 DATA 1,1,1,1,1,1,1,1
+520 DATA 0,0,0,0,0,0,0,0
+530 DATA 7,6,2,0,0,0,1,1,1,1,1,1,2,1,2,2,2,2,2,2,3,2,3,3,3,3,3,3,4,3,4,4,4,4,4,4,5,4,5,5,5,5,5,5,6,5,6,6,6,6,6,6,7,6,7,7,7
+540 REM demo 8
+550 DATA 0,1,0,1,0,1,0,1
+560 DATA 0,0,0,0,0,0,0,0
+570 DATA 7,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,7,6,7,7
+580 REM demo 9
+590 DATA 0,1,0,1,0,1,0,1
+600 DATA 0,0,0,0,0,0,0,0
+610 DATA 7,0,0,1,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,7

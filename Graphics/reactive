@@ -1,0 +1,8 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/reactive
+CHANGED FALSE
+10 REM Mouse Circles
+20 LET maxr=40: LET lowxy=maxr*2: LET highx=SCRw-maxr*2: LET highy=SCRh-maxr*2
+30 screen lock:CLS 0: FOR y=lowxy TO highy STEP maxr: FOR x=lowxy TO highx STEP maxr: LET i=1: FOR r=(((x-MOUSEx)^2+(y-MOUSEy)^2)^.5)/11 TO 0 STEP -4: CIRCLE INK i+1;x,y,r FILL: LET i=NOT i: NEXT r: NEXT x: NEXT y
+40 WAIT SCREEN : GO TO 30

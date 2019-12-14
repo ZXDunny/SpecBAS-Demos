@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG demos:toys/thue-morse
+CHANGED FALSE
+10 REM Thue-Morse sequence
+20 c=10,a$="0"*2^(c-1): 
+	a,r=1: 
+	DO: 
+	   FOR f=1 TO a: 
+				   a$(a+f)=CHR$((49-CODE a$(f))+48): 
+				NEXT f: 
+				a+=a: 
+				r+=1: 
+	LOOP UNTIL r=c
+30 PRINT a$

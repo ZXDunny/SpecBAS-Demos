@@ -1,0 +1,42 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/goldwave
+CHANGED FALSE
+10 REM Goldwave
+20 FOR f=1 TO 3:
+    READ r,g,b:
+    PALETTE f,r,g,b:
+ NEXT f:
+	screen lock:
+ DATA 242,242,0,255,80,0,255,150,0
+25 for f=5 to 125:
+    palette f,242+.1*f,242+.1*f,f:
+ next f:
+	t=1,tm=0
+26 dim h$=token$ "60*sin(x1/4+tm)+65",
+        token$ "60*sin(y1/4+tm)+65",
+        token$ "60*sin((x1-y1)/4+tm)+65",
+        token$ "30*sin(x1/2+tm)+30*sin(y1/2+tm)+65",
+        token$ "60*sin((x1+y1)/4+tm)+65",
+        token$ "60*sin(d*.3+tm)+65"
+30 do:
+    cls 0:
+				polygon ink 2;100,295 to 398,444 to 696,295 to 398,145 fill:
+    for y1=0 to 24:
+       for x1=0 to 24:
+          x=(12*(24-x1))+(12*y1)+100,
+          y=(-6*(24-x1))+(6*y1)+300,
+          d=((10-x1)^2+(10-y1)^2)^.5,
+          h=val h$(t),tm+=.01
+90          polygon ink h;x,y-h to x+10,y+5-h to x+20,y-h to x+10,y-5-h fill:
+          polygon ink 2;x,y-h to x+10,y+5-h to x+10,y to x,y-5 fill:
+          polygon ink 3;x+10,y+5-h to x+10,y to x+20,y-5 to x+20,y-h fill
+200       next x1:
+    next y1:
+    wait screen:
+				if inkey$<>"" then 
+				   inc t,1,1 to 6:
+							DO: LOOP until inkey$="":
+				end if:
+ loop:
+ go to 30

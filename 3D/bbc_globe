@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG bbc_globe
+10 REM Fake sphere mapping
+20 cd "demos:3d":
+ GRAPHIC NEW t LOAD "bbc.png":
+ gw=gfxw t,gh=gfxh t,h=gh/3,w=gw/6:
+ palette copy t,0,256 to 0:
+ paper 0:
+ screen lock:swh=scrw/2
+30 r=scrh/3.1,xc=SCRw/2,yc=SCRh/2,xo=0:
+ do:
+    for y=-r+1 to r-1:
+       x1=sqr(r*r-y*y),
+       tv=(asn(y/r)+1.5)*h:
+       for x=-swh to swh:
+          plot ink gpoint(t,(xo-(sin(x/scrw*3.1)-1.5)*w) mod gw,tv);x+xc,y+yc:
+       next x:
+       for x=-x1 to x1:
+          plot ink gpoint(t,(xo+(asn(x/x1)-1.5)*w) mod gw,tv);x+xc,y+yc:
+       next x:
+    next y:
+    xo-=gw/360,xo%=gw:
+    wait screen:
+    cls:
+ loop

@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG palindrome
+10 REM Palindrome Checker
+20 INPUT "Give me a word or phrase: ";a$
+30 LET b$=UP$ a$,c$,d$="": FOR f=1 TO LEN a$: IF b$(f) IN ["A" TO "Z"] THEN LET c$=c$+b$(f),d$=b$(f)+d$: END IF: NEXT f
+40 PRINT "'";a$;"'";: IF c$=d$ THEN PRINT " is a Palindrome!" ELSE PRINT " is not a Palindrome."

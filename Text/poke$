@@ -1,0 +1,6 @@
+ZXASCII
+AUTO -1
+PROG poke$
+10 REM POKE$ demo
+20 LET a$="": FOR f=1 TO 255: LET a$=a$+CHR$ f: NEXT f
+30 CLS 0: FOR f=0 TO SCRh-1: POKE$ 0,((SCRw-255)/2)+(f*SCRw),a$: NEXT f

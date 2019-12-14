@@ -1,0 +1,41 @@
+ZXASCII
+AUTO -1
+PROG cwaves2
+10 rem Better CWaves
+20 a=1,f=10,xs=scrw,ys=scrh,z=0
+30 d=2+int(rnd*10),s=255/(d+1),i=s,r,g,b=rnd*255:
+ palette 0,r,g,b:
+ for h=0 to d-1:
+    palette i,rnd*255,rnd*255,rnd*255:
+    rainbow i-s to i:
+    i+=s:
+ next h:
+ palette 255,r,g,b:
+ rainbow i-s to 255
+40 n=2+rnd*10:
+ dim b(n,4);cx(scrw,2) base 0:
+ for h=1 to n;g=1 to 4:
+    b(h,g)=1.5+rnd*5.5:
+ next g;h:
+ t=0,ti=((rnd*2.5)/1E+5)*((int(rnd*255)&2)-1),
+ sy=ys*1.3,r=64+(rnd*1024),o=rnd*255,z=0
+50 for xa=0 to scrw-1:
+    x=xa/scrw,y=sin(x*f):
+    t+=ti:
+    for h=1 to n:
+       y+=sin(x*f*b(h,2)+t*b(h,3))*b(h,4):
+    next h:
+    y*=a*0.012,
+    y1=sy+y*ys:
+    y=(y+0.4)*r+o:
+    draw ink y;xa,0 to xa,scrh-1:
+    xb=xa,yb=y1:
+ next xa:
+ if sgn ti>0 then
+    palette shl 1,0 to 255
+ else
+    palette shr 1,0 to 255:
+ end if:
+ z=z or (inkey$="")
+80 wait screen:
+ go to 50-(20*((inkey$<>"") and z))

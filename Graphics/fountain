@@ -1,0 +1,31 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/fountain
+CHANGED FALSE
+10 paper 0: ink 15: cls: screen lock:
+ for f=0 to 127:
+    palette f,0,0,255-(f*2):
+    palette f+128,0,255-(f*2),255-(f*2):
+ next f:
+ palette 0,0,0,0:
+	degrees
+20 np=500: dim p(np,8)
+30 for f=1 to np:
+    go sub 100:
+ next f
+40 PLOT p(): PARTICLE p() GRAVITY 90,0.2
+50 for f=1 to np:
+    if p(f,2)>scrh then
+       go sub 100
+55 p(f,4)+=.05:p(f,3)+=p(f,8)
+60 next f:
+ wait screen: cls: go to 40
+100 p(f,1)=scrw/2,
+ p(f,2)=scrh,
+ p(f,3)=iif(rnd>.5,1,129),
+ p(f,4)=1,
+ p(f,5)=-1,
+ p(f,6)=(rnd*5)-2.5,
+ p(f,7)=-6-(rnd*7),
+ p(f,8)=rnd*4:
+ return

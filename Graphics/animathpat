@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG animathpat
+10 REM Mathematical Patterns
+20 d=15000,fc=100: DIM p1(d,3),p2(d,3),dd(d,2)
+30 GO SUB 70: GO SUB 70
+40 FOR f=1 TO d: dd(f,1)=(p2(f,1)-p1(f,1))/fc,dd(f,2)=(p2(f,2)-p1(f,2))/fc: NEXT f
+50 PLOT p2(): DO fc: FOR f=1 TO d: p2(f,1)-=dd(f,1),p2(f,2)-=dd(f,2): NEXT f: WAIT SCREEN: CLS 0: PLOT p2(): LOOP 
+60 GO SUB 70: GO TO 40
+70 MAT p2()=p1(): xf=SCRw*.47,yf=SCRh*.5: a=RND,b=.9998,c=2-2*a,x,j=0,y=RND*12+.1: FOR i=1 TO d: z=x,x=b*y+j,j=a*x+c*(x^2)/(1+x^2),y=(j-z): p1(i,1)=x*20+xf,p1(i,2)=y*20+yf,p1(i,3)=i/1000: NEXT i: RETURN 

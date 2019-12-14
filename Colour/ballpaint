@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG ballpaint
+10 REM Ball painter
+20 FOR f=0 TO 7: READ r$,g$,b$: FOR g=0 TO 31: PALETTE (f*32)+g,VAL r$,VAL g$,VAL b$: NEXT g: NEXT f: DATA "255-6*g","0","0","0","0","255-6*g","0","220-6*g","0","256-4*g-1","256-4*g-1","0","256-7*g-1","0","256-7*g-1","255-4*g-1","255-4*g-1","255-4*g-1","0","196-3*g-1","196-3*g-1","255-3*g-1","180-4*g-1","0"
+30 DIM c(8) BASE 0: FOR f=0 TO 7: READ d$: KEY c(f)=d$: LET c(d$)=f: NEXT f: DATA "r","b","g","y","v","w","c","o"
+40 LET clr$="r": PALETTE 0,0,0,0: CLS 0: SCREEN LOCK 
+50 LET a$=INKEY$: IF a$<>"" THEN IF POS(a$,"rbgyvwco") THEN LET clr$=a$ ELSE IF a$="a" THEN FOR f=1 TO 100: LET xc=RND*SCRw,yc=RND*SCRh,cl=INT(RND*8): GO SUB 80: NEXT f
+60 IF MOUSEBTN=1 THEN LET xc=MOUSEx,yc=MOUSEy,cl=c(clr$): GO SUB 80
+70 WAIT SCREEN : GO TO 50
+80 LET p=cl*32: FOR r=31 TO 1: CIRCLE INK p+r;xc,yc,r FILL: NEXT r: RETURN 

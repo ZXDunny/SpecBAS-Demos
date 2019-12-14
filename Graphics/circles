@@ -1,0 +1,30 @@
+ZXASCII
+AUTO -1
+PROG circles
+10 RADIANS: CLS 0: OVER 1: SCREEN LOCK
+20 n=3,sw=scrw,sh=scrh:
+ DIM xp(n);yp(n);xpct(n);ypct(n);c(n)
+30 FOR f=1 TO n:
+    GRAPHIC NEW c(f),SCRw*2,SCRh*2 TRANSPARENT 0:
+    gfx=c(f),ik=f:
+    GO SUB 90:
+    xp(f)=1+RND*SCRw/2,
+    yp(f)=1+RND*SCRh/2:
+ NEXT f
+40 i=0
+50 FOR f=1 TO n:
+    xPct(f)=(xp(f)*i)*0.0001,
+    yPct(f)=(yp(f)*i)*0.0001
+60    cx=(SCRw/2)*SIN(xpct(f))+SCRw/2,
+    cy=(SCRh/2)*SIN(ypct(f))+SCRh/2
+70    WINDOW PUT GRAPHIC c(f),0,cx-SCRw,cy-SCRh
+80 NEXT f:
+ WAIT SCREEN: i+=1: CLS 0:
+ GO TO 50
+90 WINDOW GRAPHIC gfx: CLS 0:
+ i=ik:
+ FOR r=SQR(SCRw*SCRw+SCRh*SCRh) TO 16 STEP -16:
+    CIRCLE INK i;sw,sh,r FILL:
+    i=ik-i:
+ NEXT r:
+ WINDOW 0: RETURN

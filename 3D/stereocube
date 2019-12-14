@@ -1,0 +1,38 @@
+ZXASCII
+AUTO -1
+PROG stereocube
+10 LET numpoints=8: LET numlines=12: DIM v(numpoints,3): DIM p(numpoints,2): DIM l(numlines,2)
+20 GO SUB 120
+30 LET cx=SCRw/2: LET cy=SCRh/2: LET dist=800
+40 LET xangle=0: LET yangle=0: LET zangle=0
+50 DEGREES: DO: INC zangle,0.75: INC yangle: INC xangle,1.75: LET xoff=-90: LET xs=-100: GO SUB 60: LET xoff=130: LET xs=100: GO SUB 60: WAIT SCREEN: CLS: LOOP 
+60 LET xsin=SIN xangle: LET xcos=COS xangle: LET ysin=SIN yangle: LET ycos=COS yangle: LET zsin=SIN zangle: LET zcos=COS zangle
+70 FOR n=1 TO numpoints: LET x=v(n,1): LET y=v(n,2): LET z=v(n,3): LET y1=y*xcos+z*xsin: LET z1=z*xcos-y*xsin: LET x2=x*ycos-z1*ysin: LET z2=x*ysin+z1*ycos: LET x3=x2*zcos-y1*zsin+xoff: LET y3=x2*zsin+y1*zcos: LET f=dist/(z2+dist): LET p(n,1)=(x3*f)+cx: LET p(n,2)=SCRh-((y3*f)+cy): NEXT n
+80 FOR n=1 TO numlines
+90 DRAW p(l(n,1),1)+xs,p(l(n,1),2) TO p(l(n,2),1)+xs,p(l(n,2),2)
+100 NEXT n
+110 RETURN 
+120 FOR n=1 TO numpoints
+130 READ v(n,1),v(n,2),v(n,3)
+140 NEXT n
+150 FOR n=1 TO numlines: READ l(n,1),l(n,2): NEXT n: RETURN 
+160 DATA -75,75,-75
+170 DATA 75,75,-75
+180 DATA 75,-75,-75
+190 DATA -75,-75,-75
+200 DATA -75,75,75
+210 DATA 75,75,75
+220 DATA 75,-75,75
+230 DATA -75,-75,75
+240 DATA 1,2
+250 DATA 2,3
+260 DATA 3,4
+270 DATA 4,1
+280 DATA 5,6
+290 DATA 6,7
+300 DATA 7,8
+310 DATA 8,5
+320 DATA 1,5
+330 DATA 2,6
+340 DATA 3,7
+350 DATA 4,8

@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG earth-moon-sun
+10 REM ABC Archive's Planets snippet
+20 CLS 0: SCREEN LOCK: LET moonspin=8: LET earthspin=2: LET yflip=0: LET sw=SCRw/2: LET sh=SCRh/2
+30 LET a=1: LET yflip=earthspin+yflip: LET d,di,r,ri,s,x,y,d2,r2,s2,t,x2,y2=0
+40 LET d=(d+earthspin) MOD 360: LET r=d*PI/180: LET di=(di+yflip) MOD 360: LET ri=di*(PI/180): LET s=10+(10+COS r*10): LET x=sw+(200*SIN r): LET y=sh+(50*SIN ri): LET d2=(d2+moonspin) MOD 360: LET r2=d2*(PI/180): LET s2=4+(COS r2*2)+(COS r*2)+4: LET t=50+(25*COS r): LET x2=x+(t*SIN r2): LET y2=y+(4*COS r2)
+50 IF 10*COS r>=0 THEN CIRCLE INK 6;sw,sh,100 FILL 
+60 IF 10*COS r2<=0 THEN CIRCLE INK 7;x2,y2,s2 FILL 
+70 CIRCLE INK 1;x,y,s FILL 
+80 IF 10*COS r2>0 THEN CIRCLE INK 7;x2,y2,s2 FILL 
+90 IF 10*COS r<0 THEN CIRCLE INK 6;sw,sh,100 FILL 
+100 WAIT SCREEN : CLS 0: GO TO 40

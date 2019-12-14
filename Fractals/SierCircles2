@@ -1,0 +1,32 @@
+ZXASCII
+AUTO -1
+PROG SierCircles2
+10 window depth 0,32:
+ screen lock:
+ def fn r(s)=max(255,128*(rnd*3))shl s:
+ p3=pi/180,p5=pi*-.5:
+ for n=3 to 8:
+    i=$32 shl 24:
+    ink i|fn r(16)|fn r(8)|fn r(0):
+    a=0,ra=tau/n:
+    do while a<tau-p3:
+       cls:
+       a+=p3:
+       levels=8-n+3:
+       proc r(scrw/2,scrh/2,scrh/6,n,a,levels):
+       wait screen:
+    loop:
+    pause 150:
+ next n
+20 def proc r(x,y,r,n,rao,l):
+    circle alpha x,y,r fill:
+    if l>0 then
+       local i,a=0:
+       for i=0 to n-1:
+          a=i*ra+rao+p5,
+          b=1.5*r,
+          c=x+b*cos a,
+          d=y+b*sin a:
+          proc r(c,d,r*.6,n,2*rao,l-1):
+       next i
+30 END PROC

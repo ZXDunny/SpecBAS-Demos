@@ -1,0 +1,8 @@
+ZXASCII
+AUTO -1
+PROG lissajous
+10 REM Lissajous curves
+20 LET m,n=CEIL(RND*100),d=RND,sx=SCRw/2,sy=SCRh/2
+30 FOR t=0 TO 2*PI STEP .001: LET x=sx*SIN(m*t)+SCRw/2,y=sy*SIN((n*t)+(d*PI))+SCRh/2: IF t=0 THEN PLOT x,y ELSE DRAW TO x,y
+40 NEXT t
+50 PAUSE 0: CLS: RUN 

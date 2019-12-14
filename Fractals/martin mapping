@@ -1,0 +1,4 @@
+ZXASCII
+AUTO -1
+PROG martin mapping
+10 s=12,x,y=0,a=RND*9999/5002-RND*9999/5002*2,b=RND*200/100-RND*200/100+.0001,c=RND*300/100-RND*300/100+.0001,p=RND,d=1+RND*4: DO 250000: PLOT x*s+400,y*s+240: xx=y-SGN x*ABS(b*x-c)^p/d,y=a-x,x=xx: LOOP: PAUSE 0: RUN 

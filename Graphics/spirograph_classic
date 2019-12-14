@@ -1,0 +1,23 @@
+ZXASCII
+AUTO -1
+PROG spirograph_classic
+10 REM Classic spirograph
+20 R=INT(RND*(SCRh/4)+SCRh/4),r2=INT((RND*100)-50),
+ o=INT((RND*100)-50): 
+ IF ABS(ABS(o)-ABS(r2))<20 OR r2=0 THEN 
+    GO TO 20
+30 DEGREES: 
+ dur=1,stp=.01,w=SCRw/2,h=SCRh/2,samples=1+360*((ABS r2)/GCD(r,ABS(r2))),
+ d=samples/(dur*500),s=0:
+ ink 1 shl int(rnd*3)
+50 FOR a=0 TO samples STEP stp: 
+    x=(r+r2)*COS(a)-(r2+o)*COS(((r+r2)/r2)*a),
+    y=(r+r2)*SIN(a)-(r2+o)*SIN(((r+r2)/r2)*a): 
+    PLOT x+w,y+h
+60    s+=stp: 
+    IF s>=d THEN 
+       s=0: 
+       WAIT SCREEN
+70 NEXT a
+80 PAUSE 0: 
+ RUN

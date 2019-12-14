@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/fern2
+CHANGED FALSE
+10 REM Black Spleenwort fractal
+20 DIM a=0,.20,-.15,.85;b=0,-.26,.28,.04;c=0,.23,.26,-.04;
+	    d=.16,.22,.24,.85;e=0,0,0,0;f=0,1.6,.44,1.6;p=328,2621,4925,32767
+30 xs,ys=40,xo=300,yo=80,x,y=0
+40 FOR i=1 TO 50000: j=RND*32767: k=IIF(j<p(1),1,IIF(j<p(2),2,IIF(j<p(3),3,4))),nx=a(k)*x+b(k)*y+e(k),y=c(k)*x+d(k)*y+f(k),x=nx: PLOT x*xs+xo,350-y*ys+yo: NEXT i

@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG sphere3d
+10 REM 3D Sphere
+20 RADIANS: LET np=5000: LET hlines=SQR np: LET vlines=hlines: LET r=100
+30 DIM pts(hlines*vlines,3)
+40 LET i=1: FOR m=1 TO vlines: FOR n=0 TO hlines: LET pts(i,1)=r*(SIN(PI*m/vlines)*COS(2*PI*n/hlines)): LET pts(i,2)=r*(SIN(PI*m/vlines)*SIN(2*PI*n/hlines)): LET pts(i,3)=r*(COS(PI*m/vlines)): INC i: NEXT n: NEXT m
+45 SCREEN LOCK: LET c=(2*PI)/360: LET angle=0
+50 PROJECT3D pts() TO dst() ROTATE angle,angle,angle
+60 PLOT dst()
+70 INC angle,c,0 TO 2*PI
+80 WAIT SCREEN: CLS: GO TO 50

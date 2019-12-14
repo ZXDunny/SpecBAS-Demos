@@ -1,0 +1,43 @@
+ZXASCII
+AUTO -1
+PROG demos:3d/point clouds
+CHANGED FALSE
+10 LET nd=25000,s=0,c=5,m=1:
+ DIM p(nd,4):
+ FPS 60:
+ SCREEN LOCK:
+ DEGREES
+20 rx,ry,rz=RND*2-1,hx,hy,hz=0,sc=1.5:
+ DIM a$="sin(","cos(";b$="xd)","t*360/nd)";e$(3):
+ DEF FN t$=a$(RND+1)+b$(RND+1):
+ FOR i=1 TO 3:
+    e$(i)="",o=INT(1+RND*c):
+    FOR j=1 TO o:
+       e$(i)=e$(i)+FN t$+IIF$(j<o,"*",""),s=MAX(30*o,s):
+    NEXT j:
+    e$(i)=TOKEN$(e$(i)+"*s"):
+ NEXT i:
+25 FOR t=1 TO nd:
+    xd=IIF(m=1,t MOD 1800,RND*1800),
+    p(t,1)=VAL e$(1)*sc,p(t,2)=VAL e$(2)*sc,p(t,3)=VAL e$(3)*Sc:
+ NEXT t
+30 TRANSFORM3D p() to t() ROTATE hx,hy,hz:
+	hx+=rx,hy+=ry,hz+=rz:
+ PROJECT3D t() TO d()
+40 CLS:print at 0,0;"Press 'l' to switch between points and lines"'"any other key for a new shape":
+ IF m THEN
+    POLYGON d() OPEN
+ ELSE
+    PLOT d()
+50 WAIT SCREEN:
+ n=20:
+ s$=INKEY$:
+ IF s$="" THEN
+    GO TO 30
+ ELSE
+    IF s$="l" THEN
+       m=NOT m:
+       n=25
+60 DO:
+ LOOP UNTIL INKEY$="":
+ GO TO n

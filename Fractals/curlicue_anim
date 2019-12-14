@@ -1,0 +1,5 @@
+ZXASCII
+AUTO -1
+PROG curlicue_anim
+10 LET x,y,f,i=0,d=3.14: SCREEN LOCK 
+20 FOR i=-1 TO 11500*4: LET f=f+d: LET x=-x+COS(i*f),y=-y+SIN(i*f): PLOT x+400,y+240: NEXT i: INC d,.0000001/(180*PI): WAIT SCREEN: CLS: LET f,x,y=0: GO TO 20

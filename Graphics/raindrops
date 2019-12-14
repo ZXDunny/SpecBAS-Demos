@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG raindrops
+10 PALETTE 0,128,128,128: PAPER 0: CLS: FOR f=1 TO 255: PALETTE f,f/2,f/2,f/2: NEXT f
+20 LET md=100: DIM drop(md,3): FOR a=1 TO md: LET drop(a,1)=RND*SCRw,drop(a,2)=RND*SCRh,drop(a,3)=RND*40: NEXT a
+30 FOR a=1 TO md: IF drop(a,3)<=40 THEN CIRCLE INK 1+drop(a,3)*6.374;drop(a,1),drop(a,2),drop(a,3): INC drop(a,3) ELSE LET drop(a,1)=RND*SCRw,drop(a,2)=RND*SCRh,drop(a,3)=0
+40 NEXT a: WAIT SCREEN: CLS: GO TO 30

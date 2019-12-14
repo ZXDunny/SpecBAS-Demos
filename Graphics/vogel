@@ -1,0 +1,20 @@
+ZXASCII
+AUTO -1
+PROG vogel
+10 REM Vogel's Pattern
+20 PALETTE 1,102,37,6:
+ PALETTE 128,254,153,41:
+ PALETTE 255,255,255,229:
+ RAINBOW 1 TO 128:
+ RAINBOW 128 TO 255:
+ PAPER 0:
+ CLS:
+ degrees
+30 c=5*(scrh/480):
+ FOR n=1 TO 2000:
+    r=c*SQR n,
+    t=n*137.508,
+    x=scrw/2+r*COS t,
+    y=scrh/2+r*SIN t:
+    CIRCLE INK 17.1*SQR r;x,y,3 FILL:
+ NEXT n

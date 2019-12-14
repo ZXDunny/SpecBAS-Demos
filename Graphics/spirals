@@ -1,0 +1,19 @@
+ZXASCII
+AUTO -1
+PROG spirals
+10 screen lock:oang=0
+20 cls 0:
+ da=.025*oang,c=1,r=0,dr=.4,clr=1
+30 ang=oang:
+ for a=0 to 4000:
+    x=scrw/2+cos(ang)*r,
+    y=scrh/2+sin(ang)*r:
+    circle ink clr;x,y,4 fill:
+    clr+=iif(clr<=15,.015,-14):
+    r+=dr,
+    ang+=da,
+    c+=.001:
+ next a:
+ oang+=.01:
+ wait screen:
+ GO To 20

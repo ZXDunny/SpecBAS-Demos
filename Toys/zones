@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG demos:toys/zones
+CHANGED FALSE
+10 REM Zones demo
+20 REM Try to hit the zone!
+30 LET score=0: LET z=-1: LET t=2
+40 CLS: LET sze=10+INT(RND*40): LET x=RND*(SCRw-sze): LET y=RND*(SCRh-sze)
+50 IF z<>-1 THEN ZONE ERASE z
+60 ZONE NEW z,x,y,sze,sze: RECTANGLE INK 2;x,y TO x+sze,y+sze FILL "": PRINT AT 0,0;"Score = ";score
+70 LET ms=mSECS
+80 IF MOUSEBTN=1 AND INZONE(MOUSEx,MOUSEy)=z THEN INC score: LET t=MAX(t*0.9,0.5): GO TO 40
+90 IF (mSECS-ms)/1000<T THEN wait screen: GO TO 80
+100 GO TO 40

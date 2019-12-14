@@ -1,0 +1,72 @@
+ZXASCII
+AUTO -1
+PROG 3dmaze
+10 SCREEN LOCK : FONT 1: PALETTE 4,0,128,0: PALETTE 1,128,80,0: PALETTE 2,192,128,0: PALETTE 3,80,80,0
+20 LET sw=SCRw/2: LET sh=SCRh/2: LET mw=(SCRw/FONTw)-1: LET mh=(SCRh/FONTh)-1: DIM c$(mh,mw)
+30 DIM a$(1000)
+40 DIM b$(1000)
+50 LET x=mh-2
+60 LET y=mw-2
+70 LET z=1
+80 FOR w=1 TO mw: FOR h=1 TO mh
+90 LET c$(h,w)=" #"(1+((w>1) AND (w<mw) AND (h>1) AND (h<mh)))
+100 NEXT h: NEXT w
+110 LET c=0: LET d=0: LET c$(x,y)=" "
+120 IF c$(x+2,y)="#" OR c$(x-2,y)="#" OR c$(x,y+2)="#" OR c$(x,y-2)="#" THEN GO TO 180
+130 LET z=z-1
+140 IF z=0 THEN GO TO 300
+150 LET x=CODE a$(z)
+160 LET y=CODE b$(z)
+170 GO TO 110
+180 LET a$(z)=CHR$ x
+190 LET b$(z)=CHR$ y
+200 LET z=z+1
+210 LET r=INT(RND*4)
+220 LET c=(r=0)-(r=1)
+230 LET d=(r=2)-(r=3)
+240 IF c$(x+2*c,y+2*d)=" " THEN GO TO 210
+250 LET c$(x+c,y+d)=" "
+260 LET c$(x+2*c,y+2*d)=" "
+270 LET x=x+2*c
+280 LET y=y+2*d
+290 GO TO 110
+300 LET x=3
+310 LET y=3
+320 LET r=1
+330 IF INKEY$<>"" THEN GO TO 330
+340 CLS 0: LET fw=FONTw/2: LET fh=FONTh/2: FOR h=1 TO mh: FOR w=1 TO mw: IF c$(h,w)="#" THEN PRINT MOVE w*FONTw-fw,h*FONTh-fh;" ": END IF: NEXT w: NEXT h
+350 PRINT MOVE y*FONTw-fw,x*FONTh-fh;PAPER RND*7;" "
+360 IF INKEY$="" THEN WAIT SCREEN : GO TO 350
+370 CLS 
+380 IF r=1 THEN LET nc=2: LET ec=3: LET sc=1: LET wc=6
+390 IF r=2 THEN LET nc=3: LET ec=1: LET sc=6: LET wc=2
+400 IF r=3 THEN LET nc=1: LET ec=6: LET sc=2: LET wc=3
+410 IF r=4 THEN LET nc=6: LET ec=2: LET sc=3: LET wc=1
+420 LET k=sw
+430 LET l=sh
+440 LET p=(r=1)-(r=3)
+450 LET q=(r=2)-(r=4)
+460 LET j=-1
+470 IF l<3 THEN PLOT sw-(k*4),sh: DRAW INK 4;k*8,0: GO TO 570
+480 IF c$(x+j*p+p,y+j*q+q)="#" THEN PLOT sw-k,sh+l: DRAW 2*k,0: PLOT sw-k,sh-l: DRAW 2*k,0: FILL INK nc;sw,sh: GO TO 570
+490 LET j=j+1
+500 IF c$(x+j*p-q,y+j*q+p)="#" THEN PLOT sw-k,sh+l: DRAW k/4,-l/4: DRAW 0,-l*3/2: DRAW -k/4,-l/4: FILL INK ec;(sw-k)+2,sh: GO TO 520
+510 PLOT sw-k,sh+l*3/4: DRAW k/4,0: DRAW 0,-l*3/2: DRAW -k/4,0: FILL INK nc;(sw-k)+2,sh
+520 IF c$(x+j*p+q,y+j*q-p)="#" THEN PLOT sw+k,sh+l: DRAW -k/4,-l/4: DRAW 0,-l*3/2: DRAW k/4,-l/4: FILL INK wc;sw+k-2,sh: GO TO 540
+530 PLOT sw+k,sh+l*3/4: DRAW -k/4,0: DRAW 0,-l*3/2: DRAW k/4,0: FILL INK nc;sw+k-2,sh
+540 LET k=INT(k*3/4)
+550 LET l=INT(l*3/4)
+560 GO TO 470
+570 IF x+j*p=mh-2 AND y+j*q=mw-2 THEN PLOT sw-k,sh+l: DRAW 2*k,-2*l: PLOT sw-k,sh-l: DRAW 2*k,2*l
+580 IF x=mh-2 AND y=mw-2 THEN STOP 
+590 FILL INK 4;sw,SCRh-2: FILL INK 5;sw,1: WAIT SCREEN 
+600 IF INKEY$<>"" THEN GO TO 600
+610 IF INKEY$="" THEN GO TO 610
+620 IF KEYST KEY_UP AND c$(x+p,y+q)=" " THEN LET x=x+p: LET y=y+q
+630 IF KEYST KEY_DOWN AND c$(x-p,y-q)=" " THEN LET x=x-p: LET y=y-q
+640 IF KEYST KEY_RIGHT THEN LET r=r-1
+650 IF KEYST KEY_LEFT THEN LET r=r+1
+660 IF r=5 THEN LET r=1
+670 IF r=0 THEN LET r=4
+680 IF KEYST KEY_HOME THEN GO TO 330
+690 GO TO 370

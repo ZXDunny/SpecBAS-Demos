@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG petridish
+10 REM Petri-dish sim
+20 REM Let it run, it takes a few minutes!
+30 LET n=10000: DIM x(n): DIM y(n): WINDOW NEW w,0,0,SCRw,SCRh TRANSPARENT 0: WINDOW w: CLS 0: CIRCLE INK 6;SCRw/2,SCRh/2,SCRh/3: CIRCLE INK 6;SCRw/2,SCRh/2,(SCRh/3)+3: FILL INK 6;SCRw/2-SCRh/3-1,SCRh/2: WINDOW 0
+40 DEGREES: FOR f=1 TO n: LET r=RND*(SCRh/3): LET a=RND*360: LET x(f)=SCRw/2+(COS(a)*r): LET y(f)=SCRh/2+(SIN(a)*r): NEXT f
+50 SCREEN LOCK 
+60 CLS: FOR f=1 TO n: PLOT INK 0;x(f),y(f)
+70 LET dx=INT(RND*3)-1: LET dy=INT(RND*3)-1
+80 WINDOW w: IF POINT(x(f)+dx,y(f)+dy)<>0 THEN PLOT INK 6;x(f),y(f): LET r=RND*(SCRh/3): LET a=RND*360: LET x(f)=SCRw/2+(COS(a)*r): LET y(f)=SCRh/2+(SIN(a)*r): ELSE INC x(f),dx: INC y(f),dy
+90 WINDOW 0: NEXT f: WAIT SCREEN: GO TO 60

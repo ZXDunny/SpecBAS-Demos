@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/kamtorus
+CHANGED FALSE
+10 REM KAM Torus
+20 b=1.5,a=(scrh/scrw)*b:
+	window origin 0,-b,-a to b,a:
+	SCREEN LOCK: PAPER 0: CLS
+30 st=.05,ed=1.5,pc=500:
+	FOR b=0 TO TAU STEP .0001
+40    a=b+PI/3:
+				FOR o=0 TO ed STEP st:
+				   x=o/3,y=x:
+							INK o*(256/ed)+1:
+							FOR p=1 TO pc:
+							   xo=x,
+										x=x*COS a+(x^2-y)*SIN a,
+										y=xo*SIN a-(xo^2-y)*COS a:
+										PLOT x,y:
+							NEXT p:
+				NEXT o:
+				WAIT SCREEN:
+				CLS:
+				b+=.001*(INKEY$<>""):
+	NEXT b:
+	GO TO 30

@@ -1,0 +1,20 @@
+ZXASCII
+AUTO -1
+PROG pattern2
+10 FOR x=0 TO scrw STEP 8:
+    FOR y=0 TO scrh STEP 8:
+       d=Iif(rnd>.5,1,-1):
+       PLOT x,y+4*d+1:
+       DRAW 8,-8*d:
+    NEXT y:
+ NEXT x
+20 FOR x=0 TO SCRw-1 STEP 7:
+    FOR y=2 TO SCRh-1 STEP 7
+30       IF POINT(x,y)=8 THEN
+          FILL INK (RND*15)+1;x,y:
+          wait screen
+40    NEXT y:
+ NEXT x:
+ PAUSE 0:
+ cls:
+ GO TO 10

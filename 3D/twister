@@ -1,0 +1,61 @@
+ZXASCII
+AUTO -1
+PROG demos:3d/twister
+CHANGED FALSE
+10 REM Twister demo effect
+20 PAPER 0: MOUSE HIDE: CLS: SCREEN LOCK:
+	GO SUB 120
+30 DEGREES:
+	sw=SCRw,sh=SCRh,ang=0,xoff=sw/2-20,aa=1,t=mSECS
+40 ys=0,amp=6+SIN(COS(aa)*17)*16:
+	FOR y=0 TO Sh-1:
+	   ym=y MOD gw+1,yamp=(y/amp)+ang
+50    x1=(SIN yamp*100)+xoff,
+				x2=(SIN(yamp+90)*100)+xoff,
+				x3=(SIN(yamp+180)*100)+xoff,
+				x4=(SIN(yamp+270)*100)+xoff
+70    IF x2-x1>1 THEN POKE$ 0,ys+x1,tex$(1,ym,x2-x1)
+80    IF x3-x2>1 THEN POKE$ 0,ys+x2,tex$(2,ym,x3-x2)
+90    IF x4-x3>1 THEN POKE$ 0,ys+x3,tex$(3,ym,x4-x3)
+100    IF x1-x4>1 THEN POKE$ 0,ys+x4,tex$(4,ym,x1-x4)
+110    ys+=SCRw:
+	NEXT y:
+	t1=mSECS,aa+=(t1-t)/20,t=t1,ang=-180+SIN aa*180:
+	WAIT SCREEN: CLS:
+	GO TO 40
+120 REM Prepare texture
+130 PALETTE DEFAULT: INK 15:
+	PRINT MOVE (SCRw-(FONTw*32))/2,(SCRh/2)-FONTh*2;"Please wait - preparing textures":
+	Wait screen
+140 GRAPHIC NEW tex LOAD "twist_tex.bmp":gw=GFXw tex/4
+150 IF FILEEXISTS "twister_dat" THEN
+	   LOAD "twister_dat" DATA :
+				GO TO 210
+160 DIM tex$(4,gw,gw):
+	WINDOW GRAPHIC tex
+170 pc=gw:
+	FOR y=0 TO gw-1:
+	   y1=y+1:
+				FOR x=1 TO gw:
+				   s=gw/x,t1$="",t2$="",t3$="",t4$="",sx=0
+180       IF LEN t1$<x THEN
+							   t1$=t1$+CHR$(POINT(sx,y)),
+										t2$=t2$+CHR$(POINT(sx+gw,y)),
+										t3$=t3$+CHR$(POINT(sx+gw+gw,y)),
+										t4$=t4$+CHR$(POINT(sx+gw+gw+gw,y)):
+										sx+=s:
+										GO TO 180
+190       tex$(1,y1,x)=t1$,
+							tex$(2,y1,x)=t2$,
+							tex$(3,y1,x)=t3$,
+							tex$(4,y1,x)=t4$:
+				NEXT x:
+				WINDOW 0:
+				PRINT MOVE SCRw/2,SCRh/2;100-INT(pc/gw*100);"%     ":
+				SCREEN UPDATE:
+				WINDOW GRAPHIC tex:
+				pc-=1:
+	NEXT y
+200 SAVE "twister_dat" DATA tex$()
+210 WINDOW 0: PALETTE COPY tex,0,256 TO 0
+220 RETURN

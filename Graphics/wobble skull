@@ -1,0 +1,25 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/wobble skull
+CHANGED FALSE
+10 GRAPHIC NEW skull LOAD "pm.bmp": 
+	PALETTE COPY skull,0,256 TO 0
+20 WINDOW NEW w,0,0,GFXw skull,GFXh skull: 
+	WINDOW PUT GRAPHIC skull,w,0,0: 
+	WINDOW HIDE w: 
+	window 0
+30 s=2,wamp=6,wfreq=.2,x=0,
+	gw=GFXw skull,
+	ox=(SCRw-gw*s)/2,
+	oy=(SCRh-GFXh skull*s)/2: 
+	WINDOW 0: 
+	CLS 0
+40 x-=.5,m=x: 
+	FOR i=0 TO GFXh skull-1: 
+	   m+=wfreq,
+				dx=ox+SIN (m/3)*wamp,
+				dy=oy+i*s: 
+				WINDOW COPY w,0,i,gw-1,1 TO 0,dx,dy,gw*s,s: 
+	NEXT i
+50 WAIT SCREEN : 
+	GO TO 40

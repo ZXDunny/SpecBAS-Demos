@@ -1,0 +1,5 @@
+ZXASCII
+AUTO -1
+PROG rainbow_gradient
+10 WINDOW DEPTH 0,32: LET sw=SCRw/2,sh=SCRh/2
+20 FOR x=0 TO SCRw: FOR y=0 TO SCRh: PLOT INK RGBtoINT(255-x/SCRw*255,127-127*(ABS(sw-x)/sw)+127-127*(ABS(sh-y)/sh),y/SCRh*255);x,y: NEXT y: NEXT x

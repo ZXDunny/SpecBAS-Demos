@@ -1,0 +1,6 @@
+ZXASCII
+AUTO -1
+PROG chimes
+10 SAMPLE NEW chimes,"chimes.wav"
+20 FOR f=1 TO 20: SAMPLE PLAY chimes RATE 11025+(RND*48000) LOOP: NEXT f
+30 PAUSE 0

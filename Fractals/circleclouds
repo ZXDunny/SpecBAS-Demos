@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG circleclouds
+10 REM Filled circles animation
+20 FOR f=0 TO 255: PALETTE HSV f,f*1.4,255,255: NEXT f: CLS 1
+25 LET nc=1024: DIM c(nc,3): FOR f=1 TO nc: LET c(f,1)=RND*SCRw: LET c(f,2)=RND*SCRh: LET c(f,3)=RND*200: NEXT f
+50 FOR f=1 TO nc: CIRCLE OVER 2;INK 1;c(f,1),c(f,2),c(f,3) FILL: NEXT f: GO TO 50

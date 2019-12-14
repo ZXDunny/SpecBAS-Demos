@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG spinner
+10 REM Spinner
+20 LET sq=480,rc=127,c=sq/2,i=0: FOR f=0 TO 127: PALETTE f,0,0,f*2: PALETTE f+128,f*2,0,0: NEXT f: PALETTE 0,0,255,0: CLS 0
+40 INC i,(MOUSEy-c)/sq*1.57: LET dx=rc*SIN i,dy=rc*COS i
+50 FOR j=1 TO rc: CIRCLE INK j;c+dx,c+dy,j: CIRCLE INK 128+j;c-dx,c-dy,j: NEXT j: WAIT SCREEN: GO TO 40

@@ -1,0 +1,44 @@
+ZXASCII
+AUTO -1
+PROG lensflare
+1 REM Lens-flare(ish)
+10 LET num=6000: LET x=0: LET y=0:
+	DIM nx(num,3):
+	FOR j=1 TO num:
+	   LET nx(j,1)=RND*SCRw:
+				LET nx(j,2)=RND*SCRh:
+				LET nx(j,3)=4+(RND*16):
+	NEXT j:
+	PALETTE DEFAULT:
+	FOR f=16 TO 255:
+	   PALETTE f,f,f,f:
+	NEXT f:
+	CLS 8: SCREEN LOCK
+20 LET x2=MOUSEx: LET y2=MOUSEy
+30 FOR j=1 TO num:
+	   LET x1=nx(j,1): LET y1=nx(j,2):
+				LET ik=MIN(255,PYTH(ABS(x2-x1),ABS(y2-y1))):
+				INK 255-ik:
+	   LET r=ik/16
+50    IF x1<>x2 THEN
+				   LET an=ATN((y1-y2)/(x1-x2))
+				ELSE
+				   LET an=1
+60    IF x1>x2 THEN
+				   LET x=(COS((an)-PI))*r:
+							LET y=(SIN((an)-PI))*r
+				ELSE
+				   IF x1<x2 THEN
+							   LET x=(COS((an)))*r:
+										LET y=(SIN((an)))*r
+							ELSE
+							   IF y1>y2 THEN
+										   DRAW x1,y1 TO x2,y2-r
+										ELSE
+										   DRAW x1,y1 TO x2,y2+r
+70    DRAW x1,y1 TO x1+x,y1+y:
+				CIRCLE x1+x,y1+y,3 FILL ""
+80 NEXT j:
+	WAIT SCREEN:
+	CLS:
+	GO TO 20

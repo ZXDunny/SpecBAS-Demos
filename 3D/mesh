@@ -1,0 +1,85 @@
+ZXASCII
+AUTO -1
+PROG mesh
+10 REM Art5 from Blitzbasic
+20 CONST x=0,y=1,z=2,sx,vx=3,sy,vy=4,fx=5,fy=6,i=7:
+ sw=scrw,sh=scrh,sw2=sw/2,sh2=sh/2
+30 FOR h=1 TO 255:
+    PALETTE HSV h,h*(360/255),255,255:
+ NEXT h
+40 sz=30,af=2+INT(RND*6),ang=0,ck=256*(INT(RND*4)+1)
+50 DIM cn(sz+1,sz+1,8) BASE 0
+60 FOR a=0 TO sz:
+    FOR b=0 TO sz:
+       tx=(a/sz)*4-2,ty=(b/sz)*4-2,
+       x1=(tx+ty)/2,y1=(tx-ty)/2,
+       cn(a,b,x)=x1,
+       cn(a,b,y)=y1,
+       x1=x1*PI,
+       y1=y1*PI,
+       cn(a,b,z)=SQR((y1*SIN(y1+x1*COS x1))^2+(x1*COS(x1+y1*SIN y1))^2)/10:
+    NEXT b:
+ NEXT a
+70 DIM hpt(af+1,5) BASE 0
+80 FOR c=0 TO af:
+    hpt(c,x)=RND*sz,
+    hpt(c,y)=RND*sz,
+    hpt(c,z)=(RND-0.5)*(RND*1.25),
+    hpt(c,vx)=(RND+0.2)/4,
+    hpt(c,vy)=(RND+0.2)/4:
+ NEXT c
+90 SCREEN LOCK :
+ DO:
+    ang=MOUSEx/800*PI*2,
+    qs=SIN ang,
+    qc=COS ang
+100    FOR c=0 TO af:
+       x1=hpt(c,x)+hpt(c,vx),
+       y1=hpt(c,y)+hpt(c,vy)
+110       IF x1<0 OR x1>sz THEN
+          hpt(c,vx)=-hpt(c,vx)
+       ELSE
+          hpt(c,x)=x1
+120       IF y1<0 OR y1>sz THEN
+          hpt(c,vy)=-hpt(c,vy)
+       ELSE
+          hpt(c,y)=y1
+130    NEXT c
+140    FOR a=0 TO sz:
+       FOR b=0 TO sz:
+          tx=cn(a,b,x)*qc-cn(a,b,y)*qs,
+          ty=cn(a,b,x)*qs+cn(a,b,y)*qc,tot,tz=0:
+          FOR t=0 TO af:
+             dx=a-hpt(t,x),
+             dy=b-hpt(t,y),
+             dist=dx*dx+dy*dy,
+             fac=1/(dist+.1),
+             tot+=fac,
+             tz+=fac*hpt(t,z):
+          NEXT t:
+          tz/=tot,
+          rx=tx,
+          ry=ty*0.866-0.5*tz,
+          rz=ty*0.5+1.25*tz,
+          fac=1/(ry+4),
+          cn(a,b,sx)=sw2+rx*fac*sw,
+          cn(a,b,sy)=sh2-rz*fac*sh,
+          cn(a,b,i)=(((tz+1)*ck) MOD 255)+1:
+       NEXT b:
+    NEXT a
+150    FOR a=sz-1 TO 0:
+       FOR b=sz-1 TO 0:
+          INK cn(a,b,i):
+          POLYGON cn(a,b,sx),cn(a,b,sy) TO
+                  cn(a+1,b,sx),cn(a+1,b,sy) TO
+                  cn(a+1,b+1,sx),cn(a+1,b+1,sy) TO
+                  cn(a,b+1,sx),cn(a,b+1,sy):
+       NEXT b:
+    NEXT a
+160    PALETTE SHL 1,1 TO 255:
+    WAIT SCREEN:
+    CLS 0:
+ LOOP UNTIL INKEY$<>""
+170 DO :
+ LOOP UNTIL INKEY$="":
+ RUN

@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG mandala life
+10 REM Mandala Life
+20 PAPER 0: CLS: FOR f=1 TO 9: READ r,g,b: PALETTE f,r,g,b: NEXT f: SCREEN LOCK 
+30 DATA 255,255,255,0,255,255,128,128,128,0,255,0,0,0,255,255,0,255,255,0,0,128,0,0,128,0,128
+40 LET an=75,s=INT(SCRh/an),bb=an*s,g=0,xp=-s+(SCRw-s*an)/2,yp=-s+(SCRh-s*an)/2
+50 DIM a(an,an),ng(an,an)
+60 IF ODD g THEN FOR x=1 TO an: LET a(x,1),a(x,an),a(1,x),a(an,x)=1: NEXT x
+70 FOR x=2 TO an-1: FOR y=2 TO an-1: LET pc=a(x-1,y-1)+a(x-1,y)+a(x-1,y+1)+a(x,y-1)+a(x,y+1)+a(x+1,y-1)+a(x+1,y)+a(x+1,y+1)
+80 LET ng(x,y)=IIF(a(x,y),pc IN [2 TO 4,6],pc IN [3,4]): RECTANGLE INK (pc+1)*(a(x,y)=0);x*s+xp,y*s+yp,s,s FILL: NEXT y: NEXT x
+90 MAT a()=ng(): WAIT SCREEN: INC g: GO TO 60

@@ -1,0 +1,25 @@
+ZXASCII
+AUTO -1
+PROG doilies
+10 REM Doilies
+20 DEF FN a(b)=360/INT(360/INT b)
+30 s$="Any key... ",
+ tx=SCRw-(LEN s$*8),ty=SCRh-9
+40 DO: 
+    a1i=FN a(1+RND*22),
+    a2i=FN a(1+RND*22),
+    it=LCM(360/a1i,360/a2i): 
+ LOOP UNTIL a1i<>a2i AND it IN [50 TO 1000]
+50 a1,a2=0,cx=SCRw/2,cy=SCRh/2,r1=cy-1,r2=50+RND*(cy-50)
+60 PAPER 0: INK 1+RND*15: CLS: DEGREES
+70 CIRCLE cx,cy,r1;cx,cy,r2
+80 DO it: 
+    x1=cx+SIN a1*r1,
+    y1=cy+COS a1*r1,
+    x2=cx+SIN a2*r2,
+    y2=cy+COS a2*r2
+90    DRAW x1,y1 TO x2,y2
+100    a1+=a1i,a2+=a2i: 
+    WAIT SCREEN: 
+ LOOP
+110 PRINT INK 15;MOVE tx,ty;s$: PAUSE 0: RUN

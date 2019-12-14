@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG c_curve
+10 REM C-Curve
+20 DEF PROC crv(x1,y1,x2,y2,l): IF l<=0 THEN DRAW y1,x1 TO y2,x2 ELSE LOCAL xm=(X1+x2+y1-y2)/2,ym=(x2+y1+y2-x1)/2: PROC crv(x1,y1,xm,ym,l-1): PROC crv(xm,ym,x2,y2,l-1)
+30 END PROC
+40 PROC crv(384,210,384,590,14)

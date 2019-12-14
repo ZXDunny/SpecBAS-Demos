@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG burning ship
+10 REM Burning Ship fractal
+20 GO SUB 90
+30 LET b=12: FOR f=0 TO 254: LET n=((f^b)/2^(8*(b-1))): PALETTE f,n,n,n: NEXT f: PALETTE 255,0,0,0
+40 FOR i=0 TO SCRw-1;j=0 TO SCRh: LET p0x,py=0,cx=mx+2*r*(i/SCRh-.5),cy=my+2*r*((SCRh-j)/SCRh-.5): FOR k=254 TO 0 STEP -1: LET px=p0x*p0x-py*py-cx,py=2*ABS(p0x*py)-cy,p0x=px: IF PYTH(px,py)<=3.16 THEN NEXT k: END IF: PLOT INK k;i,j: NEXT j;i
+70 STOP 
+80 LET mx=-0.5,my=0.75,r=1.5: RETURN: REM Whole ship
+90 LET mx=1.755,my=0.03,r=0.04: RETURN: REM First small ship
+100 LET mx=1.625,my=0.035,r=0.04: RETURN: REM Second small ship
+110 LET mx=1.941,my=0.004,r=0.005: RETURN: REM Tiny ship in tail
+120 LET mx=1.861,my=0.005,r=0.008: RETURN: REM Another small one

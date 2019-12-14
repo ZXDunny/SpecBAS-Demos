@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG orbits
+10 REM Galactic Orbitals
+11 PAPER 0: OVER 1: CLS 
+20 w=SCRw,h=SCRh,num=w*h/810,i=0: DIM arr(num,4): FOR f=1 TO num: arr(f,1)=RND*w,arr(f,2)=RND*h: NEXT f
+30 DEF FN x(i)=SIN(arr(i,2)/45)/.5: DEF FN y(i)=SIN(arr(i,1)/45)/.5
+40 FOR i=1 TO num: arr(i,1)+=arr(i,3),arr(i,2)+=arr(i,4)
+50 IF arr(i,1)<0 THEN arr(i,1)+=w ELSE IF arr(i,1)>w THEN arr(i,1)-=w
+60 IF arr(i,2)<0 THEN arr(i,2)+=h ELSE IF arr(i,2)>h THEN arr(i,2)-=h
+70 arr(i,4)=FN y(i),arr(i,3)=FN x(i)
+80 CIRCLE INK i MOD 255;arr(i,1),arr(i,2),15/MAX((arr(i,3)^2+arr(i,4)^2),.5) FILL 
+90 NEXT i: WAIT SCREEN: CLS: GO TO 40
+100 OVER 7: CLS: FOR f=10 TO 1: PRINT AT 0,0;f: CIRCLE 100,100,f FILL: PAUSE 0: CLS: NEXT f
+110 FOR f=20 TO 1: CLS: CIRCLE 100,100,f FILL: PAUSE 0: NEXT f

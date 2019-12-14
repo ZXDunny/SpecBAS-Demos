@@ -1,0 +1,21 @@
+ZXASCII
+AUTO -1
+PROG koch
+10 REM Koch Snowflake
+20 DEF PROC fractal(dist,lp)
+30    IF lp>0 THEN
+       lp-=1:
+       dist/=3:
+       PROC fractal(dist,lp): ROTATE 60:
+       PROC fractal(dist,lp): ROTATE -120:
+       PROC fractal(dist,lp): ROTATE 60:
+       PROC fractal(dist,lp)
+    ELSE
+       DRAW 3*dist
+40 END PROC
+50 LET d=120,l=5:
+ DEGREES:
+ PLOT SCRw/2-180,SCRh/2+100:
+ PROC fractal(d,l): ROTATE -120:
+ PROC fractal(d,l): ROTATE -120:
+ PROC fractal(d,l)

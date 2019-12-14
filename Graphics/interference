@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG interference
+10 REM Interesting
+20 PALETTE 2,0,0,$C0;3,$C0,0,0: OVER 1: WINDOW NEW w,0,0,800,480 TRANSPARENT 1: WINDOW w: CLS 0: CIRCLE INK 1;SCRw/2,SCRh/2,SCRh/2 FILL: WINDOW 0
+30 nsh=11,nsw=21,a1,a2,b1,b2,th1,th2=RND,t=0,s=2,hst=SCRw/nsw,vst=SCRh/nsh,hsw=SCRw/2,hsh=SCRh/2: degrees
+40 x1=hsw+hsw*SIN(a1*t+th1),y1=hsh+hsh*SIN(b1*t),x2=400+400*SIN(a2*t+th2),y2=240+240*SIN(b2*t),t+=s
+50 CLS 0: INK 1: FOR x=0 TO SCRw-hst STEP hst*2: POLYGON x,0 TO x1,y1 TO x+hst,0 FILL: POLYGON x,SCRh-1 TO x1,y1 TO x+hst,SCRh-1 FILL: NEXT x: FOR y=vst TO SCRh-vst STEP vst*2: POLYGON 0,y TO x1,y1 TO 0,y+vst FILL: POLYGON SCRw-1,y TO x1,y1 TO SCRw-1,y+vst FILL: NEXT y
+60 INK 2: FOR x=0 TO SCRw-hst STEP hst*2: POLYGON x,0 TO x2,y2 TO x+hst,0 FILL: POLYGON x,SCRh-1 TO x2,y2 TO x+hst,SCRh-1 FILL: NEXT x: FOR y=vst TO SCRh-vst STEP vst*2: POLYGON 0,y TO x2,y2 TO 0,y+vst FILL: POLYGON SCRw-1,y TO x2,y2 TO SCRw-1,y+vst FILL: NEXT y
+70 WAIT SCREEN: IF INKEY$="" THEN GO TO 40 ELSE DO: LOOP UNTIL INKEY$="": GO TO 30

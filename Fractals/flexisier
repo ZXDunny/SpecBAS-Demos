@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG flexisier
+10 REM Flexible Sierpinski Polygon
+20 DEGREES: CLS 0: cx=SCRw/2,cy=SCRh/2,n=3,r=cy-20,s=360/n: FOR i=0 TO 360-s STEP s: INK i+1: d=5,x1=cx,y1=cy,x2=cx+r*COS i,y2=cy+r*SIN i,x3=cx+r*COS(i+120),y3=cy+r*SIN(i+120): GO SUB 30: NEXT i: STOP 
+30 REM Start algorithm - GOSUB 30 to draw your polygon
+40 s$=FCHR$ x1+FCHR$ y1+FCHR$ x2+FCHR$ y2+FCHR$ x3+FCHR$ y3+CHR$ d,n=LEN FCHR$ 0: POLYGON x1,y1 TO x2,y2 TO x3,y3
+50 x1=FCODE s$(1 TO),y1=FCODE s$(n+1 TO),x2=FCODE s$(n*2+1 TO),y2=FCODE s$(n*3+1 TO),x3=FCODE s$(n*4+1 TO),y3=FCODE s$(n*5+1 TO),x11=x3+((x1-x3)/2),y11=y1+((y3-y1)/2),x12=x1+((x2-x1)/2),y12=y1+((y2-y1)/2),x13=x3+((x2-x3)/2),y13=y3+((y2-y3)/2),d=CODE s$(6*n+1 TO),s$=s$(6*n+2 TO)
+60 POLYGON x11,y11 TO x12,y12 TO x13,y13: IF d>1 THEN s$=s$+FCHR$ x1+FCHR$ y1+FCHR$ x12+FCHR$ y12+FCHR$ x11+FCHR$ y11+CHR$(d-=1)+FCHR$ x11+FCHR$ y11+FCHR$ x13+FCHR$ y13+FCHR$ x3+FCHR$ y3+CHR$ d+FCHR$ x12+FCHR$ y12+FCHR$ x2+FCHR$ y2+FCHR$ x13+FCHR$ y13+CHR$ d: GO TO 50 ELSE IF s$<>"" THEN GO TO 50
+70 RETURN 

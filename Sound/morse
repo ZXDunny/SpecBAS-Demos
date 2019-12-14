@@ -1,0 +1,25 @@
+ZXASCII
+AUTO -1
+PROG morse
+10 REM Morse code
+20 DIM c$(): LET vocab$="": FOR f=1 TO 54: READ e$,d$: LET c$(CODE e$)=d$,vocab$=vocab$+e$: NEXT f: LET dot=.06,dash=dot*3,wgap=dot*7,cgap=3*dot
+30 INPUT "Message? ";m$: CLS: IF m$="" THEN GO TO 30
+40 FOR f=1 TO LEN m$
+50 LET d$=UP$ m$(f): PRINT d$;: IF d$<=" " THEN BEEP wgap,0 FORMAT 1,0,0,0,0,0,0 ELSE GO SUB 100: BEEP cgap,0 FORMAT 1,0,0,0,0,0,0
+60 NEXT f: GO TO 30
+100 REM Produce tones
+110 IF POS(d$,vocab$)=0 THEN RETURN 
+120 LET e$=c$(CODE d$): FOR a=1 TO LEN e$
+130 IF e$(a)="." THEN BEEP dot,"c7" FORMAT 1,0,0,1,0,0,0 ELSE BEEP dash,"c7" FORMAT 1,0,0,1,0,0,0
+140 IF a<>LEN e$ THEN BEEP dot,0 FORMAT 1,0,0,0,0,0,0
+150 NEXT a: RETURN 
+1000 DATA "A","._","B","_...","C","_._.","D","_..","E",".","F",".._."
+1010 DATA "G","__.","H","....","I","..","J",".___","K","_._","L","._.."
+1020 DATA "M","__","N","_.","O","___","P",".__.","Q","__._","R","._."
+1030 DATA "S","...","T","_","U",".._","V","..._","W",".__","X","_.._"
+1040 DATA "Y","_.__","Z","__..","1",".____","2","..___","3","...__"
+1050 DATA "4","...._","5",".....","6","_....","7","__...","8","___.."
+1060 DATA "9","____.","0","_____",".","._._._",",","__..__","?","..__.."
+1070 DATA "'",".____.","!","_._.__","/","_.._.","(","_.__.",")","_.__._"
+1080 DATA "&","._...",":","___...",";","_._._.","=","_..._","+","._._.","-","_...._"
+1090 DATA "_","..__._",#34,"._.._.","$","..._.._","@",".__._."

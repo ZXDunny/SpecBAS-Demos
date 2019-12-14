@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG recurring squares
+10 REM Recurring Squares
+20 DEF PROC s(x,y,s,c)
+30 LOCAL cc,cx,cy,ns: LET cx=x-s/2,cy=y-s/2: RECTANGLE INK c;cx,cy,s,s FILL: IF s>=4 THEN LET cc=c-36,ns=s/2: PROC s(cx,cy,ns,cc): PROC s(cx+s,cy,ns,cc): PROC s(cx,cy+s,ns,cc): PROC s(cx+s,cy+s,ns,cc)
+50 END PROC
+60 INK 0: PAPER 0: FOR f=0 TO 255: PALETTE f,f,0,f: NEXT f: CLS 
+70 PROC s(SCRw/2,SCRh/2,MAX(SCRw,SCRh)/2,255)

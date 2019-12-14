@@ -1,0 +1,22 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/disks
+CHANGED FALSE
+10 rem Rotating Disks
+20 rem Original by Motus-Art
+30 cx=scrw/2,cy=scrh/2,
+	speed=100,hsize=100,vsize=100,f=1,
+	n=5+int (rnd*25):
+	paper 50: ink 8: Over 2: screen lock
+40 cls:
+	for i=-n to n:
+				h=cos(i/pi)*vsize+hsize:
+				ellipse (i/n*sin(f/speed)*hsize)*2+cx,cy,h*cos(f/speed),h fill:
+	next i:
+	f+=1:
+	wait screen:
+	if inkey$="" then
+	   GO To 40
+	else
+	   do: loop until inkey$="":
+	   GO To 30

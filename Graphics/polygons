@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG polygons
+10 DEGREES: PAPER 0: INK 14: CLS 
+20 LET xc=RND*SCRw: LET yc=RND*SCRh: LET np=INT(RND*18)+3: LET r=(RND*150)+25
+30 LET pp=INT(RND*255)+1: LET ik=INT(RND*256): IF ik=pp THEN GO TO 30
+40 DIM p(np,2): LET ar=360/np: FOR a=1 TO np: LET p(a,1)=SIN(a*ar)*r+xc: LET p(a,2)=COS(a*ar)*r+yc: NEXT a
+50 POLYGON INK pp;p() FILL ""
+60 INK ik: FOR a=1 TO np: LET x1=p(a,1): LET y1=p(a,2): FOR b=a TO np: LET x2=p(b,1): LET y2=p(b,2): DRAW x1,y1 TO x2,y2: NEXT b: NEXT a
+70 WAIT SCREEN: GO TO 20

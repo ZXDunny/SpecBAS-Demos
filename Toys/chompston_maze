@@ -1,0 +1,69 @@
+ZXASCII
+AUTO -1
+PROG demos:toys/chompston_maze
+CHANGED FALSE
+10 REM Chompston maze generator
+20 LET mw=29,mh=21,spawns=5,mind=2,maxd=18,x$,y$,d$,l$="": 
+	DIM m(mw,mh),dx=-1,0,1,0: 
+	DIM dy=0,-1,0,1: 
+	DIM rd=-1,1
+30 DEF FN d=INT(mind+INT(1+(RND*(maxd-mind)))/2)*2
+40 FOR f=1 TO spawns: 
+	   DO: 
+				   LET x=3+(INT(RND*((mw-4)/2))*2),
+							    y=3+(INT(RND*((mh-4)/2))*2): 
+							IF m(x,y)=1 THEN 
+							   LOOP 
+							ELSE 
+							   LET m(x,y)=1,n=INT(RND*3)+2,e$="1234": 
+										FOR g=1 TO n: 
+										   LET a=int(1+RND*LEN e$),d$=d$+CHR$ VAL e$(a),
+													    e$=e$( TO a-1)+e$(a+1 TO),
+																	l$=l$+CHR$ FN d: 
+													LET x$=x$+CHR$ x,
+													    y$=y$+CHR$ y: 
+										NEXT g: 
+	NEXT f
+50 LET n=LEN x$: 
+	DIM x(n),y(n),d(n),l(n),a(n): 
+	LET al=n: 
+	FOR f=1 TO LEN x$: 
+	   LET x(f)=CODE x$(f),
+				    y(f)=CODE y$(f),
+								d(f)=CODE d$(f),
+								l(f)=CODE l$(f),
+								a(f)=1: 
+	NEXT f
+60 FOR f=1 TO n: 
+	   IF NOT a(f) THEN 
+				   GO TO 90 
+				ELSE 
+				   LET dx=x(f)+dx(d(f)),
+							    dy=y(f)+dy(d(f)): 
+							IF l(f)>0 AND dx>=1 AND dx<=mw AND dy>=1 AND dy<=mh THEN 
+							   GO TO 80
+70    LET d$=IIF$(d(f) IN [1,3],
+				            (CHR$ 2 AND y(f)>1)+(CHR$ 4 AND y(f)<mh),
+																(CHR$ 1 AND x(f)>1)+(CHR$ 3 AND x(f)<mw)),
+																d(f)=CODE d$(int(1+RND*LEN d$)),
+				    l(f)=FN d,
+								dx=x(f)+dx(d(f)),
+								dy=y(f)+dy(d(f))
+80    LET x(f)=dx,
+				    y(f)=dy: 
+				IF m(dx,dy)<>0 THEN 
+				   LET a(f)=0: 
+							DEC al 
+				ELSE 
+				   LET m(dx,dy)=1: 
+							DEC l(f)
+90 NEXT f: 
+	IF al>0 THEN 
+	   GO TO 60
+100 FOR x=1 TO mw: 
+	   FOR y=1 TO mh: 
+				   PRINT AT y,x;" ð"(1+(m(x,y)<>0)): 
+				NEXT y: 
+	NEXT x
+110 PAUSE 0: 
+	RUN

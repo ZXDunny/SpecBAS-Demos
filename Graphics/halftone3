@@ -1,0 +1,25 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/halftone3
+CHANGED FALSE
+10 PAPER 7: INK 0: CLS
+20 l=8:dim m(l,l) base 0:
+	proc bayer(0,0,l,0,1):
+ FOR y=0 TO scrh;x=0 to scrw:
+    i=2*(x/scrw)-1,
+				j=2*(y/scrh)-1,
+				r=pyth(i,j),
+				v=ABS (0.5*(SIN (9*i*r)+COS (6*j*r))):
+    PLOT INVERSE m(x-l*INT (x/l),y-l*INT (y/l))<=v;x,y:
+ NEXT x;y
+110 DEF PROC bayer(x,y,s,v,st):
+	   if s=1 then
+				   m(y,x)=v/(l*l)
+				else
+				   local h=int(s/2),st4=st*4:
+				   proc bayer(x,y,h,v,st4):
+							proc bayer(x+h,y+h,h,v+st,st4):
+							proc bayer(x+h,y,h,st*2+v,st4):
+							proc bayer(x,y+h,h,st*3+v,st4):
+				end if:
+	end proc

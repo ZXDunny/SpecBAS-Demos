@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/wipe2
+CHANGED FALSE
+10 REM Screen Wipe
+20 GRAPHIC NEW img LOAD "moon.png": 
+	PALETTE COPY img,0,256 TO 0
+30 FOR y=SCRh-1 TO 0: 
+	   POKE$ 0,0,PEEK$(img,SCRw*y,SCRw)*y: 
+				WAIT SCREEN: 
+	NEXT y

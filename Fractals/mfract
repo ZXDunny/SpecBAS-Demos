@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG mfract
+10 PAPER 0: CLS: LET a=RND: LET b=RND: LET c=RND: window origin 0,0,0 to 799,479
+20 LET sw=400: LET sh=240: LET x0=0: LET y0=0
+30 LET x1=y0-SQR(ABS(b*x0-c))*SGN x0: LET y1=a-x0: PLOT INK PYTH(x1,y1)*2 MOD 256;sw+x1*40,sh+y1*24: LET x0=x1: LET y0=y1: IF INKEY$="" THEN GO TO 30
+40 CLS: GO TO 10

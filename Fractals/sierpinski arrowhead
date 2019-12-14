@@ -1,0 +1,32 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/sierpinski arrowhead
+CHANGED FALSE
+10 REM L-System Sierpinski Arrowhead
+11 degrees
+20 s$="A",order=8,l=2.15
+30 for o=1 to order:
+    t$="":
+    for f=1 to len s$:
+       if s$(f)="A" then
+          t$=t$+"B-A-B"
+       else
+          if s$(f)="B" then
+             t$=t$+"A+B+A"
+          else
+             t$=t$+s$(f)
+40    next f:
+    s$=t$:
+ next o
+50 CLS : plot 125,scrh-1: rotate -60: mx=0
+60 FOR f=1 TO LEN s$
+70    if s$(f)="A" or s$(f)="B" then
+       draw l
+    else
+       if s$(f)="-" then
+          rotate -60
+       else
+          if s$(f)="+" then
+             rotate 60
+80    mx=max(mx,getopt "drposx"):
+	next f

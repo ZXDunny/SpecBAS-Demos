@@ -1,0 +1,23 @@
+ZXASCII
+AUTO -1
+PROG burning ship2
+10 REM Burning Ship fractal
+20 DEF FN r=MIN(INT(RND*5)*64,255): PROC rain: INK 255
+30 xa=-3.5,xb=3.5,ya=2,yb=-2,hs=-1: DIM hist()
+40 OVER 0: GO SUB 50: PROC getinput: GO TO 40
+50 PROC aspect(xa,xb,yb,ya): hs+=1: hist(hs,1)=xa,hist(hs,2)=ya,hist(hs,3)=xb,hist(hs,4)=yb,xs=(xb-xa)/SCRw,ys=(yb-ya)/SCRh
+60 maxiters=INT(5*(1.5^(ABS(LN((xb-xa)/SCRw)))))
+70 x=xa: FOR m=0 TO SCRw-1: y=ya: FOR n=0 TO SCRh-1: xi,yi,i,xsq,ysq=0: DO WHILE xsq+ysq<=4 AND i<maxiters: yi=(ABS(xi*yi)*2)-y,xi=(xsq-ysq)-x,xsq=xi*xi,ysq=yi*yi,i+=1: LOOP: PLOT INK i*(i<>maxiters);m,n: y+=ys: NEXT n: x+=xs: NEXT m
+80 RETURN 
+90 DEF PROC aspect(REF xmin,REF xmax,REF ymin,REF ymax): w=xmax-xmin,h=ymax-ymin,rs=SCRw/SCRh,rr=w/h,nw=w,nh=h: IF rr<rs THEN nw=h*rs ELSE nh=w/rs: END IF: wa=ABS(nw-w)/2,ha=ABS(nh-h)/2,xmin-=wa,xmax+=wa,ymin-=ha,ymax+=ha: END PROC
+100 DEF PROC getinput
+110 OVER 1: DO: IF INKEY$="p" THEN PROC rain: DO: LOOP UNTIL INKEY$<>"p"
+120 LOOP UNTIL MOUSEBTN<>0: x1=MOUSEx,y1=MOUSEy
+130 IF MOUSEBTN=2 THEN IF hs>0 THEN hs-=1,xa=hist(hs,1),ya=hist(hs,2),xb=hist(hs,3),yb=hist(hs,4),hs-=1: GO TO 190 ELSE GO TO 110
+140 x2=MOUSEx,y2=MOUSEy: RECTANGLE x1,y1 TO x2,y2 FILL 
+150 DO: WAIT SCREEN: LOOP UNTIL MOUSEdx<>0 OR MOUSEdy<>0 OR MOUSEBTN=0
+160 RECTANGLE x1,y1 TO x2,y2 FILL: IF MOUSEBTN<>0 THEN GO TO 140 ELSE IF x1=x2 OR y1=y2 THEN GO TO 110
+170 IF x1>x2 THEN SWAP x1,x2: END IF: IF y1>y2 THEN SWAP y1,y2
+180 xs=(xb-xa)/SCRw,ys=(yb-ya)/SCRh,xaa=xa+(xs*x1),xb=xa+(xs*x2),xa=xaa,yaa=ya+(ys*y1),yb=ya+(ys*y2),ya=yaa
+190 END PROC
+200 DEF PROC rain: b=2 SHL (INT(RND*4)+2),bs=256/b: FOR i=0 TO b-1: PALETTE i*bs,FN r,FN r,FN r: NEXT i: FOR i=0 TO b-1: j=i*bs: RAINBOW j TO j+bs: NEXT i: PALETTE 0,0,0,0: END PROC

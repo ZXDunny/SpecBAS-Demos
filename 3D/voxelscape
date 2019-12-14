@@ -1,0 +1,41 @@
+ZXASCII
+AUTO -1
+PROG voxelscape
+10 REM Voxel landscape. Try changing rz for accuracy/speed tradeoff :)
+20 GRAPHIC new gfx load "demos:3d/C1W.png":
+ PALETTE COPY gfx,0,255 TO 0:
+ c$=peek$(gfx,0,1024*1024): cofs=straddr c$:
+ graphic load gfx,"demos:3d/D1.png":
+ h$=peek$(gfx,0,1024*1024): hofs=straddr h$:
+ xp=512,yp=512,a=0,hg=150,hzn=-100,sf=scrh/2,dist=256,rz=2,rzm1=rz-1:
+ degrees: ink 0:paper 252: cls: screen lock
+30 sina=sin a,cosa=cos a,dz=1,z=20: y$=FCHR$ SCRH*SCRW,yofs=straddr y$,a+=359:
+ mo=(xp & 1023)+((yp & 1023)*1024),h=memrd(hofs+mo)+hg:
+ do while z<dist:
+    cz=cosa*z,sz=sina*z,
+    plx=-cz-sz,
+    ply=sz-cz,
+    prx=cz-sz,
+    pry=-sz-cz,
+    dx=((prx-plx)/scrw)*rz,
+    dy=((pry-ply)/scrw)*rz,
+    plx+=xp,ply+=yp,
+    iz=1/z*sf:
+    yo=yofs,ly=h:
+    for i=0 to scrw step rz:
+       mo=(plx & 1023)+((ply & 1023)*1024),
+       hs=(h-memrd(hofs+mo))*iz+hzn,
+       y=Fmemrd yo:
+       if hs<=y then
+          rectangle ink memrd(cofs+mo);i,hs to i+rzm1,y:
+          memwrtF yo,hs:
+       end if:
+       plx+=dx,ply+=dy,yo+=8:
+    next i:
+    z+=dz,
+    dz+=rz/100:
+ loop:
+ if inkey$="" Then
+ wait screen: cls:
+ yp+=1022,xp+=1021:
+ go to 30

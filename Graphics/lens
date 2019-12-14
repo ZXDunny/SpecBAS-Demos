@@ -1,0 +1,53 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/lens
+CHANGED FALSE
+10 REM Lens effect - new and improved!
+20 GRAPHIC NEW bck LOAD "butterflies.png":
+ gw=GFXw bck,
+ gptr=DATADDR bck
+30 PALETTE COPY bck,0,256 TO 0:
+ SCREEN LOCK
+40 WINDOW PUT GRAPHIC bck,0,0,0:
+ WINDOW NEW bw,0,0,SCRw,SCRh:
+ WINDOW HIDE bw:
+ WINDOW PUT GRAPHIC bck,bw,0,0:
+ WINDOW 0
+50 CONST d=128:
+ m=-(d*0.75),r=d/2,s=r*r,
+ ox,oy=-1,
+ sw=SCRw-d,sh=SCRh-d,
+ tx$,ty$=(#255#255)*(d+1)*(d+1),
+ addrx=STRADDR tx$,
+ addry=STRADDR ty$
+60 adx=addrx,ady=addry:
+ FOR y=-r TO r:
+    FOR x=-r TO r:
+       IF x*x+y*y<s THEN
+          LET z=SQR(r*r-x*x-y*y):
+          MEMWRTD adx,INT(x/m*z+.5+d):
+          MEMWRTD ady,INT(y/m*z+.5+d)
+70       adx+=2,ady+=2:
+    NEXT x:
+ NEXT y
+80 saddr=WINADDR 0,dx=SCRw-d-1
+90 WINDOW COPY bw,ox,oy,d,d TO 0,ox,oy:
+ xm=MIN(sw,MAX(0,MOUSEx-r)),
+ ym=MIN(sh,MAX(0,MOUSEy-r)),
+ ox=xm,oy=ym,xr=xm-d,yr=ym-d,
+ adx=addrx,
+ ady=addry,
+ sad=saddr+xm+(ym*SCRw):
+ FOR y=0 TO d:
+    FOR x=0 TO d:
+       IF DMEMRD adx<65535 THEN
+          MEMWRT sad,MEMRD(gptr+(x+DMEMRD adx+xr)+((y+DMEMRD ady+yr)*gw))
+100       adx+=2,ady+=2,sad+=1:
+    NEXT x:
+    sad+=dx:
+ NEXT y:
+ CIRCLE INK 57;xm+r,ym+r,INT(d/2)-1:
+ DO:
+    WAIT SCREEN:
+ LOOP UNTIL xm<>MOUSEx OR ym<>MOUSEy:
+ GO TO 90

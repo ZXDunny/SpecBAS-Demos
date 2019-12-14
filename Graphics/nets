@@ -1,0 +1,49 @@
+ZXASCII
+AUTO -1
+PROG nets
+10 paper 0: ink 15: cls: screen lock
+20 FOR i=1 TO 31:
+    FOR j=0 TO 7:
+       f=1-(i/32),p=RGB j:
+       PALETTE i*8+j,RED p*f,GREEN p*f,BLUE p*f:
+    NEXT j:
+ NEXT i
+30 const x=1,y=2,c=3,r=4,dx=6,dy=7
+40 def fn rdir=iif(rnd<.5, -1, 1)
+50 nP=50,dt=130:
+ dim p(nP,7),tri(3,3):
+ for i=1 to nP:
+    p(i,x)=rnd*scrw,
+    p(i,y)=rnd*scrh,
+    p(i,dx)=fn rdir*rnd*4,
+    p(i,dy)=fn rdir*rnd*2.5,
+    p(i,c)=1+int(rnd*7),
+    p(i,r)=(rnd*2)+1:
+ next i
+60 cls:
+ for i=1 to nP-2:
+    for j=i+1 to nP-1:
+       d=pyth(p(i,x)-p(j,x),p(i,y)-p(j,y)),
+       m=8*INT(32*(d/dt)):
+       if d<dt then
+          tri(1,x)=p(i,x),tri(1,y)=p(i,y),tri(1,c)=p(i,c)+m,
+          tri(2,x)=p(j,x),tri(2,y)=p(j,y),tri(2,c)=p(j,c)+m:
+          for k=j+1 to nP:
+             d1=pyth(p(k,x)-p(j,x),p(k,y)-p(j,y)),
+             d2=pyth(p(k,x)-p(i,x),p(k,y)-p(i,y)):
+             if d1<dt and d2<dt then
+                tri(3,x)=p(k,x),tri(3,y)=p(k,y),tri(3,c)=p(k,c)+(8*int(32*(d/dt))):
+                polygon ink p(i,c);tri():
+             end if:
+          next k:
+       End if:
+    next j
+70  next i:
+  plot p():
+  for i=1 to np:
+    p(i,dx)*=iif(p(i,x)<0 or p(i,x)>scrw,-1,1):
+    p(i,dy)*=IIF(p(i,y)<0 or p(i,y)>scrh,-1,1):
+  next i:
+  particle p():
+  wait screen
+80 go to 60

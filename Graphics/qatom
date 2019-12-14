@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG qatom
+10 REM QAtom simulator
+20 LET n=50: DIM phi(n,n) BASE 0: DIM v(n,n) BASE 0
+30 FOR i=0 TO n-1: FOR j=0 TO n-1: LET v(i,j)=i+21+j: LET phi(i,j)=0: NEXT j: NEXT i
+40 PAPER 0: INK 2
+50 FOR j=0 TO n-1: FOR i=0 TO n-1: INC phi(i,j),v(i,j)*0.0005: CIRCLE scrw/2+COS(phi(i,j))*10*j,scrh/2+SIN(phi(i,j))*10*j,5 FILL: NEXT i: NEXT j
+60 IF MOUSEBTN=0 THEN WAIT SCREEN : CLS: GO TO 50

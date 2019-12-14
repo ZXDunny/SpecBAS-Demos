@@ -1,0 +1,32 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/fastfire
+CHANGED FALSE
+10 REM Fire!
+20 startx=0,endx=319:
+	starty=40,endy=105: 
+	DIM fire(): 
+	FOR x=startx-20 TO endx+20: 
+	   FOR y=starty-20 TO endy+20:
+				   fire(x,y)=0: 
+				NEXT y: 
+	NEXT x
+30 FOR n=0 TO 63: 
+	   PALETTE n,n*4,n,0: 
+				PALETTE n+64,252,n,0: 
+				PALETTE n+128,252,252,(n/2+31)*4: 
+				PALETTE n+192,252,252,252: 
+	NEXT n: 
+	CLS 0
+40 x=0: 
+	DO: 
+	   x+=1+RND*10,
+				fire(x,endy-1)=(RND*250)+50: 
+	LOOP UNTIL x>=endx
+50 FOR x=startx TO endx: 
+	   FOR y=starty TO endy-2: 
+				   fire(x,y)=MAX(0,(fire(x-1,y+1)+fire(x,y+1)+fire(x+1,y+1)+fire(x+1,y+2))/4-3): 
+							PLOT INK fire(x,y);x+200,y+100: 
+				NEXT y: 
+	NEXT x: 
+	GO TO 40

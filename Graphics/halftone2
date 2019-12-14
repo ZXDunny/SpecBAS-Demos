@@ -1,0 +1,20 @@
+ZXASCII
+AUTO -1
+PROG halftone2
+1 PAPER 7: INK 0: CLS 
+100 DIM g(3,3)
+110 RESTORE 900
+120 FOR j=1 TO 3
+130 FOR i=1 TO 3
+140 READ g(i,j)
+150 NEXT i
+160 NEXT j
+200 FOR y=0 TO scrh
+210 FOR x=0 TO scrw
+220 LET i=2*(x/scrw)-1: LET j=2*(y/scrh)-1: LET r=SQR (i*i+j*j): LET v=ABS (0.5*(SIN (9*i*r)+COS (6*j*r))): LET c=INT (9.9999*v)
+230 PLOT INVERSE g(1+x-3*INT (x/3),1+y-3*INT (y/3))<=c;x,y
+290 NEXT x: NEXT y
+800 PAUSE 0: STOP 
+900 DATA 4,9,6
+910 DATA 5,1,2
+920 DATA 8,3,7

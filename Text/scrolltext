@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG scrolltext
+10 INPUT "Message? ";m$
+20 LET sw=SCRw/FONTw: IF LEN m$<sw THEN LET m$=m$+(" "*(sw-LEN m$))
+30 PRINT AT 30,0;m$( TO sw)
+40 LET m$=m$(2 TO)+m$(1)
+50 PAUSE 4
+60 GO TO 30

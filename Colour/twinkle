@@ -1,0 +1,6 @@
+ZXASCII
+AUTO -1
+PROG twinkle
+10 PAPER 0: CLS 
+20 ns=1000: DIM s(ns,3): FOR n=1 TO ns: s(n,1)=RND*SCRw,s(n,2)=RND*SCRh,s(n,3)=RND*255: NEXT n
+30 FOR n=1 TO ns: PLOT INK s(n,3);s(n,1),s(n,2): s(n,3)+=.25: NEXT n: WAIT SCREEN: GO TO 30

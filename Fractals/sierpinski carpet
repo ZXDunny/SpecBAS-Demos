@@ -1,0 +1,19 @@
+ZXASCII
+AUTO -1
+PROG sierpinski carpet
+10 REM Sierpinski Carpet
+20 FOR x=-34 TO scrw-34:
+    FOR y=124 TO scrh+124:
+       x1=x,y1=y
+30       IF abs x1 MOD 3<>1 or y1 MOD 3<>1 THEN
+          x1=x1 DIV 3:
+          y1=y1 DIV 3:
+       Else 
+          go to 40:
+       end if:
+       if x1>0 or y1>0 then
+          go to 30
+       else
+          PLOT x+34,y-124
+40    NEXT y:
+ NEXT x

@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG block_graphics
+10 LET a$=""
+20 FOR x=1 TO 7
+30 LET a$=a$+CHR$(RND*14+97+128)
+40 NEXT x
+50 INK RND*7
+70 PRINT a$;
+80 GO TO 70

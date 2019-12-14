@@ -1,0 +1,6 @@
+ZXASCII
+AUTO -1
+PROG silk
+10 PAPER 0: FOR f=0 TO 255: PALETTE f,f,f,f: NEXT f: CLS 
+20 sw=480,sh=800,rs=3,re=3.9,dr=(re-rs)/sh,xs=0,xe=0.5,dx=(xe-xs)/sw,it=3,sc=29
+30 FOR j=1 TO sh: r=re-j*dr: FOR i=1 TO sw: x=xs+i*dx,y=x:: FOR k=0 TO it: x*=r*(1-x),x=3*x*(1-x): NEXT k: k=sc*ABS(x-y): PLOT INK k*11;j,i: NEXT i;j

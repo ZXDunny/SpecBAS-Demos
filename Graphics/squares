@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG squares
+10 WINDOW DEPTH 0,32: PAPER 0: INK $FFFFFF: CLS: PRINT AT 0,0;"Click & Drag!": DO WHILE MOUSEBTN=0: LOOP: SCREEN LOCK 
+20 DIM ex(10000): DIM ey(10000): DIM eb(10000): DIM ee(10000): LET ees=0
+30 DO : IF MOUSEBTN<>0 THEN INC ees: LET eb(ees)=30: LET ex(ees)=MOUSEx: LET ey(ees)=MOUSEy: LET ee(ees)=255
+40 GO SUB 50: WAIT SCREEN: CLS: LOOP 
+50 IF ees>9999 THEN LET ees=0
+60 FOR i=1 TO 9999: IF ee(i)>0 THEN RECTANGLE INK RGBtoINT(100+(ee(i)/2),ee(i),MIN(MAX(0,6*(ee(i)-200)),240));ex(i)-0.5*eb(i),ey(i)-0.5*eb(i),eb(i),eb(i): DEC ee(i),2: LET eb(i)=eb(i)*(ee(i)/15000+1): IF INT(RND*80)=1 THEN LET eb(ees)=eb(i)*0.5: LET ex(ees)=ex(i)+(RND*(2*eb(i))-eb(i)): LET ey(ees)=ey(i)+(RND*(2*eb(i))-eb(i)): LET ee(ees)=150: INC ees
+70 NEXT i
+80 RETURN 

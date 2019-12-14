@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/fibonacci word
+CHANGED FALSE
+10 f$="0",w$="01"
+20 FOR i=0 TO 22
+30    t$=w$,w$=w$+f$,f$=t$
+40 next i
+50 ink 2: plot 0,scrh-40
+60 x=0,y=-.5
+70 for i=1 to len w$:
+    draw x,y:
+    if w$(i)="0" then
+       if odd i then
+          t=x,x=-y,y=t
+       else
+          t=-x,x=y,y=t
+80 next i

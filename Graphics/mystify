@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG mystify
+10 REM Line art
+20 IF INKEY$<>"" THEN GO TO 20
+30 WINDOW DEPTH 0,32: CLS 0
+40 LET a=0: LET b=4: LET x1,y1,x2,y2=0: LET dx1,dy1,dx2,dy2=-1: LET maxx=SCRw/2: LET maxy=SCRh: LET rmod=RND: LET gmod=RND: LET bmod=RND: RANDOMIZE mSECS: LET nl=0
+50 DO 
+60 IF x1+dx1<0 OR x1+dx1>maxx OR y1+dy1<0 OR y1+dy1>maxy OR (dx1=0 AND dy1=0) THEN LET dx1=INT(RND*10)-5: LET dy1=INT(RND*10)-5: GO TO 60
+70 IF x2+dx2<0 OR x2+dx2>maxx OR y2+dy2<0 OR y2+dy2>maxy OR (dx2=0 AND dy2=0) THEN LET dx2=INT(RND*10)-5: LET dy2=INT(RND*10)-5: GO TO 70
+80 INC x1,dx1: INC y1,dy1: INC x2,dx2: INC y2,dy2: INC a,b
+90 IF a>250 THEN LET b=-b: LET a=254
+100 IF a<5 THEN LET b=-b: LET a=4
+110 INK RGBtoINT(a*rmod,a*gmod,a*bmod)
+120 DRAW SCRw-x1,y1 TO SCRw-x2,y2: DRAW x1,y1 TO x2,y2: DRAW SCRw-x1,SCRh-y1 TO SCRw-x2,SCRh-y2: DRAW x1,SCRh-y1 TO x2,SCRh-y2
+130 INC nl: IF nl>32 THEN WAIT SCREEN: LET nl=0
+140 IF INKEY$="" THEN LOOP ELSE RUN 

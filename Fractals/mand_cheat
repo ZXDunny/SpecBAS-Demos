@@ -1,0 +1,21 @@
+ZXASCII
+AUTO -1
+PROG mand_cheat
+10 DEF FN r=MIN(INT(RND*5)*64,255): PROC rain
+20 xmin=-2,ymin=-1.5,xmax=1.5,ymax=1.5,hs=0: INK 255: DIM xm(),ym(),xn(),yn()
+30 OVER 0: GO SUB 40: PROC getinput: GO TO 30
+40 PROC aspect(xmin,xmax,ymin,ymax): hs+=1: xn(hs)=xmin,yn(hs)=ymin,xm(hs)=xmax,ym(hs)=ymax
+50 maxiters=INT(5*(1.5^(ABS(LN((xmax-xmin)/SCRw))))),xs=(xmax-xmin)/SCRw,ys=(ymax-ymin)/SCRh
+60 y1=ymin: FOR y=0 TO SCRh-1: x1=xmin: FOR x=0 TO SCRw-1: PLOT INK MANDEL(x1,y1,maxiters);x,y: x1+=xs: NEXT x: y1+=ys: NEXT y: RETURN 
+70 DEF PROC aspect(REF xmin,REF xmax,REF ymin,REF ymax): w=xmax-xmin,h=ymax-ymin,rs=SCRw/SCRh,rr=w/h,nw=w,nh=h: IF rr<rs THEN nw=h*rs ELSE nh=w*(1/rs): END IF: wa=ABS(nw-w)/2,ha=ABS(nh-h)/2,xmin-=wa,xmax+=wa,ymin-=ha,ymax+=ha: END PROC
+80 DEF PROC getinput
+90 mw=MOUSEWHEEL: OVER 1: DO: IF INKEY$="p" THEN PROC rain: DO: LOOP UNTIL INKEY$<>"p" ELSE IF KEYST KEY_C THEN PALETTE SHL 1,1 TO 255: WAIT SCREEN ELSE IF MOUSEWHEEL<>mw THEN IF MOUSEWHEEL<mw THEN PALETTE SHL 1,1 TO 255 ELSE PALETTE SHR 1,1 TO 255: END IF: mw=MOUSEWHEEL
+100 LOOP UNTIL MOUSEBTN<>0: x1=MOUSEx,y1=MOUSEy
+110 IF MOUSEBTN=2 THEN IF hs>1 THEN hs-=1,xmin=xn(hs),ymin=yn(hs),xmax=xm(hs),ymax=ym(hs),hs-=1: GO TO 170 ELSE GO TO 90
+120 x2=MOUSEx,y2=MOUSEy: RECTANGLE x1,y1 TO x2,y2 FILL 
+130 DO: WAIT SCREEN: LOOP UNTIL MOUSEdx<>0 OR MOUSEdy<>0 OR MOUSEBTN=0
+140 RECTANGLE x1,y1 TO x2,y2 FILL: IF MOUSEBTN<>0 THEN GO TO 120 ELSE IF x1=x2 OR y1=y2 THEN GO TO 90
+150 IF x1>x2 THEN SWAP x1,x2: END IF: IF y1>y2 THEN SWAP y1,y2
+160 xs=(xmax-xmin)/SCRw,ys=(ymax-ymin)/SCRh,xa=xmin+(xs*x1),xmax=xmin+(xs*x2),xmin=xa,ya=ymin+(ys*y1),ymax=ymin+(ys*y2),ymin=ya
+170 END PROC
+180 DEF PROC rain: b=2 SHL (INT(RND*4)+2),bs=256/b: FOR i=0 TO b-1: PALETTE i*bs,FN r,FN r,FN r: NEXT i: FOR i=0 TO b-1: j=i*bs: RAINBOW j TO j+bs: NEXT i: PALETTE 0,0,0,0: END PROC

@@ -1,0 +1,52 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/plasma8
+CHANGED FALSE
+10 s=8,w=int((scrw/s)+1),h=int((scrh/s)+1),
+	v=0,r1=200,r2=300,r3=2,a1,a2,a3,s1,s2,s3,sp=1:
+	screen lock
+20 graphic NEW plasma,w,h
+30 b=1 SHL INT(RND*3)+5,p,op=0:
+ DO:
+				palette hsv p,rnd*360,127+rnd*127,127+rnd*127:
+    RAINBOW op TO p:
+    op=p,p+=b:
+ LOOP UNTIL p=256:
+ PALETTE 255,RGB 0:
+ RAINBOW op TO 255
+40 gs1,gs2,gs3=(.125+rnd*2)/1000
+50 a1+=s1,
+ a2+=s2,
+	a3+=s3,
+ mx=SIN a1*r1,
+ my=COS a2*r2,
+ s1+=(gs1-s1)/sp,
+ s2+=(gs2-s2)/sp,
+	s3+=(gs3-s3)/sp,
+	z=.5+((sin a3)+1)/2
+60 tm=msecs/1000,
+	v+=5/283:
+	window graphic plasma:
+	for y1=0 to h-1:
+    for x1=0 to w-1:
+				   x=(x1+mx)*z,
+							y=(y1+my)*z,
+							vl=sin(pyth(x-128,y-128)/8+v)+
+							   sin(pyth(x-64+tm,y-64)/8+v)+
+										sin(pyth(x-192,(y+tm/7)-64)/7)+
+										sin(pyth(x-192,y-100)/8-v)+
+										sin(pyth(x-64-(tm*8),y-192)/15+v):
+							plot ink 256/(1+abs(vl))-1;x1,y1:
+				next x1:
+ next y1:
+	window 0:
+	window put graphic plasma,0,-1,-1 scale s:
+	sp=64:
+	palette shr 1,0 to 255:
+	wait screen:
+	if inkey$="" then
+	   GO To 50
+	Else
+	   DO:
+				Loop until INKEY$="":
+	   GO To 30

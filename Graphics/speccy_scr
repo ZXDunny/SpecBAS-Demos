@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG speccy_scr
+10 STREAM NEW SCR,"Sabre Wulf.SCR": IF STREAMLEN scr=0 THEN STOP
+20 STREAM READ scr,a$,6912
+30 CLS 7: PALETTE 8,0,0,0
+40 DIM ScreenOffsets(6144) BASE 0:
+ FOR f=0 TO 6143:
+    ScreenOffsets(f)=
+    (INT((f & 1792)/256))+(INT((f & 224)/32))*8+(INT((f & 6144)/2048))*64:
+ NEXT f:
+ s=1
+50 FOR f=0 TO 6143:
+    x=(f & 31)*8,
+    y=ScreenOffsets(f),
+    att=CODE a$(6145+(INT(y/8)*32)+x/8),
+    i=att & 7,
+    p=(att SHR 3) & 7,
+    i,p+=8*(att & 64>0),
+    byteval=CODE a$(f+1),
+    x,y*=s:
+    FOR bt=7 TO 0:
+       rectangle INK IIF(BIT(byteval,bt),i,p);(x+=s)-s,y,s,s fill:
+    NEXT bt:
+ NEXT f:
+ PAUSE 0

@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG dotty_anim
+10 PAPER 0: CLS: FOR a=1 TO 255: PALETTE HSV a,a,255,255: NEXT a: ORIGIN -SCRw/2,-SCRh/2 TO SCRw/2,SCRh/2
+20 CONST dots=16000: CONST b=0.9998: FOR a=0.1 TO 1 STEP 0.0003: LET c=2-2*a: LET x=0: LET j=0: LET y=12.1
+30 FOR i=0 TO dots: LET z=x: LET x=b*y+j: LET j=a*x+c*(x*x)/(1+x*x): LET y=j-z: PLOT INK 1+(i/64);x*20,y*20: NEXT i
+40 WAIT SCREEN: CLS: NEXT a

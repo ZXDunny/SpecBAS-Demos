@@ -1,0 +1,16 @@
+ZXASCII
+AUTO -1
+PROG snowflakes
+10 REM Snowflakes!
+20 LET flakes=1000: DEGREES
+30 DIM a(flakes,2),w(flakes,2),p(flakes,7)
+40 FOR f=1 TO flakes: GO SUB 110: LET p(f,2)=RND*SCRh: NEXT f
+50 PAPER 0: INK 15: SCREEN LOCK: CLS 
+60 FOR f=1 TO flakes: IF p(f,7)=1 THEN PLOT INK p(f,6);p(f,1),p(f,2) ELSE RECTANGLE INK p(f,6);p(f,1),p(f,2) TO p(f,1)+p(f,7),p(f,2)+p(f,7) FILL 
+70 INC p(f,2),p(f,3): IF p(f,2)>SCRh THEN GO SUB 110
+80 LET a3=SIN((p(f,2)+p(f,5))/(w(f,2)/SCRh)),p(f,1)=a3*a(f,1)*SIN((p(f,2)+p(f,5))/(w(f,1)/SCRw))+p(f,4)
+90 NEXT f
+100 WAIT SCREEN : CLS: GO TO 60
+110 REM New flake - call with f for the index
+120 LET a(f,1)=(10+RND*700)*((RND*2)-1),w(f,1)=3200+(RND*300),a(f,2)=10+RND*100,w(f,2)=3200+RND*300,p(f,4)=(RND*(SCRw+200))-100,p(f,2)=0,p(f,3)=.5+RND*2,p(f,1)=p(f,4),p(f,5)=RND*SCRh,p(f,6)=(RND*16)+(255-16),p(f,7)=INT(RND*3)
+130 RETURN 

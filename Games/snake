@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG snake
+10 REM Snake game
+20 LET bs=25,sz=MIN(SCRw,SCRh)/bs,sc=0,l=1,d=0,x,y=12,x$,y$=CHR$ x
+30 DIM xd=-1,0,1,0: DIM yd=0,-1,0,1
+40 RECTANGLE INK 0;0,0,bs*sz,bs*sz FILL : FOR a=0 TO bs-1: FOR b=0 TO bs-1: PROC r(a,b,20): NEXT b: NEXT a: FOR f=1 TO 5: GO SUB 80: NEXT f: PROC r(x,y,12)
+50 IF d>0 THEN PROC r(x,y,4): INC x,xd(d): INC y,yd(d): GO SUB 70: PROC r(x,y,12): LET x$=x$+CHR$ x,y$=y$+CHR$ y: IF LEN x$>l THEN PROC r(CODE x$(1),CODE y$(1),20): LET x$=x$(2 TO): LET y$=y$(2 TO)
+60 LET delay=0: DO: LET d=IIF(INKEY$ IN [#37 TO #40],CODE INKEY$-36,d): INC delay: WAIT SCREEN: LOOP UNTIL delay=MAX(25-l,3): GO TO 50
+70 IF x<0 OR y<0 OR x>=bs OR y>=bs THEN GO TO 100 ELSE IF POINT(x*sz,y*sz)=4 THEN GO TO 100 ELSE IF POINT(x*sz,y*sz)=3 THEN INC l: INC sc: GO SUB 80: RETURN ELSE RETURN 
+80 DO : LET a=INT(RND*bs),b=INT(RND*bs): LOOP UNTIL POINT(a*sz,b*sz)=20: PROC r(a,b,3): RETURN 
+90 DEF PROC r(x,y,i): RECTANGLE INK i;x*sz,y*sz,sz-1,sz-1 FILL: END PROC
+100 STOP 

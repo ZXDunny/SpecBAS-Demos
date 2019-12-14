@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG over_demo
+10 PAPER 0: OVER 1: CLS: DO: INK 1+(RND*15)
+30 DEF FN a=1+INT(RND*2): DEF FN b(a,b)=IIF(a>b OR a<0,-1,1)
+40 LET x,a=0,y,b=INT(RND*SCRh),g,h,d=FN a,c=g
+70 FOR f=1 TO 8000: g*=FN b(a+g,SCRw),c*=FN b(x+c,SCRw),h*=FN b(b+h,SCRh),d*=FN b(y+d,SCRh): a+=g,b+=h,x+=c,y+=d: DRAW a,b TO x,y: IF f MOD 10=0 THEN WAIT SCREEN: END IF: NEXT f: LOOP 

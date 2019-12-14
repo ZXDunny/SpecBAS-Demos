@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG 3D Pyramid
+10 REM Fake 3D Pyramid
+20 DEGREES: LET np=6: LET tr=360/np: LET x=SCRw/2: LET y=SCRh/2: LET ya=y-120: LET a=30
+30 PAPER 15: INK 1: CLS 
+40 FOR f=0 TO np: LET ab=a+tr*f: LET ax=x+100*COS ab: LET ay=y-50*SIN ab
+50 IF f<np THEN DRAW x,ya TO ax,ay
+60 IF f>0 THEN DRAW ox,oy TO ax,ay
+70 LET ox=ax: LET oy=ay: NEXT f: INC a,4: WAIT SCREEN: CLS: GO TO 40

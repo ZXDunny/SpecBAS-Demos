@@ -1,0 +1,47 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/digitalrain
+CHANGED FALSE
+10 PAPER 0: CLS: screen lock:
+ sc=2:
+ palette 1,$ff,$ff,$fF:
+ FOR f=1 to 64:
+    palette 70-f,0,(f/64)*255,0:
+ next f:
+ rainbow 1 to 6:
+ scale sc,sc:
+20 nr=75:
+ dim r(nr,5);r$(nr):
+ x=1,y=2,l=3,s=4,c=5:
+ for f=1 to nr:
+    go sub 70:
+ next f
+30 for f=1 to nr:
+    text at r(f,y),r(f,x);ink 1;r$(f)(r(f,y)+1):
+    clr=2,h=r(f,y)-1:
+    for g=r(f,y)-1 to max(r(f,y)-r(f,l),-1):
+       text at g,r(f,x);ink clr;r$(f)(h+1):
+       h-=1:
+       clr=clr+(64/r(f,l)):
+    next g:
+    r(f,y)+=r(f,s):
+    if r(f,y)>r(f,l)+(txth/sc) then
+       go sub 70
+40    do 4:
+				   r$(f)(1+(rnd*len r$(f)))=chr$((rnd*94)+33):
+				loop
+50 next f:
+	pause 2:
+ wait screen:
+ cls
+60 go to 30
+70 r(f,x)=int(rnd*(txtw/sc))
+80 r(f,y)=0,
+ r(f,l)=int(rnd*(txth/sc)/3)+15,
+ r(f,s)=.25+rnd,
+ r(f,c)=1:
+ r$(f)="":
+ for g=1 to txth*2:
+    r$(f)=r$(f)+chr$((rnd*94)+33):
+ next g:
+ return

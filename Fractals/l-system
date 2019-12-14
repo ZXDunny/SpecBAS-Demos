@@ -1,0 +1,37 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/l-system
+CHANGED FALSE
+10 rem L-System fractals
+20 degrees:go sub 1000
+30 b$="",d=3:
+ for i=1 to it:
+    for j=1 to len ax$:
+       if ax$(j)="F" then
+          b$=b$+r$
+       else
+          b$=b$+ax$(j):
+       end if:
+    next j:
+    ax$=b$,b$="":
+ next i
+40 cls:
+ move int(scrw/2)+190,int(scrh/2)-144:
+	rotate 270:
+ for i=1 to len ax$
+50    case ax$(i)
+60    when "F":
+       draw d
+70    when "G":
+       move d
+80    WHEN "+":
+       rotate ta
+90    WHEN "-":
+       rotate -ta
+100    WHEN "R":
+       MOVE -d
+110    END CASE:
+120 NEXT i
+130 stop
+1000 ax$="F",r$="F+F-",it=14:ta=90
+1010 return

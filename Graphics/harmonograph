@@ -1,0 +1,38 @@
+ZXASCII
+AUTO -1
+PROG harmonograph
+10 REM Harmonograph
+20 np=100,kb=1:
+ FOR f=0 TO 255:
+    PALETTE f,0,f,f/4:
+ NEXT f:
+ INK 255:
+ PAPER 0:
+ CLS:
+ cx=(SCRw/2)-200,cy=(SCRh/2)-200,
+ dx=cx+400,dy=cy+400,
+ wh=scrw/2,hh=scrh/2:
+ DIM p((np/.03)+1,2):
+ SCREEN LOCK
+30 LET a1,a2,a3,a4=(RND*25)+75,
+     f1,f2,f3,f4=4+RND*.001,
+     p1=4/16,p2=3/2,p3=13/15,p4=1,
+     d1=.02,d2=.0315,d3=.02,d4=.02,
+     tf1,tf2,tf3,tf4=RND*.005,
+     tp1,tp2,tp3,tp4=-.025+(RND*.05)
+40 i=1,
+ kb=INKEY$<>"":
+ FOR t=0 TO np STEP .03:
+    p(i,1)=wh+a1*SIN(f1*t+PI*p1)*EXP(-d1*t)+a2*SIN(f2*t+PI*p2)*EXP(-d2*t),
+    p(i,2)=hh+a3*SIN(f3*t+PI*p3)*EXP(-d3*t)+a4*SIN(f4*t+PI*p4)*EXP(-d4*t),
+    i+=1:
+ NEXT t:
+ RECTANGLE INK 0;OVER 7;cx,cy TO dx,dy FILL:
+ POLYGON p() OPEN
+50 LET f1+=tf1,f2+=tf2,f3+=tf3,f4+=tf4,
+     p1+=tp1,p3+=tp3,p2+=tp2,p4+=tp4
+60 WAIT SCREEN:
+ IF INKEY$="" OR kb THEN
+    GO TO 40
+ ELSE
+    RUN

@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG animwave
+10 REM Animated sinewave plot with auto-frameskip
+20 PAPER 0: INK 15: CLS 
+30 SCREEN LOCK: LET maxheight=31: LET xsize=40: LET ysize=40: LET xscale=5: LET yscale=4: LET xoffset=-3: LET yoffset=1: LET ms=mSECS
+40 DIM wavetable()
+50 DIM heightmap()
+60 FOR angle=0 TO 359: LET wavetable(angle)=SIN(angle*PI/180)*maxheight: NEXT angle
+70 FOR y=-ysize TO ysize: FOR x=-xsize TO xsize: LET heightmap(x,y)=(((COS(x/12)+1)+(COS(y/12)+1))/4*359): NEXT x: NEXT y
+80 LET xcentre=SCRw/2: LET ycentre=SCRh/2
+90 DO WHILE INKEY$=""
+100 FOR y=-ysize TO ysize: FOR x=-xsize TO xsize
+110 DEC heightmap(x,y),0 TO 359
+120 NEXT x: NEXT y
+130 LET ms2=mSECS: IF ms2-ms<20 THEN FOR y=-ysize TO ysize: FOR x=-xsize TO xsize: PLOT x*xscale+y*xoffset+xcentre,SCRh-(y*yscale+x*yoffset-wavetable(heightmap(x,y))+ycentre): NEXT x: NEXT y: WAIT SCREEN: CLS 
+140 LET ms=ms2: LOOP 

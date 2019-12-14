@@ -1,0 +1,63 @@
+ZXASCII
+AUTO -1
+PROG raytracing
+10 PAPER 0: INK 15: CLS
+20 spheres=2:
+ DIM c(spheres,3),r(spheres),q(spheres),cl(5):
+ w=scrw/2,h=scrh/2,s=0:
+ cl(1)=1,cl(2)=6,cl(3)=cl(1)+8,cl(4)=cl(2)+8,cl(5)=5
+30 FOR k=1 TO spheres: 
+    READ c(k,1),c(k,2),c(k,3),r: 
+    r(k)=r,q(k)=r*r: 
+ NEXT k
+40 DATA -0.3,-0.8,3,0.6
+50 DATA 0.9,-1.1,2,0.2
+60 FOR i=0 TO scrh: 
+    FOR j=0 TO scrw-1
+70       x=0.3,y=-0.5,z=0,ba=3:
+       dx=j-w,dy=h-i,dz=(scrh/480)*600,dd=dx*dx+dy*dy+dz*dz:
+       GO SUB 90: 
+    NEXT j: 
+ NEXT i
+80 pause 0:
+ STOP
+90 n=-(y>=0 OR dy<=0): 
+ IF NOT n THEN 
+    s=-y/dy
+100 FOR k=1 TO spheres:
+    px=c(k,1)-x,py=c(k,2)-y,pz=c(k,3)-z,
+    pp=px*px+py*py+pz*pz,
+    sc=px*dx+py*dy+pz*dz:
+    IF sc<=0 THEN 
+       GO TO 130
+110    bb=sc*sc/dd,
+    aa=q(k)-pp+bb:
+    IF aa<=0 THEN 
+       GO TO 130
+120    sc=(SQR bb-SQR aa)/SQR dd: 
+    IF sc<s OR n<0 THEN 
+       n=k,s=sc
+130 NEXT k
+140 IF n<0 THEN n=0:
+    plot ink cl(5);j,scrh-i:
+    RETURN
+150 dx=dx*s,dy=dy*s,dz=dz*s,dd=dd*s*s,
+ x+=dx,y+=dy,z+=dz:
+ IF n=0 THEN 
+    GO TO 170
+160 nx=x-c(n,1),ny=y-c(n,2),nz=z-c(n,3),
+ nn=nx*nx+ny*ny+nz*nz,
+ l=2*(dx*nx+dy*ny+dz*nz)/nn,
+ dx=dx-nx*l,dy=dy-ny*l,dz=dz-nz*l:
+ GO TO 90
+170 FOR k=1 TO spheres:
+    u=c(k,1)-x,v=c(k,3)-z: 
+    IF u*u+v*v<=q(k) THEN 
+       ba=1
+190 NEXT k
+200 IF (x-INT x>.5)=(z-INT z>.5) THEN
+    ik=cl(ba)
+ else
+    ik=cl(ba+1)
+205 plot ink ik;j,scrh-i
+210 RETURN

@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG mira
+10 REM Mira Fractals
+20 LET a=RND,b=0.9998,c=2-2*a,d=120000,x,j=0,y=RND*12+0.1: CLS 0
+30 LET is=255/d: FOR i=0 TO d: LET z=x,x=b*y+j,j=a*x+c*(x^2)/(1+x^2),y=j-z: PLOT INK (i*is)+1;x*20+400,y*20+240: NEXT i
+40 PAUSE 0: RUN 

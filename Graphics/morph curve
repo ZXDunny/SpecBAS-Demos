@@ -1,0 +1,41 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/morph curve
+CHANGED FALSE
+10 DEF FN gauss(t,mx,my)=((t/2)*8^-((t/mx)^2*32))/my
+20 pts=5000,interps=50,h=RND*360,oh=h,t=0:
+ DIM p(pts+1,2),q(pts+1,2),s(pts+1,2),i(interps):
+ l=0,cx=SCRw/2,cy=SCRh/2,sc=cy*.49,st=TAU/pts,j=2*PI/360:
+ FOR n=1 TO interps:
+    i(n)=SIN(n/interps*(PI/2)):
+ NEXT n:
+ PAPER 0: INK 255: CLS:screen lock
+30 n,m=INT(RND*500)-250
+40 c=1,j=(rnd*tau*4)-(TAU*2):
+ FOR t=j TO TAU+j STEP st:
+    q(c,1)=cx+sc*(COS t+COS(n*t)/2+SIN(m*t)/3),
+    q(c,2)=cy+sc*(SIN t+SIN(n*t)/2+COS(m*t)/3),c+=1:
+ NEXT t
+50 IF l=0 THEN
+    POLYGON q():
+    l+=1
+ ELSE
+    m,t=0:
+    FOR t=0 TO interps step .5:
+       t+=1+FN gauss(m,interps,1):
+       FOR n=1 TO pts+1:
+          s(n,1)=q(n,1)*i(t)+p(n,1)*(1-i(t)),
+          s(n,2)=q(n,2)*i(t)+p(n,2)*(1-i(t)):
+       NEXT n:
+       RECTANGLE INK 0;OVER 7;cx-cy,0,SCRh,SCRh FILL:
+       POLYGON s():
+       wait screen:
+       m+=1,nh=(h-oh)/interps:
+       FOR f=0 TO 255:
+          PALETTE HSV f,oh+(INT t*nh),255,f:
+       NEXT f:
+    NEXT t:
+    oh=h,h=RND*360:
+ END IF:
+ MAT p()=q():
+ GO TO 30

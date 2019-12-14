@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG art_circles
+10 cx=SCRw/2,cy=SCRh/2,s=(scrh/2)/1905:
+	over 11
+20 FOR f=1 TO 6:
+	   READ x,y,r:x*=s,y*=s,r*=s:
+				CIRCLE cx+x,cy+y,r FILL:
+				if f>1 then
+				   circle cx+x,cy-y+1,r fill:
+				   if f>2 then 
+				      circle cx-x+1,cy+y,r fill:
+										circle cx-x+1,cy-y+1,r fill:
+				   end if:
+				end if:
+	NEXT f:
+	pause 0
+30 DATA 0,0,210, 0,-240,230, -100,-465,250, -200,-740,300, -300,-1100,350, -400,-1500,400

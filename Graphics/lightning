@@ -1,0 +1,8 @@
+ZXASCII
+AUTO -1
+PROG lightning
+10 REM Lightning
+20 DEF PROC lightning(x1,y1,x2,y2,d)
+30 IF d<5 THEN DRAW INK 15;x1,y1 TO x2,y2 ELSE LET mx=(x2+x1)/2+(RND-.5)*d: LET my=(y2+y1)/2+(RND-.5)*d: PROC lightning(x1,y1,mx,my,d/2): PROC lightning(x2,y2,mx,my,d/2)
+40 END PROC
+50 PROC lightning(50,240,750,240,400): WAIT SCREEN: CLS 0: GO TO 50

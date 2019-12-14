@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG boxtree
+10 REM Box tree
+20 DEF PROC b(ax,ay,bx,by,rc): LOCAL cx=ax-ay+by,cy=ax+ay-bx,dx=bx+by-ay,dy=ax-bx+by,ex=(cx-cy+dx+dy)/2,ey=(cx+cy-dx+dy)/2: POLYGON INK rc+1;cx,cy TO ax,ay TO bx,by TO dx,dy TO cx,cy TO ex,ey TO dx,dy: IF rc<limit THEN PROC b(cx,cy,ex,ey,rc+.75): PROC b(ex,ey,dx,dy,rc+.75): END IF
+21 END PROC
+30 CLS 0: limit=9: PROC b(SCRw/2-SCRw/15,SCRh-40,SCRw/2+SCRw/15,SCRh-40,0)

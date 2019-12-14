@@ -1,0 +1,16 @@
+ZXASCII
+AUTO -1
+PROG polyhedra
+5 RADIANS: PAPER 6: CLS 
+10 INPUT "How many sides? ";n
+20 FOR r=20 TO SCRh/2-20 STEP 2
+25 LET x=SCRw/2: LET y=SCRh/2
+30 LET h1=x-r: LET v1=y
+35 PLOT h1,v1
+40 FOR a=0 TO 361 STEP 360/n
+50 LET h2=x-r*COS(a*PI/180)
+60 LET v2=y+r*SIN(a*PI/180)
+70 DRAW h2-h1,v2-v1
+80 LET h1=h2: LET v1=v2
+90 NEXT a
+100 NEXT r

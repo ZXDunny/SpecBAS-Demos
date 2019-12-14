@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/pinboard2
+CHANGED FALSE
+10 DEGREES: PAPER 6: INK 1: CLS: SCREEN LOCK
+20 DEF FN x(z)=SIN((z*angle)+j)*(SCRw/2)+SCRw/2: DEF FN y(z)=COS((z*angle)+j)*(SCRh/2)+SCRh/2
+30 LET np=21: LET angle=360/np
+40 FOR j=1 TO angle
+50 FOR a=1 TO np: LET x1=FN x(a): LET y1=FN y(a): FOR b=a TO np: LET x2=FN x(b): LET y2=FN y(b): PLOT x1,y1: DRAW TO x2,y2: NEXT b: NEXT a
+60 WAIT SCREEN: CLS: NEXT j
+70 GO TO 40

@@ -1,0 +1,51 @@
+ZXASCII
+AUTO -1
+PROG john_dragon
+10 screen lock:
+ degrees:
+ ang=25,dep=0,
+ t1=COS ang,
+ t2=SIN ang:
+ do:
+    di=0,
+    dep+=1:
+    x,y=300:
+    length=335:
+    PLOT x,y:
+    GO SUB 20:
+    wait screen:
+    CLS:
+ loop
+20 dep-=1:
+ IF dep=0 OR length<1 THEN
+    GO TO 40
+ else
+    di+=360-ang:
+    length*=t1:
+    GO SUB 20:
+    length/=t1/t2,
+    di+=90:
+    GO SUB 30:
+    length/=t2,
+    dep+=1,
+    di+=270+ang:
+    RETURN
+30 dep-=1:
+ IF dep=0 OR length<1 THEN
+    GO TO 40
+ else
+    length*=t2,
+    di+=90-ang:
+    gO SUB 20:
+    length/=t2/t1,
+    di+=270:
+    GO SUB 30:
+    length/=t1,
+    dep+=1,
+    di+=ang:
+    RETURN
+40 dep+=1:
+ x+=length*COS di,
+ y+=length*SIN di:
+ DRAW to x,y:
+ RETURN

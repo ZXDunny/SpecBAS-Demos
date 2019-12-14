@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/maurer rose
+CHANGED FALSE
+10 REM Maurer Rose
+20 READ c: FOR f=1 TO c: READ n,m: LET d=1,k=n/d,s=MIN(SCRw,SCRh)/2: DEGREES: INK 1
+30 DEF FN rosex(a)=s*COS(k*a)*COS a: DEF FN rosey(a)=s*COS(k*a)*SIN a
+40 FOR p=0 TO 360: LET a=m*p,x1=FN rosex(a),y1=FN rosey(a),a=m*(p-1),x2=FN rosex(a),y2=FN rosey(a): DRAW x1+SCRw/2,y1+SCRh/2 TO x2+SCRw/2,y2+SCRh/2: NEXT p
+50 LET g=GCD(n,d),nd=d/g,l=180*nd*(EVEN(n/g*nd)+1)
+60 INK 2: FOR a=0 TO l STEP .01: LET x=FN rosex(a)+SCRw/2,y=FN rosey(a)+SCRh/2: RECTANGLE x,y TO x+1,y+1: NEXT a
+70 wait keydown: CLS: NEXT f
+80 DATA 6,2,39,3,47,4,31,5,97,6,71,7,19

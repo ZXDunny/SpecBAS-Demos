@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/linecircle
+CHANGED FALSE
+10 window depth 0,32:
+	paper $808080: ink $0f000000
+20 cls
+30 cx=scrw/2,cy=scrh/2,r=min(cx,cy)-1
+40 a=rnd*tau,x1=cx+sin a*r,y1=cy+cos a*r,
+	a=rnd*tau,x2=cx+sin a*r,y2=cy+cos a*r:
+	draw alpha x1,y1 to x2,y2:
+	wait screen:
+	GO To 40

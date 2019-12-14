@@ -1,0 +1,8 @@
+ZXASCII
+AUTO -1
+PROG yin-yang
+10 REM Yin-Yang Circles
+20 DEF PROC c(x,y,r)
+30 LOCAL x1,y1,nr: LET x1=x+r*SIN i,y1=y+r*COS i: CIRCLE INK 15;x1,y1,r FILL: CIRCLE INK 1;x1,y1,r/3 FILL: CIRCLE INK 1;x-x1+x,y-y1+y,r FILL: CIRCLE INK 15;x-x1+x,y-y1+y,r/3 FILL 
+40 END PROC
+50 DEGREES: LET i=0,s=MIN(SCRw,SCRh): DO: PROC c(SCRw/2,SCRh/2,s/6): INC i,(MOUSEy/SCRh)*10: WAIT SCREEN: LOOP 

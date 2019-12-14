@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG areafill
+10 REM Random Area Filling
+15 PAPER 0: CLS: FOR f=1 TO 255: PALETTE f,128+f/2,64+f/1.5,f: NEXT f: LET d=0
+20 LET r=3+(RND*100): LET xc=(RND*(SCRw-(r*2)))+r: LET yc=(RND*(SCRh-(r*2)))+r: LET c=(RND*254)+1: GO SUB 500+(d*100)
+30 IF INKEY$="" THEN GO TO 20
+40 INC d: DO: LOOP UNTIL INKEY$="": CLS: GO TO 20
+500 INC r: FOR y=-r TO r: LET x1=INT(SQR(r*r-y*y)): FOR x=-x1 TO x1: IF POINT(x+xc,y+yc)<>0 THEN RETURN ELSE NEXT x: NEXT y: DEC r
+510 FOR y=-r TO r: LET x1=INT(SQR(r*r-y*y)): FOR x=-x1 TO x1: PLOT INK c;x+xc,y+yc: NEXT x: NEXT y: RETURN 
+600 INC r: FOR y=yc-r TO yc+r: FOR x=xc-r TO xc+r: IF POINT(x,y)<>0 THEN RETURN ELSE NEXT x: NEXT y: DEC r
+610 FOR y=yc-r TO yc+r: FOR x=xc-r TO xc+r: PLOT INK c;x,y: NEXT x: NEXT y: RETURN 

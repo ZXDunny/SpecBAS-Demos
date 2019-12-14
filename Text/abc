@@ -1,0 +1,27 @@
+ZXASCII
+AUTO -1
+PROG abc
+10 REM ABC Snippet decoder
+20 INPUT "Filename to decode: ";f$: LET k,s,b=0: PRINT "Opening file: ";f$: IF NOT FILEEXISTS(f$) THEN PRINT INK 2;"File not found": STOP 
+30 STREAM NEW src,f$: DO: GO SUB 120: LOOP UNTIL a$( TO 3)="SUB"
+40 LET p=POS(":OPEN",a$): IF p=0 THEN STOP 
+50 INC p,5: LET p=POS(",",a$,p): INC p: LET p=POS(",",a$,p): INC p: IF a$(p)<>#34 THEN STOP ELSE INC p
+60 LET d$="": DO WHILE a$(p) IN ["0" TO "9","A" TO "Z",".","a" TO "z"]: LET d$=d$+a$(p): INC p: LOOP 
+70 PRINT "Creating file ";d$: STREAM NEW dst,d$
+80 LET z=-1: LET p=POS("Z&=",a$): IF p>0 THEN LET z$="": INC p,3: DO WHILE a$(p) IN ["0" TO "9"]: LET z$=z$+a$(p): INC p: LOOP: LET z=VAL z$
+90 DO : GO SUB 120: IF a$( TO 5)="CLOSE" THEN STREAM CLOSE dst: GO TO 200
+100 IF a$( TO 2)="U"#34 THEN GO SUB 150
+110 LOOP 
+120 REM Read a line of text from source
+130 LET a$="": DO: STREAM READ src,b$,1: LET a$=a$+b$: PRINT b$ AND b$>=" ";: LOOP UNTIL b$<" ": LET a$=a$( TO LEN a$-1)
+140 DO : STREAM READ src,b$,1: LOOP UNTIL b$>=" ": STREAM SEEK src,STREAMPOS src-1: PRINT #13: OPTION "SCROLLCNT",0: RETURN 
+150 REM Decode line
+160 LET a$=a$(3 TO): FOR a=1 TO LEN a$: LET c=CODE a$(a)-37: IF c<0 THEN LET c=91+c*32
+170 IF k<4 THEN LET k=c+243 ELSE STREAM WRITE dst,CHR$(c+(k MOD 3)*86): LET k=k DIV 3: INC b
+180 LET s=(s+c) & 255: NEXT a
+190 RETURN 
+200 REM Checksum
+210 LET p=POS("S=",a$)+2: LET n$="": DO WHILE a$(p) IN ["0" TO "9"]: LET n$=n$+a$(p): INC p: LOOP 
+220 IF z=-1 THEN LET p=POS("B&",a$)+3: LET m$="": DO WHILE a$(p) IN ["0" TO "9"]: LET m$=m$+a$(p): INC p: LOOP: LET z=VAL m$
+230 IF s=VAL n$ AND b=z THEN PRINT INK 4;"Success!" ELSE PRINT INK 2;"Failed."
+240 PAUSE 0

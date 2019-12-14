@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG manic_mosaic
+5 RANDOMIZE 
+10 LET h=16: LET v=11: LET x=0: LET y=0
+15 LET ox=x: LET oy=y
+20 LET x=INT(RND*3)-1: LET y=INT(RND*3)-1: IF (x=0 AND y=0) OR (x=-ox AND y=oy) OR (x=ox AND y=-oy) OR (x=-ox AND y=-oy) THEN GO TO 20
+30 INK RND*256
+40 FOR z=1 TO RND*(SCRh/FONTh-1)
+50 TEXT AT v,h;"ð"
+60 LET h=h+x
+70 LET v=v+y
+80 IF h<0 THEN LET h=(SCRw/FONTw)-1
+90 IF h>=(SCRw/FONTw) THEN LET h=0
+100 IF v<0 THEN LET v=(SCRh/FONTh)-1
+110 IF v>=(SCRh/FONTh) THEN LET v=0
+120 NEXT z
+130 WAIT SCREEN : GO TO 15

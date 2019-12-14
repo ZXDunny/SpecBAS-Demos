@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG dottyfractal
+10 PAPER 0: CLS: ORIGIN -SCRw/2,-SCRh/2 TO SCRw/2,SCRh/2
+20 LET a=RND: LET b=0.9998: LET c=2-2*a: LET dots=10000: LET x=0: LET j=0: LET y=RND*12+.1
+30 FOR i=0 TO dots: LET z=x: LET x=b*y+j: LET j=a*x+c*(x^2)/(1+x^2): LET y=j-z: PLOT INK i/1000;x*20,y*20: NEXT i
+40 PAUSE 0: CLS: GO TO 20

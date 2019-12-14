@@ -1,0 +1,25 @@
+ZXASCII
+AUTO -1
+PROG namegen
+10 REM Fantasy Name Generator
+20 REM Translated from David Wheeler's script
+30 DEF FN r(m1,m2)=INT(RND*((m2-m1)+1))+m1
+40 DIM cns(): DIM vwls(): DIM cn$(): DIM vwl$(): LET nc=0: LET nv=0
+50 RESTORE 1000
+60 READ a$,b: IF b>=0 THEN LET vwl$(nv)=a$: LET vwls(nv)=b: INC nv: GO TO 60
+70 RESTORE 1030
+80 READ a$,b: IF b>=0 THEN LET cn$(nc)=a$: LET cns(nc)=b: INC nc: GO TO 80
+100 REM Generate the name
+110 LET minsyl=2: LET maxsyl=6
+120 LET g$="": LET leng=FN r(minsyl,maxsyl): LET isv=FN r(0,1)
+130 FOR i=1 TO leng
+140 IF isv THEN LET n=FN r(0,nv-1): LET n$=vwl$(n): LET n=vwls(n) ELSE LET n=FN r(0,nc-1): LET n$=cn$(n): LET n=cns(n)
+150 IF (i=1 AND n & 2=2) OR (i=leng AND n & 1=1) OR (n & 4=4) THEN GO TO 200
+160 GO TO 140
+190 REM Display the name
+200 LET g$=g$+n$: LET isv=1-isv: NEXT i
+210 LET g$=UP$ g$(1)+g$(2 TO): PRINT g$
+1000 REM Vowels and Vowel-Sounds
+1010 DATA "a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"ae",7,"ai",7,"ao",7,"au",7,"aa",7,"ea",7,"eo",7,"eu",7,"ee",7,"eau",7,"ia",7,"io",7,"iu",7,"ii",7,"oa",7,"oe",7,"oi",7,"ou",7,"oo",7,"'",4,"y",7,"ay",7,"ay",7,"ei",7,"ei",7,"ei",7,"ua",7,"ua",7,"$$",-1
+1020 REM Consonants and compounds
+1030 DATA "b",7,"c",7,"d",7,"f",7,"g",7,"h",7,"j",7,"k",7,"l",7,"m",7,"n",7,"p",7,"qu",6,"r",7,"s",7,"t",7,"v",7,"w",7,"x",7,"y",7,"z",7,"sc",7,"ch",7,"gh",7,"ph",7,"sh",7,"th",7,"wh",6,"ck",5,"nk",5,"rk",5,"sk",7,"wk",0,"cl",6,"fl",6,"gl",6,"kl",6,"ll",6,"pl",6,"sl",6,"br",6,"cr",6,"dr",6,"fr",6,"gr",6,"kr",6,"pr",6,"sr",6,"tr",6,"ss",5,"st",7,"str",6,"b",7,"c",7,"d",7,"f",7,"g",7,"h",7,"j",7,"k",7,"l",7,"m",7,"n",7,"p",7,"r",7,"s",7,"t",7,"v",7,"w",7,"b",7,"c",7,"d",7,"f",7,"g",7,"h",7,"j",7,"k",7,"l",7,"m",7,"n",7,"p",7,"r",7,"s",7,"t",7,"v",7,"w",7,"br",6,"dr",6,"fr",6,"gr",6,"kr",6,"x",7,"x",7,"x",7,"x",7,"x",7,"xx",7,"xx",5,"$$",-1

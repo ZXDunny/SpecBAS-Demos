@@ -1,0 +1,28 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/brownian_tree3
+CHANGED FALSE
+10 dEF FN c=POINT(x-1,y-1) OR POINT(x,y-1) OR POINT(x+1,y-1) OR POINT(x-1,y) OR POINT(x,y) OR point(x+1,y) OR POINT(x-1,y+1) OR POINT(x,y+1) OR POINT(x+1,y+1)
+20 PAPER 0: INK 15: CLS: degrees
+30 i=0,rr=10,n=20000,
+ w=scrw,h=scrh,w2=int(w/2),h2=int(h/2),
+ x=w2,y=h2,mxr=50:
+ plot x,y: dim d=-1,0,1
+40 do while i<n:
+    do while fn c:
+       r=rnd*360,
+       x=w2+sin r*mxr,
+       y=h2+cos r*mxr:
+    loop:
+    label @again:
+    x,y+=d(1+rnd*2):
+    if x<1 or y<1 or x>w-2 or y>h-2 then
+       x=w2,y=h2
+    else
+       if fn c then
+          plot x,y:
+          mxr=max(mxr,pyth(x-w2,y-h2)),
+          i+=1,x=w2,y=h2
+      else
+          GO To @again
+50 loop

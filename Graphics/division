@@ -1,0 +1,33 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/division
+CHANGED FALSE
+10 m=msecs,x,y,i,j=8,r=1,d=2
+20 DO:
+	   rectangle i,j,d,d:
+				FOr y=1 to d-1:
+				   for x=1 to y:
+							   IF x*y=INT((x*y)/d)*d THEN
+             PLOT i+x,j+y;i+y,j+x;i+d-x,j+y;i+d-y,j+x;i+x,j+d-y;i+y,j+d-x;i+d-x,j+d-y;i+d-y,j+d-x:
+										end if:
+							next x:
+				next y:
+				if r<0 then
+				   if i-d-2<0 then
+							   i=8,j+=d+8,r=-r
+							ELSE
+							   i-=d,j-=1:
+							end if:
+				else
+				   i+=d-1:
+							if i+d>scrw-1 then
+							   i=scrw-10-d,j+=d+8,r=-r:
+							end if:
+				end if:
+	   d+=1:
+				if j+d<Scrh then
+				   loop
+30 PAUSE 1:
+	ms=msecs-m,s=int(ms/1000),m=INT (s/60):
+	PRINT AT txth-1,0;d-1;" squares, Time: ";m;" min, ";s-60*m;" secs, ";ms;" msecs.",:
+	PAUSE 0

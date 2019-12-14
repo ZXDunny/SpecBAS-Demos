@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG huecircles
+10 WINDOW DEPTH 0,32: PAPER 0: CLS 
+15 LET sz=1.5
+20 LET steps=24: RADIANS: LET xmax=sz*3/7*(SCRw-SCRh): LET y=SCRh/2: LET twopi=2*PI: LET radius=1.6*xmax/(1+2*steps/twopi)
+30 FOR i=1 TO steps: LET angle=(i-1)*twopi/steps: LET sa=((sz-0.25)/1.25)*255: LET da=INT(RADTODEG angle): INK HSVtoRGB(da,sa,255)
+40 CIRCLE SCRw/2-(xmax-radius)*SIN(angle),y-(xmax-radius)*COS(angle),radius FILL 
+50 NEXT i
+60 IF sz>0.3 THEN LET sz=sz/1.19: GO TO 20

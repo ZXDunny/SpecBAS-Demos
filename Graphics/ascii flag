@@ -1,0 +1,5 @@
+ZXASCII
+AUTO -1
+PROG ascii flag
+10 DEF FN rr$(r$)=r$(2 TO)+r$(1): DEF FN rl$(r$)=r$(LEN r$)+r$( TO LEN r$-1)
+20 z$="x"*14,a$="\  \"+z$+"\\0",b$="x"*12+"//0/  /xx",c$=z$+"/  /0//",d$="\\"+z$+"\  \0",e$="  000000  ": ?" ";"_"*42: DO 18: ?"|";a$( TO 16);e$;b$( TO 16);"|": a$=FN rl$(a$),b$=FN rr$(b$): LOOP: ?"|";TAB 17;e$;TAB 43;"|"'("|"+("0"*42)+"|"+#13)*3;"|";TAB 17;e$;TAB 43;"|": DO 18: ?"|";c$( TO 16);e$;d$( TO 16);"|": c$=FN rr$(c$),d$=FN rl$(d$): LOOP: ?#11;TAB 17;"__";TAB 25;"__";TAB 40;"__"

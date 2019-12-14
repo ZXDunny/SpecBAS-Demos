@@ -1,0 +1,19 @@
+ZXASCII
+AUTO -1
+PROG chrysanthemum curve
+10 REM Chrysanthemum curve
+20 LET n=30000,s=20,a=0:
+ DIM pts(n,3)
+30 FOR i=0 TO n-1:
+    u=i*21*PI/n,
+    r=5*(1+SIN(11*u/5))-4*(sin(17*u/3)^4)*(SIN(2*COS(3*u)-28*u)^8),
+    pts(i+1,1)=r*s*COS u,
+    pts(i+1,2)=r*s*SIN u,
+    pts(i+1,3)=s*2*(r/20+.2)*SIN(r*TAU/7):
+ NEXT i
+40 PROJECT3D pts() TO dst() ROTATE a,a/2,a/3:
+ PLOT dst():
+ WAIT SCREEN:
+ CLS:
+ INC a,PI/180:
+ GO TO 40

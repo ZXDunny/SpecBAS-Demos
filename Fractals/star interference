@@ -1,0 +1,5 @@
+ZXASCII
+AUTO -1
+PROG star interference
+10 REM Starry interference
+20 sc=15: FOR i=0 TO SCRw;j=0 TO SCRh: b=i+SCRw/2,a=b/sc,c=((b/20)^2)*j: IF c & 512 THEN PLOT i,j: END IF: NEXT j;i

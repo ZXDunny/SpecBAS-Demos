@@ -1,0 +1,29 @@
+ZXASCII
+AUTO -1
+PROG network
+10 REM Network
+20 DEGREES:
+ np=100,md=130,x=1,y=2,c=3,r=4,dx=6,dy=7:
+ DIM p(np,8):
+ FOR n=1 TO np:
+    p(n,r)=2+RND*3,
+    p(n,x)=RND*SCRw,p(n,y)=RND*SCRh,
+    p(n,c)=HSVtoRGB(RND*360,255,255),
+    p(n,dx),p(n,dy)=(rnd*5)-2.5:
+ NEXT n
+30 DEGREES: WINDOW DEPTH 0,32: CLS 0: SCREEN LOCK
+40 FOR i=1 TO np-1:
+    FOR j=i+1 TO np:
+       d=PYTH(p(i,x)-p(j,x),p(i,y)-p(j,y)):
+       IF d<md THEN
+          DRAW ALPHA INK p(i,c)+(((md-d)*2.55) SHL 24);p(i,x),p(i,y) TO p(j,x),p(j,y):
+       END IF:
+    NEXT j:
+    p(i,dx)*=iif(p(i,x)<0 or p(i,x)>scrw,-1,1),
+    p(i,dy)*=iif(p(i,y)<0 or p(i,y)>scrh,-1,1):    
+ NEXT i:
+ plot p():
+ particle p():
+50 WAIT SCREEN:
+ CLS ALPHA $10000000:
+ GO TO 40

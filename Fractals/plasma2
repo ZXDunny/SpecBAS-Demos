@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG plasma2
+10 REM Plasma II
+20 DEF FN dist(a,b,c,d)=SQR(POWERTWO(a-c)+POWERTWO(b-d))
+30 FOR f=0 TO 255: PALETTE f,255-f,ABS(f-128),f: NEXT f
+40 LET d=6: LET w=800: LET dt=PI: LET h=480: LET k0=w/16: LET k1=w/2: LET k2=h/2: LET k3=w/4: LET k4=h/4: LET k5=(w/4)*3: LET k6=k4: LET k7=k5: LET k8=w*(64/25): OPTION "base",0
+50 DIM mem(w,h,3)
+60 FOR x=0 TO w-1 STEP d: FOR y=0 TO h-1 STEP d: LET mem(x,y,0)=COS(FN dist(x,y,k3,k4)/((w/k0)+4)): LET mem(x,y,1)=SIN(FN dist(x,y/((w/k0)-1),k5,k6)/((w/k0)-3)): LET mem(x,y,2)=COS(FN dist(x,y,k7,k8)/(w/k0)): NEXT y: NEXT x
+70 LET x=0: LET y=0: LET T=0
+80 INC t,dt: FOR x=0 TO w-d STEP d: FOR y=0 TO h-d STEP d: LET v=SIN(FN dist(x+t,y-t,k1,k2)/8)+mem(x,y,0)+mem(x,y,1)+mem(x,y,2): INK 128+32*v: RECTANGLE x,y TO x+d,y+d FILL "": NEXT y: LET y=0: NEXT x: GO TO 80

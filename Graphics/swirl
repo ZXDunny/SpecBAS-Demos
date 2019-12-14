@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG swirl
+10 REM swirl
+20 CLS 0: PALETTE 255,255,255,255: RAINBOW 0 TO 255: SCREEN LOCK 
+30 LET wd=200: LET ht=200: LET w=16: LET h=16: LET dx=w/wd: LET dy=h/ht: LET s=2: LET px=(SCRw-(wd*s))/2: LET py=(SCRh-(ht*s))/2
+40 GRAPHIC NEW buf,wd,ht: WINDOW GRAPHIC buf
+50 DIM pixel(wd*ht+wd,2) BASE 0: FOR i=0 TO wd-1: FOR j=0 TO ht-1: LET p=i+j*wd: LET pixel(p,0)=i: LET pixel(p,1)=j: NEXT j: NEXT i
+60 LET m=MOUSEx: GO SUB 80
+70 DO : PALETTE SHL 1,1 TO 255: WAIT SCREEN: LOOP UNTIL MOUSEx<>m: GO TO 60
+80 LET n=(m+1)*10/wd: LET x=-w/2: FOR i=0 TO wd-1: LET y=-h/2: FOR j=0 TO ht-1: LET v=SIN(n*COS(PYTH(x,y))+5*POLAR(y,x)): LET p=i+j*wd: PLOT INK 1+(v*255);pixel(p,0),pixel(p,1): INC y,dy: NEXT j: INC x,dx: NEXT i
+90 WINDOW PUT GRAPHIC buf,0,px,py SCALE s: RETURN 

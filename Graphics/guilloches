@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG guilloches
+10 REM Guilloche curves
+20 DEF FN rand(mn,mx)=(RND*(mx-mn))+mn
+30 LET steps=INT FN rand(100,3000): LET r1=INT FN rand(0,100): LET r2=FN rand(0,.5): LET p=INT FN rand(0,100): LET m=FN rand(.1,5): LET amp=2.5
+40 CLS : ORIGIN -SCRw/2,-SCRh/2 TO SCRw/2,SCRh/2
+50 LET thst=(2*PI)/steps: LET s=(r1+r2)/r2: LET rr=r2+r1: LET rp=r2+p: LET theta=0
+60 FOR t=0 TO steps
+70 LET tm=m*theta: LET x=amp*(rr*COS(tm)+rp*COS(s*tm)): LET y=amp*(rr*SIN(tm)+rp*SIN(s*tm))
+80 IF t>0 THEN DRAW TO x,y ELSE PLOT x,y
+90 INC theta,thst
+100 NEXT t
+110 PAUSE 0: RUN 

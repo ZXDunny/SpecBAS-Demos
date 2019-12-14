@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG lorenz2
+10 REM Lorenz Attractor
+20 LET p=28: LET b=8/3: LET s=10: LET dt=0.0001: LET k=0.005/dt: LET x=dt: LET y=dt: LET z=dt: LET sw=SCRw/2: LET sh=SCRh/2
+30 FOR f=0 TO 255: PALETTE f,f,f,f: NEXT f: PAPER 0: OVER 2: CLS: PLOT INK 0;sw,sh
+40 LET dx=s*(y-x): LET dy=x*(p-z)-y: LET dz=x*y-b*z: LET x=x+dx*dt: LET y=y+dy*dt: LET z=z+dz*dt: DRAW INK 1; TO sw+x*10,sh+y*10: GO TO 40

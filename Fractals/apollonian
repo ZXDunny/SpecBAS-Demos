@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG apollonian
+10 REM Apollonian Fractal
+20 CLS 0: x=.2,y=.3,z=60,r=SQR 3: PALETTE 3,0,192,0
+30 DO: a=RND,x1=3*(1+r-x)/((1+r-x)^2+y^2)-(1+r)/(2+r),y=3*y/((1+r-x)^2+y^2),x=x1: IF a>1/3 THEN f1x=x/(x^2+y^2),f1y=-y/(x^2+y^2): IF a<=2/3 THEN b=r/2,x=f1x*-.5-f1y*b,y=f1x*b+f1y*-.5 ELSE b=-r/2,x=f1x*-.5-f1y*b,y=f1x*b+f1y*-.5
+40 PLOT INK a*3+1;800/2+z*x,480/2+z*y: LOOP 

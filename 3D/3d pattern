@@ -1,0 +1,19 @@
+ZXASCII
+AUTO -1
+PROG 3d pattern
+10 ORIGIN -SCRw/2,-SCRh/2
+20 LET xs=1: LET ys=1
+30 LET a=SCRw/2: LET b=a*a: LET c=SCRh/2
+40 FOR x=0 TO a STEP xs
+50 LET s=POWERTWO x: LET p=SQR(b-s)
+60 FOR i=-p TO p STEP 6*ys
+70 LET r=SQR(s+POWERTWO i)/a
+80 LET q=(r-1)*SIN(24*r)
+90 LET y=-INT(i/3+q*c)
+100 IF i=-p THEN LET m=y: LET n=y
+110 IF y>m THEN LET m=y
+120 IF y<n THEN LET n=y
+130 IF m=y OR n=y THEN PLOT -x,y: PLOT x,y
+140 NEXT i
+150 NEXT x
+160 PAUSE 0

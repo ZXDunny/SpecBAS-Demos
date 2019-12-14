@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG SierCircles
+10 screen lock:
+ p3=pi/180,p5=pi*-.5:
+ for n=3 to 8:
+    a=0:
+    do while a<tau-p3:
+       cls:
+       a+=p3:
+       levels=6:
+       proc r(scrw/2,scrh/2,scrh/6,n,a,levels):
+       wait screen:
+    loop:
+    pause 150:
+ next n
+20 def proc r(x,y,r,n,rao,level):
+    circle x,y,r:
+    if level>0 then
+       local ra=tau/n,i=0:
+       for i=0 to n-1:
+          x1=x+1.5*r*cos(i*ra+rao+p5),
+          y1=y+1.5*r*sin(i*ra+rao+p5):
+          proc r(x1,y1,r*.5,n,2*rao,level-1):
+       next i
+30 end proc

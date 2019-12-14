@@ -1,0 +1,5 @@
+ZXASCII
+AUTO -1
+PROG fizzbuzz
+10 REM FizzBuzz
+20 FOR a=1 TO 100: PRINT IIF$(a MOD 15=0,"Fizzbuzz",IIF$(a MOD 3=0,"Fizz",IIF$(a MOD 5=0,"Buzz",STR$ a))): NEXT a

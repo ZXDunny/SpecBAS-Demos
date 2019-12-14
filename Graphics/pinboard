@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG pinboard
+10 DEGREES: PAPER 2: INK 14: CLS 
+20 DEF FN x(z)=SIN(z*angle)*(SCRw/2)+SCRw/2
+30 DEF FN y(z)=COS(z*angle)*(SCRh/2)+SCRh/2
+40 LET np=20: LET angle=360/np
+50 FOR a=1 TO np: LET x1=FN x(a): LET y1=FN y(a): FOR b=a TO np: LET x2=FN x(b): LET y2=FN y(b): PLOT x1,y1: DRAW TO x2,y2: NEXT b: NEXT a
+60 PAUSE 0

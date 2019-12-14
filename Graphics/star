@@ -1,0 +1,10 @@
+ZXASCII
+AUTO -1
+PROG star
+10 REM Rotating textured star
+20 LET np=7: LET r2=SCRh/2: LET r1=r2/3: DEGREES
+30 DIM pts(np*2,2)
+40 LET a=0: LET as=360/(np*2)
+50 FOR f=1 TO np*2: IF ODD f THEN LET pts(f,1)=SIN a*r2: LET pts(f,2)=COS a*r2 ELSE LET pts(f,1)=SIN a*r1: LET pts(f,2)=COS a*r1: END IF: INC a,as: NEXT f
+60 PAPER 0: CLS: SCREEN LOCK: LET a=0
+70 FOR f=0 TO 359 STEP 2: TRANSFORM2D pts() TO dst() ROTATE f MOVE SCRw/2,SCRh/2: POLYGON dst() FILL #16#4#0#0#0#17#2#0#0#0"ê": WAIT SCREEN: CLS: NEXT f: GO TO 70

@@ -1,0 +1,27 @@
+ZXASCII
+AUTO -1
+PROG brainfuck
+10 REM Brainfuck interpreter
+20 LET c$="++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>."
+30 BANK NEW bfdat,32768
+40 LET i=0: LET d=0
+50 INC i: IF i>LEN c$ THEN STOP 
+60 CASE c$(i)
+70 WHEN "<": DEC d
+80 WHEN ">": INC d
+90 WHEN "+": LET v=PEEK(bfdat,d): INC v,1,0 TO 255: POKE bfdat,d,v
+100 WHEN "-": LET v=PEEK(bfdat,d): DEC v,1,0 TO 255: POKE bfdat,d,v
+110 WHEN ".": PRINT CHR$(PEEK(bfdat,d));
+120 WHEN ",": INPUT b$: POKE bfdat,d,CODE b$
+130 WHEN "[": IF PEEK(bfdat,d)=0 THEN GO SUB 170
+140 WHEN "]": IF PEEK(bfdat,d)<>0 THEN GO SUB 210
+150 END CASE
+160 GO TO 50
+170 LET b=1
+180 INC i: IF i>LEN c$ THEN STOP ELSE IF c$(i)="[" THEN INC b
+190 IF c$(i)="]" THEN DEC b: IF b=0 THEN RETURN 
+200 GO TO 180
+210 LET b=1
+220 DEC i: IF i<1 THEN STOP ELSE IF c$(i)="]" THEN INC b
+230 IF c$(i)="[" THEN DEC b: IF b=0 THEN RETURN 
+240 GO TO 220

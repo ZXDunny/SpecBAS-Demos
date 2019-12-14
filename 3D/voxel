@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG voxel
+10 PAPER 0: FOR f=1 TO 3: READ a,r,g,b: PALETTE a,r,g,b: NEXT f: CLS 
+20 READ b$: FOR f=1 TO 10: READ a$: LET b$=b$+a$: NEXT f
+30 FOR l=256 TO 1 STEP -8: FOR y=4 TO 128 STEP 4: FOR x=256 TO 1 STEP -8
+40 IF SGN(SIN(x*y*l*3.14))=1 THEN GO TO 70
+50 LET b=1: FOR by=1 TO 11: FOR bx=1 TO 11: LET a$=b$(b): IF a$<>"." THEN PLOT INK CODE a$ MOD 16;x+bx+y-4,by+y+l+3
+60 INC b: NEXT bx: NEXT by
+70 NEXT x: NEXT y: NEXT l
+80 DATA 14,255,255,128,12,255,128,100,8,160,58,60
+90 DATA "00000000...","llnnnnnnl..","l8lnnnnnnl.","l88llllllll","l88l000000l",a$,a$,a$,".l8l000000l","..ll000000l","...llllllll"

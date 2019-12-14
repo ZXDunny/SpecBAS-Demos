@@ -1,0 +1,22 @@
+ZXASCII
+AUTO -1
+PROG sinstack
+10 rem sine addition
+20 a=1,f=10,xs=scrw,ys=scrh
+30 for x=0 to 1 step 1/scrw:
+    y=sin(x*f):
+    t=.001*msecs:
+    y+=sin(x*f*2.1+t)*4.5:
+    y+=sin(x*f*1.72+t*1.121)*4.0:
+    y+=sin(x*f*2.221+t*0.437)*5.0:
+    y+=sin(x*f*3.1122+t*4.269)*2.5:
+    y*=a*0.012:
+    if x=0 then
+       plot x*xs,(y+.5)*ys
+    else
+       draw to x*xs,(y+.5)*ys:
+    end if:
+ next x:
+ wait screen:
+ cls:
+ go to 30

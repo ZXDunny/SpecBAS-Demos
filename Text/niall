@@ -1,0 +1,110 @@
+ZXASCII
+AUTO -1
+PROG niall
+10 REM NIALL - The Non-intelligent AMOS
+20 REM Language learner
+30 PAPER 0: INK 15:: CLS
+40 LET mnw=3000: OPTION "base",0: DIM word$(mnw+1,2): DIM w$(256): DIM co(2)
+50 LET word$(0,0)=" ": LET word$(MNW,0)=".": LET num,nmw,com,fs=0
+60 GO SUB @SETUP
+70 DO : GO SUB @USER_INPUT: IF com=1 THEN GO TO 90
+80 GO SUB @NIALL_REPLIES
+90 LOOP
+100 LABEL @SETUP
+110 PRINT SCALE 4,4;CENTRE 1;"Welcome to NIALL";SCALE 1,1;CENTRE 7;"Non intelligent AMOS Language Learner";CENTRE 8;"Written in AMOS BASIC Version 1.1";CENTRE 9;"by Matthew Peck in 1990";CENTRE 11;"This program is fully public domain": IF com=1 THEN GO TO 130
+120 PRINT CENTRE 14;INK 6;"Type '#help' for a list of commands"
+130 PRINT CENTRE 16;INK 1;".......... Get Typing .........."
+140 PRINT : LET com=0: RETURN
+150 LABEL @SEE_INSTRUCTIONS
+160 CLS : PRINT SCALE 4,4;CENTRE 1;"NIALL Instructions"
+170 PRINT : FOR g=1 TO 17: READ c,a$: PRINT INK c;a$: NEXT g: PAUSE 0: CLS: LET com=1: RETURN
+180 DATA 6,"COMMAND WORDS",1," ",1,"When you are given the prompt USER: you will normally type in a sentence,",1,"but you can also type in a command word. All command words are prefixed",1,"by a '#'. This version can support the following commands:"
+190 DATA 1," ",7,"#LIST     Displays Niall's current dictionary on the screen."
+200 DATA 1," ",7,"#SAVE     Saves the current diictionary to disk under any name."
+210 DATA 1," ",7,"#LOAD     Loads a previously saved dictionary from disk."
+220 DATA 1," ",7,"#CORRECT  Corrects a mispelt word in the dictionary."
+230 DATA 1," ",7,"#FRESH    Clears the current dictionary."
+240 DATA 1," ",2,"#QUIT     Leaves the program."
+250 LABEL @USER_INPUT
+260 LET com=0: INPUT INK 6;"USER: ";INK 8;t$: IF LTRIM$(RTRIM$(t$))<>"" THEN PRINT INK 1;SCALE 1,2;"USER:";INK 8;"  ";t$
+270 IF t$="" THEN RETURN
+280 LET t$=LOW$ t$: IF t$(1)="#" THEN GO SUB @COMMANDS: LET com=1: RETURN
+290 LET r$="": LET t$=LTRIM$(RTRIM$ t$): FOR f=1 TO LEN t$
+300 IF t$(f)="," THEN LET t$(f)="."
+310 IF t$(f) IN ["."," ","a" TO "z"] THEN LET r$=r$+t$(f)
+320 IF f=LEN t$ AND (t$(f) IN ["?","!"]) THEN LET r$=r$+t$(f)
+330 NEXT f: LET t$=r$
+340 LET q$=t$
+350 LABEL @FULLSTOP
+360 LET n=POS(".",q$): IF n<>0 THEN LET fs=1: LET t$=q$( TO n-1): LET q$=q$(n+1 TO)
+370 IF t$="" THEN GO TO 430
+380 LET w=1: LET w$(w)="": FOR f=1 TO LEN t$
+390 IF t$(f)=" " THEN IF t$(f+1)<>" " THEN INC w: LET w$(w)="": GO TO @SKIP
+400 LET w$(w)=w$(w)+t$(f)
+410 LABEL @SKIP
+420 NEXT f
+430 IF num<>nmw-1 THEN GO SUB @ANALYSE_SENTENCE
+440 IF fs=1 THEN LET fs=0: LET t$=q$: GO TO @FULLSTOP
+450 RETURN
+460 LABEL @ANALYSE_SENTENCE
+470 LET old=0
+480 FOR h=1 TO w+1
+490 IF h=w+1 THEN LET f=mnw: GO TO @FOUNDIT
+500 FOR f=1 TO num: IF w$(h)=word$(f,0) THEN GO TO @FOUNDIT
+510 NEXT f
+520 INC num: LET word$(num,0)=w$(h): LET f=num
+530 LABEL @FOUNDIT
+540 IF word$(old,1)="" THEN LET word$(old,1)="1|"+STR$ f+"(1)": GO TO @ALLDONE
+550 LET c$=word$(old,1): LET c$=STR$(IVAL c$+1)+RIGHT$(c$,LEN c$-POS("|",c$)+1)
+560 FOR g=POS("|",c$)+1 TO LEN c$
+570 IF IVAL(RIGHT$(c$,LEN c$-g))=F THEN GO TO @HERE
+580 LET g=POS(")",c$,g)
+590 NEXT g
+600 LET c$=c$+STR$(f)+"(1)": LET word$(old,1)=c$: GO TO @ALLDONE
+610 LABEL @HERE
+620 LET g=POS("(",c$,g): LET i=POS(")",c$,g)-1: LET c$=LEFT$(c$,g)+STR$(IVAL(RIGHT$(c$,LEN c$-g))+1)+RIGHT$(c$,LEN c$-i)
+630 LET word$(old,1)=c$
+640 LABEL @ALLDONE
+650 LET old=f: NEXT h: RETURN
+660 LABEL @NIALL_REPLIES
+670 IF num=0 THEN PRINT SCALE 1,2;INK 5;"NIALL:";INK 2;" I cannot speak yet!": RETURN
+680 LET RP$="": LET c=0
+690 LABEL @RLOOP
+700 IF word$(c,1)="" THEN INC c: GO TO 700
+710 LET c$=word$(c,1): LET r=INT(RND*(IVAL c$+1)): IF r=0 THEN GO TO @RLOOP
+720 FOR g=POS("(",c$) TO LEN c$
+730 LET r=r-IVAL(RIGHT$(c$,LEN c$-g)): IF r<=0 THEN GO TO @THISWORD
+740 LET g=POS("(",c$,g+1)-1
+750 NEXT g
+760 STOP
+770 LABEL @THISWORD
+780 FOR f=g TO 1 STEP -1: LET f$=MID$(c$,f,1): IF f$=")" OR f$="|" THEN GO TO @WORD
+790 NEXT f
+800 LABEL @WORD
+810 LET d=IVAL(RIGHT$(c$,LEN c$-f)): LET rp$=rp$+word$(c,0)+" ": IF c=d THEN INC c: GO TO @RLOOP
+820 LET c=d: IF c<>mnw THEN GO TO @RLOOP
+830 DO : IF LEFT$(rp$,1)<>" " THEN EXIT
+840 LET rp$=RIGHT$(rp$,LEN rp$-1): LOOP
+850 IF rp$="" THEN RETURN
+860 LET rp$(1)=CHR$(CODE rp$(1)-32): IF NOT (rp$(LEN rp$-1) IN ["?","!"]) THEN LET rp$(LEN rp$)="."
+870 PRINT SCALE 1,2;INK 5;"NIALL: ";INK 7;rp$
+880 RETURN
+890 LABEL @COMMANDS
+900 IF t$="#list" THEN FOR f=1 TO NUM: PRINT INK 4;USING$("#####",f);INK 7;": ";word$(f,0);" ";word$(f,1): NEXT f
+910 IF t$( TO 5)="#load" THEN LET f$=LTRIM$(t$(6 TO)): IF FILEEXISTS(f$) THEN GO SUB @LOADFILE
+920 IF t$( TO 5)="#save" THEN LET f$=LTRIM$(t$(6 TO)): STREAM NEW fs,f$: STREAM SEEK fs,0: STREAM WRITE fs,STR$(num)+#13#10: FOR f=1 TO num: STREAM WRITE fs,word$(f,0)+#13#10+word$(f,1)+#13#10: NEXT f: STREAM CLOSE fs
+930 IF t$="#correct" THEN GO SUB @CORRECT
+940 IF t$="#fresh" THEN INPUT "Are you sure? (Y/N) ";a$: IF UP$(a$(1))="Y" THEN FOR f=10 TO num: LET word$(f,0)="": LET word$(f,1)="": NEXT f: LET num=0
+950 IF t$="#quit" THEN STOP
+960 IF t$="#help" THEN GO SUB @SEE_INSTRUCTIONS
+970 RETURN
+980 LABEL @LOADFILE
+990 STREAM NEW fs,f$: STREAM READ fs,g$,STREAMLEN fs: STREAM CLOSE fs
+1000 DIM b$(SPLIT g$,NOT #13#10): LET num=IVAL b$(0): LET g=1: FOR f=1 TO num: LET word$(f,0)=b$(g): LET word$(f,1)=b$(g+1): INC g,2
+1010 IF POS(" ",word$(f,1))<>0 THEN LET word$(f,1)=REPLACE$(word$(f,1)," ",""): GO TO 1010
+1020 NEXT f
+1030 RETURN
+1040 LABEL @CORRECT
+1050 INPUT "Enter incorrect word: ";n$
+1060 FOR f=1 TO NUM
+1070 IF LOW$ n$=word$(f,0) THEN INPUT "Enter correction: ";n$: LET word$(f,0)=LOW$ n$: RETURN ELSE NEXT f: PRINT INK 2;SCALE 1,2;"Word not found!": RETURN

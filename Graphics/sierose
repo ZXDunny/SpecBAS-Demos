@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG sierose
+10 PAPER 0: CLS 
+20 a120=2*PI/3,x=SCRw/2,y=SCRh/2,start=MIN((SCRw-20)/2,(SCRh-20)/2),clr,angle=0
+30 DIM i(start)
+40 clr=(clr+=1) MOD 6
+50 FOR j=1 TO 12: INK j: sz=start: GO SUB 60: angle=j*PI/6: NEXT j: STOP 
+60 FOR k=1 TO 3: x2=x+COS angle*sz,y2=y+SIN angle*sz: DRAW x,y TO x2,y2: x=x2,y=y2: angle+=a120
+70 IF sz>15 THEN i(sz)=k,sz/=2: GO SUB 60: sz*=2,k=i(sz)
+80 NEXT k: RETURN 

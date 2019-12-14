@@ -1,0 +1,16 @@
+ZXASCII
+AUTO -1
+PROG particles
+10 REM Particles
+20 LET mx=2000: DIM p(mx+1,6) BASE 0
+30 CLS 0: FOR k=0 TO 500: LET s=(RND*mx)+1: IF p(s,4)<1 THEN LET p(s,0)=MOUSEx-2: LET p(s,1)=MOUSEy: LET p(s,2)=SIN(RND*360)/2: LET p(s,3)=COS(RND*360)/2: LET p(s,4)=RND*149+100: LET p(s,5)=p(s/5,4): NEXT k
+40 FOR i=0 TO mx-1: IF p(i,4)>0 THEN INC p(i,0),p(i,2): INC p(i,1),p(i,3): INC p(i,3),RND*10/100: DEC p(i,4): IF p(i,1)>SCRh THEN LET p(i,3)=-p(i,3)*(RND*10/20)
+50 CASE p(i,4)
+60 WHEN IN [0 TO p(i,5)]: INK 2
+70 WHEN IN [p(i,5) TO p(i,5)*2]: INK 10
+80 WHEN IN [p(i,5)*2 TO p(i,5)*3]: INK 6
+90 WHEN IN [p(i,5)*3 TO p(i,5)*4]: INK 14
+100 WHEN IN [p(i,5)*4 TO ]: INK 15
+110 END CASE
+120 IF p(i,4)>0 THEN RECTANGLE p(i,0),p(i,1),4,4 FILL : NEXT i
+130 NEXT i: WAIT SCREEN: GO TO 30

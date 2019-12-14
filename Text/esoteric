@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG esoteric
+10 REM Esoteric
+20 DIM i(64) BASE 0: DIM instr$(): LET p,k=1: LET p1,p2,sl,lp,nl,cl=0
+30 LET p$=".==++>:+>+>[:++++++++>]:=+>===++>.===+++++++>:=+>:=++++>:++++++++>:rp>p>>p>p>p>p>p>p>p>p>p!"
+40 READ a$: LET instr$(CODE a$(1))=TOKEN$ a$(2 TO): IF a$(1)<>"@" THEN GO TO 40
+50 DO WHILE k<=LEN p$: EXECUTE instr$(CODE p$(k)): INC k: LOOP 
+60 STOP 
+70 DATA "+INC i(p)","-DEC i(p)","=INC i(p),10","_DEC i(p),10",".INC i(p),50",",DEC i(p),50",":INC i(p),100",";DEC i(p),100"
+80 DATA ">INC p","<DEC p","rLET p=1","pPRINT CHR$ i(p);","qLET p1=i(p)","wLET p2=i(p)","aLET i(p)=p1+p2","sLET i(p)=p1-p2","dLET i(p)=p1*p2"
+90 DATA "fLET i(p)=IIF(p2<>0,p1/p2,i(p)): PRINT i(p)","zLET p1=p2","xLET p2=p1","!STOP","[LET sl=k: LET lp=1: LET nl=i(p-1): LET cl=0"
+100 DATA "]IF cl<nl THEN INC cl: LET k=sl ELSE LET lp,sl,nl,cl=0","@PRINT "#34"MEQ in SpecBAS v1.0"#34

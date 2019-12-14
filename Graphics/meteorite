@@ -1,0 +1,8 @@
+ZXASCII
+AUTO -1
+PROG meteorite
+10 REM Meteorite
+20 LET num=60,x$=REP$(DCHR$ MOUSEx,num),y$=REP$(DCHR$ MOUSEy,num)
+30 PALETTE 0,0,0,50: FOR f=1 TO num: PALETTE f,4*f,2*f,f: NEXT f
+40 LET x$=x$(3 TO)+DCHR$ MOUSEx,y$=y$(3 TO)+DCHR$ MOUSEy
+50 CLS 0: FOR i=0 TO num-1: LET n=(i*2)+1: CIRCLE INK i+1;DCODE x$(n TO n+1),DCODE y$(n TO n+1),i/4 FILL: NEXT i: WAIT SCREEN: GO TO 40

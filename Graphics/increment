@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG increment
+1 REM Incrementally Linked
+2 REM  2019 Motus-Art
+3 rem https://instagram.com/motus_art
+10 paper 0: ink 15: cls
+20 cx=scrw/2,cy=scrh/2,phase=0,ml=10,
+	speed=.001/ml,elements=20*ml:
+	radians
+30 cls:
+	for i=1 to elements:
+	   r=i*12/ml,
+				m=phase*(tau*(elements-i)),
+				x=cos m*r+cx,
+				y=sin m*r+cy:
+				circle x,y,3 fill:
+				if i>1 then
+				   draw lx,ly to x,y:
+				end if:
+				lx=x,ly=y:
+	next i:
+	phase+=speed:
+	wait screen:
+	GO To 30
+	

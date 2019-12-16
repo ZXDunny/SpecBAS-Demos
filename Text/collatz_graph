@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG /demos/text/collatz_graph
+CHANGED FALSE
+10 REM The Collatz Conjecture
+11 l=80000,m=scrw/l
+20 for s=1 to l
+30    n=s,c=0
+40    n=IIF(EVEN n,n/2,n*3+1):
+	   IF n<>1 THEN
+				   c+=1:
+	      GO TO 40
+50    rectangle s*m,c*(scrh/300),3,3 fill:
+	next s

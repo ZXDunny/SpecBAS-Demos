@@ -2,8 +2,9 @@ ZXASCII
 AUTO -1
 PROG demos:graphics/gears
 CHANGED FALSE
-10 DEF FN a(b)=MAX(MIN(SIN b,.7),-.6)
-20 def proc gear(x,y,n,c,d):
+10 WINDOW ORIGIN 0,0,0 TO 799,479
+20 DEF FN a(b)=MAX(MIN(SIN b,.7),-.6)
+30 def proc gear(x,y,n,c,d):
 	   ph=(msecs-t)/50,cr=n*6,crm=cr/4,
 				x1=(x+cr+15*fn a(ph)),y1=y:
 				plot x1,y1:
@@ -13,9 +14,9 @@ CHANGED FALSE
 							draw to x1,y1:
 				next i:
 				circle ink c+8;x,y,crm fill;ink 0;x,y,crm:
-				fill ink c;max(0,x),min(y-(crm*2),scrh-1):
-	end proc
-30 screen lock:t=msecs:
+				fill ink c;max(0,x),min(y-(crm*2),logh-1):
+ end proc 
+40 screen lock:t=msecs:
 	do:
 	   proc gear(485,220,30,1,-1);gear(215,240,15,2,1):
 				proc gear(234,372,7,4,-1);gear(83,74,20,6,-1):

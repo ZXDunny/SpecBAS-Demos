@@ -1,18 +1,19 @@
 ZXASCII
 AUTO -1
-PROG cwaves2
+PROG demos:graphics/cwaves2
+CHANGED FALSE
 10 rem Better CWaves
-20 a=1,f=10,xs=scrw,ys=scrh,z=0
-30 d=2+int(rnd*10),s=255/(d+1),i=s,r,g,b=rnd*255:
- palette 0,r,g,b:
- for h=0 to d-1:
-    palette i,rnd*255,rnd*255,rnd*255:
-    rainbow i-s to i:
-    i+=s:
- next h:
- palette 255,r,g,b:
- rainbow i-s to 255
-40 n=2+rnd*10:
+20 a=1,f=5,xs=scrw,ys=scrh,z=0
+30 d=2+int(rnd*10),e=255/(d+1),i=e,h=rnd*360,s,v=127+rnd*127:
+ palette hsv 0,h,s,v:
+ for j=0 to d-1:
+    palette hsv i,rnd*360,127+rnd*127,127+rnd*127:
+    rainbow i-e to i:
+    i+=e:
+ next j:
+ palette hsv 255,h,s,v:
+ rainbow i-e to 255
+40 n=3+rnd*15:
  dim b(n,4);cx(scrw,2) base 0:
  for h=1 to n;g=1 to 4:
     b(h,g)=1.5+rnd*5.5:

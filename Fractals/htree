@@ -1,8 +1,12 @@
 ZXASCII
 AUTO -1
-PROG htree
+PROG demos:fractals/htree
+CHANGED FALSE
 10 REM H-Tree
-20 DEF PROC hdraw(n,sz,x,y)
-30 IF n>4 THEN LOCAL x0=x-sz/2,x1=x+sz/2,y0=y-sz/2,y1=y+sz/2: DRAW x0,y TO x1,y: DRAW x0,y0 TO x0,y1: DRAW x1,y0 TO x1,y1: DEC n: PROC hdraw(n,sz/2,x0,y0): PROC hdraw(n,sz/2,x0,y1): PROC hdraw(n,sz/2,x1,y0): PROC hdraw(n,sz/2,x1,y1)
+20 DEF PROC h(n,sz,x,y)
+30    IF n>4 THEN 
+				   local x0=x-sz/2,x1=x+sz/2,y0=y-sz/2,y1=y+sz/2:n-=1: 
+							DRAW x0,y TO x1,y;x0,y0 TO x0,y1;x1,y0 TO x1,y1:  
+							PROC h(n,sz/2,x0,y0);h(n,sz/2,x0,y1);h(n,sz/2,x1,y0);h(n,sz/2,x1,y1)
 90 END PROC
-100 PROC hdraw(11,SCRw/2,SCRw/2,SCRh/2)
+100 PROC h(11,SCRw/2,SCRw/2,SCRh/2)

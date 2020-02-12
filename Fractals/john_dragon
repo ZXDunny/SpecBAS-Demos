@@ -1,12 +1,14 @@
 ZXASCII
 AUTO -1
-PROG john_dragon
+PROG demos:fractals/john_dragon
+CHANGED FALSE
 10 screen lock:
  degrees:
  ang=25,dep=0,
  t1=COS ang,
  t2=SIN ang:
- do:
+ do 50:
+	   cls:
     di=0,
     dep+=1:
     x,y=300:
@@ -14,8 +16,8 @@ PROG john_dragon
     PLOT x,y:
     GO SUB 20:
     wait screen:
-    CLS:
- loop
+ loop:
+	Stop
 20 dep-=1:
  IF dep=0 OR length<1 THEN
     GO TO 40

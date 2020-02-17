@@ -1,0 +1,20 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/bubble_universe
+CHANGED FALSE
+10 const w=480,n=235,r=tau/235:
+	x,y,v,t=0:
+	window depth 0,32:
+	screen lock:
+	do:
+    cls 0:
+	   for i=0 to n;j=0 to n:
+				   u=sin(i+v)+sin(r*i+x),
+							v=cos(i+v)+cos(r*i+x),
+							x=u+t:
+							plot ink rgbtoint(i,j,99);u*117+w/1.2,v*117+w/2:
+				next j;i:
+				t+=.05:
+				wait screen:
+	loop
+	

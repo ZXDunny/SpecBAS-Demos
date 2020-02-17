@@ -1,0 +1,19 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/ballthing
+CHANGED FALSE
+10 const w=480,m=200,r=tau,s=2:
+	x,y,v,t=0:
+ ink 15:
+	screen lock:
+	do:
+    cls 0:
+	   for i=0 to m step 2;j=0 to m step 2:
+				   x=2/m*i-1,y=2/m*j-1,
+				   n=octnoise((cos(x*r+t)+cos(y*r+pi/2)+cos t)/s,0,0,4,.5),
+							d=sqr(x*x+y*y+n*n):
+							circle x/d*m+w/1.2,y/d*m+w/2,1:
+				next j;i:
+				t+=.125:
+				wait screen:
+	loop

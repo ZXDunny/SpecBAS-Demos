@@ -1,18 +1,42 @@
 ZXASCII
 AUTO -1
-PROG morse
+PROG demos:sound/morse
+CHANGED FALSE
 10 REM Morse code
-20 DIM c$(): LET vocab$="": FOR f=1 TO 54: READ e$,d$: LET c$(CODE e$)=d$,vocab$=vocab$+e$: NEXT f: LET dot=.06,dash=dot*3,wgap=dot*7,cgap=3*dot
-30 INPUT "Message? ";m$: CLS: IF m$="" THEN GO TO 30
+20 DIM c$(): 
+	vocab$="": 
+	FOR f=1 TO 54: 
+	   READ e$,d$: 
+				c$(CODE e$)=d$,vocab$=vocab$+e$: 
+	NEXT f: 
+	dot=.06,dash=dot*3,wgap=dot*7,cgap=3*dot
+30 INPUT "Message? ";m$: 
+	CLS: 
+	IF m$="" THEN 
+	   GO TO 30
 40 FOR f=1 TO LEN m$
-50 LET d$=UP$ m$(f): PRINT d$;: IF d$<=" " THEN BEEP wgap,0 FORMAT 1,0,0,0,0,0,0 ELSE GO SUB 100: BEEP cgap,0 FORMAT 1,0,0,0,0,0,0
-60 NEXT f: GO TO 30
+50    d$=UP$ m$(f): 
+				PRINT d$;: 
+				IF d$<=" " THEN 
+				   BEEP wgap,0 FORMAT 1,0,0,0,0,0,0 
+				ELSE 
+				   GO SUB 100: 
+							BEEP cgap,0 FORMAT 1,0,0,0,0,0,0
+60 NEXT f: 
+	GO TO 30
 100 REM Produce tones
-110 IF POS(d$,vocab$)=0 THEN RETURN 
-120 LET e$=c$(CODE d$): FOR a=1 TO LEN e$
-130 IF e$(a)="." THEN BEEP dot,"c7" FORMAT 1,0,0,1,0,0,0 ELSE BEEP dash,"c7" FORMAT 1,0,0,1,0,0,0
-140 IF a<>LEN e$ THEN BEEP dot,0 FORMAT 1,0,0,0,0,0,0
-150 NEXT a: RETURN 
+110 IF not POS(d$,vocab$) THEN 
+	   RETURN
+120 e$=c$(CODE d$): 
+	FOR a=1 TO LEN e$
+130    IF e$(a)="." THEN 
+				   BEEP dot,"c7" FORMAT 1,0,0,1,0,0,0 
+				ELSE 
+				   BEEP dash,"c7" FORMAT 1,0,0,1,0,0,0
+140    IF a<>LEN e$ THEN 
+				   BEEP dot,0 FORMAT 1,0,0,0,0,0,0
+150 NEXT a: 
+	RETURN
 1000 DATA "A","._","B","_...","C","_._.","D","_..","E",".","F",".._."
 1010 DATA "G","__.","H","....","I","..","J",".___","K","_._","L","._.."
 1020 DATA "M","__","N","_.","O","___","P",".__.","Q","__._","R","._."

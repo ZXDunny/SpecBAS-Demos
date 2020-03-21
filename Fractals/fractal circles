@@ -1,9 +1,12 @@
 ZXASCII
 AUTO -1
-PROG fractal circles
+PROG demos:fractals/fractal circles
+CHANGED FALSE
 10 REM Fractal Circles
 20 DEF PROC circ(x,y,r)
-30 IF r<1 THEN EXIT PROC 
-40 CIRCLE x,y,r: PROC circ(x-(r/2),y,r/2): PROC circ(x+(r/2),y,r/2)
+40 if r>1 then 
+	   CIRCLE x,y,r: 
+				PROC circ(x-(r/2),y,r/2): 
+				PROC circ(x+(r/2),y,r/2)
 50 END PROC
 60 PROC circ(SCRw/2,SCRh/2,SCRh/2)

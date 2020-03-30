@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/rtb_circles
+CHANGED FALSE
+10 circles=50:
+	dim y(circles),x(circles):
+	for i=1 to circles:
+	   x(i)=rnd*scrw,y(i)=rnd*scrh:
+	next i:
+	for x=0 to scrw-1;y=0 to scrh-1:
+				r=scrw:
+				for i=1 to circles:
+							r1=sqr((x-x(i))*(x-x(i))+(y-y(i))*(y-y(i))),
+							r=min(r1,r):
+				next i:
+				plot ink (r/4 & 1)*6;x,y:
+	next y;x

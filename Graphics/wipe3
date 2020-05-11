@@ -1,0 +1,21 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/wipe3
+CHANGED FALSE
+10 REM Picture unroller
+20 r=64,r2=r/2:
+	GRAPHIC NEW img LOAD "demos:graphics/butterflies.png":
+ PALETTE COPY img,0,256 TO 0:
+	cls rgbn $808080: ink rgbn 0
+30 for yc=0 to scrh-1:
+	   for y=-r2+1 to r2-1:
+       tv=(1-((asn(y/r2)+1.5)/3)*r)+r*2,
+							yp=y+yc+r2:
+							if inrange(tv+yc,0 to scrh-1) then
+				      POKE$ 0,yp*scrw,PEEK$(img,SCRw*int(tv+yc),SCRw)
+							else
+							   draw 0,yp to scrw-1,yp
+40    next y:
+				POKE$ 0,yc*scrw,PEEK$(img,Scrw*yc,SCRw):
+				wait screen:
+	next yc

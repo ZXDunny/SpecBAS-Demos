@@ -1,11 +1,25 @@
 ZXASCII
 AUTO -1
-PROG spirograph
+PROG demos:graphics/spirograph
+CHANGED FALSE
 10 REM Spirograph - change nc for more or less circles
 20 degrees:PAPER 0: INK 6: OVER 8: CLS
 30 LET nc=INT(RND*3)+2: DIM r(nc): DIM n(nc): DIM w(nc): DIM c(nc)
-40 DIM d=-1,1: FOR f=1 TO nc: LET r(f)=10+(RND*(SCRh/4)): LET n(f)=(1/(INT(RND*25)+1))*d(1+INT(RND+.5)): LET w(f)=RND*360: LET c(f)=INT(RND*14)+1: NEXT f
+40 DIM d=-1,1:
+	FOR f=1 TO nc:
+	   LET r(f)=10+(RND*(SCRh/4)):
+				LET n(f)=(1/(INT(RND*25)+1))*d(1+INT(RND+.5)):
+				LET w(f)=RND*360:
+				LET c(f)=INT(RND*14)+1:
+	NEXT f
 50 LET a=0: DO
-60 LET x=SCRw/2: LET y=SCRh/2: FOR f=1 TO nc: INC x,(r(f)*COS(n(f)*(a+w(f)))): INC y,(r(f)*SIN(n(f)*(a+w(f)))): IF f>1 THEN PLOT INK c(f);x,y: END IF: NEXT f
+60 LET x=SCRw/2: LET y=SCRh/2:
+	FOR f=1 TO nc:
+	   INC x,(r(f)*COS(n(f)*(a+w(f)))):
+				INC y,(r(f)*SIN(n(f)*(a+w(f)))):
+				IF f>1 THEN
+				   PLOT INK c(f);x,y:
+				END IF:
+	NEXT f
 70 INC a: IF a MOD 128=0 THEN WAIT SCREEN
 80 IF INKEY$="" THEN LOOP ELSE RUN

@@ -1,0 +1,30 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/amiga_ball
+CHANGED FALSE
+10 rem Amiga ball
+20 rad=200,rad2=rad^2,scl=128,scl4=scl/4,norm=tau/scl,c=0,
+	xo=scrw/2-rad,yo=scrh/2-rad:
+	palette 0,128,128,128:
+	cls 0
+30 for  y=-rad to rad:
+	   y2=y*y:
+				for x=-rad to rad:
+	      if sqr(x*x+y2)<rad then
+				      tmp=x/sqr(rad2-abs(y2)),
+							   xres=atn(tmp/sqr(1-tmp*tmp))/norm,
+							   tmp=y/rad,
+							   yres=atn(tmp/sqr(1-tmp*tmp))/norm,
+							   col=xres+scl4:
+							   if (yres+scl4) mod 16<8 then col+=8: end if:
+							   col%=16:
+							   plot ink col+4;x+rad+xo,y+rad+yo:
+				   end if:
+	   next x:
+	next y:
+	do:
+	   palette c+4,255,255,255:
+				palette 4+(c+8) mod 16,255,0,0:
+				c+=iif(c>15,-c,1):
+				wait screen:
+	loop

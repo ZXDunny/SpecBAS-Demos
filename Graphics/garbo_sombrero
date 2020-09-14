@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/garbo_sombrero
+CHANGED FALSE
+10 a=0,sw=scrw/2:
+	turns
+20 def fn x(v,i)=sw+v*2*cos(a+(i/2)*0.1):
+	def fn y(v,i)=64+v*sin(a+v*0.04)+(v/i*v)-30
+30 cls 0:
+ for v=1 to 100:
+	   for i=1 to 20 step .5:
+       draw ink (i mod 7)+8;fn x(v,i),fn y(v,i) to fn x(v+1,i+1),fn y(v+1,i+1):
+    next i:
+	next v:
+ a+=0.01:
+ wait screen:
+ GO TO 30

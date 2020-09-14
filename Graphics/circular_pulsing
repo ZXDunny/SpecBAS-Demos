@@ -1,0 +1,20 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/circular_pulsing
+CHANGED FALSE
+10 t=0:
+	screen lock
+20 t+=.01:
+ for d=180 to 0 step -9:
+    for y=2 to 1 step -1:
+				   for x=4 to 1 step -1:
+				      ink(d/9 & 1)*15:
+          a=t*5+d/30:
+          b=120,c=180-d:
+          circle x*b+b+sin a*c/iif(x & 1,5,-5)-20,y*b+b+cos a*c/iif(y & 1,5,-5)-60,d fill:
+							next x:
+				next y:
+	next d:
+	WAIT SCREEN:
+	cls: 
+	GO To 20

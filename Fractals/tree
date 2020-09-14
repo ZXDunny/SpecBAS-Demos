@@ -1,19 +1,20 @@
 ZXASCII
 AUTO -1
-PROG tree
+PROG demos:fractals/tree
+CHANGED FALSE
 10 REM Fractal Tree
 20 DEGREES: SCREEN LOCK: mx=MOUSEx, my=MOUSEy
-23 dist=0.68,turn=90*(my*1.5)/SCRh,bias=90*(mx-(SCRw/2))/SCRw
-25 PROC branch(SCRw/2,SCRh,-90,12)
-30 DEF PROC branch(x,y,angle,dep)
-40    IF dep>=0.15 THEN 
+30 dist=0.7,turn=90*(my*1.5)/SCRh,bias=90*(mx-(SCRw/2))/SCRw
+40 PROC branch(SCRw/2,SCRh,-90,6.8)
+50 DEF PROC branch(x,y,angle,dep)
+60    IF dep>=0.15 THEN
        LOCAL dx=x+(COS(angle)*dep*12.9),
-             dy=y+(SIN(angle)*dep*12.9): 
-       DRAW x,y TO dx,dy: 
-       PROC branch(dx,dy,angle-(turn-bias),DEP*dist): 
+             dy=y+(SIN(angle)*dep*12.9):
+       DRAW x,y TO dx,dy:
+       PROC branch(dx,dy,angle-(turn-bias),DEP*dist):
        PROC branch(dx,dy,angle+(turn+bias),DEP*dist)
-90 END PROC
-100 WAIT SCREEN : CLS: 
+70 END PROC
+80 WAIT SCREEN : CLS:
  mx+=(MOUSEx-mx)/15,
- my+=(MOUSEy-my)/15: 
- GO TO 23
+ my+=(MOUSEy-my)/15:
+ GO TO 30

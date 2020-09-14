@@ -1,8 +1,9 @@
 ZXASCII
 AUTO -1
-PROG chrysanthemum curve
+PROG demos:3d/chrysanthemum curve
+CHANGED FALSE
 10 REM Chrysanthemum curve
-20 LET n=30000,s=20,a=0:
+20 LET n=30000,s=20*(scrw/800),a=0:
  DIM pts(n,3)
 30 FOR i=0 TO n-1:
     u=i*21*PI/n,

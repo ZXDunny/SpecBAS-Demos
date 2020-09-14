@@ -1,7 +1,8 @@
 ZXASCII
 AUTO -1
-PROG rabbit
-10 LET an2=PI/2,xa=370,ya=250,an3,an1=.1,xc=400,yc=240
+PROG demos:graphics/rabbit
+CHANGED FALSE
+10 LET sl=scrw/800,an2=PI/2,xa=370*sl,ya=250*sl,an3,an1=.1,xc=scrw/2,yc=scrh/2
 20 DEF FN x=COS an1*xa*COS an3+xc: DEF FN y=SIN an2*ya*SIN an3+yc
 30 LET x1=FN x,y1=FN y: FOR i=1 TO 5000: LET x2=FN x,y2=FN y: DRAW x1,y1 TO x2,y2
 40 INC an1,.0666: INC an2,.0999: INC an3,.0334: LET xa=xa*.9999,ya=ya*.9999,x1=x2,y1=y2: NEXT i

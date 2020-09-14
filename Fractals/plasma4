@@ -1,9 +1,21 @@
 ZXASCII
 AUTO -1
-PROG plasma4
-10 FOR i=0 TO 255: PALETTE i,ABS(INT(128-127*SIN(i*PI/32))),ABS(INT(128-127*SIN(i*PI/64))),ABS(INT(128-127*SIN(i*PI/128))): NEXT i
-20 FOR y=0 TO SCRh-1: FOR x=0 TO SCRw-1
-30 LET c=(SIN(x/35)*128+SIN(y/28)*32+SIN((x+y)/16)*64) MOD 256: IF c<0 THEN INC c,256
-40 PLOT INK c;x,y
-50 NEXT x: NEXT y
-60 PALETTE SHL 1,0 TO 255: WAIT SCREEN: GO TO 60
+PROG demos:fractals/plasma4
+CHANGED FALSE
+10 FOR i=0 TO 255: 
+	   PALETTE i,
+				        ABS(INT(128-127*SIN(i*PI/32))),
+												ABS(INT(128-127*SIN(i*PI/64))),
+												ABS(INT(128-127*SIN(i*PI/128))): 
+	NEXT i
+20 FOR y=0 TO SCRh-1: 
+	   FOR x=0 TO SCRw-1
+30       c=(SIN(x/35)*128+SIN(y/28)*32+SIN((x+y)/16)*64) MOD 256: 
+							IF c<0 THEN 
+							   c+=256
+40       PLOT INK c;x,y
+50    NEXT x: 
+	NEXT y
+60 PALETTE SHL 1,0 TO 255: 
+	WAIT SCREEN: 
+	GO TO 60

@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/munching
+CHANGED FALSE
+10 w=256,n=0:
+	window origin 0,-(scrw-w)/2,-(scrh-w)/2
+20 for x=0 to w-1;y=0 to w-1:
+	   plot inverse x xor y<n;x,y:
+	next y;x:
+	wait screen:
+	n=iif(n<w,n+1,0):
+	GO To 20

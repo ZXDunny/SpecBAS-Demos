@@ -5,7 +5,7 @@ CHANGED FALSE
 10 REM Stereogram generator
 20 option "base",0:
  eyesep=2.5:
- strip_width=128*(eyesep/2.5):
+ strip_width=64*(eyesep/2.5):
  def fn i(x,y)=gpoint(dm,x,y)/256:
  def fn p(x,y)=gpoint(pt,x mod pw,y mod ph):
  DEF FN s(z)=(1-mu*z)*e/(2-mu*z)
@@ -20,7 +20,7 @@ CHANGED FALSE
  STOP
 60 REM Create autostereogram in current window
 70 FOR y=0 TO scrh-1:
-    DIM pix(scrw);same(scrw):
+    DIM pix(scrw+1);same(scrw+1):
     FOR x=0 TO scrw-1:
        same(x)=x:
     NEXT x:

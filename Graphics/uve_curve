@@ -1,0 +1,19 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/uve_curve
+CHANGED FALSE
+10 CLS 0: a=-(INT(RND*20)+1),b=INT(RND*2)+1,d=(INT(RND*100)+10)*10,w=RND+0.125: IF a=-b THEN GO TO 10
+20 origin 0,0 to 320,192 flip
+30 LET f=INT (88/(ABS (a+b)+ABS (3*b)))-1
+40 LET x1=160+f*((a+b)+3*b)
+50 LET y1=88
+60 PLOT x1,y1:st=(pi*2)/w
+70 FOR i=-pi TO pi STEP w
+80 FOR j=0 TO 2*PI+PI/d STEP PI/d
+90 LET x2=160+f*((a+b)*COS j-i*b*COS ((a+b)/b*j))
+100 LET y2=88+f*((a+b)*SIN j-i*b*SIN ((a+b)/b*j))
+110 DRAW ink (i*st)+1;to x2,y2
+120 LET x1=x2: LET y1=y2
+130 NEXT j: wait screen
+140 NEXT i
+150 PAUSE 0: GO To 10

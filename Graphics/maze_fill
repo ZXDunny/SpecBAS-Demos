@@ -1,0 +1,31 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/maze_fill
+CHANGED FALSE
+10 cls 0:
+	def fn r(w)=int(rnd*w/2)*2
+20 for i=0 to (rnd*500)+10:
+	   plot ink 1+(rnd*255);fn r(scrw),fn r(scrh):
+	next i:
+	DIM d=-1,1:mx=((scrw*scrh)/4)-1
+30 x=fn r(scrw),y=FN r(scrh),
+	c=POINT(x,y):
+ if c<>0 then
+				dy=d(rnd*1+1),
+				dx=0:
+				if rnd>.5 then
+							dx=dy,
+							dy=0:
+    END IF:
+				a=x+dx*2,
+				b=y+dy*2:
+				if point(a,b)=0 then
+				   plot ink c;x+dx,y+dy;a,b:
+							i+=1:
+				end if:
+	end if:
+	if i<mx then 
+	   GO To 30
+	else
+	   pause 0:
+				run

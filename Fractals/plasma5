@@ -1,7 +1,8 @@
 ZXASCII
 AUTO -1
-PROG plasma5
-10 WINDOW DEPTH 0,32: SCREEN LOCK 
-20 OPTION "base",0: DIM r(256): DIM g(256): DIM b(256): LET f=0: PAPER 0: CLS: SCREEN LOCK 
+PROG demos:fractals/plasma5
+CHANGED FALSE
+10 WINDOW DEPTH 0,32: SCREEN LOCK
+20 OPTION "base",0: DIM r(256): DIM g(256): DIM b(256): LET f=0: PAPER 0: CLS: SCREEN LOCK
 30 FOR x=0 TO 255: LET r(x)=255-CEIL((SIN(3.14*2*x/255)+1)*127): LET g(x)=CEIL((SIN(3.14*2*x/127)+1)*64): LET b(x)=255-r(x): NEXT x
-40 FOR y=0 TO SCRh-FONTh STEP FONTh;x=0 TO SCRw-FONTw STEP FONTw: c1=SIN(x/50+f+y/200),c2=SIN(SQR((SIN(0.8*f)*400-x+400)*(SIN(0.8*f)*400-x+400)+(COS(1.2*f)*240-y+240)*(COS(1.2*f)*240-y+240))/50),res=(((c1+c2)/2)+1)*127: TEXT INK RGBtoINT(r(res),g(res),b(res));MOVE x,y;"ð": NEXT x;y: WAIT SCREEN: CLS: f+=0.1: GO TO 40
+40 FOR y=0 TO SCRh-FONTh STEP FONTh;x=0 TO SCRw-FONTw STEP FONTw: c1=SIN(x/50+f+y/200),c2=SIN(SQR((SIN(0.8*f)*400-x+400)*(SIN(0.8*f)*400-x+400)+(COS(1.2*f)*240-y+240)*(COS(1.2*f)*240-y+240))/50),res=(((c1+c2)/2)+1)*127: TEXT INK RGBtoINT(r(res),g(res),b(res));MOVE x,y;"ª": NEXT x;y: WAIT SCREEN: CLS: f+=0.1: GO TO 40

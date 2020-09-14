@@ -1,0 +1,19 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/constrained
+CHANGED FALSE
+10 paper 0: cls
+20 let x=scrh*rnd
+30 let y=scrh*rnd
+40 let last=6
+50 for i=1 to 20000
+60 let vertex=int(4*rnd)
+70 IF vertex=last THEN GO To 60
+80 let x=x/2: let y=y/2
+90 if vertex=0 or vertex=1 then let x=x+128
+100 if vertex=1 or vertex=2 then let y=y+128
+110 ink 6-last
+120 plot 128+int x,24+int y
+130 let last=vertex-1
+140 if last=-1 then let last=3
+150 next i

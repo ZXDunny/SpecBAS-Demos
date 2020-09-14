@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG /demos/Fractals/rossler_attractor
+CHANGED FALSE
+10 window origin 0,0,0 to 1280,1024:
+	a,b=.2,c=5.7,d=.01,
+	x=.1,y,z=0,sw=scrw/2,sh=scrh/2:
+	for i=1 to 6250:
+	   xx=x+d*(-y-z),
+				yy=y+d*(x+a*y),
+				z=z+d*(b+z*(x-c)),
+				x=xx,y=yy:
+				plot 639+32*x,199+12*y+24*z:
+	next i

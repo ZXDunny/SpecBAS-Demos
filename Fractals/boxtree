@@ -1,7 +1,24 @@
 ZXASCII
 AUTO -1
-PROG boxtree
+PROG demos:fractals/boxtree
+CHANGED FALSE
 10 REM Box tree
-20 DEF PROC b(ax,ay,bx,by,rc): LOCAL cx=ax-ay+by,cy=ax+ay-bx,dx=bx+by-ay,dy=ax-bx+by,ex=(cx-cy+dx+dy)/2,ey=(cx+cy-dx+dy)/2: POLYGON INK rc+1;cx,cy TO ax,ay TO bx,by TO dx,dy TO cx,cy TO ex,ey TO dx,dy: IF rc<limit THEN PROC b(cx,cy,ex,ey,rc+.75): PROC b(ex,ey,dx,dy,rc+.75): END IF
+20 DEF PROC b(ax,ay,bx,by,rc): 
+	   LOCAL cx=ax-ay+by,
+				      cy=ax+ay-bx,
+										dx=bx+by-ay,
+										dy=ax-bx+by,
+										ex=(cx-cy+dx+dy)/2,
+										ey=(cx+cy-dx+dy)/2: 
+				POLYGON INK rc+1;cx,cy TO ax,ay TO bx,by TO dx,dy TO cx,cy TO ex,ey TO dx,dy: 
+				IF rc<limit THEN 
+				   PROC b(cx,cy,ex,ey,rc+.75);b(ex,ey,dx,dy,rc+.75):
+				END IF
 21 END PROC
-30 CLS 0: limit=9: PROC b(SCRw/2-SCRw/15,SCRh-40,SCRw/2+SCRw/15,SCRh-40,0)
+30 CLS 0: 
+	limit=9: 
+	ax=int(SCRw/2-SCRw/18),ay=int(SCRh-40),
+	bx=int(SCRw/2+SCRw/18),by=int(SCRh-40):
+	ax=iif(odd ax,ax+1,ax),ay=iif(odd ay,ay+1,ay),
+	bx=iif(odd bx,bx+1,bx),by=iif(odd by,by+1,by):
+	proc b(ax,ay,bx,by,0)

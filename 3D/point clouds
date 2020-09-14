@@ -2,12 +2,12 @@ ZXASCII
 AUTO -1
 PROG demos:3d/point clouds
 CHANGED FALSE
-10 LET nd=25000,s=0,c=5,m=1:
+10 LET s=0,c=5,m=1,scl=scrw/800,nd=25000*scl:
  DIM p(nd,4):
  FPS 60:
  SCREEN LOCK:
  DEGREES
-20 rx,ry,rz=RND*2-1,hx,hy,hz=0,sc=1.5:
+20 rx,ry,rz=RND*2-1,hx,hy,hz=0,sc=1.5*scl:
  DIM a$="sin(","cos(";b$="xd)","t*360/nd)";e$(3):
  DEF FN t$=a$(RND+1)+b$(RND+1):
  FOR i=1 TO 3:
@@ -19,7 +19,7 @@ CHANGED FALSE
  NEXT i:
 25 FOR t=1 TO nd:
     xd=IIF(m=1,t MOD 1800,RND*1800),
-    p(t,1)=VAL e$(1)*sc,p(t,2)=VAL e$(2)*sc,p(t,3)=VAL e$(3)*Sc:
+    p(t,1)=VAL e$(1)*sc,p(t,2)=VAL e$(2)*sc,p(t,3)=VAL e$(3)*sc:
  NEXT t
 30 TRANSFORM3D p() to t() ROTATE hx,hy,hz:
 	hx+=rx,hy+=ry,hz+=rz:

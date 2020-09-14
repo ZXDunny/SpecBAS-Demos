@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG /demos/Fractals/julia3
+CHANGED FALSE
+10 PAPER 0: INK 0: CLS:
+	sw=scrw/2,sh=scrh/2
+20 for i=-sw to sw:
+	   for j=-sh to sh:
+				   zre=i/80,zim=j/80,k=0
+30       tmp=zre*zre-zim*zim:
+							zim=2*zre*zim+1,
+							zre=tmp,k+=1:
+							if abs zre<2 and k<255 then 
+							   GO To 30
+40       plot ink k;sw+i,sh-j:
+				next j:
+	next i

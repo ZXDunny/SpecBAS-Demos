@@ -1,0 +1,27 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/hoberman_tentacles
+CHANGED FALSE
+10 turns:
+	origin -63,-39 to 63,39:
+	screen lock:
+	for i=1 to 7:
+	   read r,g,b:
+				palette i,r,g,b:
+	next i:
+	data 17,29,53,29,43,83,18,83,89,0,181,67,168,231,46,0,228,54,243,239,125
+20 cls 0:
+	n=msecs/1000:
+	for e=1 to 4:
+	   for f=0 to 1 step .1:
+				   for z=1 to 3:
+							   for i=1 to 15:
+										   x=sin(n+(i+e)/20)*17,
+													y=9+i*i/2:
+													circle ink e+z;cos f*x-sin f*y,sin f*x+cos f*y,i/z fill:
+										next i:
+							next z:
+				next f:
+	next e:
+	WAIT SCREEN:
+	GO To 20

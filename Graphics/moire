@@ -1,6 +1,27 @@
 ZXASCII
 AUTO -1
-PROG moire
-10 DEF FN r=INT(RND*5)*63.9: b=1 SHL (INT(RND*5)+2),p,op=0: DO: PALETTE p,FN r,FN r,FN r: RAINBOW op TO p: op=p,p+=b: LOOP UNTIL p=256: PALETTE 255,RGB 0: RAINBOW op TO 255: r=RND*3: SCREEN LOCK 
-20 p=WINADDR 0: FOR y=0 TO SCRh-1: ym=y*y: FOR x=0 TO SCRw-1: MEMWRT p,(POWERTWO x+ym)*r: p+=1: NEXT x: NEXT y
-30 DO WHILE INKEY$="": PALETTE SHL 1,0 TO 255: WAIT SCREEN: LOOP: GO TO 10
+PROG demos:graphics/moire
+CHANGED FALSE
+10 DEF FN r=INT(RND*5)*63.9:
+	b=1 SHL (INT(RND*5)+2),p,op=0:
+	DO:
+	   PALETTE p,FN r,FN r,FN r:
+				RAINBOW op TO p:
+				op=p,p+=b:
+	LOOP UNTIL p=256:
+	PALETTE 255,RGB 0:
+	RAINBOW op TO 255:
+	r=RND*3:
+	SCREEN LOCK
+20 p=WINADDR 0-1:
+	FOR y=0 TO SCRh-1:
+	   ym=y*y:
+				FOR x=0 TO SCRw-1:
+				   MEMWRT p+=1,(POWERTWO x+ym)*r:
+				NEXT x:
+	NEXT y
+30 DO WHILE INKEY$="":
+	   PALETTE SHL 1,0 TO 255:
+				WAIT SCREEN:
+	LOOP:
+	GO TO 10

@@ -1,9 +1,15 @@
 ZXASCII
 AUTO -1
-PROG bifurcation
+PROG demos:fractals/bifurcation
+CHANGED FALSE
 10 REM Shaded Bifurcation
-20 FOR f=0 TO 255: LET g=((255-f)/2): PALETTE f,g,g,g: NEXT f
-30 PAPER 0: INK 255: OVER 3: CLS 
+20 FOR f=0 TO 255:
+	   g=((255-f)/2):
+				PALETTE f,g,g,g:
+	NEXT f
+30 PAPER 0: INK 255: OVER 3: CLS
 40 WINDOW ORIGIN 0,0,0 TO 1,1
-50 LET x=0.5
-60 FOR r=2.4 TO 4 STEP 1/SCRw: FOR i=1 TO 6000: LET x=r*x*(1-x): PLOT (r-2.4)/1.6,1-x: NEXT i: NEXT r
+50 x=0.5
+60 FOR r=2.4 TO 4 STEP 1/SCRw;i=1 TO 6000:
+	   pLOT (r-2.4)/1.6,1-(x*=r*(1-x)):
+	NEXT i;r

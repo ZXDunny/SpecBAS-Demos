@@ -1,11 +1,30 @@
 ZXASCII
 AUTO -1
-PROG perlinland
+PROG demos:fractals/perlinland
+CHANGED FALSE
 10 REM Landscape by Peter Maria
-20 DIM r(900): LET c=180,lr=10,lm=0,pb=RND
-30 SCREEN LOCK : WINDOW DEPTH 0,32: CLS RGBtoINT(220,200,220)
-40 FOR ch=1 TO 6: LET n1=256,n2=2: FOR i=1 TO 6: LET n1=n1/2,n2=n2*2,k=1
-50 FOR z=1 TO n2: LET pa=pb,pb=RND: FOR x=0 TO 1 STEP n2/SCRw: LET f=(1-COS(x*PI))*.5,ip=pa*(1-f)+pb*f: INC r(k),ip*n1: INC k: NEXT x: NEXT z: NEXT i
-60 FOR i=1 TO SCRw: DRAW INK c+c*256+c*65536;i-1,r(i)+lm TO i-1,SCRh: NEXT i
-70 INC lm,lr: INC lr,25: CLEAR r(): DEC c,23: NEXT ch
-80 WAIT SCREEN : PAUSE 0: GO TO 20
+20 DIM r(900):
+	c=180,lr=10,lm=0,pb=RND
+30 palette 0,220,200,220:
+	for i=1 to 255:
+	   palette i,i,i,i:
+	next i:
+	cls 0
+40 FOR ch=1 TO 6: 
+	   n1=256,n2=2: 
+				FOR i=1 TO 6:
+				   n1=n1/2,n2=n2*2,k=1
+50       FOR z=1 TO n2: 
+							   pa=pb,pb=RND: 
+										FOR x=0 TO 1 STEP n2/SCRw: 
+										   f=(1-COS(x*PI))*.5,ip=pa*(1-f)+pb*f, 
+													r(k)+=ip*n1,k+=1: 
+										NEXT x: 
+							NEXT z: 
+				NEXT i
+60    FOR i=1 TO SCRw: 
+				   DRAW INK c;i-1,r(i)+lm TO i-1,SCRh: 
+				NEXT i
+70    lm+=lr,lr+=25:CLEAR r():c-=23: 
+	NEXT ch
+80 PAUSE 0: GO TO 20

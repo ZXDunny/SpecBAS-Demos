@@ -1,4 +1,16 @@
 ZXASCII
 AUTO -1
-PROG random attractor
-10 sc=.25,a=RND,b=IIF(RND*3<2,1,.933),c=2-2*a,x=3,y=0,w=a*x+c*x*x/(1+x*x): DO: x=IIF(ABS x<.0001,RND*10,x): PLOT x*50*sc+350,y*50*sc+240: z=x,x=b*y+w,u=x*x,w=a*x+c*u/(1+u),y=w-z: IF INKEY$="" THEN LOOP ELSE RUN 
+PROG demos:fractals/random attractor
+CHANGED FALSE
+10 sc=.25,a=RND,
+	b=IIF(RND*3<2,1,.933),
+	c=2-2*a,x=3,y=0,
+	w=a*x+c*x*x/(1+x*x):
+	DO:
+	   x=IIF(ABS x<.0001,RND*10,x):
+				PLOT x*50*sc+scrw/2,y*50*sc+scrh/2:
+				z=x,x=b*y+w,u=x*x,w=a*x+c*u/(1+u),y=w-z:
+				IF INKEY$="" THEN
+				   LOOP
+				else
+				   run

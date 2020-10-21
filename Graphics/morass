@@ -1,0 +1,16 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/morass
+CHANGED FALSE
+10 paper 0: cls:
+	for f=0 to 255:
+	   palette f,f,f,f:
+	next f
+20 for x=0 to scrw-1;y=0 to scrh-1:
+	   plot ink (rnd*254)+1;x,y:
+	next y;x
+30 do:
+	   x=rnd*(scrw-1),y=rnd*(scrh-1),p=point(x,y),
+				x+=(rnd*2)-1,y+=(rnd*2)-1:
+				plot ink p;x,y:
+	loop

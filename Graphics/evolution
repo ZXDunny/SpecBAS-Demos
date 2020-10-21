@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/evolution
+CHANGED FALSE
+10 REM https://twitter.com/ntsutae/status/1303336841894977536
+20 def proc t(d,s,x,y,l):
+	   if s>0 then
+				   f=(20-s)/1.5,
+							n=noise(x/w-t,y/w+t,0)*f:
+       draw x,y to x+=l*cos(d)+f*cos(n),y+=l*sin(d)+f*sin(n):
+       for each j in [a,-a]:
+							   PROC t(d+j,s-1,x,y,l*.8):
+							next j:
+				end if:
+	end proc
+30 sx=scrw/2,sy=scrh/2,w=720,t=0,ns=12:
+	screen lock
+40 do:
+	   t+=.01,
+    A=sin(t/5)^2/3:
+    for i=ns to 1 step -1:
+				   proc t(pi/(ns/2)*i,7,sx,sy,50):
+	   next i:
+				wait screen:
+				cls:
+	loop

@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/piez_spirals
+CHANGED FALSE
+10 for d=.1 to 3 step .001
+20 ploT 400,240
+30 FOR a=1 TO 180 step 1/d
+40 DRAW a/d*COS a,a/d*SIN a
+50 NEXT a
+60 wait screen
+70 cls
+80 next d

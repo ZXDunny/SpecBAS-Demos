@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG /demos/graphics/liquidmetal
+CHANGED FALSE
+10 def fn f(x,y,n)=iif(n,fn f(cos(x*3+.1)-sin(y*4-2),cos(x*3)+sin(y*2),n-1),abs(x-y)^2)
+20 for f=0 to 255:
+	   palette f,f,f,f:
+	next f:
+	cls 0:
+	w=480
+30 for y=0 to scrh-1:
+	   for x=0 to scrw-1:
+       plot ink fn f(x/w,y/w,5)*57.5;x,y:
+				next x:
+	next y

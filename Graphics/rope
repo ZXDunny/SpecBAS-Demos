@@ -1,0 +1,21 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/rope
+CHANGED FALSE
+10 REM by @guerrargames
+20 t=0:turns
+30 t+=.005:
+ cls 0:
+ d=sin(t/4):
+ for i=-239 to 239:
+    for j=-240 to 240 step 30:
+       v=i/64+t*4-j/120,
+       r=32*sin(v)+16*sin(i/120),
+       x=i*cos(t)+r*sin(-t)*d,
+       y=i*sin(t)+r*cos(-t)*d,
+       s=2+5*cos(v)*d:
+       circle ink 1+j;scrw/2+x,scrh/2+y,s fill:
+    next j:
+ next i:
+ wait screen:
+ GO TO 30

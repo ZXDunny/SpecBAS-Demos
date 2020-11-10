@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG /demos/graphics/weaves2
+CHANGED FALSE
+10 degrees: s=scrw/scrh,ic=.0003125:
+ WINDOW ORIGIN 0,-s,-1 TO s,1:
+20 a,b,c,d=(rnd*8)-4,ai,bi,ci,di=(rnd*ic)-(ic/2),e=360:
+30 do:
+	   cls:
+    for i=0 to 359:
+       draw cos(a*i),sin(b*i) to cos(c*i),sin(d*i),e:
+40    next i:
+				a+=ai,b+=bi,c+=ci,d+=di,
+				e+=.25:
+				wait screen:
+ loop until inkey$<>"":
+ do while inkey$<>"":loop:
+ go to 20

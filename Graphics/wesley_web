@@ -1,0 +1,21 @@
+ZXASCII
+AUTO -1
+PROG /demos/graphics/wesley_web
+CHANGED FALSE
+10 REM By @wesleyisme
+20 q=1/4,s=scrh/2:
+	turns:
+	def fn e(i)=sin(i)*s+s
+30 cls 0:
+	i=msecs/4000,
+ a=sin(i)*(s/2)+s,
+ b=cos(i)*(s/2)+s,
+ y=fn e(i),z=fn e(i-q):
+	for j=q to 1 step q:
+	   w=y,x=z,y=fn e(i+j),z=fn e(i+j-q):
+    for k=0 to 1 step q/2:
+       draw ink 1+j*4;w+k*(a-w),x+k*(b-x) to a+k*(y-a),b+k*(z-b):
+				next k:
+ next j:
+ wait screen:
+ GO TO 30

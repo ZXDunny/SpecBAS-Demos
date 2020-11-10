@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/6502boxes
+CHANGED FALSE
+10 def proc hires(w,s)
+11    over 3
+20    do
+40       for a=0 to w step s
+50          draw a,0 to w,a
+60          draw w,a to w-a,w
+70          draw w-a,w to 0,w-a
+80          draw 0,w-a to a,0
+85          wait screen
+90       next a
+100    loop
+110 end proc
+120 paper 0: ink 1: cls
+200 proc hires(scrh,.5)

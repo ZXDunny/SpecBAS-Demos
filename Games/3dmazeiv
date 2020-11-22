@@ -13,7 +13,7 @@ CHANGED FALSE
 40 px,py=1.5,
  rs=2,tr=1,ms=.06,
  omx,omy,os,oh1,oh2=0,
- pla=IIF(mp(px+1,py)=0,0.001,90.001),
+ pla=IIF(mp(2,1)=0,0.001,90.001),
  mmw=13,mmh=13
 50 REM Engine
 60 FOR x=0 TO w-1
@@ -87,8 +87,9 @@ CHANGED FALSE
 240    FOR y=h2 TO h-1:
        wt=(h/(2*y-h))/pwd,
        ftx=((wt*fwx+(1-wt)*px)*txw) MOD txw,
-       fty=((wt*fwy+(1-wt)*py)*txh) MOD txh:
-       PLOT INK GPOINT(wall,ftx+600,fty);x,y;INK GPOINT(wall,ftx+750,fty);x,h-y:
+       fty=((wt*fwy+(1-wt)*py)*txh) MOD txh,
+       nx=int x,ny=int y:
+							PLOT INK GPOINT(wall,ftx+600,fty);nx,ny;INK GPOINT(wall,ftx+750,fty);nx,h-ny:
     NEXT y
 250 NEXT x
 260 REM Minimap
@@ -110,18 +111,18 @@ CHANGED FALSE
     GO TO 480
 310 REM Movement
 320 pla+=tr*((rs*KEYST KEY_RIGHT)-(rs*KEYST KEY_LEFT))
-330 IF KEYST KEY_UP THEN
-    px+=IIF(mp(px+dx*2*ms,py)=0,dx*ms,0),
-    py+=IIF(mp(px,py+dy*2*ms)=0,dy*ms,0)
-340 IF KEYST KEY_DOWN THEN
-    px+=IIF(mp(px-dx*2*ms,py)=0,-dx*ms,0),
-    py+=IIF(mp(px,py-dy*2*ms)=0,-dy*ms,0)
+330 IF KEYST KEY_UP or keyst KEY_W THEN
+    px+=IIF(mp(int(px+dx*2*ms),int py)=0,dx*ms,0),
+    py+=IIF(mp(int px,int(py+dy*2*ms))=0,dy*ms,0)
+340 IF KEYST KEY_DOWN or keyst KEY_S THEN
+    px+=IIF(mp(int(px-dx*2*ms),int py)=0,-dx*ms,0),
+    py+=IIF(mp(int px,int(py-dy*2*ms))=0,-dy*ms,0)
 350 IF KEYST KEY_A THEN
-    px+=IIF(mp(px+dy*2*ms,py)=0,dy*ms,0),
-    py+=IIF(mp(px,py-dx*2*ms)=0,-dx*ms,0)
+    px+=IIF(mp(int(px+dy*2*ms),int py)=0,dy*ms,0),
+    py+=IIF(mp(int px,int(py-dx*2*ms))=0,-dx*ms,0)
 360 IF KEYST KEY_D THEN
-    px+=IIF(mp(px-dy*2*ms,py)=0,-dy*ms,0),
-    py+=IIF(mp(px,py+dx*2*ms)=0,dx*ms,0)
+    px+=IIF(mp(int(px-dy*2*ms),int py)=0,-dy*ms,0),
+    py+=IIF(mp(int px,int(py+dx*2*ms))=0,dx*ms,0)
 370 CLS:
  GO TO 60
 380 REM Generate maze
@@ -150,7 +151,7 @@ CHANGED FALSE
     cc=QCODE stk$,stk$=stk$(5 TO):
     GO TO 400
 440 FOR n=0 TO LEN m$-1:
-    mp(n MOD mw,n DIV mw)=VAL m$(n+1)*208:
+    mp(n MOD mw,n DIV mw)=VAL m$(n+1)*138:
  NEXT N:
  mp(mw-1,mh-2)=0:
  RETURN

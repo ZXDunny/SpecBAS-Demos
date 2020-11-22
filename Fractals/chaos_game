@@ -1,0 +1,19 @@
+ZXASCII
+AUTO -1
+PROG /demos/Fractals/chaos_game
+CHANGED FALSE
+10 PAPER 5: INK 1: CLS :
+	w=480,m=(w/2)^2,w2=w/2,
+	sx=scrw/2-w2,x,y=0,ofr=frames
+20 v=int(4*rnd),
+ x1=(x/2)+(w2*(v<2)),y1=(y/2)+(w2*(v in [1,2])),
+ x2=x1-w2,y2=y1-w2:
+ IF x2*x2+y2*y2<m THEN 
+	   GO to 20
+30 x=x1,y=y1:
+	PLOT sx+x,y+1:
+	f=frames: 
+	if ofr<>f then 
+	   ofr=f,m-=50
+40 if m>-4000 then 
+	   GO To 20

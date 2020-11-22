@@ -5,7 +5,7 @@ CHANGED FALSE
 10 REM 3D Maze II - based on code by Lode Vandevenne
 20 DEGREES: SCREEN LOCK: GO SUB 340: GO SUB 400
 30 LET mw=91,mh=91: DIM mp(mw,mh) BASE 0: GO SUB 280
-40 LET px,py=1.5,rs=2,ms=.06,omx,omy,os,oh1,oh2=0,pla=IIF(mp(px+1,py)=0,0.001,90.001),mmw=13,mmh=13
+40 LET px,py=1.5,rs=2,ms=.06,omx,omy,os,oh1,oh2=0,pla=IIF(mp(2,1)=0,0.001,90.001),mmw=13,mmh=13
 50 REM Engine
 60 RECTANGLE INK 127;0,0 TO w-1,h/2 FILL ;INK 48;0,h/2 TO w-1,h-1 FILL: FOR x=0 TO w-1: dx=COS pla,dy=SIN pla: cx=2*x/w-1,rx=px,ry=py,rdx=dx-dy*cx,rdy=dy+dx*cx,mx=INT rx,my=INT ry,ddx=SQR(1+(rdy*rdy)/(rdx*rdx)),ddy=SQR(1+(rdx*rdx)/(rdy*rdy))
 70 IF rdx<0 THEN LET stx=-1,sdx=(rx-mx)*ddx ELSE LET stx=1,sdx=(mx+1-rx)*ddx
@@ -25,8 +25,8 @@ CHANGED FALSE
 210 REM Movement
 220 IF KEYST KEY_RIGHT THEN INC pla,rs
 230 IF KEYST KEY_LEFT THEN DEC pla,rs
-240 IF KEYST KEY_UP THEN INC px,IIF(mp(px+dx*2*ms,py)=0,dx*ms,0): INC py,IIF(mp(px,py+dy*2*ms)=0,dy*ms,0)
-250 IF KEYST KEY_DOWN THEN INC px,IIF(mp(px-dx*2*ms,py)=0,-dx*ms,0): INC py,IIF(mp(px,py-dy*2*ms)=0,-dy*ms,0)
+240 IF KEYST KEY_UP THEN INC px,IIF(mp(int(px+dx*2*ms),int py)=0,dx*ms,0): INC py,IIF(mp(int px,int(py+dy*2*ms))=0,dy*ms,0)
+250 IF KEYST KEY_DOWN THEN INC px,IIF(mp(int(px-dx*2*ms),int py)=0,-dx*ms,0): INC py,IIF(mp(int px,int(py-dy*2*ms))=0,-dy*ms,0)
 260 CLS: GO TO 60
 270 REM Generate maze
 280 LET m$="1"*mw*mh: LET b$="1"*mw+(("1"+(" "*(mw-2))+"1")*(mh-2))+("1"*mw): LET cc=mw+2: DIM of=-1,-mw,1,mw: LET m$(cc)="0": LET stk$=QCHR$ cc: DIM nb(4)
@@ -34,7 +34,7 @@ CHANGED FALSE
 300 NEXT n
 310 IF nn>0 THEN LET o=of(nb(INT(RND*nn)+1)): LET m$(cc+o)="0": LET m$(cc+(o*2))="0": LET stk$=(QCHR$(cc) AND nn>1)+stk$: INC cc,o*2: GO TO 290
 320 IF stk$<>"" THEN LET cc=QCODE stk$: LET stk$=stk$(5 TO): GO TO 290
-330 FOR n=0 TO LEN m$-1: LET mp(n MOD mw,n DIV mw)=VAL m$(n+1)*208: NEXT N: LET mp(mw-1,mh-2)=0: RETURN
+330 FOR n=0 TO LEN m$-1: LET mp(n MOD mw,n DIV mw)=VAL m$(n+1)*138: NEXT N: LET mp(mw-1,mh-2)=0: RETURN
 340 REM Set up palette
 350 PALETTE 3,128,80,0: PALETTE 1,192,128,0: PALETTE 2,80,80,0: PALETTE 4,192,192,0: PALETTE 6,0,128,0: PALETTE 8,255,0,0
 360 LET w=SCRw,h=SCRh: RETURN

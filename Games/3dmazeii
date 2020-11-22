@@ -5,7 +5,7 @@ CHANGED FALSE
 10 REM 3D Maze II - based on code by Lode Vandevenne
 20 DEGREES: SCREEN LOCK: GO SUB 390
 30 LET mw=91,mh=51: DIM mp(mw,mh) BASE 0: GO SUB 330
-40 LET px,py=1.5,rs=2,ms=.06,omx,omy,os,oh1,oh2=0,pla=IIF(mp(px+1,py)=0,0.001,90.001),mmw=13,mmh=13
+40 LET px,py=1.5,rs=2,ms=.06,omx,omy,os,oh1,oh2=0,pla=IIF(mp(2,1)=0,0.001,90.001),mmw=13,mmh=13
 50 REM Engine
 60 RECTANGLE INK 5;0,0 TO SCRw-1,SCRh/2 FILL : RECTANGLE INK 6;0,SCRh/2 TO SCRw-1,SCRh-1 FILL
 70 FOR x=0 TO SCRw-1
@@ -24,14 +24,14 @@ CHANGED FALSE
 200 LET omx=mx,omy=my,os=s,oh1=h1*(x<SCRw-1),oh2=IIF(x=SCRw-1,SCRh,h2)
 210 NEXT x
 220 REM Minimap
-230 LET ax=MIN(MAX(0,INT px-INT(mmw/2)),mw-(mmw+1)),ay=MIN(MAX(0,INT py-INT(mmh/2)),mh-(mmh+1)): FOR fx=ax TO MIN(ax+mmw,mw-1): FOR fy=ay TO MIN(ay+mmh,mh-1): PRINT AT fy-ay+1,fx-ax+1;INK 7;PAPER 8*(fx=INT px AND fy=INT py);CHR$(mp(fx,fy)+32): NEXT fy: NEXT fx: LET qx=12+INT(px-ax)*8,qy=12+INT(py-ay)*8: DRAW INK 9;qx,qy TO qx+(dx*8),qy+(dy*8)
+230 LET ax=MIN(MAX(0,INT px-INT(mmw/2)),mw-(mmw+1)),ay=MIN(MAX(0,INT py-INT(mmh/2)),mh-(mmh+1)): FOR fx=ax TO MIN(ax+mmw,mw-1): FOR fy=ay TO MIN(ay+mmh,mh-1): PRINT AT fy-ay+1,fx-ax+1;INK 7;PAPER 15*(fx=INT px AND fy=INT py);CHR$(mp(fx,fy)+32): NEXT fy: NEXT fx: LET qx=12+INT(px-ax)*8,qy=12+INT(py-ay)*8: DRAW INK 9;qx,qy TO qx+(dx*8),qy+(dy*8)
 240 DO : WAIT SCREEN: LOOP UNTIL INKEY$<>""
 250 IF px>=mw-.4 THEN GO TO 420
 260 REM Movement
 270 IF KEYST KEY_RIGHT THEN INC pla,rs
 280 IF KEYST KEY_LEFT THEN DEC pla,rs
-290 IF KEYST KEY_UP THEN INC px,IIF(mp(px+dx*2*ms,py)=0,dx*ms,0): INC py,IIF(mp(px,py+dy*2*ms)=0,dy*ms,0)
-300 IF KEYST KEY_DOWN THEN INC px,IIF(mp(px-dx*2*ms,py)=0,-dx*ms,0): INC py,IIF(mp(px,py-dy*2*ms)=0,-dy*ms,0)
+290 IF KEYST KEY_UP THEN INC px,IIF(mp(int(px+dx*2*ms),int py)=0,dx*ms,0): INC py,IIF(mp(int px,int(py+dy*2*ms))=0,dy*ms,0)
+300 IF KEYST KEY_DOWN THEN INC px,IIF(mp(int(px-dx*2*ms),int py)=0,-dx*ms,0): INC py,IIF(mp(int px,int(py-dy*2*ms))=0,-dy*ms,0)
 310 CLS : GO TO 60
 320 REM Generate maze
 330 LET m$="1"*mw*mh: LET b$="1"*mw+(("1"+(" "*(mw-2))+"1")*(mh-2))+("1"*mw): LET cc=mw+2: DIM of=-1,-mw,1,mw: LET m$(cc)="0": LET stk$=QCHR$ cc: DIM nb(4)
@@ -39,7 +39,7 @@ CHANGED FALSE
 350 NEXT n
 360 IF nn>0 THEN LET o=of(nb(INT(RND*nn)+1)): LET m$(cc+o)="0": LET m$(cc+(o*2))="0": LET stk$=(QCHR$(cc) AND nn>1)+stk$: INC cc,o*2: GO TO 340
 370 IF stk$<>"" THEN LET cc=QCODE stk$: LET stk$=stk$(5 TO): GO TO 340
-380 FOR n=0 TO LEN m$-1: LET mp(n MOD mw,n DIV mw)=VAL m$(n+1)*208: NEXT N: LET mp(mw-1,mh-2)=0: RETURN
+380 FOR n=0 TO LEN m$-1: LET mp(n MOD mw,n DIV mw)=VAL m$(n+1)*138: NEXT N: LET mp(mw-1,mh-2)=0: RETURN
 390 REM Set up palette
 400 PALETTE 3,128,80,0: PALETTE 1,192,128,0: PALETTE 2,80,80,0: PALETTE 4,192,192,0: PALETTE 6,0,128,0: PALETTE 8,255,0,0
 410 RETURN

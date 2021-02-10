@@ -1,4 +1,5 @@
 ZXASCII
 AUTO -1
-PROG asciimand
-1 FOR y=-29 TO 30: FOR x=-10 TO 89: LET m,r=0: FOR k=0 TO 112: LET j=r^2-m^2-2+x/25,m=2*r*m+y/25,r=j,l=k & 15,k=IIF(j^2+m^2>11,113,k): NEXT k: ?" .:-;!/>)|&IH%*#"(l+1);: NEXT x: NEXT y
+PROG demos:fractals/asciimand
+CHANGED FALSE
+1 FOR y=-29 TO 30;x=-10 TO 89:m,r=0:FOR k=0 TO 112:j=r^2-m^2-2+x/25,m=2*r*m+y/25,r=j,l=k&15,k=IIF(j^2+m^2>11,113,k):NEXT k:?" .:-;!/>)|&IH%*#"(l+1);:NEXT x;y

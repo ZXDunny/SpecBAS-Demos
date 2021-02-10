@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/hermann_grid
+CHANGED FALSE
+10 gs=40,t=1, cs=4: paper 0: ink 7: cls:
+	t2=t/2:
+	for x=gs/2 to scrw step gs:
+	   for y=gs/2 to scrh step gs:
+	      rectangle x-gs,y-t2 to x+gs,y+t2 fill;
+							          x-t2,y-gs to x+t2,y+gs fill:
+							circle x,y,cs fill:
+	   next y:
+	next x

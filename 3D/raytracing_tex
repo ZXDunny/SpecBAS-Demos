@@ -2,7 +2,7 @@ ZXASCII
 AUTO -1
 PROG demos:3d/raytracing_tex
 CHANGED FALSE
-10 PAPER 0: INK 15: CLS: so=32,ss=(256-so),hh=int(ss*0.0666667):
+10 PAPER 0: INK 15: CLS: sh=2,so=32,ss=(256-so),hh=int(ss*0.0666667):
  palette so,255,255,255:
  palette so+hh,0,192,255:
  palette 255,0,0,192:
@@ -16,22 +16,26 @@ CHANGED FALSE
  DIM c(spheres,3),r(spheres),q(spheres): dim cl(so) base 0:
  for f=0 to so-1:
     c=rgb f:
-    cl(f)=rgbn(RED rgb f/2,
-               green rgb f/2,
-               blue rgb f/2):
+    cl(f)=rgbn(RED rgb f/sh,
+               green rgb f/sh,
+               blue rgb f/sh):
  next f:
  w=scrw/2,h=scrh/2,s=0,sh=scrh/480
 40 FOR k=1 TO spheres:
-    READ c(k,1),c(k,2),c(k,3),r:
+	   read r,x,y,z:
+    c(k,1)=x+.25,c(k,2)=y,c(k,3)=z+2.1:
     r(k)=r,q(k)=r*r:
- NEXT k
-50 data 6:
- DATA -0.3,-0.8,3,0.6
-60 DATA 0.9,-1.4,3.5,0.35:
- data 0.7,-0.45,2.5,0.4:
- data -0.5,-0.3,1.5,0.15:
- DATA 1.0,-0.2,1.5,0.1:
- DATA -0.1,-0.2,1.25,0.2
+ NEXT k:
+	rem radius,x,y,zn follow
+50 data 8:
+ DATA 0.3, 0,   -r,  0:
+	data r,   0,   -r*3,0:
+	data r,   -r*2,-r,  0:
+	data r,   r*2, -r,  0:
+	data 0.2, -0.3,-r,-.4:
+	data r,   0.3, -r,-.4:
+	data r,  -0.3, -r,.4:
+ data r,   0.3, -r,.4
 70 FOR i=1 TO scrh:
     FOR j=0 TO scrw-1
 80       x=0.3,y=-0.5,z=0,ba=0:

@@ -1,6 +1,6 @@
 ZXASCII
 AUTO -1
-PROG /demos/3D/raytracing_msx
+PROG demos:3d/raytracing_msx
 CHANGED FALSE
 10 rem Screen init
 20 window depth 0,32: CLS: option "base",0
@@ -17,7 +17,7 @@ CHANGED FALSE
 130 V(12)=T(6):V(13)=T(7):V(14)=T(8)
 140 READ MO:FOR I=0 TO MO-1:FOR J=0 TO 7:READ O(I,J):NEXT J;I
 150 READ MS:FOR I=0 TO MS-1:FOR J=0 TO 7:READ S(I,J):NEXT J;I
-160 MA=1000:MI=1E-01:MD=0:PT=4:SC=240
+160 MA=1000:MI=1E-01:MD=0:PT=4:SC=SCRH/4.75:SCW=SCRW/2,SCH=SCRH/2
 170 FOR I=1 TO 4
 180 V=SQR(V(I*3+0)*V(I*3+0)+V(I*3+1)*V(I*3+1)+V(I*3+2)*V(I*3+2))
 190 V(I*3+0)=V(I*3+0)/V:V(I*3+1)=V(I*3+1)/V:V(I*3+2)=V(I*3+2)/V
@@ -25,9 +25,9 @@ CHANGED FALSE
 210 rem Trace
 220 FOR SY=0 TO scrh-1:FOR SX=0 TO scrw-1:XD=0:YD=0
 230 CX=V(0):CY=V(1):CZ=V(2)
-240 VX=V(3)*(SX-320)/SC+V(6)*(250-SY)/SC-V(9)*V(15)
-250 VY=V(4)*(SX-320)/SC+V(7)*(250-SY)/SC-V(10)*V(15)
-260 VZ=V(5)*(SX-320)/SC+V(8)*(250-SY)/SC-V(11)*V(15)
+240 VX=V(3)*(SX-SCW)/SC+V(6)*(SCH-SY)/SC-V(9)*V(15)
+250 VY=V(4)*(SX-SCW)/SC+V(7)*(SCH-SY)/SC-V(10)*V(15)
+260 VZ=V(5)*(SX-SCW)/SC+V(8)*(SCH-SY)/SC-V(11)*V(15)
 270 V=SQR(VX*VX+VY*VY+VZ*VZ)
 280 VX=VX/V:VY=VY/V:VZ=VZ/V
 290 CR=0:CG=0:CB=0:RN=0:RF=1
@@ -53,8 +53,7 @@ CHANGED FALSE
 490 rem Cross
 500 RX=CX-O(N,0):RY=CY-O(N,1):RZ=CZ-O(N,2)
 510 A=O(N,3):B=O(N,4):C=O(N,5)
-520 IF O(N,6)+1=1 THEN GO TO 540 ELSE IF O(N,6)+1=2 THEN GO to 650
-530 GO TO 540
+520 IF O(N,6) THEN GO to 650
 540 rem Box
 550 IF VX=0 THEN T1=MA ELSE IF RX<0 THEN T1=-(RX+A)/VX ELSE T1=-(RX-A)/VX
 560 IF VY=0 THEN T2=MA ELSE IF RY<0 THEN T2=-(RY+B)/VY ELSE T2=-(RY-B)/VY
@@ -110,48 +109,63 @@ CHANGED FALSE
 1060 VX=WX:VY=WY:VZ=WZ
 1070 RETURN
 1080 rem Picture data
-1090 DATA 40, 20, 20
-1100 DATA 0, 0, 0
-1110 DATA -8, 9, -3
-1120 DATA 6
-1130 DATA 6
-1140 DATA 2, 0, 2
-1150 DATA .2, .2, .2
-1160 DATA 1, 2
-1170 DATA -2, 2, 2
+1090 DATA 40, 20, 20: REM Camera rotation
+1100 DATA 5, -5, 0:   REM Camera position
+1110 DATA -8, 9, -3:  REM Light source position
+1120 DATA 6:          rem Camera zoom
+	
+1130 DATA 6:          REM Number of objects
+	
+1140 DATA 16, 2, 10:  rem x,y,z position
+1150 DATA .2, .2, .2: rem x,y,z size (greater = smaller)
+1160 DATA 1, 2:       rem Type (1=sphere,2=box),colour index
+	
+1170 DATA 6, 2, 10
 1180 DATA .2, .2, .2
-1190 DATA 1, 3
-1200 DATA -6, 4, 2
+1190 DATA 1, 5
+	
+1200 DATA -4, 2, 10
 1210 DATA .2, .2, .2
 1220 DATA 1, 4
-1230 DATA -2, 2, -2
-1240 DATA .2, .2, .2
-1250 DATA 1, 5
-1260 DATA -6, 4, -6
-1270 DATA .2, .2, .2
+	
+1230 DATA 14, 3, -8
+1240 DATA .1, .1, .1
+1250 DATA 1, 6
+	
+1260 DATA 4, 6, 0
+1270 DATA .025, .025, .025
 1280 DATA 1, 6
+	
 1290 DATA 0, -2, 0
-1300 DATA 20, 1, 20
+1300 DATA 20, .5, 20
 1310 DATA 0, -1
-1320 DATA 7
-1330 DATA .9, .9, .9
-1340 DATA .5, .4, .6
-1350 DATA .7, 6
-1360 DATA .0, .9, .0
-1370 DATA .5, .4, .6
+	
+1320 DATA 7:          REM Number of colorurs
+	
+1330 DATA .9, .9, .3: REM RGB values (0..1) - grid yellow
+1340 DATA .5, .4, 0:  rEM brightness, specular, reflectivity
+1350 DATA .7, 6:      REM
+	
+1360 DATA 0, .5, 0:   rem grid green
+1370 DATA .5, .4, 0
 1380 DATA .7, 6
-1390 DATA .9, .0, .0
-1400 DATA .3, .6, 0
+	
+1390 DATA .9, .0, .0: rem red ball
+1400 DATA .3, .6, .2
 1410 DATA 0, 0
-1420 DATA .9, .9, .9
+	
+1420 DATA .9, .9, .9: rem grey ball
 1430 DATA .3, .6, 0
 1440 DATA .6, 8
-1450 DATA .0, .0, .9
-1460 DATA .3, .6, 0
+	
+1450 DATA .0, .0, .9: rem blue ball
+1460 DATA .3, .6, .2
 1470 DATA .6, 8
-1480 DATA .9, .9, .9
-1490 DATA .3, .6, 0
-1500 DATA .6, 6
-1510 DATA .0, .0, .0
-1520 DATA ,3, .6, 1
-1530 DATA .9, 8
+	
+1480 DATA 0, .9, 0:   rem green ball
+1490 DATA .3, .6, .2
+1500 DATA 1, 6
+	
+1510 DATA 0, 0, 0:    rem chrome ball
+1520 DATA .3, .6, .7
+1530 DATA .9, 1

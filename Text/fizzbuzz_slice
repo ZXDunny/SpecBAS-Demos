@@ -1,0 +1,5 @@
+ZXASCII
+AUTO -1
+PROG /demos/Text/fizzbuzz_slice
+CHANGED FALSE
+10 FOR i=1 TO 100: PRINT "Fizz"( TO 4*(i mod 3=0))+"Buzz"( TO 4*(i mod 5=0))+(STR$ i+" ")(4-3*((i mod 3<>0)*(i mod 5<>0)) TO ): NEXT i

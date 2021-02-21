@@ -1,0 +1,31 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/neon_buddha
+CHANGED FALSE
+10 window depth 0,32: paper 0: cls
+20 its=750:option "base",0:
+	dw=scrw,dh=scrh,sc=175*(dh/480):
+	dim lx(its),ly(its),lc1(its),lc2(its),lc3(its)
+30 for x=-2 to 0.5 step .015:
+	   for y=.01 to 1.1 step .015:
+				   xx=x,yy=y:
+							for it=0 to its-1:
+							   xt=(xx*xx)-(yy*yy)+x,
+										yt=(2*xx*yy)+y,
+										xx=xt,yy=yt,
+										lx(it)=50+(xx*sc+dh/2),
+										ly(it)=yy*sc+dw/2,
+										lc1(it)=(y+.01)/1.1*255,
+										lc2(it)=it/its*255,
+										lc3(it)=255-((x+2)/2.5*255)
+40          if xx*xx+yy*yy>4 then
+										   GO To 70
+50       next it
+60       for n=0 to its-1:
+							   x1=ly(n),y1=lx(n):
+							   I=RGBToInt(lc1(n),lc2(n),lc3(n)):
+										ink I|IIF(POINT(x1,y1)=0,$FF shl 24,$80 shl 24):
+										plot alpha x1,y1;alpha dw-x1,y1:
+							next n
+70    next y:
+	next x

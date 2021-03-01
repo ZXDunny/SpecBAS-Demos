@@ -1,13 +1,13 @@
 ZXASCII
 AUTO -1
-PROG /demos/Graphics/bernoulli
+PROG demos:graphics/bernoulli
 CHANGED FALSE
-10 INK 0: PAPER 7: CLS
-20 PRINT PAPER 5;AT 0,11;scale 3,3;" Lemniscate of Bernoulli "
+10 INK 0: PAPER 8: CLS
+20 PRINT PAPER 5;centre 0;scale 3,3;" Lemniscate of Bernoulli "
 30 LET u=scrw/2: LET v=scrh/2
 40 LET n=200: LET s=1/(n-1)
 50 DIM x(n): DIM y(n)
-60 PLOT 0,v: DRAW scrw,0: PLOT u,105: DRAW 0,270
+60 PLOT 0,v: DRAW scrw,0: PLOT u,(scrh-270)/2: DRAW 0,270
 70 INK 2
 80 LET t=0
 90 FOR i=1 TO n

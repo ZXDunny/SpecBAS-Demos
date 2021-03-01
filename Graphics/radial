@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/radial
+CHANGED FALSE
+10 RADIANS: screen lock
+20 n=5,pn=pi/(n+1)/10,sw=scrw/2,sh=scrh/2:
+ for i=(20*n)+19 to 0 step -1:
+    v=.3*(msecs/1000)+pn*i,
+    p=300/Cos v,
+    q=p*Sin v:
+    draw sw,sh to sw+p,sh-q,-pi:
+    draw sw,sh to sw+p,sh-q,pi:
+ next i: wait screen: cls: go to 20

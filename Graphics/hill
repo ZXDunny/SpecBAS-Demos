@@ -5,7 +5,7 @@ CHANGED FALSE
 10 REM Landscape outline
 20 DIM hil(1025) BASE 0
 30 PROC hill(0,512,1024)
-40 FOR i=0 TO 1024: draw to SCRw/2-512+i,SCRh/2-hil(i): NEXT i
+40 plot 0,scrh/2-hil(0):FOR i=0 TO 1024: draw to SCRw/2-512+i,SCRh/2-hil(i): NEXT i
 50 STOP
 60 DEF PROC hill(a,b,c)
 70 IF c-a<=1 THEN EXIT PROC

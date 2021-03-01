@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/hilbert
+CHANGED FALSE
+10 paper 0: ink 4: cls
+20 def proc h(x,y,lg,i1,i2):
+	   if lg=1 then
+				   draw to (w-x)*sz,(w-y)*sz:
+				else
+				   lg=lg shr 1:
+							proc h(x+i1*lg,y+i1*lg,lg,i1,1-i2):
+							proc h(x+i2*lg,y+(1-i2)*lg,lg,i1,i2):
+       proc h(x+(1-i1)*lg,y+(1-i1)*lg,lg,i1,i2):
+       proc h(x+(1-i2)*lg,y+i2*lg,lg,1-i1,i2):
+				end if:
+	end proc
+30 w=64,sz=8:plot w*sz,w*sz:
+	proc h(0,0,w,0,0)

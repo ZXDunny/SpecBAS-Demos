@@ -1,0 +1,20 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/charwave
+CHANGED FALSE
+10 a=UDG "a": 
+	FOR f=0 TO 7: 
+	   for g=0 to 63: 
+				   poke 1,g+a,0: 
+				next g: 
+				addr=a+(8*f): 
+				FOR g=0 TO 7: 
+				   POKE 1,addr+g,1: 
+				NEXT g: 
+				a+=64: 
+	NEXT f:
+	screen lock
+20 option "scrollcnt",0:
+	PRINT "בבבבגגדדההווזזחחטטטחחזזווההדדגגב";:
+	wait screen:
+	GO To 20

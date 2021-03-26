@@ -1,9 +1,9 @@
 ZXASCII
 AUTO -1
-PROG /demos/Graphics/bubble_universe
+PROG demos:graphics/bubble_universe
 CHANGED FALSE
-10 const w=480,n=235,r=tau/235:
-	x,y,v,t=0:
+10 const n=235,r=tau/235:
+	x,y,v,t=0,w=scrh,sz=w/4:
 	window depth 0,32:
 	screen lock:
 	do:
@@ -12,9 +12,8 @@ CHANGED FALSE
 				   u=sin(i+v)+sin(r*i+x),
 							v=cos(i+v)+cos(r*i+x),
 							x=u+t:
-							plot ink rgbtoint(i,j,99);u*117+w/1.2,v*117+w/2:
+							plot ink rgbtoint(i,j,99);u*sz+w/1.2,v*sz+w/2:
 				next j;i:
-				t+=.05:
+				t+=.025:
 				wait screen:
 	loop
-	

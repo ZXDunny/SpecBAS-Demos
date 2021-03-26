@@ -1,0 +1,27 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/quasicrystals
+CHANGED FALSE
+10 rem Quasicrystals
+20 rem originally by Richard Marxer
+30 screen lock:
+	for f=0 to 255: palette f/2,f,f,f;255-f/2,f,f,f: next f
+40 wavecount=7,wavefreq=.4,waveoffsetinc=.05,waveoffset=0,a=0,
+	wd=scrw,ht=scrh,sz=8,z=18
+50 cls:
+	for i=0 to wd-1 step sz:
+	   for j=0 to ht-1 step sz:
+				   c=0:
+							for m=1 to wavecount:
+							   ang=map(m,1 to wavecount,0 to a*pi),
+										kx=cos ang,ky=sin ang,
+										c+=(cos(waveFreq*(kx*i/z+ky*j/z)+waveOffset)+1)/2:
+							next m:
+							rectangle ink frac c*255;i,j,sz,sz fill:
+				next j:
+	next i:
+	waveoffset+=waveoffsetinc,a+=.002:
+	palette shL 1,0 to 255:
+	wait screen:
+	GO To 50
+

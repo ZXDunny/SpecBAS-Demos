@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG /binary_pi
+CHANGED FALSE
+10 n=pi-3:
+	print "11.";
+20 n*=2: 
+	if n>=1 then
+	   print "1";:
+				n-=1:
+ else
+	   print "0";:
+	end if:
+	if n=0 then 
+	   stop
+	else
+	   GO To 20

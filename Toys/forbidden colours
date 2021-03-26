@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG /demos/toys/forbidden colours
+CHANGED FALSE
+10 FOR i=0 TO txth-1: text PAPER 14,PAPER 9,: NEXT i:x=(scrw/4)-12,y=(scrh/2)-12
+20 PLOT x,y: GO SUB 40: PLOT x+(scrw/2),y: GO SUB 40
+30 PAUSE 0: GO TO 70
+40 DRAW 0,7;8,0;0,8;7,0;0,-8;8,0;0,-7;-8,0;0,-8;-7,0;0,8;-8,0: fill ink 15;drposx+1,drposy+1
+50 RETURN

@@ -1,0 +1,70 @@
+ZXASCII
+AUTO -1
+PROG /beast/beast
+CHANGED FALSE
+10 degrees:mouse hide:SCREEN window 1280,800: WINDOW SIZE 0,320,200: WINDOW DEPTH 0,32: CD "/beast": nw=13: FPS 60:sw=scrw,sh=scrh:tp=0,lfc=400,mn=1:dim lets(500,4):GO SUb 2000
+20 screen lock:
+	WINDOW NEW moon,220,16,0,0 TRANS 0 load "moon.png"
+30 window new b1,0,20,sw*2,27 trans 0 load "blimp_big.png"
+40 WINDOW NEW b2,0,48,Sw*2,13 TRANS 0 load "blimp_small.png"
+50 restore:DIM w(nw): FOR f=1 TO nw: READ a$,y,t: window new w(f),0,y,0,0 trans t load a$: next f: window 0
+60 data "cloud1.png",0,0,"cloud2.png",23,0,"cloud3.png",63,0,"cloud4.png",82,0,"cloud5.png",91,0,"mountains.png",100,6,"grass1.png",172,255,"grass2.png",174,255,"grass3.png",177,255,"grass4.png",184,255,"grass5.png",191,255,"trees.png",0,15,"fence.png",176,0
+75 window new fl,0,0,sw,sh trans 0: cls 0: font new fnt,16,16,FONT_COLOUR LOAD "font.png": font fnt
+100 rem create gradient
+110 window 0:
+	cls rgbtoint(102,119,136):
+	r=102,g=119,b=136:
+	for y=69 to 180:
+	   draw ink rgbtoint(r,g,b);0,y to scrw,y:
+				r=r+1.37:
+	next y
+200 rem Places, people!
+220 rem sprites
+230 window 0:dudeflag=scrw,dudeframe=1:window new sp,scrw,120,32,52 trans 0:dim sp(6):for f=1 to 6: graphic new sp(f) load "dude"+str$ f+".png": next f: palette copy sp(1),0,256 to 0:for f=1 to 6:graphic remap sp(f):next f
+240 window 0:batx=-640:baty=60:window new bat,batx,baty,32,64 trans 0: dim bat(5): for f=1 to 5: graphic new bat(f) load "bat"+str$ f+".png": next f: palette copy bat(1),0,256 to 0: for f=1 to 5:graphic remap bat(f):next f:bat$=#1#2#3#4#5#4#3#2
+300 rem Do the demo
+310 c=0: restore 3010
+320 window roll w(1),1,0:window roll w(12),2,0
+330 if c&1 then window roll w(2),1,0: window roll w(6),1,0
+340 FOR f=3 TO 5: IF NOT (c MOD f) THEN WINDOW ROLL w(f),1,0
+350 next f:for f=7 to 11: window roll w(f),(f-6)+1,0
+360 NEXT f
+370 window roll w(13),6,0
+380 if not (c mod 3) then window roll b1,1,0
+390 IF NOT (c MOD 7) THEN WINDOW ROLL b2,-1,0
+400 if dudeflag>144 then dudeflag-=.25:window move sp,dudeflag,125 ELSE GO SUb 2500
+410 if not (c mod 6) then window put graphic sp(dudeframe),sp,0,0:inc dudeframe,1,1 to 6
+420 if not (c mod 6) then window put graphic bat(code bat$(1)),bat,0,0:bat$=bat$(2 to)+bat$(1)
+430 if batx<sw+100 then window move bat,batx,baty:batx+=3 else batx=-(640+(320*rnd*12)):baty=rnd*80
+1000 c+=1:WAIT SCREEN: GO To 320
+2000 rem intro
+2010 music play "music.mp3" loop: restore 2030:for j=1 to 2:for f=1 to 4: read a$,y,fc,ri,gi,bi
+2020 for g=1 to fc-1 step .7:
+	ink rgbtoint(ri*g,gi*g,bi*g):print move (scrw-(len a$*8*4))/2,y+7;scale 4,4;paper 0;a$:wait screen: next g:pause (100*(f in [2,4]))+1: next f:
+	pause 150:
+	for f=1 to scrh step 4:window scroll 0,0,-4:wait screen: next f:next j:
+	return
+2030 data "ZXDunny",1,64,4,4,4,"presents",50,64,4,4,0,"from",100,64,4,0,4,"SCUNTHORPE",150,128,2,0,0
+2040 DATA "A BEAST",1,64,0,4,4,"of a",50,64,0,4,0,"#FOLLOW",100,64,4,4,0,"FRIDAY",150,64,4,2,0
+2500 IF tp=0 THEN GO To 2700
+2510 if tp=1 then cnt-=1:window fl: cls 0: for f=1 to nl:x=lets(f,1),y=lets(f,2):text move x,y;n$(f);:x+=(lets(f,3)-x)*.0625,y+=(lets(f,4)-y)*.0625:lets(f,1)=x,lets(f,2)=y: next f:if cnt>0 then return else tp=2:cnt=20
+2520 if tp=2 then cnt-=1: if cnt>0 then return else tp=3:for f=1 to nl:lets(f,4)=-((rnd*4)+1),lets(f,3)=(rnd*6)-3:next f
+2530 if tp=3 then window fl: cls 0:nip=0:for f=1 to nl:x=lets(f,1),y=lets(f,2):text move x,y;n$(f);:x+=lets(f,3),y+=lets(f,4),lets(F,2)=y,lets(f,1)=x,nip+=lets(f,2)<-16:next f:if nip=nl then tp=4,cnt=20 else return
+2540 if tp=4 then cnt-=1: if cnt=0 then tp=0
+2699 return
+2700 read n$:n$=up$ n$*mn: if n$="E"*mn then restore 3010: read n$:n$=up$ n$*mn
+2710 nl=len n$,
+	x=(sw-((nl/mn)*16))/2:
+	for f=1 to nl:
+	   r=400+(rnd*100),a=rnd*360:
+				lets(f,1)=x+(sin a)*r,
+				lets(f,2)=(sh-8)+(cos a)*r,
+				lets(f,3)=x,
+				lets(f,4)=(sh/2)-8,x+=16:
+				if not (f mod (nl/mn)) then
+				   x=(sw-((nl/mn)*16))/2
+2720 next f:
+	tp=1,cnt=lfc/2
+2999 return
+3000 rem 22 followers
+3010 data "jimblimey","retrogamesearch","daph2theb","8bltG","jcmunckton","saucerbrain","lord-arse","tobobobo","sophierosemusix","judgedrokk","thatbunty","8bitgrrl","commodoreblog","jamograd","spectrumtinted","0xC0DE6502","electron-greg","spectrumnez","peteprodge","sharpworksmz","damienguard","brendan-alford","breakintoprog","florinthedwarf","bhaal-spawn","rozzybozzy","e"

@@ -3,9 +3,9 @@ AUTO -1
 PROG demos:graphics/morph curve
 CHANGED FALSE
 10 DEF FN gauss(t,mx,my)=((t/2)*8^-((t/mx)^2*32))/my
-20 pts=5000,interps=50,h=RND*360,oh=h,t=0:
+20 pts=5000,interps=2000,h=RND*360,oh=h,t=0:
  DIM p(pts+1,2),q(pts+1,2),s(pts+1,2),i(interps):
- l=0,cx=SCRw/2,cy=SCRh/2,sc=cy*.49,st=TAU/pts,j=2*PI/360:
+ l=0,cx=SCRw/2,cy=SCRh/2,sc=cy*.49,st=TAU/pts,j=2*PI/360:radians:
  FOR n=1 TO interps:
     i(n)=SIN(n/interps*(PI/2)):
  NEXT n:
@@ -22,7 +22,7 @@ CHANGED FALSE
  ELSE
     m,t=0:
     FOR t=0 TO interps step .5:
-       t+=1+FN gauss(m,interps,1):
+       t+=1+FN gauss(m,interps,1),t=min(t,interps):
        FOR n=1 TO pts+1:
           s(n,1)=q(n,1)*i(t)+p(n,1)*(1-i(t)),
           s(n,2)=q(n,2)*i(t)+p(n,2)*(1-i(t)):

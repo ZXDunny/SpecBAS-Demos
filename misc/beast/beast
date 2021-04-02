@@ -1,8 +1,8 @@
 ZXASCII
 AUTO -1
-PROG /beast/beast
+PROG /demos/misc/beast/beast
 CHANGED FALSE
-10 degrees:mouse hide:SCREEN window 1280,800: WINDOW SIZE 0,320,200: WINDOW DEPTH 0,32: CD "/beast": nw=13: FPS 60:sw=scrw,sh=scrh:tp=0,lfc=400,mn=1:dim lets(500,4):GO SUb 2000
+10 degrees:mouse hide:SCREEN window 1280,800: WINDOW SIZE 0,320,200: WINDOW DEPTH 0,32: nw=13: FPS 60:sw=scrw,sh=scrh:tp=0,lfc=400,mn=1:dim lets(500,4):GO SUb 2000
 20 screen lock:
 	WINDOW NEW moon,220,16,0,0 TRANS 0 load "moon.png"
 30 window new b1,0,20,sw*2,27 trans 0 load "blimp_big.png"

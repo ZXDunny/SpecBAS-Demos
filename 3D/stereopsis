@@ -10,7 +10,7 @@ CHANGED FALSE
 	proc c(cx,cy,r1,r1-th,10):r1-=rd:
 	proc c(cx,cy,r1,r1-th,1):r1-=rd:
 	proc c(cx,cy,r1,0,10):
-	pause 0
+	wait keydown
 30 def proc c(xc,yc,r,r2,i):
     FOR y=-r TO r step 2:
        x1=SQR(r*r-y*y):

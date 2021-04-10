@@ -1,0 +1,44 @@
+ZXASCII
+AUTO -1
+PROG /julia_art
+CHANGED FALSE
+10 paper 225: cls:
+	ON ERROR GO To 100:
+20 detail=(rnd*.1)+.1,
+	ox,oy=(rnd*2)-1,
+	lw=((rnd*3)/100)+.06,
+	lsh=(rnd*1.5)+.1,
+	s$="UV"(1+RND):
+	for f=1 to 2+(rnd*5):
+	   a,b=1+rnd*9:
+				s$=s$+"++/++-+*+^"(a)+"UVUXYVUVUV"(b):
+	next f:
+	s$=token$ s$:
+30 sw=scrw/2,sh=scrh/2,sc=sw/2
+40 For A=0 TO sw:
+    For B=0 TO scrh:
+       X=(A-sw)/sc,
+       Y=(B-sh)/sc,
+       I=0,D=100
+50       U=X*X:V=Y*Y:
+       IF U+V>2.4 OR I>60 OR d<detail then
+							   GO TO 80
+60       T=U-V,
+       Y=2*X*Y+ox,
+       X=T-oy,
+       I+=1,
+       N=ABS(val s$-lsh):
+       IF N<D then
+							   D=N
+70       GO TO 50
+80       INK iif(d<lw,((i+8) mod 15),0)
+90       PLOT A,B:
+       plot scrw-A,scrh-B:
+    NEXT B:
+				if inkey$<>"" Then
+				   RUN
+				ELSE
+ NEXT A
+100 clear error:
+	if a=sw then pause 0
+110 run

@@ -1,0 +1,27 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/bbc_julia_rings
+CHANGED FALSE
+10 dim i=0,10,14,15:
+	sw=scrw/2,sh=scrh/2,sc=sw/2:
+	For A=0 TO sw:
+    For B=0 TO scrh:
+       X=(A-sw)/sc,
+       Y=(B-sh)/sc,
+       I=0,D=100
+20       U=X*X:V=Y*Y:
+       IF U+V>2.4 OR I>60 OR D<.12 then
+							   GO TO 50
+30       T=U-V,
+       Y=2*X*Y+.156,
+       X=T-.8,
+       I=I+1,
+       N=ABS(U+V-.7):
+       IF N<D then
+							   D=N
+40       GO TO 20
+50       ink 0: if D<.07 THEN INK ((i+8) mod 15)
+60       PLOT A,B:
+       plot scrw-A,scrh-B:
+    NEXT B:
+ NEXT A

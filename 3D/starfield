@@ -2,11 +2,19 @@ ZXASCII
 AUTO -1
 PROG demos:3d/starfield
 CHANGED FALSE
-10 LET np=1000: DIM p(np,3)
-20 FOR f=1 TO np: LET p(f,1)=RND*SCRw: LET p(f,2)=RND*SCRh: LET p(f,3)=(RND*32)+225: NEXT f
+10 np=1000: 
+	DIM p(np,3)
+20 FOR f=1 TO np: 
+	   p(f,1)=RND*SCRw: 
+				p(f,2)=RND*SCRh: 
+				p(f,3)=(RND*30)+226: 
+	NEXT f
 30 PAPER 0: INK 15: CLS: SCREEN LOCK
 40 FOR f=1 TO np
-50 DEC p(f,1),(p(f,3)-225)/16: IF p(f,1)<0 THEN LET p(f,1)=SCRw: LET p(f,2)=RND*SCRh
+50    p(f,1)-=(p(f,3)-225)/16: 
+				IF p(f,1)<0 THEN 
+				   p(f,1)=SCRw,
+							p(f,2)=RND*SCRh
 60 NEXT f
 70 PLOT INK p(f,3);p()
 80 WAIT SCREEN: CLS: GO TO 40

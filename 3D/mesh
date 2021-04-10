@@ -1,6 +1,7 @@
 ZXASCII
 AUTO -1
-PROG mesh
+PROG demos:3d/mesh
+CHANGED FALSE
 10 REM Art5 from Blitzbasic
 20 CONST x=0,y=1,z=2,sx,vx=3,sy,vy=4,fx=5,fy=6,i=7:
  sw=scrw,sh=scrh,sw2=sw/2,sh2=sh/2
@@ -17,14 +18,14 @@ PROG mesh
        cn(a,b,y)=y1,
        x1=x1*PI,
        y1=y1*PI,
-       cn(a,b,z)=SQR((y1*SIN(y1+x1*COS x1))^2+(x1*COS(x1+y1*SIN y1))^2)/10:
+       cn(a,b,z)=SQR(abs(y1*SIN(y1+x1*COS x1))^2+abs(x1*COS(x1+y1*SIN y1))^2)/10:
     NEXT b:
  NEXT a
 70 DIM hpt(af+1,5) BASE 0
 80 FOR c=0 TO af:
     hpt(c,x)=RND*sz,
     hpt(c,y)=RND*sz,
-    hpt(c,z)=(RND-0.5)*(RND*1.25),
+    hpt(c,z)=(RND-0.5)*(RND*3.25),
     hpt(c,vx)=(RND+0.2)/4,
     hpt(c,vy)=(RND+0.2)/4:
  NEXT c

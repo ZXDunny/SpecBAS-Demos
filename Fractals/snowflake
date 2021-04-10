@@ -3,21 +3,21 @@ AUTO -1
 PROG demos:fractals/snowflake
 CHANGED FALSE
 10 REM Turtle Snowflake
-20 PAPER 0: 
-	FOR f=1 TO 6: 
-	   READ r,g,b: 
-				PALETTE f,r,g,b: 
-	NEXT f: 
+20 PAPER 0:
+	FOR f=1 TO 6:
+	   READ r,g,b:
+				PALETTE f,r,g,b:
+	NEXT f:
 	CLS
-30 n$="draw s:rotate -60:draw s:rotate 120:draw s:rotate -60:draw s": 
+30 n$="draw s:rotate -60:draw s:rotate 120:draw s:rotate -60:draw s":
 	n$=token$("ink n:"+n$+":rotate -60:"+n$+":rotate 120:"+n$+":rotate -60:"+n$+":rotate -60")
-40 DEGREES: s=10
-50 MOVE TO SCRw/2,SCRh/2: 
-	FOR n=1 TO 6: 
-				FOR i=1 TO 6: 
-				   EXECUTE n$: 
-				NEXT i: 
-				ROTATE 60: 
-				DRAW s: 
+40 DEGREES: s=9
+50 MOVE TO SCRw/2,SCRh/2-s:
+	FOR n=1 TO 6:
+				FOR i=1 TO 6:
+				   EXECUTE n$:
+				NEXT i:
+				ROTATE 60:
+				DRAW s:
 	NEXT n
 60 DATA 240,0,240,0,0,240,0,150,0,220,200,0,240,160,0,210,0,0

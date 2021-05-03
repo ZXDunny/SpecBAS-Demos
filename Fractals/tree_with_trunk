@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG /demos/Fractals/tree_with_trunk
+CHANGED FALSE
+10 REM by @katie_panda
+20 ORIGIN 0,0 TO 1440,900 FLIP :paper 0: cls
+30 PROC D(450,20,650,20,16)
+40 stop
+50 DEF PROC D(Q,R,S,T,N):
+	   ink 2:
+    IF N<3 then
+				   ink 4
+				else
+				   if N<7 THEN
+				      ink 12:
+				   end if:
+				end if:
+    draw Q,R to Q+R-T,R+S-Q:
+    draw S,T to S+R-T,T+S-Q:
+    LOCAL X,Y,U,V:
+    U=S-Q:V=T-R,X=Q+R-T+.36*U-.48*V,Y=R+U+.36*V+.48*U
+60    IF N then
+				   PROC D(Q-V,R+U,X,Y,N-1)
+70    IF N then
+				   PROC D(X,Y,S-V,T+U,N-1)
+80 END PROC

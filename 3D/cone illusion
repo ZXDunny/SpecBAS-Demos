@@ -1,5 +1,14 @@
 ZXASCII
 AUTO -1
-PROG cone illusion
-10 DEGREES: LET x1=SCRw/2: LET y1=SCRh/2: LET b=0
-20 FOR a=0 TO 360 STEP 8: LET x=100*COS a: LET y=SIN a*SIN b*80: LET h=100*COS b: INK a MOD 256: DRAW x1,y1 TO x1+x,y1-(y-h): NEXT a: WAIT SCREEN: CLS: INC b,2: GO TO 20
+PROG demos:3d/cone illusion
+CHANGED FALSE
+10 DEGREES: 
+	x1=SCRw/2,y1=SCRh/2,b=0
+20 FOR a=0 TO 360 STEP 8: 
+	   x=100*COS a,y=SIN a*SIN b*80,h=100*COS b: 
+				DRAW INK a MOD 256;x1,y1 TO x1+x,y1-(y-h): 
+	NEXT a: 
+	WAIT SCREEN: 
+	CLS: 
+	b+=2: 
+	GO TO 20

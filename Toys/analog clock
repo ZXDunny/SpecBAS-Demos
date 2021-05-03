@@ -3,26 +3,26 @@ AUTO -1
 PROG demos:toys/analog clock
 CHANGED FALSE
 10 REM Analog Clock with sweep-second-hand and digital 7-segment LED display
-20 PALETTE 8,0,90,82;16,64,0,0: SCREEN LOCK: 
+20 PALETTE 8,0,90,82;16,64,0,0: SCREEN LOCK:
 	DEGREES: OPTION "base",0
-30 xc=SCRw/2,yc=SCRh/2,ws=1.5,wm=3,wh=4,r=156,
+30 xc=SCRw/2,yc=SCRh/2-30,ws=1.5,wm=3,wh=4,r=156,
  mr=r/1.17,ls=mr/1.17,lm=ls/1.17,lh=lm/1.17:
  GO SUB 190
 40 REM Draw the clock face
-50 CLS: 
+50 CLS:
 	CIRCLE INK 0;xc-1,yc-2,r FILL
-60 FOR f=0 TO 59: 
-	   CIRCLE INK 3;xc+COS(6*f)*mr,yc+SIN(6*f)*mr,1 FILL: 
+60 FOR f=0 TO 59:
+	   CIRCLE INK 3;xc+COS(6*f)*mr,yc+SIN(6*f)*mr,2:
 	NEXT f
-70 FOR f=0 TO 11: 
-	   x=xc+COS(30*f)*mr,y=yc+SIN(30*f)*mr: 
-				IF f MOD 3 THEN 
-				   s$=STR$((f+3) MOD 12): 
-							PRINT PAPER 0;INK 4;MOVE x-4*LEN s$,y-4;INK 4;s$ 
-				ELSE 
-				   s$=STR$ IIF(f=9,12,(f+3) MOD 12): 
-							PRINT PAPER 0;MOVE x-(8*LEN s$),y-8;SCALE 2,2;INK 10;s$: 
-				END IF: 
+70 FOR f=0 TO 11:
+	   x=xc+COS(30*f)*mr,y=yc+SIN(30*f)*mr:
+				IF f MOD 3 THEN
+				   s$=STR$((f+3) MOD 12):
+							PRINT PAPER 0;INK 4;MOVE x-4*LEN s$,y-4;INK 4;s$
+				ELSE
+				   s$=STR$ IIF(f=9,12,(f+3) MOD 12):
+							PRINT PAPER 0;MOVE x-(8*LEN s$),y-8;SCALE 2,2;INK 10;s$:
+				END IF:
 	NEXT f
 80 REM Calculate the angles of the hands
 90 t=TIME,
@@ -31,38 +31,38 @@ CHANGED FALSE
 	h=30*HOUR t+(30*(m/360)),
 	s-=90,m-=90,h-=90
 100 a$=TIME$(TIME,"hh:mm:ss"):
-	l=svh*7,t=175:
-	RECTANGLE INK 48;xc-l,yc+t TO xc+l,yc+t+svh*4 FILL: 
-	INK 2: 
-	x=xc-l+4,y=yc+t+4: 
-	FOR i=1 TO LEN a$: 
-	   IF a$(i) IN ["0" TO "9"] THEN 
+	l=svh*7.5,t=175:
+	RECTANGLE INK 48;xc-l,yc+t TO xc+l,yc+t+svh*4 FILL:
+	INK 2:
+	x=xc-l+4,y=yc+t+4:
+	FOR i=1 TO LEN a$:
+	   IF a$(i) IN ["0" TO "9"] THEN
 				   ink 16:
 							execute led$(8):
 							ink 2:
-							EXECUTE led$(VAL a$(i)) 
-				ELSE 
+							EXECUTE led$(VAL a$(i))
+				ELSE
 				   ink iif((s+90) MOD 6<3,2,16):
-							RECTANGLE 2+x+sw+shw/2,2+y+sw+svh/2,2,2 FILL: 
+							RECTANGLE 2+x+sw+shw/2,2+y+sw+svh/2,2,2 FILL:
 							RECTANGLE 2+x+sw+shw/2,2+y+sw+svh*2,2,2 FILL
-110    x+=sw*2+shw+8: 
+110    x+=sw*2+shw+10:
 	NEXT i
 120 REM Draw the hands
-130 POLYGON INK 12;xc+COS(s-90)*ws,yc+SIN(s-90)*ws TO 
-	               xc+COS(s)*ls,yc+SIN(s)*ls TO 
-																xc+COS(s+90)*ws,yc+SIN(s+90)*ws TO 
+130 POLYGON INK 12;xc+COS(s-90)*ws,yc+SIN(s-90)*ws TO
+	               xc+COS(s)*ls,yc+SIN(s)*ls TO
+																xc+COS(s+90)*ws,yc+SIN(s+90)*ws TO
 																xc+COS(s-180)*40,yc+SIN(s-180)*40 FILL
-140 POLYGON INK 10;xc+COS(m-90)*wm,yc+SIN(m-90)*wm TO 
-	               xc+COS(m)*lm,yc+SIN(m)*lm TO 
-																xc+COS(m+90)*wm,yc+SIN(m+90)*wm TO 
+140 POLYGON INK 10;xc+COS(m-90)*wm,yc+SIN(m-90)*wm TO
+	               xc+COS(m)*lm,yc+SIN(m)*lm TO
+																xc+COS(m+90)*wm,yc+SIN(m+90)*wm TO
 																xc+COS(m-180)*30,yc+SIN(m-180)*30 FILL
-150 POLYGON INK 9;xc+COS(h-90)*wh,yc+SIN(h-90)*wh TO 
-	              xc+COS(h)*lh,yc+SIN(h)*lh TO 
-															xc+COS(h+90)*wh,yc+SIN(h+90)*wh TO 
+150 POLYGON INK 9;xc+COS(h-90)*wh,yc+SIN(h-90)*wh TO
+	              xc+COS(h)*lh,yc+SIN(h)*lh TO
+															xc+COS(h+90)*wh,yc+SIN(h+90)*wh TO
 															xc+COS(h-180)*20,yc+SIN(h-180)*20 FILL
-160 CIRCLE INK 11;xc,yc,8 FILL: 
+160 CIRCLE INK 11;xc,yc,8 FILL:
 	CIRCLE INK 0;xc,yc,4 FILL
-170 WAIT SCREEN: 
+170 WAIT SCREEN:
 	GO TO 50
 180 REM Set up LED segments
 190 ss=2,sw=1*ss,svh=6*ss,shw=4*ss
@@ -70,15 +70,15 @@ CHANGED FALSE
 	hd$="sx,sy TO sx+sw,sy-sw TO sx+sw+shw,sy-sw TO sx+sw+shw+sw,sy TO sx+sw+shw,sy+sw TO sx+sw,sy+sw",
 	vd$=REPLACE$(REPLACE$(vd$,"sw",STR$ sw),"svh",STR$ svh),
 	hd$=REPLACE$(REPLACE$(hd$,"sw",STR$ sw),"shw",STR$ shw)
-210 DIM digit$="123456","34","23567","23457","1347","12457","124567","234","1234567","123457" BASE 0: 
+210 DIM digit$="123456","34","23567","23457","1347","12457","124567","234","1234567","123457" BASE 0:
 	DIM coord$="sw,sw+1","sw+1,sw","sw*3+shw+2,sw+1","sw*3+shw+2,sw*3+svh+3","sw+1,sw*5+svh*2+4","sw,sw*3+svh+3","sw+1,sw*3+svh+2" BASE 1
-220 DIM led$(10) BASE 0: 
-	FOR f=0 TO 9: 
-	   b$="": 
-				FOR g=1 TO LEN digit$(f): 
-				   b=VAL digit$(f)(g): 
-							b$=b$+REPLACE$("sx=x+"+coord$(b),",",",sy=y+")+":POLYGON "+IIF$(b IN [2,7,5],hd$,vd$)+" FILL:": 
-				NEXT g: 
-				led$(f)=TOKEN$ b$: 
+220 DIM led$(10) BASE 0:
+	FOR f=0 TO 9:
+	   b$="":
+				FOR g=1 TO LEN digit$(f):
+				   b=VAL digit$(f)(g):
+							b$=b$+REPLACE$("sx=x+"+coord$(b),",",",sy=y+")+":POLYGON "+IIF$(b IN [2,7,5],hd$,vd$)+" FILL:":
+				NEXT g:
+				led$(f)=TOKEN$ b$:
 	NEXT f
 230 RETURN

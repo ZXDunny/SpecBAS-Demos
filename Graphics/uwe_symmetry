@@ -1,0 +1,21 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/uwe_symmetry
+CHANGED FALSE
+10 sz=12.5,d=scrw/sz,r=d/2,e=d-1,m=INT (scrw/d),n=INT (scrh/d),l=((scrw-m*d)/2),
+	t=((scrh-n*d)/2),l=INT (l/8)*8,t=INT (t/8)*8,s=1.25
+20 PAPER 0: CLS
+30 FOR q=scrh-1-t TO scrh-1-(n-1)*d-t STEP -d:
+    FOR p=l TO l+(m-1)*d STEP d:
+       FOR i=1 TO (d^2)/(300*s):
+40          x=INT (r*RND),
+										y=INT (r*RND),
+										u=e-x,v=e-y:
+          INK INT (15*RND)+1:
+          circle p+x,q-y,s fill;p+u,q-y,s fill;p+x,q-v,s fill;p+u,q-v,s fill;
+										       p+y,q-x,s fill;p+v,q-x,s fill;p+y,q-u,s fill;p+v,q-u,s fill:
+       NEXT i:
+    NEXT p:
+	NEXT q
+50 wait keydown:
+	gO TO 20

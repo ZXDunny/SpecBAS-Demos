@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/hypnoswirl
+CHANGED FALSE
+10 REM Hypnotic swirl by @picoter8
+20 paper 6: ink 1: turns: sw=scrw/2,sh=scrh/2,sc=256*(sw/400)
+30 plot sw,sh:
+ for i=0 to sc*3 step .2:
+    a=cos(-msecs/2000+i/sc)+.25:
+    draw to sw+i*cos a,sh+i*sin a:
+ next i:
+ wait screen:
+	cls:
+	GO To 30

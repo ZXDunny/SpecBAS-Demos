@@ -1,0 +1,32 @@
+ZXASCII
+AUTO -1
+PROG demos:3d/tornado
+CHANGED FALSE
+10 REM From code by Paul Malin
+20 for i=1 to 7:
+    read r,g,b: palette i,r,g,b:
+ next i:
+ for i=8 to 255: palette i,0: next i
+30 stx=scrw/2/79,sty=scrh/255,sz=32:
+	FOR U1=0 TO 79 step 1/stx:
+	   x=U1/64-1.25:
+				FOR V1=0 TO 255 step 1/sty:
+				   y=V1/128-1,X1=0,Y1=X1,Z=-2.4
+40       k=SQR(X1*X1+Z*Z)-2,d=1-SQR(k*k+Y1*Y1):
+							IF d>.0005 then
+							   X1+=x*d,Y1+=y*d,Z+=d:
+										GO TO 40
+50       v=ATN(Z/X1)/PI,u=ATN(Y1/k)/PI:
+							proc q: PLOT U1*stx,V1*sty:v=.99-v:
+							proc q: PLOT scrw-U1*stx,V1*sty:
+				NEXT V1:
+	next U1
+60 DEF proc q:
+	   p=SIN(INT((u+v)*99)*99)*98,
+				o=u-v+p:
+				ink (o*48*ABS SIN p) mod sz:
+	end proc
+70 palette shr 1,0 to sz-1:
+	wait screen:
+	GO To 70
+80 data 0,0,128,0,0,255,0,255,255,0,255,0,255,255,0,255,128,0,255,0,0

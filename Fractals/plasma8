@@ -2,7 +2,7 @@ ZXASCII
 AUTO -1
 PROG demos:fractals/plasma8
 CHANGED FALSE
-10 s=8,w=int((scrw/s)+1),h=int((scrh/s)+1),
+10 s=4,w=int((scrw/s)+1),h=int((scrh/s)+1),scl=16/s,
 	v=0,r1=200,r2=300,r3=2,a1,a2,a3,s1,s2,s3,sp=1:
 	screen lock
 20 graphic NEW plasma,w,h
@@ -23,7 +23,7 @@ CHANGED FALSE
  s1+=(gs1-s1)/sp,
  s2+=(gs2-s2)/sp,
 	s3+=(gs3-s3)/sp,
-	z=.5+((sin a3)+1)/2
+	z=(.5+((sin a3)+1))/scl
 60 tm=msecs/1000,
 	v+=5/283:
 	window graphic plasma:
@@ -42,7 +42,7 @@ CHANGED FALSE
 	window 0:
 	window put graphic plasma,0,-1,-1 scale s:
 	sp=64:
-	palette shr 1,0 to 255:
+	palette shl 1,0 to 255:
 	wait screen:
 	if inkey$="" then
 	   GO To 50

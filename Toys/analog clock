@@ -12,7 +12,7 @@ CHANGED FALSE
 50 CLS:
 	CIRCLE INK 0;xc-1,yc-2,r FILL
 60 FOR f=0 TO 59:
-	   CIRCLE INK 3;xc+COS(6*f)*mr,yc+SIN(6*f)*mr,2:
+	   CIRCLE INK 3;xc+COS(6*f)*mr,yc+SIN(6*f)*mr,2 fill:
 	NEXT f
 70 FOR f=0 TO 11:
 	   x=xc+COS(30*f)*mr,y=yc+SIN(30*f)*mr:

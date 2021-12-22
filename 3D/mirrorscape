@@ -1,0 +1,24 @@
+ZXASCII
+AUTO -1
+PROG /demos/3D/mirrorscape
+CHANGED FALSE
+10 sw=scrw/4,sh=scrh/2.5
+20 FOR V1=0 TO scrh
+30    FOR U1=0 TO scrw
+40       x=U1/sw-1,y=V1/sh-1.4,z=1/SQR(x*x+y*y+1),
+							x*=z,y*=z,X1=0,Y1=.4,Z1=-2,P=-Y1*y-Z1*z:i=x*P:j=Y1+y*P:k=Z1+z*P:C=i*i+j*j+k*k
+50       IF C<1 then 
+							   w=P-SQR(1-C),X1=w*x,Y1=Y1+w*y,Z1=Z1+w*z,D=2*(X1*x+Y1*y+Z1*z),
+										x=x-X1*D,y=y-Y1*D,z=z-Z1*D
+60       if y<>0 then 
+							   t=(ABS Y1+.5)/ABS y,
+										u=X1+x*t,v=Z1-z*t,L=u*u-v*v
+70       PLOT ink 15 & (INT(v*16)+(INT(u*2))*8);U1,SCRH-V1
+80    NEXT U1: 
+	NEXT V1
+90 for f=0 to 7:
+	   palette f,0,0,255;f+8,255,255,0:
+ next f
+100 PALETTE SHR 1,0 TO 15: WAIT SCREEN: GO TO 100 
+
+

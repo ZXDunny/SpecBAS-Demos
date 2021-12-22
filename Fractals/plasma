@@ -1,40 +1,52 @@
 ZXASCII
 AUTO -1
-PROG plasma
+PROG demos:fractals/plasma
+CHANGED FALSE
 10 DEGREES:
  DEF FN r=INT(RND*5)*63.9:
  SCREEN LOCK
-20 b=1 SHL (INT(RND*5)+2),p,op=0:
- DO:
-    PALETTE p,FN r,FN r,FN r:
-    RAINBOW op TO p:
-    op=p,p+=b:
- LOOP UNTIL p=256:
- PALETTE 255,RGB 0:
- RAINBOW op TO 255
+20 GO SUB 80
 30 bs=1 SHL INT(RND*4),
  px=(RND*1.8)+0.5,py=(RND*1.8)+1.25+(INT(RND*2)*180),
  xs=(RND*30)+40,ys=(RND*50)+20,
  xst=RND*400,yst=RND*200,
  xi=RND*3,yi=RND*3,
  psw=SCRw+500,psh=SCRh+420
-40 WINDOW NEW p,0,0,psw,psh:
+40 WINDOW NEW w,0,0,psw,psh:
  FOR f=0 TO psh STEP bs:
     RECTANGLE INK (f/bs) MOD 256;0,f TO 700,f+bs FILL:
  NEXT f
 50 x=1:
  FOR f=1 TO psw-1: x+=px:
-    WINDOW COPY p,0,0,1,psh TO p,f,(SIN x*xs)-xs:
+    WINDOW COPY w,0,0,1,psh TO w,f,(SIN x*xs)-xs:
  NEXT f
 60 y=1:
  FOR f=0 TO psh-1: y+=py:
-    WINDOW COPY p,0,f,psw,1 TO p,(SIN y*ys)-ys,f:
+    WINDOW COPY w,0,f,psw,1 TO w,(SIN y*ys)-ys,f:
  NEXT f
 70 xst+=xi,yst+=yi:
- WINDOW MOVE p,(SIN xst*140)-140,(SIN yst*100)-100:
+ WINDOW MOVE w,(SIN xst*140)-140,(SIN yst*100)-100:
  PALETTE SHL 1:
  WAIT SCREEN:
  IF INKEY$="" THEN
+	   b=0:
     GO TO 70
  ELSE
-    RUN
+	   if b then 
+				   GO To 70
+				else
+				   b=1:
+	      if inkey$="p" then 
+				      GO SUb 80:
+							   GO To 70:
+				   else
+          RUN
+80 b=1 SHL (INT(RND*5)+2),p,op=0:
+ DO:
+    PALETTE p,FN r,FN r,FN r:
+    RAINBOW op TO p:
+    op=p,p+=b:
+ LOOP UNTIL p=256:
+ PALETTE 255,RGB 0:
+ RAINBOW op TO 255:
+	return

@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/ditherbrot
+CHANGED FALSE
+10 f=1/ln 2:c=3/1600
+20 DIM e(2) base 0:
+	for z=0 to 10:
+	   palette z,0,iif(z>5,(z-5)*46,0),z*23:
+	next z:
+ cls 0
+30 FOR Y=0 TO scrh/2:
+40    FOR X=0 TO scrw:
+50       u=X/200-2.7,v=Y/200,r=u,i=v,l=69:
+	      DO:
+	         R1=r*r,I1=i*i,i=r*i*2+v,r=R1-I1+u,l-=1:
+	      loop UNTIL R1+I1>65536 OR l=0
+90       IF l then
+	         i=l+LN(LN(R1+I1)*f)*f:
+	         FOR E=0 TO 1:
+				         g=9-int(i*i*c+e(E)*2):
+							      e(E)=g-INT g+RND/2-.25:
+							      PLOT ink g;X,240+(2*E-1)*Y:
+				      NEXT e
+100    NEXT x:
+	next y
+

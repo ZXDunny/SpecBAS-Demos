@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG /demos/graphics/xmastree
+CHANGED FALSE
+10 def proc b(x,y,l,a,n):
+	   local xx,yy:
+	   plot x,y:
+				xx=x+l*cos a,yy=y+l*sin a:
+				draw to xx,yy:
+				if n>0 then
+				   l*=.6:
+				   proc b(xx,yy,l,a,n-1):
+							xx=x+l*cos a,yy=y+l*sin a:
+							proc b(xx,yy,l,a+2,n-1):
+							proc b(xx,yy,l,a-2,n-1)
+20 end proc
+30 origin -512,-25 to 512,512 flip:
+	proc b(0,0,200,1.570796327,7)

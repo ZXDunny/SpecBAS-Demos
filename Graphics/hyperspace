@@ -1,0 +1,25 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/hyperspace
+CHANGED FALSE
+10 cls 0:
+	for i=1 to 5:
+	   read r,g,b: palette i,r,g,b:
+	next i:
+	for i=6 to 255: palette i,0: next i
+20 z=RND*-2,c,y=1,sw=scrw/2,sh=scrh/2,
+	sz=23,l=sw^2+sh^2:
+	FOR i=0 TO 5000:
+	   IF z<=0 then
+				   x=y,y=RND*50-25,z=.2
+30    u=x/z,v=y/z,
+				z=iif(u^2+v^2>l,0,z-.005),
+				c=1+c mod sz
+40    if z=.195 then
+				   plot sw+u,sh+v
+				else
+				   DRAW ink c;to sw+u,sh+v
+50 NEXT i
+60 PALETTE SHr 1,1 TO sz:
+	WAIT SCREEN: GO To 60
+70 data 0,0,255,0,255,255,0,255,0,255,255,0,255,0,0

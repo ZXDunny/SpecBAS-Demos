@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/1500 circles
+CHANGED FALSE
+10 t=1500,sw=scrw/2,sh=scrh/2,i=1
+20 paper 0: cls
+30 FOR l=1 TO t
+40    x=COS((10*PI*l)/t)*(1-0.5*(COS((16*PI*l)/t))^2)
+60    y=SIN((10*PI*l)/t)*(1-0.5*(COS((16*PI*l)/t))^2)
+80    r=(1/100)+(1/10)*(SIN((52*PI*l)/t))^4
+85    if abs r<.00275 then i=((i+1) mod 15)+1
+90    circle ink i;x*160+sw,y*160+sh,r*200
+100    wait screen
+110 NEXT l

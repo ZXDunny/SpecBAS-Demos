@@ -1,0 +1,81 @@
+ZXASCII
+AUTO -1
+PROG /snowflake_2
+CHANGED FALSE
+10 REM Original by @coprolite9000
+20 DEF FN r(a,b)=RND*(b-a)+a:
+	palette 1,0,0,128;8,0,0,0:
+	paper 1:
+	screen lock
+30 DIM c(12) base 0,s(12) base 0
+50 U,V,W,Z,T=0
+60 DO:
+	   D=4+(int(rnd*2)),mi=3+int(rnd*2),k=1:
+	   a$="1234567":
+				dim ik(mi):
+	   for i=1 to mi:
+       a=int(rnd*len a$)+1,
+       ik(i)=val a$(a)+8,
+       a$=a$(to a-1)+a$(a+1 to):
+    next i:
+				if rnd>.5 then sort ik() inverse else sort ik()
+70    GO SUb 340
+80    cA=FN r(-1,1):cR=FN r(.5,.9):cB=FN r(1,2.25):cS=FN r(.25,.5):cT=FN r(.25,.5):
+				cP=FN r(.1,.4):cQ=FN r(.1,.25):
+				cU=int(RND*4)-2:cV=int(RND*4)-2
+90    FOR N=0 TO 11:
+				   c(N)=COS(N*PI/6+cA):s(N)=SIN(N*PI/6+cA):
+				NEXT N
+110    PROC d(scrw/2,scrh/2,scrh/3.25/cB,0,0,0)
+120    wait screen: wait keydown: do: loop until inkey$=""
+130 LOOP
+140 DEF PROC d(X,Y,R,N,A,C)
+150    IF N>D then EXIT PROC else if k then WAIT SCREEN: k=inkey$=""
+160    U=X+R*c(A):V=Y+R*s(A)
+170    T=(A+2) MOD 12:W=X+R*c(T):Z=Y+R*s(T):i=(1+N+C/2) MOD mi+1
+180    POLYGON ink ik(i);X,Y TO U,V TO W,Z fill
+190    draw ink 0;W,Z TO U,V;ink ik(i)-8;X,Y TO U,V;X,Y to W,Z
+200    IF C<5 then
+				   PROC d(X,Y,R,N,(A+2) MOD 12,C+1)
+				ELSE
+				   PROC d(X,Y,R*cR,N+1,A,0)
+210    IF N>D-2 then
+				   EXIT PROC
+220    T=(A+N MOD 2*cU) MOD 12:W=X+R*c(T):Z=Y+R*s(T)
+230    W=X+cB*R*c(T):Z=Y+cB*R*s(T)
+240    X=X+R*cP*(N+1)*c(T):Y=Y+R*cP*(N+1)*s(T)
+250    U=W+R*cQ*(N+1)*s(T):V=Z-R*cQ*(N+1)*c(T):
+				i=(N+C/2) MOD mi+1
+260    POLYGON ink ik(i);X,Y TO U,V TO W,Z fill
+270    draw ink 0;U,V TO W,Z; TO X,Y
+280    U=W-R*cQ*(N+1)*s(T):V=Z+R*cQ*(N+1)*c(T)
+290    POLYGON ink ik(i);X,Y to U,V to W,Z fill
+300    draw ink 0;U,V TO W,Z; TO X,Y
+310    IF C MOD 2>0 then T=R*cS ELSE T=R*cT
+320    PROC d(W,Z,T,N+2,(C MOD 2*abs cV),0)
+330 END PROC
+340 l=16:dim m(l,l) base 0:
+ proc bayer(0,0,l,0,1):
+	md=scrh/(mi-1):
+	For Y=0 TO SCRH-1:
+    ink ik(int(y/md)+1)-8:
+    paper ik(int(y/md)+2)-8:
+    v=(y mod md)/md:
+    FOR X=0 TO l-1:
+       PLOT INVERSE m(x-l*INT (x/l),y-l*INT (y/l))<=v;x,y:
+    NEXT x;y:
+	for x=l to scrw-1 step l:
+	   window copy 0,0,0,l,scrh to 0,x,0:
+	next x:
+	return
+350 DEF PROC bayer(x,y,s,v,st):
+    if s=1 then
+       m(y,x)=v/(l*l)
+    else
+       local h=int(s/2),st4=st*4:
+       proc bayer(x,y,h,v,st4):
+       proc bayer(x+h,y+h,h,v+st,st4):
+       proc bayer(x+h,y,h,st*2+v,st4):
+       proc bayer(x,y+h,h,st*3+v,st4):
+    End if:
+ end proc

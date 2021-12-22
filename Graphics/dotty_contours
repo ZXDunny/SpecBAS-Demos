@@ -7,7 +7,7 @@ CHANGED FALSE
 	for y=0 to scrh step 8:
 	   for x=0 to scrw step 8:
 				   r=octnoise(x/w,y/w-t,0,4,.5):
-				   circle cos(r*f)*TAU+x,sin r*TAU+y,2 fill:
+				   circle cos(r*f)*TAU+x,sin r*TAU+y,.5+(abs sin r)*8 fill:
 				next x:
 	next y:
 	wait screen: cls:

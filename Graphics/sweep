@@ -1,0 +1,27 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/sweep
+CHANGED FALSE
+10 degrees:paper 0:cls:
+	S=32,R=15:
+	DIM S(S),C(S):
+	FOR I=1 TO S:
+	   K=(I-1)*360/S:
+				S(I)=R*SIN K:
+				C(I)=R*COS K:
+	NEXT I:
+	sx=(r*2)+10,sxc=scrw/sx-1,syc=scrh/sx-1:
+20 FOR X=1 TO Sxc:
+	   FOR Y=1 TO syc:
+				   CX=X*sx,CY=Y*sx,O=X+Y,OX=CX+S(S),OY=CY+C(S):
+							FOR I=1 TO S:
+										polygon ink 1+(I+O) MOD S;CX,CY to CX+S(I),CY+C(I) to OX,OY fill:
+										OX=CX+S(I),OY=CY+C(I):
+							NEXT I:
+				NEXT Y:
+	NEXT X
+30 for f=1 to S:
+	   palette f,$FF:
+	next f:
+	palette 1,0,255,255
+40 PALETTE SHL 1,1 TO S: WAIT SCREEN: GO To 40

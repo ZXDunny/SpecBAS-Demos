@@ -1,0 +1,24 @@
+ZXASCII
+AUTO -1
+PROG /demos/Fractals/Malin_blob
+CHANGED FALSE
+10 REM Original by P.Malin for the BBC BASIC Twitter bot
+20 paper 0: cls:
+	ys=scrh/256,xs=scrh/160,xo=(scrw-scrh)/2,r=1
+30 FOR y=0 TO 255 step 1/ys:
+    FOR x=0 TO 159 step 1/xs:
+       u=x/160,v=y/256,u=u-.5,u=u*(1280/1024),v=v-.5,a=.15,f=10:
+       FOR i=0 TO 2:
+          t=u,u=u+SIN(v*f)*a,v=v+SIN(t*f)*a,a=a*.5,f=f*2.2:
+       NEXT i:
+       u=ABS u,v=ABS v,m=u:
+       IF v>m THEN m=v
+40       IF u<.4 AND v<.4 then ink 1+((m*200) MOD 15) ELSE ink 0
+50       PLOT xo+x*xs,scrh-y*ys:
+    NEXT x:
+	next y
+60 for f=1 to 15:
+	   PALETTE f,0: if r then read r:if r then palette f,r
+70 next f
+80 data $FF,$FF00FF,$FF0000,$FFFF00,$FFFFFF,r,$FFFF00,$FF00,$FFFF,$FF,0
+90 PALETTE SHr 1,1 TO 15: WAIT SCREEN 50: GO To 90

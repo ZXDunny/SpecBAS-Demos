@@ -1,0 +1,23 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/ripplescape
+CHANGED FALSE
+10 REM Original by P Malin for the BBC BASIC Twitter bot
+20 origin 0,0 to 1280,1024 flip
+30 FOR U=0 TO 1279 step 1280/SCRW:
+    V=0:
+				plot U,V:
+    T=.5,x=U/640-1,y=1:
+    do:
+       Y1=y*T,X1=x*T+SIN(Y1/2),
+							p=clamp(abs(X1)-1,0 to 1),
+							p=3*p*p-2*p*p*p,Z=p*3-1+(SIN(X1*2)+SIN(Y1*2))/2,H=1200+(Z*384-1587)/T:
+       DRAW ink 15 & (8*(INT(X1*2))-INT(Y1*16));to U,H:
+       T+=.0015:
+				loop UNTIL H>=1024:
+	NEXT U
+40 for f=0 to 15:
+	   if f<6 then palette f,0 else READ r: PALETTE f,r: END IF:
+	next f:
+	DATA $FF,$FFFF,$FFFFFF,r,r,r,r,r,$FFFF00,$FF0000
+50 PALETTE SHR 1,0 TO 15: WAIT SCREEN: GO To 50

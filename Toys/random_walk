@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG /demos/Toys/random_walk
+CHANGED FALSE
+10 d$="10121",x=TXTw/2,y=TXTh/2
+20 PRINT AT y,x;PAPER RND*16;" ";:
+	d=INT(RND*4)+1:
+	inc x,VAL d$(d+1)-1,0 to TXTW-1:
+	inc y,VAL d$(d)-1,0 to txth-1:
+	wait screen:
+	GO TO 20

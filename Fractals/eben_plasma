@@ -2,14 +2,14 @@ ZXASCII
 AUTO -1
 PROG demos:fractals/eben_plasma
 CHANGED FALSE
-10 PAPER 0: OVER 5: 
+10 PAPER 0: OVER 5:
 	sw=800/scrw,sh=480/scrh:
 	ORIGIN -400,-240 TO 400,240: CLS:
 20 FOR F=0 TO 2:
 	   READ I,J:
 				G=.75*I,H=2^F:
-	   FOR Y=-240 TO 239 step sw:
-	      FOR X=-400 TO 399 step sh:
+	   FOR Y=-240 TO 239 step sh:
+	      FOR X=-400 TO 399 step sw:
           A=SIN(X/40)+COS(Y/40),S=SIN A,C=COS A:
           plot ink ((abs(((C*X-S*Y) MOD I-G)^2)+(abs((S*X+C*Y) MOD I-G)^2))<J)*H;X,Y:
        NEXT X:

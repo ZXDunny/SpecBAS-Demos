@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG demos:3d/aurel_pyramid
+CHANGED FALSE
+10 cx=scrw/2,ax=cx:ay=50,a=0,ex=cx:ey=330,xr=cx*0.7,yr=0.33*xr:
+	radians: ink 6: dim x(4,2) base 0
+20 CLS 0:
+	for i=0 to 3:
+	   x(i,0)=ex+xr*cos(a+PI*(i/2)),
+				x(i,1)=ey+yr*sin(a+pi*(i/2)):
+	next i:
+ polygon x():
+	draw ax,ay to x(0,0),x(0,1);ax,ay to x(1,0),x(1,1);
+	     ax,ay to x(2,0),x(2,1);ax,ay to x(3,0),x(3,1):
+ a+=0.01:
+ wait screen:
+ GO TO 20

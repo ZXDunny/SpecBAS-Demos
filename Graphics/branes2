@@ -1,0 +1,19 @@
+ZXASCII
+AUTO -1
+PROG /demos/graphics/branes2
+CHANGED FALSE
+10 for i=0 to 255: palette i,i,i,i: next i:
+	np=50
+20 dim pn(np,2):
+	for i=1 to np:
+	   pn(i,1)=rnd*scrw,pn(i,2)=rnd*scrh:
+	next i
+30 for y=0 to scrh:
+	   for x=scrw-1 to 0 step -1:
+				   a=0:
+							for p=1 to np:
+							   a+=3*sin(3*polar(pn(p,2)-y,pn(p,1)-x)):
+							next p:
+							plot ink map(sin a,-1 to 1,0 to 255);x,y:
+				next x:
+	next y

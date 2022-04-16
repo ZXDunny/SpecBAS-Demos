@@ -3,7 +3,7 @@ AUTO -1
 PROG demos:toys/analog clock
 CHANGED FALSE
 10 REM Analog Clock with sweep-second-hand and digital 7-segment LED display
-20 PALETTE 8,0,90,82;16,64,0,0: SCREEN LOCK:
+20 PALETTE 8,0,90,82;16,72,0,0: SCREEN LOCK:
 	DEGREES: OPTION "base",0
 30 xc=SCRw/2,yc=SCRh/2-30,ws=1.5,wm=3,wh=4,r=156,
  mr=r/1.17,ls=mr/1.17,lm=ls/1.17,lh=lm/1.17:
@@ -12,7 +12,7 @@ CHANGED FALSE
 50 CLS:
 	CIRCLE INK 0;xc-1,yc-2,r FILL
 60 FOR f=0 TO 59:
-	   CIRCLE INK 3;xc+COS(6*f)*mr,yc+SIN(6*f)*mr,2 fill:
+	   CIRCLE INK 3;xc+COS(6*f)*mr,yc+SIN(6*f)*mr,1 fill:
 	NEXT f
 70 FOR f=0 TO 11:
 	   x=xc+COS(30*f)*mr,y=yc+SIN(30*f)*mr:
@@ -21,7 +21,7 @@ CHANGED FALSE
 							PRINT PAPER 0;INK 4;MOVE x-4*LEN s$,y-4;INK 4;s$
 				ELSE
 				   s$=STR$ IIF(f=9,12,(f+3) MOD 12):
-							PRINT PAPER 0;MOVE x-(8*LEN s$),y-8;SCALE 2,2;INK 10;s$:
+							PRINT PAPER 0;MOVE x-8*LEN s$,y-8;SCALE 2,2;INK 10;s$:
 				END IF:
 	NEXT f
 80 REM Calculate the angles of the hands
@@ -43,8 +43,8 @@ CHANGED FALSE
 							EXECUTE led$(VAL a$(i))
 				ELSE
 				   ink iif((s+90) MOD 6<3,2,16):
-							RECTANGLE 2+x+sw+shw/2,2+y+sw+svh/2,2,2 FILL:
-							RECTANGLE 2+x+sw+shw/2,2+y+sw+svh*2,2,2 FILL
+							RECTANGLE 2+x+sw+shw/2,2+y+sw+svh/2,4,4 FILL:
+							RECTANGLE 2+x+sw+shw/2,2+y+sw+svh*2,4,4 FILL
 110    x+=sw*2+shw+10:
 	NEXT i
 120 REM Draw the hands

@@ -1,0 +1,22 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/branes3
+CHANGED FALSE
+10 DEF FN c(a)=(SIn a+1)*127
+20 WINDOW DEPTH 0,32
+30 np=100,r,g,b=.2+(rnd*.8),s=1
+40 dim pn(np,2):
+	for i=1 to np:
+	   pn(i,1)=rnd*scrw,pn(i,2)=rnd*scrh:
+	next i
+50 for y=0 to scrh-1 step s:
+	   for x=0 to scrw-1 step s:
+				   a=0:
+							for p=1 to np:
+							   a+=sin(12*polar(pn(p,2)-y,pn(p,1)-x)):
+							next p:
+							rectangle ink rgbtoint(fn c(a*r),fn c(a*g),fn c(a*b));x,y,s,s fill:
+				next x:
+	next y
+60 PAUSE 0:
+	GO TO 30

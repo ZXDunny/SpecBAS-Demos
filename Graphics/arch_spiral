@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/arch_spiral
+CHANGED FALSE
+10 REM ARCHIMEDES' SPIRAL
+20 for t=0 to 1325.21 step .001:
+	   r=1.5+.35*t:
+				plot 400+r*cos t,240+r*sin t:
+	next t

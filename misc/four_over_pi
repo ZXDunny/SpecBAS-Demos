@@ -1,8 +1,8 @@
 ZXASCII
 AUTO -1
-PROG /demos/misc/four_over_pi
+PROG demos:misc/four_over_pi
 CHANGED FALSE
-10 n=-1,p,npi=0
-20 npi+=iif(p!=p,4/(n+=2),-4/(n+=2)):
+10 n=-1,npi=0
+20 npi+=4/(n+=2)-4/(n+=2):
 	print at 0,0;npi:
 	GO To 20

@@ -1,21 +1,22 @@
 ZXASCII
 AUTO -1
-PROG octopus
+PROG demos:games/octopus
+CHANGED FALSE
 10 a$="ê"+#20#1#0#0#0#34#20#0#0#0#0+"ç"
 20 b$="ç ê"
 30 k=INT(RND*(SCRw/2))+1
 40 l=INT(RND*(SCRh/2))+1
-50 c$="íðí"
+50 c$="íªí"
 60 g=INT(RND*(SCRw/2))
 70 h=INT(RND*(SCRh/2))+1
 80 GO TO 250
 90 TEXT MOVE h,g;c$;MOVE l,k;a$
 100 text MOVE l,k+FONTh;b$
-110 text AT 0,0;"SCORE=";score;"    ": 
- WAIT SCREEN 
-120 IF l>=h-(FONTw*3) AND l<h+(3*FONTw) AND k>g-FONTh*2 AND k<=g+FONTh THEN 
-    pause 0: 
-    run 
+110 text AT 0,0;"SCORE=";score;"    ":
+ WAIT SCREEN
+120 IF l>=h-(FONTw*3) AND l<h+(3*FONTw) AND k>g-FONTh*2 AND k<=g+FONTh THEN
+    pause 0:
+    run
 130 IF g>k THEN LET k=k+1
 140 IF l>h THEN LET l=l-1
 150 IF k>g THEN LET k=k-1
@@ -24,7 +25,7 @@ PROG octopus
 180 IF KEYST KEY_RIGHT AND h<SCRw-(FONTw*3) THEN LET h=h+dd
 190 IF KEYST KEY_DOWN AND g<SCRh-FONTh THEN LET g=g+dd
 200 IF KEYST KEY_UP AND g>0 THEN LET g=g-dd
-210 CLS 
+210 CLS
 220 LET score=score+1
 230 IF score MOD 150=0 THEN LET dd=dd*0.75
 240 GO TO 90

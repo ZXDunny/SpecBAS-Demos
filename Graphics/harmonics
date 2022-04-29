@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/harmonics
+CHANGED FALSE
+10 palette 0,0,0,192;255,0,192,192:
+	rainbow 0 to 255
+20 paper 0: ink 16: cls: ot=msecs,s=100,s2=s/2,sh=scrh/2
+30 t=(msecs-ot)/7500:
+	rectangle over 13;0,0 to scrw,scrh fill:
+	for x=0 to s-1:
+	   y=sin(t*(s2-x))*sh+sh,x1=x*8:
+				circle ink 255;x1,y,8 fill:
+	next x:
+	wait screen:
+	GO To 30

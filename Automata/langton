@@ -1,15 +1,16 @@
 ZXASCII
 AUTO -1
-PROG langton
+PROG demos:automata/langton
+CHANGED FALSE
 10 REM Langton's Ant
 20 CLS 8: INK 0: LET a$="": PRINT AT 0,0;"Please specify a colour seed for the ant."'"Use L and R for each colour, or type a number for an example."'"Examples may be:"''"1. LR - 2 colours, traditional."'"2. RLR: Three colours, chaotic."'"3. LLRR: Four colours, symmetrical."'"4. LRRRRRLLR: Nine colours, square filling."'"5. LLRRRLRLRLLR: Twelve colours, convoluted highway."'"6. RRLLLRLLLRRR: Filled triangle."''"Type G<n> to generate a random sequence of <n> steps."
-30 DO WHILE a$="": INPUT AT 15,0;"Enter 1 TO 6, or create a sequence: ";a$: LOOP 
+30 DO WHILE a$="": INPUT AT 15,0;"Enter 1 TO 6, or create a sequence: ";a$: LOOP
 40 IF a$(1) IN ["1" TO "6"] THEN RESTORE 1000+CODE a$(1)-48: READ a$ ELSE IF a$(1) IN ["g","G"] THEN GO SUB 500
 50 DIM ant(LEN a$): LET a$=UP$ a$: LET nc=LEN a$
 60 FOR f=1 TO nc
 70 IF a$(f)="L" THEN LET ant(f)=-1 ELSE IF a$(f)="R" THEN LET ant(f)=1 ELSE GO TO 600
 80 NEXT f
-90 CLS 0
+90 CLS 0:DO: LOOP UNTIL INKEY$=""
 100 LET ax=SCRw/2: LET ay=SCRh/2: LET ad=0
 110 LET clr=POINT(ax,ay): LET d=ant(clr+1): INC clr,1,0 TO nc-1: PLOT INK clr;ax,ay
 120 INC ad,d,0 TO 3
@@ -19,13 +20,13 @@ PROG langton
 202 INC ay,0 TO SCRh-1: GO TO 300
 203 DEC ax,0 TO SCRw-1
 300 IF INKEY$="" THEN GO TO 110
-310 RUN 
+310 RUN
 500 LET a$=a$(2 TO): IF a$="" THEN GO TO 600
 510 FOR f=1 TO LEN a$: IF NOT(a$(f) IN ["0" TO "9"]) THEN GO TO 600 ELSE NEXT f
 520 LET v=VAL a$: IF v<2 OR v>255 THEN GO TO 600
 530 LET a$="": FOR i=1 TO v: IF RND>.5 THEN LET a$=a$+"L" ELSE LET a$=a$+"R"
-540 NEXT i: INC i: RETURN 
-600 PRINT INK 2;'"ERROR IN INPUT": PAUSE 0: RUN 
+540 NEXT i: INC i: RETURN
+600 PRINT INK 2;'"ERROR IN INPUT": PAUSE 0: RUN
 1000 REM Preset ants
 1001 DATA "LR"
 1002 DATA "RLR"{RRL}

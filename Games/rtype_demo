@@ -1,11 +1,12 @@
 ZXASCII
 AUTO -1
-PROG rtype_demo
+PROG demos:games/rtype_demo
+CHANGED FALSE
 10 PAPER 0: INK 7: CLS: PRINT MOVE SCRw/2-40,100;"Please Wait"
 20 REM RType 640 By Paul Dunn 2011
 30 GRAPHIC NEW shipgfx LOAD "rtype.png": PALETTE COPY shipgfx,0,16 TO 16: GRAPHIC REMAP shipgfx
-40 GRAPHIC NEW shipshot LOAD "rtypeshot.png": PALETTE COPY shipshot,0,7 TO 32: GRAPHIC REMAP shipshot
-50 DIM ship_anim$(5): FOR f=0 TO 4: GRAPHIC GRAB ship_anim$(f+1),shipgfx,(4-f)*32,0,32,15 TRANSPARENT 0: NEXT f: DIM shot_anim$(3): FOR f=0 TO 2: GRAPHIC GRAB shot_anim$(f+1),shipshot,f*16,0,16,14 TRANSPARENT 0: NEXT f
+40 GRAPHIC NEW shipshot LOAD "rtypeshot.png": PALETTE COPY shipshot,0,7 TO 32: GRAPHIC REMAP shipshot:
+50 DIM ship_anim$(5): FOR f=0 TO 4: GRAPHIC GRAB ship_anim$(f+1),shipgfx,(4-f)*32,0,32,15 TRANSPARENT 0: NEXT f: DIM shot_anim$(3): FOR f=0 TO 2: GRAPHIC GRAB shot_anim$(f+1),shipshot,f*16,0,16,14 TRANSPARENT 0: NEXT f:
 60 LET x=32: LET y=(scrh/2)-8: LET nx=0: LET ny=0: DIM stars(150,4): FOR f=1 TO 150: LET stars(f,1)=RND*SCRw: LET stars(f,2)=RND*SCRh: LET stars(f,3)=(RND*4)+1: LET stars(f,4)=RND*32: NEXT f: LET pl_state=3: LET pl_movingx=0: LET pl_movingy=0: LET statecounter=0: LET shotx$="": LET shoty$="": LET canshoot=1: LET shotanim=0: SCREEN LOCK
 70 CLS 0: FOR f=1 TO 150: PLOT INK stars(f,4)+224;stars(f,1),stars(f,2): LET stars(f,1)=stars(f,1)-stars(f,3): IF stars(f,1)<0 THEN LET stars(f,1)=SCRw: LET stars(f,2)=RND*SCRh: LET stars(f,3)=1+RND*4: LET stars(f,4)=RND*32: END IF: NEXT f
 80 LET y=y+pl_movingy: LET x=x+pl_movingx
@@ -16,7 +17,7 @@ PROG rtype_demo
 120 LET pl_movingx=0: IF (KEYST(KEY_LEFT) OR NX>1000) AND x>0 THEN LET pl_movingx=-2*KEYST(KEY_LEFT)+NX/5000: END IF: IF (KEYST(KEY_RIGHT) OR NUBX 1<-1000) AND x<SCRw-50 THEN LET pl_movingx=2*KEYST(KEY_RIGHT)+NUBX 1/5000
 130 IF pl_movingy<=-1 AND y<=0 THEN LET pl_movingy=0: LET y=0
 140 IF pl_movingy>=1 AND y>=SCRh-16 THEN LET pl_movingy=0: LET y=SCRh-16
-150 IF (KEYST(KEY_END) OR KEYST(KEY_SPACE)) AND canshoot THEN LET canshoot=0: LET shottime=mSECS: LET shotx$=shotx$+DCHR$(x+32): LET shoty$=shoty$+DCHR$(y+2+pl_movingy*2): LET shotanim=2
+150 IF (KEYST(KEY_END) OR KEYST(KEY_SPACE)) AND canshoot THEN LET canshoot=0: LET shottime=mSECS: LET shotx$=shotx$+DCHR$(x+32): LET shoty$=shoty$+DCHR$(y+2+pl_movingy): LET shotanim=2
 160 IF NOT canshoot THEN IF NOT(KEYST(KEY_END) OR KEYST(KEY_SPACE)) OR mSECS-shottime>60 THEN LET canshoot=1
 170 WAIT SCREEN : GO TO 70
 180 LABEL @drawship

@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/pattern4
+CHANGED FALSE
+5 PAPER 0: CLS
+10 FOR x=-4 TO scrw-4 STEP 5: 
+	   FOR y=-4 TO scrh-4 STEP 5:
+20       z=int(RND*2)+1:
+30       TEXT INK RND*255;trans 1;move x,y;"/\"(z):
+40    NEXT y: 
+	NEXT x:

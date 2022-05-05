@@ -4,18 +4,18 @@ PROG demos:graphics/wipe3
 CHANGED FALSE
 10 REM Picture unroller
 20 r=128,r2=r/2,ra=(r-1)/scrh:
-	GRAPHIC NEW img LOAD "demos:graphics/butterflies.png":
+	GRAPHIC NEW img LOAD "demos:graphics/ballistix.png":
  PALETTE COPY img,0,256 TO 0:
-	cls rgbn $808080: ink rgbn 0
-30 for yc=0 to scrh-1:
+	cls 0: screen lock: s=3
+30 for yc=0 to scrh-1 step s:
 	   for y=-r2+1 to r2-1:
        tv=(1-((asn(y/r2)+1.5)/3)*r)+r*2,
 							yp=y+yc+r2:
 							if tv+yc<scrh then
 				      POKE$ 0,yp*scrw,PEEK$(img,SCRw*int(tv+yc),SCRw)
 40    next y:
-				POKE$ 0,yc*scrw,PEEK$(img,Scrw*yc,SCRw):
-				r=r-ra,r2=r/2:
+				POKE$ 0,yc*scrw,PEEK$(img,Scrw*yc,SCRw*s):
+				r-=ra*s,r2=r/2:
 				wait screen:
 	next yc:
 	pause 50

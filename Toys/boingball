@@ -1,6 +1,6 @@
 ZXASCII
 AUTO -1
-PROG /demos/Toys/boingball
+PROG demos:toys/boingball
 CHANGED FALSE
 10 REM Amiga Boing Ball
 20 PALETTE 0,0;16,0;128,$808080;129,$606060;130,$A000A0;131,$600060: RAINBOW 0 TO 16:
@@ -26,7 +26,7 @@ CHANGED FALSE
 	for f=1 to nc:
     palette f,iif(int(f/nc2) mod 2,$FFFFFF,$FF0000):
  next f:
-	palette 8,$FFBBBB
+	palette 8,$FFCCBB
 60 PAPER 128: CLS: ss=scrh/14,sc=int(scrw/ss)
 70 for y=1 to 13:
 	   rectangle ink 130;ss*2,y*ss,ss*(sc-4),2 fill:
@@ -41,15 +41,13 @@ CHANGED FALSE
 	   cls:
 				window put s$,0,0,0:
 				circle ink 1;over 2;x+rad/2.5+rad,y+rad,rad*1.05 fill: window put b$,0,x,y
-100    x+=xd:
-	   if (x>scrw-rad*2) or (x<0) then
+100    if (x+xd>scrw-rad*2) or (x<0) then
 							SAMPLE PLAY boing RATE 4800 pan sgn xd:
-							xd=-xd
-110    y+=yd:
-				yd+=ya:
-				if y>scrh-rad*2 then
-				   yd=-((rnd*3)+2):
+							xd=-sgn xd*((RND*3)+2): x=iif(x<0,0,scrw-rad*2)
+110    if y+yd>scrh-rad*2 then
+				   yd=-((rnd*4)+2): y=scrh-rad*2:
 							SAMPLE PLAY boing RATE 3000 pan 0
-120    palette shl sgn xd,1 to nc:
+120    x+=xd,y+=yd,yd+=ya:
+    palette shl sgn xd,1 to nc:
 				wait screen:
 	loop

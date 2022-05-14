@@ -1,6 +1,7 @@
 ZXASCII
 AUTO -1
-PROG mandelbrot
+PROG demos:fractals/mandelbrot
+CHANGED FALSE
 10 DEF FN r=MIN(INT(RND*5)*64,255): PROC rain
 20 xmin=-2,ymin=-1.5,xmax=1.5,ymax=1.5,hs=0:
  INK 0:
@@ -17,7 +18,7 @@ PROG mandelbrot
     x1=xmin:
     FOR x=0 TO SCRw-1:
        u,v,n=0:
-       p2y=POWERTWO y1,q=POWERTWO(x1-0.25)+p2y:
+       p2y=y1*y1,q=POWERTWO(x1-0.25)+p2y:
        IF POWERTWO(x1+1)+p2y<1/16 OR q*(q+(x1-0.25))<p2y/4 THEN
           PLOT x,y: x1+=xs:
           NEXT x:
@@ -29,8 +30,8 @@ PROG mandelbrot
 70       ckr=zr,cki=zi,ptot+=ptot:
        IF ptot>maxiters THEN
           ptot=maxiters
-80       p+=1,tmp=POWERTWO zr-POWERTWO zi+x1,zi=(zi*2*zr)+y1,zr=tmp
-90       IF POWERTWO zr+POWERTWO zi>4 THEN
+80       p+=1,tmp=zr*zr-zi*zi+x1,zi=(zi*2*zr)+y1,zr=tmp
+90       IF zr*zr+zi*zi>4 THEN
           PLOT INK p;x,y: x1+=xs:
           NEXT x:
           y1+=ys:
@@ -69,6 +70,7 @@ PROG mandelbrot
 120    mw=MOUSEWHEEL:
     OVER 1:
     DO:
+				   YIELD:
        IF INKEY$="p" THEN
           PROC rain:
           DO:

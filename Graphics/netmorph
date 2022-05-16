@@ -1,12 +1,13 @@
 ZXASCII
 AUTO -1
-PROG netmorph
+PROG demos:graphics/netmorph
+CHANGED FALSE
 10 REM Net morph
-20 ORIGIN -400,-350 TO 400,130: SCREEN LOCK 
+20 ink 5: paper 0: cls: ORIGIN -400,-350 TO 400,130: SCREEN LOCK
 30 LET xlow=-10: LET xhigh=10: LET ylow=-10: LET yhigh=10: LET xscale=15: LET yscale=6: LET c=-3000
 40 FOR d=100 TO 10 STEP -1: GO SUB 70: NEXT d
 50 FOR d=10 TO 100: GO SUB 70: NEXT d: GO TO 40
-60 STOP 
+60 STOP
 70 FOR x=xlow TO xhigh STEP 0.5: PLOT xscale*(x+ylow),yscale*(ylow-x)+c/(x*x+ylow*ylow+d): FOR y=ylow TO yhigh STEP 0.5: DRAW TO xscale*(x+y),yscale*(y-x)+c/(x*x+y*y+d): NEXT y: NEXT x
 80 FOR y=ylow TO yhigh STEP 0.5: PLOT xscale*(xlow+y),yscale*(y-xlow)+c/(xlow*xlow+y*y+d): FOR x=xlow TO xhigh STEP 0.5: DRAW TO xscale*(x+y),yscale*(y-x)+c/(x*x+y*y+d): NEXT x: NEXT y
-90 WAIT SCREEN : CLS: RETURN 
+90 WAIT SCREEN : CLS: RETURN

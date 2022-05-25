@@ -5,7 +5,7 @@ CHANGED FALSE
 10 REM Stereogram generator
 20 option "base",0:
  eyesep=2.5:
- strip_width=64*(eyesep/2.5)*ceil(scrw/640)*1.2:
+ strip_width=160:
  def fn i(x,y)=gpoint(dm,x,y)/256:
  def fn p(x,y)=gpoint(pt,x mod pw,y mod ph):
  DEF FN s(z)=(1-mu*z)*e/(2-mu*z)

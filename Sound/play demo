@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG demos:sound/play demo
+CHANGED FALSE
+10 LET a$="T100O2(((1CCg$b))(($E$E$b$D))((GGDF))))"
+20 LET b$="O5N&&&&C$bfG)"
+30 LET c$="O4((3C&)C&1CCDD(3$E&)$E&1$E$EEE(3F&)F&1FF$G$G(3G&)G&1GG$EC))"
+40 LET d$="N9&&&&&&&&(9EGF7b5CD))"
+50 PLAY a$,b$,c$,d$

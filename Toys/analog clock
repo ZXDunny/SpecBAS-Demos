@@ -5,20 +5,20 @@ CHANGED FALSE
 10 REM Analog Clock with sweep-second-hand and digital 7-segment LED display
 20 PALETTE 8,0,90,82;16,72,0,0: SCREEN LOCK:
 	DEGREES: OPTION "base",0
-25 dim wq$="O4N5#g#feO3N7b","O4N5e#g#fO3N7b",
+30 dim wq$="O4N5#g#feO3N7b","O4N5e#g#fO3N7b",
 	        "O4N5e#f#g7e","O4N5#ge#fO3N7b","O3N5bO4#f#g7e":
 	DIM change$=wq$(1)+wq$(2)+wq$(3)+wq$(4),wq$(0),wq$(1)+wq$(2),wq$(3)+wq$(4)+wq$(0):
 	chime$="O3N9e"
-30 xc=SCRw/2,yc=SCRh/2-30,ws=1.5,wm=3,wh=4,r=156,
+40 xc=SCRw/2,yc=SCRh/2-30,ws=1.5,wm=3,wh=4,r=156,
  mr=r/1.17,ls=mr/1.17,lm=ls/1.17,lh=lm/1.17,ps,pm=-1:
- GO SUB 190
-40 REM Draw the clock face
-50 CLS:
+ GO SUB 210
+50 REM Draw the clock face
+60 CLS:
 	CIRCLE INK 0;xc-1,yc-2,r FILL
-60 FOR f=0 TO 59:
+70 FOR f=0 TO 59:
 	   CIRCLE INK 3;xc+COS(6*f)*mr,yc+SIN(6*f)*mr,1 fill:
 	NEXT f
-70 FOR f=0 TO 11:
+80 FOR f=0 TO 11:
 	   x=xc+COS(30*f)*mr,y=yc+SIN(30*f)*mr:
 				IF f MOD 3 THEN
 				   s$=STR$((f+3) MOD 12):
@@ -28,8 +28,8 @@ CHANGED FALSE
 							PRINT PAPER 0;MOVE x-8*LEN s$,y-8;SCALE 2,2;INK 10;s$:
 				END IF:
 	NEXT f
-80 REM Calculate the angles of the hands
-90 t=TIME,ch=hour t,cm=minutes t,cs=seconds t,
+90 REM Calculate the angles of the hands
+100 t=TIME,ch=hour t,cm=minutes t,cs=seconds t,
 	s=6*cs+MILLISECONDS t*.006,
 	m=6*cm+(6*(s/360)),
 	h=30*ch+(30*(m/360)),
@@ -37,7 +37,7 @@ CHANGED FALSE
 	if ps<>cs then
 	   BEEP .0001,100:
 				ps=cs
-100 a$=TIME$(TIME,"hh:mm:ss"):
+110 a$=TIME$(TIME,"hh:mm:ss"):
 	l=svh*7.5,t=175:
 	RECTANGLE INK 48;xc-l,yc+t TO xc+l,yc+t+svh*4 FILL:
 	INK 2:
@@ -52,37 +52,37 @@ CHANGED FALSE
 				   ink iif((s+90) MOD 6<3,2,16):
 							RECTANGLE 2+x+sw+shw/2,2+y+sw+svh/2,4,4 FILL:
 							RECTANGLE 2+x+sw+shw/2,2+y+sw+svh*2,4,4 FILL
-110    x+=sw*2+shw+10:
+120    x+=sw*2+shw+10:
 	NEXT i
-120 REM Draw the hands
-130 POLYGON INK 12;xc+COS(s-90)*ws,yc+SIN(s-90)*ws TO
+130 REM Draw the hands
+140 POLYGON INK 12;xc+COS(s-90)*ws,yc+SIN(s-90)*ws TO
 	               xc+COS(s)*ls,yc+SIN(s)*ls TO
 																xc+COS(s+90)*ws,yc+SIN(s+90)*ws TO
 																xc+COS(s-180)*40,yc+SIN(s-180)*40 FILL
-140 POLYGON INK 10;xc+COS(m-90)*wm,yc+SIN(m-90)*wm TO
+150 POLYGON INK 10;xc+COS(m-90)*wm,yc+SIN(m-90)*wm TO
 	               xc+COS(m)*lm,yc+SIN(m)*lm TO
 																xc+COS(m+90)*wm,yc+SIN(m+90)*wm TO
 																xc+COS(m-180)*30,yc+SIN(m-180)*30 FILL
-150 POLYGON INK 9;xc+COS(h-90)*wh,yc+SIN(h-90)*wh TO
+160 POLYGON INK 9;xc+COS(h-90)*wh,yc+SIN(h-90)*wh TO
 	              xc+COS(h)*lh,yc+SIN(h)*lh TO
 															xc+COS(h+90)*wh,yc+SIN(h+90)*wh TO
 															xc+COS(h-180)*20,yc+SIN(h-180)*20 FILL
-160 CIRCLE INK 11;xc,yc,8 FILL:
+170 CIRCLE INK 11;xc,yc,8 FILL:
 	CIRCLE INK 0;xc,yc,4 FILL
-165 IF (pm<>cm) and (cm IN [0,15,30,45]) THEN 
+180 IF (pm<>cm) and (cm IN [0,15,30,45]) THEN
 	   pm=cm:
-	   GO SUb 250
-170 WAIT SCREEN:
-	GO TO 50
-180 REM Set up LED segments
-190 ss=2,sw=1*ss,svh=6*ss,shw=4*ss
-200 vd$="sx,sy TO sx+sw,sy+sw TO sx+sw,sy+svh+sw TO sx,sy+sw+svh+sw TO sx-sw,sy+svh+sw TO sx-sw,sy+sw",
+	   GO SUb 260
+190 WAIT SCREEN:
+	GO TO 60
+200 REM Set up LED segments
+210 ss=2,sw=1*ss,svh=6*ss,shw=4*ss
+220 vd$="sx,sy TO sx+sw,sy+sw TO sx+sw,sy+svh+sw TO sx,sy+sw+svh+sw TO sx-sw,sy+svh+sw TO sx-sw,sy+sw",
 	hd$="sx,sy TO sx+sw,sy-sw TO sx+sw+shw,sy-sw TO sx+sw+shw+sw,sy TO sx+sw+shw,sy+sw TO sx+sw,sy+sw",
 	vd$=REPLACE$(REPLACE$(vd$,"sw",STR$ sw),"svh",STR$ svh),
 	hd$=REPLACE$(REPLACE$(hd$,"sw",STR$ sw),"shw",STR$ shw)
-210 DIM digit$="123456","34","23567","23457","1347","12457","124567","234","1234567","123457" BASE 0:
+230 DIM digit$="123456","34","23567","23457","1347","12457","124567","234","1234567","123457" BASE 0:
 	DIM coord$="sw,sw+1","sw+1,sw","sw*3+shw+2,sw+1","sw*3+shw+2,sw*3+svh+3","sw+1,sw*5+svh*2+4","sw,sw*3+svh+3","sw+1,sw*3+svh+2" BASE 1
-220 DIM led$(10) BASE 0:
+240 DIM led$(10) BASE 0:
 	FOR f=0 TO 9:
 	   b$="":
 				FOR g=1 TO LEN digit$(f):
@@ -91,10 +91,10 @@ CHANGED FALSE
 				NEXT g:
 				led$(f)=TOKEN$ b$:
 	NEXT f
-230 RETURN
-250 p$=change$(cm/15): 
-	if cm=0 then 
+250 RETURN
+260 p$=change$(cm/15):
+	if cm=0 then
 	   ch=ch-(12*(ch>12)),
 				p$=p$+"9&"+(chime$*ch)
-260 play "T100UX8000W0"+p$ async: 
+270 play "T100UX8000W0"+p$ async:
 	return

@@ -5,8 +5,12 @@ CHANGED FALSE
 10 REM Analog Clock with sweep-second-hand and digital 7-segment LED display
 20 PALETTE 8,0,90,82;16,72,0,0: SCREEN LOCK:
 	DEGREES: OPTION "base",0
+25 dim wq$="O4N5#g#feO3N7b","O4N5e#g#fO3N7b",
+	        "O4N5e#f#g7e","O4N5#ge#fO3N7b","O3N5bO4#f#g7e":
+	DIM change$=wq$(1)+wq$(2)+wq$(3)+wq$(4),wq$(0),wq$(1)+wq$(2),wq$(3)+wq$(4)+wq$(0):
+	chime$="O3N9e"
 30 xc=SCRw/2,yc=SCRh/2-30,ws=1.5,wm=3,wh=4,r=156,
- mr=r/1.17,ls=mr/1.17,lm=ls/1.17,lh=lm/1.17:
+ mr=r/1.17,ls=mr/1.17,lm=ls/1.17,lh=lm/1.17,ps,pm=-1:
  GO SUB 190
 40 REM Draw the clock face
 50 CLS:
@@ -25,11 +29,14 @@ CHANGED FALSE
 				END IF:
 	NEXT f
 80 REM Calculate the angles of the hands
-90 t=TIME,
-	s=6*SECONDS t+MILLISECONDS t*.006,
-	m=6*MINUTES t+(6*(s/360)),
-	h=30*HOUR t+(30*(m/360)),
-	s-=90,m-=90,h-=90
+90 t=TIME,ch=hour t,cm=minutes t,cs=seconds t,
+	s=6*cs+MILLISECONDS t*.006,
+	m=6*cm+(6*(s/360)),
+	h=30*ch+(30*(m/360)),
+	s-=90,m-=90,h-=90:
+	if ps<>cs then
+	   BEEP .0001,100:
+				ps=cs
 100 a$=TIME$(TIME,"hh:mm:ss"):
 	l=svh*7.5,t=175:
 	RECTANGLE INK 48;xc-l,yc+t TO xc+l,yc+t+svh*4 FILL:
@@ -62,6 +69,9 @@ CHANGED FALSE
 															xc+COS(h-180)*20,yc+SIN(h-180)*20 FILL
 160 CIRCLE INK 11;xc,yc,8 FILL:
 	CIRCLE INK 0;xc,yc,4 FILL
+165 IF (pm<>cm) and (cm IN [0,15,30,45]) THEN 
+	   pm=cm:
+	   GO SUb 250
 170 WAIT SCREEN:
 	GO TO 50
 180 REM Set up LED segments
@@ -82,3 +92,9 @@ CHANGED FALSE
 				led$(f)=TOKEN$ b$:
 	NEXT f
 230 RETURN
+250 p$=change$(cm/15): 
+	if cm=0 then 
+	   ch=ch-(12*(ch>12)),
+				p$=p$+"9&"+(chime$*ch)
+260 play "T100UX8000W0"+p$ async: 
+	return

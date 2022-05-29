@@ -5,8 +5,8 @@ CHANGED FALSE
 10 REM Analog Clock with sweep-second-hand and digital 7-segment LED display
 20 PALETTE 8,0,90,82;16,72,0,0: SCREEN LOCK:
 	DEGREES: OPTION "base",0
-30 dim wq$="O4N5#g#feO3N7b","O4N5e#g#fO3N7b",
-	        "O4N5e#f#g7e","O4N5#ge#fO3N7b","O3N5bO4#f#g7e":
+30 dim wq$="O4N5#g#feO3N7b5&","O4N5e#g#fO3N7b5&",
+	        "O4N5e#f#g7e5&","O4N5#ge#fO3N7b5&","O3N5bO4#f#g7e5&":
 	DIM change$=wq$(1)+wq$(2)+wq$(3)+wq$(4),wq$(0),wq$(1)+wq$(2),wq$(3)+wq$(4)+wq$(0):
 	chime$="O3N9e"
 40 xc=SCRw/2,yc=SCRh/2-30,ws=1.5,wm=3,wh=4,r=156,
@@ -95,6 +95,7 @@ CHANGED FALSE
 260 p$=change$(cm/15):
 	if cm=0 then
 	   ch=ch-(12*(ch>12)),
-				p$=p$+"9&"+(chime$*ch)
+				ch+=12*(ch=0),
+				p$=p$+"5&"+(chime$*ch)
 270 play "T100UX8000W0"+p$ async:
 	return

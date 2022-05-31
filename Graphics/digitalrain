@@ -6,35 +6,32 @@ CHANGED FALSE
  palette 1,$ff,$ff,$fF:
  FOR f=1 to 64: palette 70-f,0,(f/64)*255,0: next f: rainbow 1 to 6:
  scale sc,sc
-11 def fn c$=CHR$((rnd*94)+33)
-20 nr=50/sc:
- dim r(nr,5);r$(nr):
- x=1,y=2,l=3,s=4,c=5:
- for f=1 to nr: go sub 70: next f
-30 for f=1 to nr:
-	   if r(f,y)>=0 then
-       text at r(f,y),r(f,x);ink 1;r$(f)(r(f,y)+1):
-       if r(f,y)>1 then
-							   clr=2,h=r(f,y)-1:
-          for g=r(f,y)-1 to max(r(f,y)-r(f,l),-1):
-             text at g,r(f,x);ink clr;r$(f)(max(1,h+1)):
-             h-=1,clr+=64/r(f,l):
+20 def fn c$=CHR$((rnd*94)+33)
+30 nr=100/sc:
+ dim r(nr,4);r$(nr):
+ for f=1 to nr: go sub 80: next f
+40 for f=1 to nr:
+	   y=r(f,2),x=r(f,1),l=r(f,3):
+	   if y>=0 then
+       text at y,x;ink 1;r$(f)(y+1):
+       if y>1 then
+							   clr=2,h=y-1:
+          for g=h to max(y-l,-1):
+             text at g,x;ink clr;r$(f)(max(1,h+1)):
+             h-=1,clr+=64/l:
           next g:
-										do 4:
-             r$(f)(1+(rnd*len r$(f)))=fn c$:
-          loop
-40    r(f,y)+=r(f,s):
-    if r(f,y)>r(f,l)+txth then
-       go sub 70
-50 next f:
- do 2: wait screen: loop:
+										do 3: r$(f)(1+(rnd*len r$(f)))=fn c$: loop
+50    r(f,2)+=r(f,4):
+    if y>l+txth then
+       go sub 80
+60 next f:
+ wait screen:
  cls
-60 go to 30
-70 r(f,x)=int(rnd*txtw)
-80 r(f,y)=-rnd*txth,
- r(f,l)=int(rnd*(txth)/3)+15,
- r(f,s)=.25+rnd,
- r(f,c)=1:
+70 go to 40
+80 r(f,1)=int(rnd*txtw)
+90 r(f,2)=-rnd*txth,
+ r(f,3)=int(rnd*(txth)/3)+15,
+ r(f,4)=(.25+rnd)/2.5,
  r$(f)="":
  for g=1 to txth*2:
     r$(f)=r$(f)+fn c$:

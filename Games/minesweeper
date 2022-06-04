@@ -1,170 +1,170 @@
 ZXASCII
 AUTO -1
-PROG /demos/Games/minesweeper
+PROG demos:games/minesweeper
 CHANGED FALSE
 10 PALETTE DEFAULT: paper 7: CLS 7: screen lock:
-	font new fnt,10,10,1 trans 14: font fnt: fw=FONTW,fh=FONTH:
-	plot 0,0: for f=1 to 8: read i,x,y: draw ink i;x,y: next f:
-	data 15,scrw-1,0,8,0,scrh-1,i,-scrw+1,0,15,0,-scrh+2,
-	i,scrw-2,0,8,0,scrh-3,i,-scrw+3,0,15,0,-scrh+3:
-	proc bevel(fw-2,fh-2,(TXTW-2)*fw+3,fh*4+3,0):
-	proc bevel(fw-2,fh*5+6,(txtw-2)*fw+3,(TXTH-7)*fh+3,0)
+ font new fnt,10,10,1 trans 14: font fnt: fw=FONTW,fh=FONTH:
+ plot 0,0: for f=1 to 8: read i,x,y: draw ink i;x,y: next f:
+ data 15,scrw-1,0,8,0,scrh-1,i,-scrw+1,0,15,0,-scrh+2,
+ i,scrw-2,0,8,0,scrh-3,i,-scrw+3,0,15,0,-scrh+3:
+ proc bevel(fw-2,fh-2,(TXTW-2)*fw+3,fh*4+3,0):
+ proc bevel(fw-2,fh*5+6,(txtw-2)*fw+3,(TXTH-7)*fh+3,0)
 20 dim clrs=9,4,10,1,2,5,0,8:
-	dim nb(8,2):
+ dim nb(8,2):
  for f=1 to 8:
     read nb(f,1),nb(f,2):
  next f:
  data -1,-1,0,-1,1,-1,-1,0,1,0,-1,1,0,1,1,1:
-	dim fs=1,2,0 base 0
+ dim fs=1,2,0 base 0
 30 restore 260:
-	for i=1 to 7:
-	   read a$:
-				addr=code a$*fw*fh:
-	   for f=addr to addr+99:
-				   read a:
-							poke fnt,f,a:
-				next f:
-	next i
+ for i=1 to 7:
+    read a$:
+    addr=code a$*fw*fh:
+    for f=addr to addr+99:
+       read a:
+       poke fnt,f,a:
+    next f:
+ next i
 40 GO sub 330: GO TO 50
 50 gw=txtw-2,gh=txth-7:
-	dim grid(gw+2,gh+2,2) base 0
+ dim grid(gw+2,gh+2,2) base 0
 60 Font fnt:
-	for x=0 to gw+1:
-	   for y=0 to gh+1:
-				   grid(x,y,0)=-2,grid(x,y,1)=0,
-							cx=min(max(x,1),gw),cy=min(max(y,1),gh):
-				   text move cx*fw,(cy+5)*fh-2;"A":
-				next y:
-	next x:
-	ngs=1,won,endgame=0,sbd=0,pressed=0:
-	mrem=int((gw*gh)/8),cellrem=1,secs=0,tm=msecs:
-	GO SUb 410;430;450
+ for x=0 to gw+1:
+    for y=0 to gh+1:
+       grid(x,y,0)=-2,grid(x,y,1)=0,
+       cx=min(max(x,1),gw),cy=min(max(y,1),gh):
+       text move cx*fw,(cy+5)*fh-2;"A":
+    next y:
+ next x:
+ ngs=1,won,endgame=0,sbd=0,pressed=0:
+ mrem=int((gw*gh)/8),cellrem=1,secs=0,tm=msecs:
+ GO SUb 410;430;450
 70 rem Game loop
 80 DO:
-	   mx=int((mousex-fw)/fw)+1,
-				my=int((mousey-fh+2)/fh)-4,
-				mb=mousebtn:
-				if not ngs then
-				   GO SUb 490
-				else
-				   tm=msecs:
-				end if:
-	   wait screen:
-	LOOP until mb<>0 or cellrem=0:
-	if cellrem=0 then
-	   won=1,mrem=0:
-				GO SUb 420:
-				GO To 240
+    mx=int((mousex-fw)/fw)+1,
+    my=int((mousey-fh+2)/fh)-4,
+    mb=mousebtn:
+    if not ngs then
+       GO SUb 490
+    else
+       tm=msecs:
+    end if:
+    wait screen:
+ LOOP until mb<>0 or cellrem=0:
+ if cellrem=0 then
+    won=1,mrem=0:
+    GO SUb 420:
+    GO To 240
 90 rem User clicked
 100 if not (mx>=1 and mx<=gw and my>=1 and my<=gh) then
-	   GO SUb 480:
-	   GO To 130
-	ELSE
-	   GO SUb 520:
-				IF NOT pressed THEN
-				   GO sub 460:
-							GO TO 80
-				else
-				   pressed=0:
-							GO SUb 460
+    GO SUb 480:
+    GO To 130
+ ELSE
+    GO SUb 520:
+    IF NOT pressed THEN
+       GO sub 460:
+       GO TO 80
+    else
+       pressed=0:
+       GO SUb 460
 110 IF ngs THEN GO SUb 140
 120 IF mb=1 and grid(mx,my,1)<>1 then
-				if grid(mx,my,0)=0 then
-							GO SUb 200
-				else
-							if grid(mx,my,0)=9 then
-							   proc drawcell(mx,my):
-										GO To 240:
-							else
-										proc drawcell(mx,my):
-							end if:
-				end if:
-	else
-	   g=grid(mx,my,1):
+    if grid(mx,my,0)=0 then
+       GO SUb 200
+    else
+       if grid(mx,my,0)=9 then
+          proc drawcell(mx,my):
+          GO To 240:
+       else
+          proc drawcell(mx,my):
+       end if:
+    end if:
+ else
+    g=grid(mx,my,1):
     if mb=2 and g<3 then
-				   g=fs(g),grid(mx,my,1)=g,
-							cx=mx*fw,cy=(my+5)*fh-2:
-							if g=0 then
-							   font fnt: Text move cx,cy;"A"
-							else
-							   if g=1 then
-										   if mrem>0 then
-										      font fnt: text move cx,cy;"C":
-													   mrem-=1:
-													   GO SUb 410:
-													end if:
-										else
-										   font 1: text move cx+1,cy+1;ink 0;"?":
-													mrem+=1:
-													GO SUb 410
+       g=fs(g),grid(mx,my,1)=g,
+       cx=mx*fw,cy=(my+5)*fh-2:
+       if g=0 then
+          font fnt: Text move cx,cy;"A"
+       else
+          if g=1 then
+             if mrem>0 then
+                font fnt: text move cx,cy;"C":
+                mrem-=1:
+                GO SUb 410:
+             end if:
+          else
+             font 1: text move cx+1,cy+1;ink 0;"?":
+             mrem+=1:
+             GO SUb 410
 130 do: YIELD: loop until mousebtn=0:
-	GO To 80
+ GO To 80
 140 rem Set up grid
 150 for f=1 to mrem
 160    x=1+int(rnd*gw),y=1+int(rnd*gh):
-				if (x=mx and y=my) or grid(x,y,0)>0 then
-				   GO To 160
+    if (x=mx and y=my) or grid(x,y,0)>0 then
+       GO To 160
 170    grid(x,y,0)=9:
-	next f
+ next f
 180 for x=1 to gw:
-	   for y=1 to gh:
-				   if grid(x,y,0)<>9 then
-							   c=0:
-				      for m=1 to 8:
-							      c+=grid(x+nb(m,1),y+nb(m,2),0)=9:
-										next m:
-										grid(x,y,0)=c:
-							end if:
-				next y:
-	next x:
-	ngs=0,cellrem=(gw*gh)-mrem:
+    for y=1 to gh:
+       if grid(x,y,0)<>9 then
+          c=0:
+          for m=1 to 8:
+             c+=grid(x+nb(m,1),y+nb(m,2),0)=9:
+          next m:
+          grid(x,y,0)=c:
+       end if:
+    next y:
+ next x:
+ ngs=0,cellrem=(gw*gh)-mrem:
  return
 190 rem reveal all zeros around clicked square
 200 s$=chr$ mx+chr$ my:
-	DO:
-	   cx=code s$(1),cy=code s$(2),s$=s$(3 to ):
-				proc drawcell(cx,cy):
-				for m=1 to 8:
-				   gx=cx+nb(m,1),gy=cy+nb(m,2):
-				   if grid(gx,gy,0)=0 then
-							   grid(gx,gy,0)=-1:
-							   s$=s$+chr$ gx+chr$ gy
-							else
-							   proc drawcell(gx,gy):
-							end if:
-				next m:
+ DO:
+    cx=code s$(1),cy=code s$(2),s$=s$(3 to ):
+    proc drawcell(cx,cy):
+    for m=1 to 8:
+       gx=cx+nb(m,1),gy=cy+nb(m,2):
+       if grid(gx,gy,0)=0 then
+          grid(gx,gy,0)=-1:
+          s$=s$+chr$ gx+chr$ gy
+       else
+          proc drawcell(gx,gy):
+       end if:
+    next m:
  LOOP UNTIL s$="":
-	RETURN
+ RETURN
 210 rem draw a cell
 220 def proc drawcell(mx,my):
-	   local cx=mx*fw,cy=(my+5)*fh-2,g=grid(mx,my,0):
-	   if g>=-1 and g<9 and not endgame then
-				   cellrem-=grid(mx,my,1)<3,
-							grid(mx,my,1)=3:
-	      FONT fnt:
+    local cx=mx*fw,cy=(my+5)*fh-2,g=grid(mx,my,0):
+    if g>=-1 and g<9 and not endgame then
+       cellrem-=grid(mx,my,1)<3,
+       grid(mx,my,1)=3:
+       FONT fnt:
        text move cx,cy;"B":
-				   if g>0 then
+       if g>0 then
           FONT 1:
           TEXT MOVE cx+1,cy+1;transparent 1;bold 1;ink clrs(g);g:
-							end if:
-				else
-				   if g=9 then
-							   font fnt:
-										if grid(mx,my,1)=1 then
-										   text move cx,cy;"C"
-										ELSE
-										   if won then
-										      text move cx,cy;"B"
-										   else
-							         text move cx,cy;"E":
-										   end if:
-										   text move cx,cy;transparent 1;"D":
-										end if:
-							end if:
-	   end if:
-	end proc
+       end if:
+    else
+       if g=9 then
+          font fnt:
+          if grid(mx,my,1)=1 then
+             text move cx,cy;"C"
+          ELSE
+             if won then
+                text move cx,cy;"B"
+             else
+                text move cx,cy;"E":
+             end if:
+             text move cx,cy;transparent 1;"D":
+          end if:
+       end if:
+    end if:
+ end proc
 230 def proc bevel(x,y,w,h,i):
-	   local i1=iif(i,15,8),i2=iif(i,8,15):
+    local i1=iif(i,15,8),i2=iif(i,8,15):
     plot x,y+h: draw ink i1;0,-h;w,0:
     plot x+1,y+h-1: draw ink i1;0,-h+2;w-2,0:
     plot x,y+h: draw ink i2;w,0;0,-h:
@@ -172,60 +172,60 @@ CHANGED FALSE
  end proc
 240 rem game ended
 250 wn=won,endgame=1:
-	GO SUb 460:
-	for x=1 to gw:
-	   for y=1 to gh:
-				   grid(x,y,1)=grid(x,y,0)=9 and wn:
-				   won=1-(x=mx and y=my):
-	      proc drawcell(x,y):
-				next y:
-	next x:
-	won=wn:
-	DO:
-	   Wait screen:
-	LOop until MOUSEBTN=0:
+ GO SUb 460:
+ for x=1 to gw:
+    for y=1 to gh:
+       grid(x,y,1)=grid(x,y,0)=9 and wn:
+       won=1-(x=mx and y=my):
+       proc drawcell(x,y):
+    next y:
+ next x:
+ won=wn:
+ DO:
+    Wait screen:
+ LOop until MOUSEBTN=0:
  do:
-	   if MOUSEBTN<>0 then
-				   GO SUb 480:
-				end if:
-				wait screen:
-	loop
+    if MOUSEBTN<>0 then
+       GO SUb 480:
+    end if:
+    wait screen:
+ loop
 260 rem Graphics
 270 data " ",
-	     $7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$7,$7,$7,$7,$7,$7,$7,$7,$7,$7
+      $7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $7,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $7,$7,$7,$7,$7,$7,$7,$7,$7,$7
 280 data "A",
-	     $F,$F,$F,$F,$F,$F,$F,$F,$F,$7,
-	     $F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
-	     $F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
-						$F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
-						$F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
-						$F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
-						$F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
-						$F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
-						$F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
-						$7,$8,$8,$8,$8,$8,$8,$8,$8,$8
+      $F,$F,$F,$F,$F,$F,$F,$F,$F,$7,
+      $F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
+      $F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
+      $F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
+      $F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
+      $F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
+      $F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
+      $F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
+      $F,$7,$7,$7,$7,$7,$7,$7,$7,$8,
+      $7,$8,$8,$8,$8,$8,$8,$8,$8,$8
 290 data "B",
-	     $8,$8,$8,$8,$8,$8,$8,$8,$8,$8,
-	     $8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
-						$8,$7,$7,$7,$7,$7,$7,$7,$7,$7
+      $8,$8,$8,$8,$8,$8,$8,$8,$8,$8,
+      $8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $8,$7,$7,$7,$7,$7,$7,$7,$7,$7,
+      $8,$7,$7,$7,$7,$7,$7,$7,$7,$7
 300 data "C",
-	     $F,$F,$F,$F,$F,$F,$F,$F,$F,$7,
+      $F,$F,$F,$F,$F,$F,$F,$F,$F,$7,
       $F,$7,$7,$7,$2,$2,$7,$7,$7,$8,
       $F,$7,$2,$2,$2,$2,$7,$7,$7,$8,
       $F,$2,$2,$2,$2,$2,$7,$7,$7,$8,
@@ -236,29 +236,29 @@ CHANGED FALSE
       $F,$7,$0,$0,$0,$0,$0,$0,$0,$8,
       $7,$8,$8,$8,$8,$8,$8,$8,$8,$8
 310 data "D",
-	     $E,$E,$E,$E,$E,$E,$E,$E,$E,$E,
-						$E,$0,$E,$E,$0,$0,$E,$E,$0,$E,
-						$E,$E,$0,$0,$0,$0,$0,$0,$E,$E,
-						$E,$E,$0,$F,$F,$0,$0,$0,$E,$E,
-						$E,$0,$0,$F,$0,$0,$0,$0,$0,$E,
-						$E,$0,$0,$0,$0,$0,$0,$0,$0,$E,
-						$E,$E,$0,$0,$0,$0,$0,$0,$E,$E,
-						$E,$E,$0,$0,$0,$0,$0,$0,$E,$E,
-						$E,$0,$E,$E,$0,$0,$E,$E,$0,$E,
-						$E,$E,$E,$E,$E,$E,$E,$E,$E,$E
+      $E,$E,$E,$E,$E,$E,$E,$E,$E,$E,
+      $E,$0,$E,$E,$0,$0,$E,$E,$0,$E,
+      $E,$E,$0,$0,$0,$0,$0,$0,$E,$E,
+      $E,$E,$0,$F,$F,$0,$0,$0,$E,$E,
+      $E,$0,$0,$F,$0,$0,$0,$0,$0,$E,
+      $E,$0,$0,$0,$0,$0,$0,$0,$0,$E,
+      $E,$E,$0,$0,$0,$0,$0,$0,$E,$E,
+      $E,$E,$0,$0,$0,$0,$0,$0,$E,$E,
+      $E,$0,$E,$E,$0,$0,$E,$E,$0,$E,
+      $E,$E,$E,$E,$E,$E,$E,$E,$E,$E
 320 data "E",
-	     $A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
-						$A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
-						$A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
-						$A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
-						$A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
-						$A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
-						$A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
-						$A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
-						$A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
-						$A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
+      $A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
+      $A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
+      $A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
+      $A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
+      $A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
+      $A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
+      $A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
+      $A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
+      $A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
+      $A,$A,$A,$A,$A,$A,$A,$A,$A,$A,
       "F",
-	     $8,$8,$8,$8,$8,$8,$8,$8,$8,$7,
+      $8,$8,$8,$8,$8,$8,$8,$8,$8,$7,
       $8,$7,$7,$7,$7,$7,$7,$7,$7,$F,
       $8,$7,$7,$7,$7,$7,$7,$7,$7,$F,
       $8,$7,$7,$7,$7,$7,$7,$7,$7,$F,
@@ -288,98 +288,98 @@ CHANGED FALSE
 380 RETURN
 390 rem draw a 3-digit number a$ at xc,yc
 400 a$="0000"( to 4-len a$)+a$:
-	l=len a$*(shw*3),
-	x=xc,y=yc,w=l+4,h=svh*4+6:
-	proc bevel(x,y,w,h,0):
-	h-=4,xc+=2,yc+=2:
-	RECTANGLE INK 48;xc,yc TO xc+l,yc+h FILL:
+ l=len a$*(shw*3),
+ x=xc,y=yc,w=l+4,h=svh*4+6:
+ proc bevel(x,y,w,h,0):
+ h-=4,xc+=2,yc+=2:
+ RECTANGLE INK 48;xc,yc TO xc+l,yc+h FILL:
  x=xc+3,y=yc+2:
  FOR i=1 TO LEN a$:
     ink 84:
     execute led$(8):
     ink 10:
     EXECUTE led$(VAL a$(i)):
-				x+=sw*2+shw+10:
-	next i:
-	return
+    x+=sw*2+shw+10:
+ next i:
+ return
 410 rem draw score
 420 a$=str$ mrem,
-	xc=fw*1.5,yc=fh*1.5:
-	GO SUb 390:
-	return
+ xc=fw*1.5,yc=fh*1.5:
+ GO SUb 390:
+ return
 430 rem draw time
 440 a$=str$ secs:
-	xc=scrw-fw*9-1,yc=fh*1.5:
-	GO SUb 390:
-	return
+ xc=scrw-fw*9-1,yc=fh*1.5:
+ GO SUb 390:
+ return
 450 rem draw smiley face button
 460 sbx=(scrw-(fw*3))/2,sby=fh*1.5,sbw=fw*3,sbh=fw*3:
-	rectangle ink 7;sbx,sby,sbw,sbh fill:
-	proc bevel(sbx,sby,sbw,sbh,1-sbd): x=sbd+scrw/2,y=sbd+sby+sbh/2:
-	circle ink 14;x,y,10 fill:
-	circle ink 0;x,y,10:
-	if won then
-	   draw ink 0;x-10,y+1 to x+10,y+1,pi/1.5:
-				circle ink 0;x-4,y-3,2 fill;x+4,y-3,2 fill:
-				draw ink 0;x-fw/2+1,y+3 to x+fw/2-1,y+3,-pi/3:
+ rectangle ink 7;sbx,sby,sbw,sbh fill:
+ proc bevel(sbx,sby,sbw,sbh,1-sbd): x=sbd+scrw/2,y=sbd+sby+sbh/2:
+ circle ink 14;x,y,10 fill:
+ circle ink 0;x,y,10:
+ if won then
+    draw ink 0;x-10,y+1 to x+10,y+1,pi/1.5:
+    circle ink 0;x-4,y-3,2 fill;x+4,y-3,2 fill:
+    draw ink 0;x-fw/2+1,y+3 to x+fw/2-1,y+3,-pi/3:
  else
-	   if not endgame then
-				   if pressed then
-							   circle ink 0;x,y+4,2
-							else
-	         draw ink 0;x-fw/2,y+3 to x+fw/2,y+3,-pi/2:
-							end if:
-	      circle ink 0;x-fw/3,y-3,1 fill;x+fw/3,y-3,1 fill:
-				else
-				   font 1:
-							draw ink 0;x-fw/2,y+5 to x+fw/2,y+5,pi/2:
-				   text ink 0;move x-fw/3-4,y-7;transparent 1;"x";move x+fw/3-2,y-7;"x":
-				end if:
-	end if:
-	return
+    if not endgame then
+       if pressed then
+          circle ink 0;x,y+4,2
+       else
+          draw ink 0;x-fw/2,y+3 to x+fw/2,y+3,-pi/2:
+       end if:
+       circle ink 0;x-fw/3,y-3,1 fill;x+fw/3,y-3,1 fill:
+    else
+       font 1:
+       draw ink 0;x-fw/2,y+5 to x+fw/2,y+5,pi/2:
+       text ink 0;move x-fw/3-4,y-7;transparent 1;"x";move x+fw/3-2,y-7;"x":
+    end if:
+ end if:
+ return
 470 rem handle the smiley face button
 480 x=mousex,y=mousey:
-	if x>=sbx and y>=sby and x<sbx+sbw and y<sby+sbh then
-	   sbd=1: GO SUb 460:
-				do:
-				   if not endgame then
-							   GO SUB 490:
-							end if:
-							wait screen:
-				loop until mousebtn=0:
-				sbd=0: go sub 460:
-				x=mousex,y=mousey:
+ if x>=sbx and y>=sby and x<sbx+sbw and y<sby+sbh then
+    sbd=1: GO SUb 460:
+    do:
+       if not endgame then
+          GO SUB 490:
+       end if:
+       wait screen:
+    loop until mousebtn=0:
+    sbd=0: go sub 460:
+    x=mousex,y=mousey:
     if x>=sbx and y>=sby and x<sbx+sbw and y<sby+sbh then
-				   GO To 60:
-				End if:
+       GO To 60:
+    End if:
  end if:
-	return
+ return
 490 rem Update timer
 500 ns=int((msecs-tm)/1000):
  if secs<9999 and ns<>secs then
     secs=ns:
     GO SUb 430:
  end if:
-	return
+ return
 510 rem user clicked a tile, squish it
 520 tx=mx*fw,ty=(my+5)*fh-2,g=grid(mx,my,1):
  font fnt:
-	text move tx,ty;"F" and g=0:
-	pressed=1: GO SUb 460:
-	do:
-	   nx=int((mousex-fw)/fw)+1,ny=int((mousey-fh+2)/fh)-4:
+ text move tx,ty;"F" and g=0:
+ pressed=1: GO SUb 460:
+ do:
+    nx=int((mousex-fw)/fw)+1,ny=int((mousey-fh+2)/fh)-4:
     if nx<>mx or ny<>my then
        print move tx,ty;"A" and grid(mx,my,1)=0:
-							if nx<1 or nx>gw or ny<1 or ny>gh then
-							   pressed=0
-							else
-							   mx=nx,my=ny,tx=mx*fw,ty=(my+5)*fh-2:
+       if nx<1 or nx>gw or ny<1 or ny>gh then
+          pressed=0
+       else
+          mx=nx,my=ny,tx=mx*fw,ty=(my+5)*fh-2:
           print move tx,ty;"F" and grid(mx,my,1)=0:
-							end if:
+       end if:
     end if:
-	   if not ngs then
-				   GO SUb 500:
-				end if:
-				wait screen:
-	LOOP until mousebtn=0:
-	return
+    if not ngs then
+       GO SUb 500:
+    end if:
+    wait screen:
+ LOOP until mousebtn=0:
+ return

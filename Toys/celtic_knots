@@ -19,8 +19,9 @@ CHANGED FALSE
     addr+=len l$:
  next i:
  font fnt
-30 paper 0: ink (rnd*6)+9: cls:
- gw,gh=(int(rnd*7)+3)*2,
+30 i=int(rnd*4)+12,p=int(rnd*4): 
+ paper p: ink i: cls 0:
+ gw,gh=(int(rnd*9)+2)*2,
  cx=(scrw-gw*20)/2,cy=((scrh-gh*20)/2)-40:
  dim g(gw,gh),k(gw,gh),g$(gh):
  for y=1 to gh step 2:
@@ -57,13 +58,15 @@ CHANGED FALSE
     next x:
  next y
 60 GO SUB 80:
+ rectangle ink i;cx-4,cy+16,gw*20+8,gh*20+8 fill:
+ font fnt:
  FOR y=1 TO gh:
     TEXT move cx,cy+(y*20);g$(y):
  NEXT y
 70 font 1:
- print centre txth-3;"Press any key":
+ print paper 0; ink 15; centre txth-3;"Press any key":
  wait screen: pause 0:
- run
+ GO To 30
 80 for x=1 to gw:
     for y=1 to gh:
        a=g(x,y):

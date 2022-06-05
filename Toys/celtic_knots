@@ -1,6 +1,6 @@
 ZXASCII
 AUTO -1
-PROG /demos/Toys/celtic_knots
+PROG demos:toys/celtic_knots
 CHANGED FALSE
 10 DIM rule$="ABCDDD HHAKKANNN AANBNC DD",
            " DDDEFDGFGDEG XX GGXZXYXYZ",
@@ -53,7 +53,7 @@ CHANGED FALSE
        if sym=2 then
           ky=gh-ky:
           GO SUb 90:
-       end if:
+       END IF:
     next x:
  next y
 60 GO SUB 80:
@@ -75,12 +75,11 @@ CHANGED FALSE
     next y:
  next x:
  return
-90 if (k(kx,ky)=k or k(kx,ky)=0) and (k(kx+1,ky)=k or k(kx+1,ky)=0) and
-    (k(kx+1,ky+1)=k or k(kx+1,ky+1)=0) and (k(kx,ky+1)=k or k(kx,ky+1)=0) then
-    if k=1 then
-       g(kx,ky)|=8,g(kx+1,ky)|=8,
-       g(kx,ky+1)|=4,g(kx+1,ky+1)|=4:
-    else if k=2 then
+90 if k=1 then
+    g(kx,ky)|=8,g(kx+1,ky)|=8,
+    g(kx,ky+1)|=4,g(kx+1,ky+1)|=4:
+ else 
+    if k=2 then
        g(kx,ky)|=2,g(kx+1,ky)|=1,
        g(kx,ky+1)|=2,g(kx+1,ky+1)|=1
 100 k(kx,ky)|=k,k(kx+1,ky)|=k,k(kx+1,ky+1)|=k,k(kx,ky+1)|=k:

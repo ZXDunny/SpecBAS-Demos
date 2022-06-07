@@ -80,7 +80,8 @@ CHANGED FALSE
  FOR y=1 TO gh:
     TEXT move cx,cy+(y*20);g$(y):
  NEXT y:
- GO SUb 110
+ GO SUb 110:
+ fill ink i-8;cx-4,cy+16
 70 font 1:
  print paper 0; ink 15; centre txth-3;"Press any key":
  wait screen: pause 0:
@@ -105,10 +106,11 @@ CHANGED FALSE
 100 return
 110 for x=1 to gw:
     for y=1 to gh:
-       g(x,y)=(x=1 and y=1):
+       g(x,y)=(x=1 and y=1)*i:
     next y:
  next x:
- x,y,sx,sy=1,pin=0
+ x,y,sx,sy=1,pin,mi=0:
+ dim ip(7)
 120 kx=x,ky=y:GO SUb 170:
  if sym=0 then
     ky=gh-y+1:
@@ -139,15 +141,21 @@ CHANGED FALSE
     sx=1:
     sy+=1:
     if sy>gh then
+       mx,i=0:
+       for f=1 to 7:
+          if ip(f)>mx then
+             mx=ip(f),i=f:
+          end if:
+       next f:
+       i+=8:
        return
-160 IF g(sx,sy)=1 THEN
+160 IF g(sx,sy)>0 THEN
     GO To 150
  else
     x=sx,y=sy,i=iif(i<15,i+1,12):
     GO To 120
-    
 170 fill ink i;cx+kx*20-10,cy+ky*20+10:
- g(kx,ky)=1:
+ g(kx,ky)=i,ip(i-8)+=1:
  return
 180 DATA "0FFF80FFF80FFFC0FFFF0FFFF0FFFF0FFFF0FFFF0FFFF0FFFF",
       "0FFFF07FFF07FFF03FFF01FFF007FF00000000000000000000"

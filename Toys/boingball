@@ -26,9 +26,9 @@ CHANGED FALSE
     palette f,iif(int(f/nc2) mod 2,$FFFFFF,$FF0000):
  next f:
  palette 15,$FFCCBB
-60 PAPER 128: CLS: ss=scrh/14,sc=int(scrw/ss): ink 130
-70 for y=1 to 13: rectangle ss*2,y*ss,ss*(sc-4),2 fill: next y:
- for x=ss*2 to ss*(sc-2) step ss: RECTANGLE x,ss,2,ss*12+2 fill: next x:
+60 PAPER 128: CLS: ss=scrw/24,sc=int(scrw/ss),sm=scrh/ss: ink 130
+70 for y=1 to sm-1: rectangle ss,y*ss,ss*(sc-2),2 fill: next y:
+ for x=ss to ss*sc step ss: RECTANGLE x,ss,2,ss*12+2 fill: next x:
  window grab s$,0,0,0,scrw,scrh:
  SAMPLE NEW boing,"boing.wav"
 80 x=scrw/2-rad,y=20,xd=3,yd=0,ya=0.05,a=0

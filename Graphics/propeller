@@ -1,0 +1,25 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/propeller
+CHANGED FALSE
+10 cls 0:
+ K=0,X=scrh/2,xo=scrw/2-x,mc=15,sp=3:
+ dim p(3,2):
+ FOR M=X TO 0 STEP -25:
+    K+=0.05,J=0,st=(2*pi)/mc/sp,
+    p(3,1)=x+xo,p(3,2)=x:
+    FOR L=K TO 2*PI+K+st STEP st:
+       p(1,1)=p(3,1),p(1,2)=p(3,2),
+       p(2,1)=x+xo,p(2,2)=x,
+       p(3,1)=X+xo+M*SIN(L),p(3,2)=X+M*COS(L):
+       polygon p() fill:
+       ink ((J+=1) MOD mc)+1:
+    next L:
+ NEXT M
+20 for f=1 to mc:
+    palette f,0:
+ next f:
+ palette mc,$FFFFFF
+30 palette shl 1,1 to mc:
+ wait screen 40:
+ GO To 30

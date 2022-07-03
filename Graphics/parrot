@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/parrot
+CHANGED FALSE
+10 k1=-10000,k2=10000
+20 paper 0: ink 6: over 12: cls: 
+ palette $FF,$FF0000: Rainbow 0 to 255
+30 s=1:
+ for r=46 to 49:
+    for k=k1 to k2 step s:
+       a=((3*k/20000)+abs(cos(37*pi*k/10000))^6*sin((k/10000)^7*(3*pi/5))+(9/7)*abs(cos(37*pi*k/10000))^16*abs(cos(pi*k/20000))^12*sin(pi*k/10000))*100,
+       b=((-5/4)*abs(cos(37*pi*k/10000))^6*cos(abs(k/10000)^7*(3*pi/5))*(1+3*abs(cos(pi*k/20000)*cos(3*pi*k/20000))^8)+(2/3)*abs(cos(3*pi*k/200000)*cos(9*pi*k/200000)*cos(9*pi*k/100000))^12)*90:
+       circle 400-a,75-b,r/6:
+    next k:
+ next r

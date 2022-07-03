@@ -4,50 +4,47 @@ PROG demos:toys/boingball
 CHANGED FALSE
 10 REM Amiga Boing Ball
 20 PALETTE 0,0;16,0;128,$808080;129,$606060;130,$A000A0;131,$600060: RAINBOW 0 TO 16:
-	screen lock
-30 rad=109,rad2=rad^2,scl=128,scl4=scl/4,nc=16,nc2=nc/2,
-	norm=tau/scl,ang=degtorad 18:
-	list
+ screen lock
+30 rad=109,r2=rad*2,rad2=rad^2,scl=128,scl4=scl/4,nc=16,nc2=nc/2,
+ norm=tau/scl,ang=degtorad 18
 40 cls 0:dim p(2,2):
-	for y=-rad to rad step .75:
-				for x=-rad to rad step .75:
-				   if sqr(x*x+y*y)<rad then
-							   tmp=x/sqr(rad2-y*y),xres=atn(tmp/sqr(1-tmp*tmp))/norm,
-									 tmp=y/rad,yres=atn(tmp/sqr(1-tmp*tmp))/norm,
-									 col=xres+scl4,col=iif((yres+scl4) mod nc<nc2,col+nc2,col):
-										p(1,1)=x,p(1,2)=y:
-										transform2d p() rotate ang:
-									 plot ink 1+(col mod nc);p(1,1)+rad,p(1,2)+rad:
-							end if:
-				next x:
-	next y:
-	window grab b$,0,0,0,rad*2,rad*2 trans 0
+ for y=-rad to rad step .75:
+    for x=-rad to rad step .75:
+       if sqr(x*x+y*y)<rad then
+          tmp=x/sqr(rad2-y*y),xres=atn(tmp/sqr(1-tmp*tmp))/norm,
+          tmp=y/rad,yres=atn(tmp/sqr(1-tmp*tmp))/norm,
+          col=xres+scl4,col=iif((yres+scl4) mod nc<nc2,col+nc2,col):
+          p(1,1)=x,p(1,2)=y:
+          transform2d p() rotate ang:
+          plot ink 1+(col mod nc);p(1,1)+rad,p(1,2)+rad:
+       end if:
+    next x:
+ next y:
+ window grab b$,0,0,0,rad*2,rad*2 trans 0
 50 cls:
-	for f=1 to nc:
+ for f=1 to nc:
     palette f,iif(int(f/nc2) mod 2,$FFFFFF,$FF0000):
  next f:
-	palette 8,$FFCCBB
-60 PAPER 128: CLS: ss=scrh/14,sc=int(scrw/ss)
-70 for y=1 to 13:
-	   rectangle ink 130;ss*2,y*ss,ss*(sc-4),2 fill:
-	next y:
-	for x=ss*2 to ss*(sc-2) step ss:
-	   RECTANGLE ink 130;x,ss,2,ss*12 fill:
-	next x:
-	window grab s$,0,0,0,scrw,scrh:
-	SAMPLE NEW boing,"boing.wav"
-80 x=scrw/2-rad,y=20,xd=3,yd=0,ya=0.05
+ palette 15,$FFCCBB
+60 PAPER 128: CLS: ss=scrh/14,sc=int(scrw/ss): ink 130
+70 for y=1 to 13: rectangle ss*2,y*ss,ss*(sc-4),2 fill: next y:
+ for x=ss*2 to ss*(sc-2) step ss: RECTANGLE x,ss,2,ss*12+2 fill: next x:
+ window grab s$,0,0,0,scrw,scrh:
+ SAMPLE NEW boing,"boing.wav"
+80 x=scrw/2-rad,y=20,xd=3,yd=0,ya=0.05,a=0
 90 DO:
-	   cls:
-				window put s$,0,0,0:
-				circle ink 1;over 2;x+rad/2.5+rad,y+rad,rad*1.05 fill: window put b$,0,x,y
-100    if (x+xd>scrw-rad*2) or (x<0) then
-							SAMPLE PLAY boing RATE 4800 pan sgn xd:
-							xd=-sgn xd*((RND*3)+2): x=iif(x<0,0,scrw-rad*2)
-110    if y+yd>scrh-rad*2 then
-				   yd=-((rnd*4)+2): y=scrh-rad*2:
-							SAMPLE PLAY boing RATE 3000 pan 0
-120    x+=xd,y+=yd,yd+=ya:
-    palette shl sgn xd,1 to nc:
-				wait screen:
-	loop
+    window put s$,0,0,0:
+    circle ink 1;over 2;x+rad/2.5+rad,(y*0.7)+rad,rad*1.05 fill:
+    window put b$,0,x,y
+100    if (x+xd>scrw-r2) or (x<0) then
+       SAMPLE PLAY boing RATE 4800 pan sgn xd:
+       xd=-sgn xd*((RND*3)+2): x=iif(x<0,0,scrw-r2)
+110    if y+yd>scrh-r2 then
+       yd=-((rnd*4)+2): y=scrh-r2:
+       SAMPLE PLAY boing RATE 3000 pan map(x+rad,0 to scrw,-1 to 1)
+120    ox=int x,x+=xd,y+=yd,yd+=ya,ox=abs(ox-int x)/3,a+=ox:
+    do while a>=1:
+       a-=1: palette shr sgn xd,1 to nc:
+    loop
+130    wait screen:
+ loop

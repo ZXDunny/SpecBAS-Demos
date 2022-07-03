@@ -3,21 +3,21 @@ AUTO -1
 PROG demos:graphics/bobkoon
 CHANGED FALSE
 10 t=0,sw=scrw/2,sh=scrh/2:
-	radians:
-	window depth 0,32:
-	paper 0: cls:
-	screen lock:
-	DO:
-	   FOR r=0 TO TAU*9 STEP .01:
-	      s=(sin(r+t)^8)*254,
-							a=iif(s<2,128*s,255-s),
-							i=HSVToRGB((r*r*r) mod 360,192,255)|a shl 24,
-				   v1=tan(r+t)*r*9,
-							r2=r*r+t,
-							v1+=cos(r2)*90+sw:
-				   circle alpha ink i;v1,cos(r+t)*r*9+sin r2*90+sh,s/15 fill:
-	   next r:
-	   t+=.002:
-				wait screen:
-				cls:
-	loop
+ radians:
+ window depth 0,32:
+ paper 0: cls:
+ screen lock:
+ DO:
+    FOR r=0 TO TAU*9 STEP .01:
+       s=abs(sin(r+t)^8)*254,
+       a=iif(s<2,127*s,255-s),
+       i=HSVToRGB((r*r*r) mod 360,192,255)|(a shl 24),
+       v1=tan(r+t)*r*9,
+       r2=r*r+t,
+       v1+=cos(r2)*90+sw:
+       circle alpha ink i;v1,cos(r+t)*r*9+sin r2*90+sh,s/15 fill:
+    next r:
+    t+=.002:
+    wait screen:
+    cls:
+ loop

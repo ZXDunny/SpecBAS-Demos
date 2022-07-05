@@ -3,9 +3,9 @@ AUTO -1
 PROG demos:toys/boingball
 CHANGED FALSE
 10 REM Amiga Boing Ball
-20 PALETTE 0,0;16,0;128,$808080;129,$606060;130,$A000A0;131,$600060: RAINBOW 0 TO 16:
+20 PALETTE 0,0;16,0;252,$808080;253,$606060;254,$A000A0;255,$600060: RAINBOW 0 TO 16:
  screen lock
-30 rad=109,r2=rad*2,rad2=rad^2,scl=128,scl4=scl/4,nc=16,nc2=nc/2,
+30 rad=109,r2=rad*2,rad2=rad^2,scl=1024,nc=128,nc2=nc/2,
  norm=tau/scl,ang=degtorad 18
 40 cls 0:dim p(2,2):
  for y=-rad to rad step .75:
@@ -13,20 +13,18 @@ CHANGED FALSE
        if sqr(x*x+y*y)<rad then
           tmp=x/sqr(rad2-y*y),xres=atn(tmp/sqr(1-tmp*tmp))/norm,
           tmp=y/rad,yres=atn(tmp/sqr(1-tmp*tmp))/norm,
-          col=xres+scl4,col=iif((yres+scl4) mod nc<nc2,col+nc2,col):
+          col=xres,col=iif(yres mod nc<nc2,col+nc2,col):
           p(1,1)=x,p(1,2)=y:
           transform2d p() rotate ang:
           plot ink 1+(col mod nc);p(1,1)+rad,p(1,2)+rad:
        end if:
     next x:
  next y:
- window grab b$,0,0,0,rad*2,rad*2 trans 0
+ window grab b$,0,0,0,r2,r2 trans 0
 50 cls:
- for f=1 to nc:
-    palette f,iif(int(f/nc2) mod 2,$FFFFFF,$FF0000):
- next f:
- palette 15,$FFCCBB
-60 PAPER 128: CLS: ss=scrw/24,sc=int(scrw/ss),sm=scrh/ss: ink 130
+ for f=1 to nc: palette f,iif(int(f/nc2) mod 2,$FFFFFF,$FF0000): next f:
+ for f=nc-1 to nc-8: palette f,$FFCCBB: next f
+60 PAPER 252: CLS: ss=scrw/24,sc=int(scrw/ss),sm=scrh/ss: ink 254
 70 for y=1 to sm-1: rectangle ss,y*ss,ss*(sc-2),2 fill: next y:
  for x=ss to ss*sc step ss: RECTANGLE x,ss,2,ss*12+2 fill: next x:
  window grab s$,0,0,0,scrw,scrh:
@@ -42,9 +40,10 @@ CHANGED FALSE
 110    if y+yd>scrh-r2 then
        yd=-((rnd*4)+2): y=scrh-r2:
        SAMPLE PLAY boing RATE 3000 pan map(x+rad,0 to scrw,-1 to 1)
-120    ox=int x,x+=xd,y+=yd,yd+=ya,ox=abs(ox-int x)/3,a+=ox:
+120    ox=int x,x+=xd,y+=yd,yd+=ya,ox=abs(ox-int x)*2,a+=ox:
     do while a>=1:
        a-=1: palette shr sgn xd,1 to nc:
     loop
 130    wait screen:
  loop
+

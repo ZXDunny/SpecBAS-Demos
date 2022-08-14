@@ -2,13 +2,16 @@ ZXASCII
 AUTO -1
 PROG demos:3d/raytracing_tex
 CHANGED FALSE
-10 PAPER 0: INK 15: CLS: sh=2,so=32,ss=(256-so),hh=int(ss*0.0666667):
+10 PAPER 0: INK 15: CLS: 
+ option "intscaling",1:
+ window size 0,320,200: screen full:
+ sh=2,so=32,ss=(256-so),hh=int(ss*0.0666667):
  palette so,255,255,255:
  palette so+hh,0,192,255:
  palette 255,0,0,192:
  rainbow so to so+hh:
  rainbow so+hh to 255
-20 graphic new gfx load "demos:3d/checks.gif":
+20 graphic new gfx load "checks.gif":
  palette copy gfx,0,so-1 to 0:
  graphic remap gfx:
  gw=gfxw gfx,gh=gfxh gfx:
@@ -22,19 +25,19 @@ CHANGED FALSE
  next f:
  w=scrw/2,h=scrh/2,s=0,sh=scrh/480
 40 FOR k=1 TO spheres:
-	   read r,x,y,z:
+    read r,x,y,z:
     c(k,1)=x+.25,c(k,2)=y,c(k,3)=z+2.1:
     r(k)=r,q(k)=r*r:
  NEXT k:
-	rem radius,x,y,zn follow
+ rem radius,x,y,zn follow
 50 data 8:
  DATA 0.3, 0,   -r,  0:
-	data r,   0,   -r*3,0:
-	data r,   -r*2,-r,  0:
-	data r,   r*2, -r,  0:
-	data 0.2, -0.3,-r,-.4:
-	data r,   0.3, -r,-.4:
-	data r,  -0.3, -r,.4:
+ data r,   0,   -r*3,0:
+ data r,   -r*2,-r,  0:
+ data r,   r*2, -r,  0:
+ data 0.2, -0.3,-r,-.4:
+ data r,   0.3, -r,-.4:
+ data r,  -0.3, -r,.4:
  data r,   0.3, -r,.4
 70 FOR i=1 TO scrh:
     FOR j=0 TO scrw-1

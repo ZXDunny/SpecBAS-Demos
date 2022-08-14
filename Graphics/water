@@ -1,12 +1,48 @@
 ZXASCII
 AUTO -1
-PROG water
+PROG demos:graphics/water
+CHANGED FALSE
 10 REM Water
-20 ns=100,xs=SCRw/(ns-1),sc=.03,d=.05,sp=.075,bh=SCRh/2,spw=200,spst=1/((spw*2)/xs): CONST y=1,v=2,a=3,ld=4,rd=5: INK 255: CLS 0: FOR f=0 TO 255: PALETTE f,0,255-f,192: NEXT f: SCREEN LOCK: FPS 60
-30 DIM s(ns,5): FOR f=1 TO ns: s(f,y)=bh,s(f,v),s(f,a)=0: NEXT f
-40 FOR i=1 TO ns: f=sc*(s(i,y)-bh)+s(i,v)*d,s(i,a)=-f,s(i,y)+=s(i,v),s(i,v)+=s(i,a): NEXT i
-50 DO 5: FOR i=2 TO ns: s(i,ld)=sp*(s(i,y)-s(i-1,y)),s(i-1,v)+=s(i,ld),s(i-1,rd)=sp*(s(i-1,y)-s(i,y)),s(i,v)+=s(i-1,rd): NEXT i: LOOP 
-60 FOR i=2 TO ns: s(i-1,y)+=s(i,ld),s(i,y)+=s(i-1,rd),x=(i-2)*xs,c=x+xs-1: POLYGON x,s(i-1,y) TO c,s(i,y) TO c,SCRh TO x,SCRh FILL: NEXT i
+20 ns=200,xs=SCRw/(ns-1),sc=.03,d=.05,sp=.075,bh=SCRh/2,spw=200,spst=1/((spw*2)/xs): 
+ CONST y=1,v=2,a=3,ld=4,rd=5: 
+ INK 255: CLS 0: 
+ FOR f=0 TO 255: 
+    PALETTE f,0,255-f,192: 
+ NEXT f: 
+ SCREEN LOCK: FPS 60
+30 DIM s(ns,5): 
+ FOR f=1 TO ns: 
+    s(f,y)=bh,s(f,v),s(f,a)=0: 
+ NEXT f
+40 FOR i=1 TO ns: 
+    f=sc*(s(i,y)-bh)+s(i,v)*d,
+    s(i,a)=-f,
+    s(i,y)+=s(i,v),
+    s(i,v)+=s(i,a): 
+ NEXT i
+50 DO 5: 
+    FOR i=2 TO ns: 
+       s(i,ld)=sp*(s(i,y)-s(i-1,y)),
+       s(i-1,v)+=s(i,ld),
+       s(i-1,rd)=sp*(s(i-1,y)-s(i,y)),
+       s(i,v)+=s(i-1,rd): 
+    NEXT i: 
+ LOOP
+60 FOR i=2 TO ns: 
+    s(i-1,y)+=s(i,ld),
+    s(i,y)+=s(i-1,rd),
+    x=(i-2)*xs,c=x+xs-1: 
+    POLYGON x,s(i-1,y) TO c,s(i,y) TO c,SCRh TO x,SCRh FILL: 
+ NEXT i
 70 IF MOUSEBTN=1 THEN GO SUB 90
-80 WAIT SCREEN: RECTANGLE INK 0;OVER 7;0,0,SCRw,SCRh FILL: GO TO 40
-90 x=0: FOR xm=MOUSEx-spw TO MOUSEx+spw STEP xs: IF xm>0 AND xm<SCRw THEN s(1+(xm/xs),v)+=((MOUSEy-bh)/25)*15^-((x-.5)^2*32): END IF: x+=spst: NEXT xm: RETURN 
+80 WAIT SCREEN: 
+ RECTANGLE INK 0;OVER 7;0,0,SCRw,SCRh FILL: 
+ GO TO 40
+90 x=0: 
+ FOR xm=MOUSEx TO MOUSEx+spw STEP xs: 
+    IF xm>0 AND xm<SCRw THEN 
+       s(1+(xm/xs),v)+=((MOUSEy-bh)/25)*15^-(x^2*32): 
+    END IF: 
+    x+=spst: 
+ NEXT xm: 
+ RETURN

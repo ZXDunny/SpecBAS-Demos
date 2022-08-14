@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/turtle spiral 2
+CHANGED FALSE
+10 for f=1 to 7:
+    read r,g,b:
+    palette f,rgbtoint(r,g,b):
+ next f:
+ data 255,128,0,200,0,0,148,0,98,0,0,190,0,128,0,255,255,0,255,170,51
+20 paper 0: Degrees: cls:
+ plot scrw/2,scrh/2: rotate to 90
+30 for x=0 to 300:
+    draw ink (x MOD 6)+1;x:
+    rotate 59:
+ next x

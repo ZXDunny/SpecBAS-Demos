@@ -18,7 +18,7 @@ CHANGED FALSE
  curm=month t,
  cury=year t,
  t=call g(curd,curm,cury)-call g(dob,mob,yob),
- xsc=scrw/60,sh=scrh/2,yo=sh-120,so=t-30,n=0
+ xsc=scrw/60,sh=scrh/2,yo=sh-120,so=t-30,n=0,tt=call g(curd,curm,cury)
 40 cls:
  for y=0 to scrh step xsc:
     plot 0,y:
@@ -27,17 +27,19 @@ CHANGED FALSE
  for x=-30 to 30:
     x1=(t+x-so)*xsc:
     plot x1,0:Draw ink 235;0,scrh:
-    if x=0 then rectangle x1-1,0 to x1+1,scrh fill: end if:
+    if x=0 then rectangle ink 236;x1-1,0 to x1+1,scrh fill: end if:
  next x
-50 for d=so to t+30 step 1/(xsc*2):
+50 Print paper 2;scale 2,2;at 1,1;" "*14;at 2,1;ink 13;" PHYSICAL     ";AT 3,1;INK 14;" EMOTIONAL    ";AT 4,1;INK 12;" INTELLECTUAL ";at 5,1;" "*14
+60 l=len a$+2,o=txtw-1-l:
+ print scale 2,2;paper 2;ink 15;at 1,o;" "*l;at 2,o;" "+a$+" ";at 3,o;" "*l
+70 over 9:
+ for d=so to t+30 step 1/(xsc*2):
     x=(d-so)*xsc:
     circle ink 5;x,fn y(d,23),2 fill:
     circle ink 6;x,fn y(d,28),2 fill:
     circle ink 4;x,fn y(d,33),2 fill:
-    n+=1: if not n mod 8 then
-       wait screen:
-55    print paper 2;scale 2,2;at 1,1;" "*14;at 2,1;ink 13;" PHYSICAL     ";AT 3,1;INK 14;" EMOTIONAL    ";AT 4,1;INK 12;" INTELLECTUAL ";at 5,1;" "*14
-60    l=len a$+2,o=txtw-1-l:
-    print scale 2,2;paper 2;ink 15;at 1,o;" "*l;at 2,o;" "+a$+" ";at 3,o;" "*l:
- next d
-70 pause 0: run
+    n+=1:
+    if not n mod 8 then
+       wait screen
+80 next d
+90 pause 0: run

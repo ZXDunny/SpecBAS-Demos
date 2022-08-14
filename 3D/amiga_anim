@@ -1,0 +1,82 @@
+ZXASCII
+AUTO -1
+PROG /demos/3d/amiga_anim
+CHANGED FALSE
+10 RADIANS: option "intscaling",1: screen full: 
+ PAPER 0: SCREEN LOCK: CLS 
+20 FOR lox=15 TO -15 STEP -.2:
+    m=63,n=63,theta=30,phi=40,d=100,
+    hix=lox+6,loy=-3,hiy=3,sum,xmax,ymax,xmin,ymin=0
+30    DEF FN z(x,y)=SIN(x^2+3*y^2)/(x^2+y^2)+(x^2+5*y^2)*EXP(1-x^2-y^2)/2
+40    theta=theta*pi/180,phi=phi*pi/180,
+    a=d*cos phi*cos theta,
+    b=d*cos phi*sin theta,
+    c=d*sin phi
+50    dim xc(m+1,n+1),yc(m+1,n+1):
+    tx=(hix-lox)/m,ty=(hiy-loy)/n
+60    cls:
+    dfx=1,dtx=m,sx=1,dfy=1,dty=n,sy=1:
+    GO SUb 80
+70    for x=dfx to dtx step sx:
+       for y=dfy to dty step sy:
+          x1=xc(x,y),x2=xc(x,y+1),x3=xc(x+1,y+1),x4=xc(x+1,y),
+          y1=yc(x,y),y2=yc(x,y+1),y3=yc(x+1,y+1),y4=yc(x+1,y):
+          polygon ink 0;x1,y1 to x2,y2 to x3,y3 to x4,y4 fill;
+                  ink 1;x1,y1 to x2,y2 to x3,y3 to x4,y4:
+       next y:
+    next x:
+    wait screen:
+ next lox:
+ GO To 20
+80 DEF FN c(a,b,c,x,y,z)=(x*(b*(b-y)+c*(c-z))+(x-a)*(b*y+c*z))/d:
+ DEF FN ang(x,y,z)=(px*x+py*y+pz*z)/(dp*SQR(x^2+y^2+z^2)):
+ px=FN c(a,b,c,0,0,10),
+ py=FN c(b,a,c,0,0,10),
+ pz=FN c(c,b,a,10,0,0),
+ dp=SQR(px^2+py^2+pz^2),
+ x=lox-tx
+90 for i=1 to m:
+    x=x+tx,j=0,y=loy-ty:
+    for j=1 to n:
+       y+=ty,
+       xc(i,j)=fn z(x,y),
+       sum+=xc(i,j):
+    next j:
+ next i
+100 avg=sum/((m+1)*(n+1)),ym=loy-ty-(loy+hiy)/2,
+ x=lox-tx-(lox+hix)/2:
+ for i=1 to m+1:
+    x+=tx,j=0,y=ym:
+    for j=1 to n+1:
+       y+=ty,z=xc(i,j)-avg,
+       d=a*(a-x)+b*(b-y)+c*(c-z),
+       xc=FN c(a,b,c,x,y,z),
+       yc=FN c(b,a,c,y,x,z),
+       zc=FN c(c,b,a,z,y,x),
+       rad=SQR(xc^2+yc^2+zc^2),
+       s=1:
+       IF SGN(a)<>SGN(yc*pz-zc*py) THEN
+          s=-1
+       ELSE  
+          IF SGN(b)<>SGN(zc*px-xc*pz) THEN
+             s=-1
+          ELSE
+             IF SGN(c)<>SGN(xc*py-yc*px) THEN
+                s=-1
+110       cs=FN ang(xc,yc,zc),sn=SQR(1.00001-cs^2),
+       xc(i,j)=s*rad*sn,yc(i,j)=-rad*cs,
+       xmax=max(xc(i,j),xmax),
+       xmin=min(xc(i,j),xmin),
+       ymax=max(yc(i,j),ymax),
+       ymin=min(yc(i,j),ymin):
+    next j:
+ next i
+120 ax=(xmax+xmin)/2,ay=(ymax+ymin)/2,hzy=240:
+ my=602/(xmax-xmin)*0.75,mx=602/(xmax-xmin)
+130 FOR x=1 TO m+1:
+    FOR y=1 TO n+1:
+       xc(x,y)=400+mx*(xc(x,y)-ax),
+       yc(x,y)=hzy+my*(yc(x,y)-ay):
+    NEXT y:
+ NEXT x:
+ RETURN

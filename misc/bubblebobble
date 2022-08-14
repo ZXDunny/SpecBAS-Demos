@@ -1,21 +1,20 @@
 ZXASCII
 AUTO -1
-PROG /demos/misc/bubblebobble
+PROG demos:misc/bubblebobble
 CHANGED FALSE
 10 REM Originally by vl_tone
 20 D$="3157044M 43O 3PK 4NIJ 5JTGSG 2OIT1G1S 3MJT1G1S 4HNT1G1SG 2NGOT1G1SM 3MH1MGTGSH 4GAG4S 3GCIJ 3GCHV 2MGBHX 1MKCV LETC",F$=" "*8,P=6
 30 PAPER 0: CLS: SCALE 3,3:
-	print 'F$;:
-	DO:
-	   C=code D$(P):
-				IF C=32 then
-				   PRINT 'F$;
-				ELSE
-				   C=C-59+(C<64)*40:
-							INK VAL D$(C div 6)+(8*(C<30)):
+ DO:
+    C=code D$(P):
+    IF C=32 then
+       PRINT F$;
+    ELSE
+       C=C-59+(C<64)*40:
+       INK VAL D$(C div 6)+(8*(C<30)):
        FOR X=1 TO (C MOD 6)+1:
-							   PRINT "ª";:
-										wait screen:
-				   NEXT X
+          PRINT "ª";:
+          wait screen:
+       NEXT X
 40    P=P+1:
-	LOOP UNTIL P>115
+ LOOP UNTIL P>115

@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/cannabis
+CHANGED FALSE
+10 def fn c(t)=(1+0.9*cos(8*t))*(1+0.1*cos(24*t))*(0.9+0.05*cos(200*t))*(1+sin t)
+20 ink 0: paper 8: cls:
+ origin -4,-4 to 4,1:
+ plot 0,-3.96:
+30 for t=-pi to pi step .001:
+    r=fn c(t-pi/2),
+    x=r*sin t,y=r*cos t:
+    draw to x,y:
+ next t:
+ fill ink 4;0,-1

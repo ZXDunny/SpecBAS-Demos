@@ -1,0 +1,29 @@
+ZXASCII
+AUTO -1
+PROG /demos/3D/diamond
+CHANGED FALSE
+10 origin flip:
+ t=0,m=400,p6=pi/6:
+ window depth 0,32:
+ paper 0: ink $4080FFFF:
+ dim ik=$200000FF,$2000FFFF;p(12,2)
+20 cls:
+ t=(t+0.01):
+ for i=0 to 12:
+    r=cos(p6*i+t),
+    x=m-300*r,
+    a=m-250*r,
+    y=350-40*cos(p6*(i-3)+t),
+    b=y+50,ii=ik(i mod 2+1):
+    if i>0 then
+       polygon alpha ink ii;m,100 to x,y to c,d fill:
+       polygon alpha ink ii;x,y to a,b to e,f to c,d fill:
+       polygon alpha m,100 to x,y to c,d:
+       polygon alpha x,y to a,b to e,f to c,d:
+       p(i,1)=a,p(i,2)=b:
+    end if:
+    c=x,d=y,e=a,f=b:
+ next i:
+ polygon alpha ink $4080FFFF;p() fill:
+ wait screen:
+ GO To 20

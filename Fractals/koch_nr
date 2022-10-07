@@ -1,0 +1,24 @@
+ZXASCII
+AUTO -1
+PROG /demos/Fractals/koch_nr
+CHANGED FALSE
+1 GO SUB 10: GO TO 10000
+10 LET s=-SIN (PI/3): LET c=COS (PI/3)
+20 LET u=200: LET v=350: LET x=400: LET y=0
+30 GO SUB 90
+40 LET z=x*c-y*s: LET y=y*c+x*s: LET x=z
+50 LET z=x*c-y*s: LET y=y*c+x*s: LET x=z
+60 GO SUB 90
+70 LET z=x*c-y*s: LET y=y*c+x*s: LET x=z
+80 LET z=x*c-y*s: LET y=y*c+x*s: LET x=z
+90 IF x*x+y*y<2 THEN PLOT u,v: LET u=u+x: LET v=v+y: RETURN 
+100 LET x=x/3: LET y=y/3
+110 GO SUB 90
+120 LET z=x*c+y*s: LET y=y*c-x*s: LET x=z
+130 GO SUB 90
+140 LET z=x*c-y*s: LET y=y*c+x*s: LET x=z
+150 LET z=x*c-y*s: LET y=y*c+x*s: LET x=z
+160 GO SUB 90
+170 LET z=x*c+y*s: LET y=y*c-x*s: LET x=z
+180 GO SUB 90
+190 LET x=3*x: LET y=3*y: RETURN 

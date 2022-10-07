@@ -1,0 +1,24 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/mathographics
+CHANGED FALSE
+10 DIM PX(6,2)
+20 K=4,C=1.414,sw=128,sh=154/2:
+ paper 0: ink 15: over 8: origin 0,0 to 256,154: CLS: I=1
+30 PRINT centre 0;"Mathographics R. Dixon 1987"
+40 D=2*PI/C,A=1
+50 FOR S=0 TO 70:
+    T=A^.2,R=K^T,P=1:
+    ink I+=iif(i<7,1,-6):
+    X=R*COS A+sw,Y=R*SIN A+sh:
+    FOR L=0 TO 5:
+       B=L*2*PI*2/5,E=1.04^S,
+       PX(P,1)=E*COS B+X,
+       PX(P,2)=E*SIN B+Y,
+       P+=1:
+    NEXT L:
+    polygon PX() fill;ink i+8;PX():
+    fill X,Y:
+    A+=D:
+    wait screen:
+ NEXT S

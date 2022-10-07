@@ -1,6 +1,19 @@
 ZXASCII
 AUTO -1
-PROG batoide
+PROG demos:graphics/batoide
+CHANGED FALSE
 10 REM Batoidea
-20 PAPER 1: CLS: FOR f=0 TO 255: PALETTE f,f,f,128: NEXT f: SCREEN LOCK 
-30 e=70,s=273,t=0,i=TAU/180: DO: FOR a=0 TO e: FOR v=0 TO s: LET x=60+2*(v+a+1),y=60+2*(a+119-((-SIN(a/e*t-PI/2)+1)*(-SIN(v/s*t-PI/2)+1)*30)): DRAW INK a*3;x,y TO x,438: NEXT v: NEXT a: INC t,i: WAIT SCREEN: CLS: LOOP 
+20 PAPER 1: CLS: FOR f=0 TO 255: PALETTE f,f,f,128: NEXT f: SCREEN LOCK
+30 e=70,s=273,t=0,i=TAU/180: 
+ DO: 
+    FOR a=0 TO e: 
+       FOR v=0 TO s: 
+          x=60+2*(v+a+1),
+          y=60+2*(a+119-((-SIN(a/e*t-PI/2)+1)*(-SIN(v/s*t-PI/2)+1)*30)): 
+          DRAW INK a*3;x,y TO x,438: 
+       NEXT v: 
+    NEXT a: 
+    t+=i: 
+    WAIT SCREEN: 
+    CLS: 
+ LOOP

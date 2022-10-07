@@ -2,12 +2,13 @@ ZXASCII
 AUTO -1
 PROG demos:graphics/draw_bug
 CHANGED FALSE
-10 FOR a=3 TO 1666 STEP 6:
-	   FOR b=0 TO 3 STEP 3:
-				   plot 200,200:
-							DRAW 100,100,a+b
+10 r=(scrw/800)*100,sw=(scrw-r)/2,sh=(scrh-r)/2:
+ FOR a=3 TO 1666 step 3:
+    FOR b=0 TO 3 STEP 3:
+       plot sw,sh:
+       DRAW r,r,a+b
 20    NEXT b:
-				wait screen:
-				CLS:
-	NEXT a:
-	GO TO 10
+    wait screen:
+    CLS:
+ NEXT a:
+ GO TO 10

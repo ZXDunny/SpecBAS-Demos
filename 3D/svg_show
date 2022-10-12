@@ -1,28 +1,16 @@
 ZXASCII
 AUTO -1
-PROG /demos/3D/svg_show
+PROG demos:3d/svg_show
 CHANGED FALSE
 10 stream new s,"demos:3d/models/r2d2":
  stream read s,f$,streamlen s:
- stream close s:
- a=1
+ stream close s
 20 do:
-    print at 0,0;"Please wait - ";a;"/9":
     read s$,r$:
     f$=replace$(f$,s$,r$):
-    a+=1:
  loop until s$=""
-30 daTa "M ;","",#13,"",#10,"",";",""," ","","L",
+30 daTa "M ;","",#13,"",#10,""," ","",";",": WAIT SCREEN ","L",
       ": DRAW TO ","M",": MOVE TO ","END","","",""
-40 asp=scrh/scrw,w=16000:
- origin -w/4,0 to (w/4)*3,w*asp flip:
- f$=f$(3 to ),
- op=1:
- do:
-    p=pos(":",f$,op):
-    if p>0 then
-       t$=f$(op to p-1):
-       op=p+1:
-       execute t$
-50 LOOP until p=0
-60 pause 0
+40 w=16000:
+ origin -w/8,0 to (w/8)*7,w*scrh/scrw flip:
+ EXECUTE f$(3 to )

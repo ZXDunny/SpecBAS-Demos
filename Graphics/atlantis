@@ -4,36 +4,36 @@ PROG demos:graphics/atlantis
 CHANGED FALSE
 10 REM Atlantis, Originally by Tiffany Rayside
 20 screen lock:cls 0:
-	window origin 0,-scrw/2,-scrh/2 to scrw/2,scrh/2:
-	FOR f=0 TO 255:
-	   PALETTE f,f,f,64+(f*.75):
-	NEXT f:
-	oldn,n=0
+ window origin 0,-scrw/2,-scrh/2 to scrw/2,scrh/2:
+ FOR f=0 TO 255:
+    PALETTE f,f,f,64+(f*.75):
+ NEXT f:
+ oldn,n=0
 30 do while n=oldn:
-	   n=int((rnd*40)+30)/10,pn=pi/n:
-	loop:
-	oldn=n:
-	ink n*5:
-	over 2
+    n=int((rnd*40)+30)/10,pn=pi/n:
+ loop:
+ oldn=n:
+ ink n*5:
+ over 2
 40 t=0,num=scrh,
-	s,a,b,x,y,x1,y1,
-	w=scrw/2,h=scrh/2
+ s,a,b,x,y,x1,y1,
+ w=scrw/2,h=scrh/2
 50 do:
-	   cls:
-	   x=0:
-				for j=0 to num-1:
-				   x-=.36,
-							y=x*sin(3*t+x/20.9)/.88,
-							x1=x*cos b-y*sin b,
-							y1=x*sin b+y*cos b,
-							b=(j*2)*pn:
-							draw to x1,y1:
-							plot ink 0;over 0;x1,y1:
-				next j:
-	   t+=1/60:
-				wait screen:
-	if inkey$="" then
-	   loop
-	else
-	   do : loop until inkey$="":
-				GO To 30
+    cls:
+    x=0:
+    for j=0 to num-1:
+       x-=.36,
+       y=x*sin(3*t+x/20.9)/.88,
+       x1=x*cos b-y*sin b,
+       y1=x*sin b+y*cos b,
+       b=(j*2)*pn:
+       draw to x1,y1:
+       plot ink 0;over 0;x1,y1:
+    next j:
+    t+=1/60:
+    wait screen:
+ if inkey$="" and mousebtn=0 then
+    loop
+ else
+    do : loop until inkey$="" and mousebtn=0:
+    GO To 30

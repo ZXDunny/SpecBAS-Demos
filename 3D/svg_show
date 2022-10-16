@@ -2,15 +2,18 @@ ZXASCII
 AUTO -1
 PROG demos:3d/svg_show
 CHANGED FALSE
-10 stream new s,"demos:3d/models/r2d2":
+10 paper 16: over 12: ink 32: cls:
+ palette 0,$202080;255,$FFFFFF:
+ rainbow 0 to 255
+20 stream new s,"demos:3d/models/b2emo":
  stream read s,f$,streamlen s:
  stream close s
-20 do:
+30 do:
     read s$,r$:
     f$=replace$(f$,s$,r$):
  loop until s$=""
-30 daTa "M ;","",#13,"",#10,""," ","",";",": WAIT SCREEN ","L",
-      ": DRAW TO ","M",": MOVE TO ","END","","",""
-40 w=16000:
+40 daTa "M ;","",#13,"",#10,""," ","",";","","L",
+      ": draw to ","M",": plot ","END","","",""
+50 w=6000:
  origin -w/8,0 to (w/8)*7,w*scrh/scrw flip:
  EXECUTE f$(3 to )

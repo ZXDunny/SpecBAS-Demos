@@ -1,15 +1,16 @@
 ZXASCII
 AUTO -1
-PROG /demos/Graphics/flux
+PROG demos:graphics/flux
 CHANGED FALSE
 10 n=10:
- DIM l(n,7):
+ DIM l(n,8):
  for i=1 to n:
     l(i,1),l(i,2)=rnd,l(i,3),l(i,4)=rnd*0.005,
-    l(i,5)=0,l(i,6)=rnd+1,l(i,7)=rnd*.125:
+    l(i,5)=0,l(i,6)=rnd+1,l(i,7)=rnd*.125,l(i,8)=rnd*100:
  next i:
- mj=0
-20 paper 0: 
+ mj=.01:
+ mv=5
+20 paper 0:
  for i=1 to 255: palette hsv i,i*1.41,255,255: next i:
  cls
 30 screen lock:
@@ -19,12 +20,12 @@ CHANGED FALSE
     for i=1 to n:
        plot 0,240:
        for x=0 to scrw-1:
-          plot ink (frac(l(i,7)+(x*.0007))*254)+1;x,240+(sin(pi/scrw*x)*((noise((x-l(i,5))/50,l(i,1),l(i,2))-.5)*(100+(mj*20)))):
+          draw ink (frac(l(i,7)+(x*.0007))*254)+1;to x,240+(sin(pi/scrw*x)*((noise((x-l(i,5)+l(i,8))/50,l(i,1),l(i,2))-.5)*(100+(mj*20)))):
        next x:
        l(i,1)+=l(i,3)*mj2,l(i,2)+=l(i,4)*mj2,
        l(i,5)+=l(i,6)*mj,l(i,7)+=.001:
     next i:
-    mj+=iif(mousebtn<>0,.05,-.03),
-    mj=min(5,max(0,mj)):
+    mv=max(0,min(mv+(((MOUSEBTN=0)-(MOUSEBTN<>0))*.05),5)),
+    mj=2.5*(cos(pi*(mv/5))+1):
     wait screen:
  loop

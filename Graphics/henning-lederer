@@ -1,0 +1,21 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/henning-lederer
+CHANGED FALSE
+10 rem Henning Lederer effect
+20 sw,sh=300,
+ tx=(scrw-sw)/2-4,ty=(scrh-sh)/2-4,
+ bx=tx+sw+8,by=ty+sh+8,sh2=scrh/2,o=0
+30 paper 5: cls
+40 do:
+    clip off:
+    rectangle ink 0;tx,ty to bx,by fill:
+    clip tx+4,ty+4 to bx-3,by-3
+50    cx1=tx-sw,cx2=bx+sw:
+    for r=(sw*2)+32 to sw step -16:
+       circle over 1;ink 5;cx1-o,sh2,r fill:
+       circle over 1;ink 6;cx2+o,sh2,r fill:
+    next r:
+    o+=1,o-=32*(o=32):
+    wait screen:
+ loop

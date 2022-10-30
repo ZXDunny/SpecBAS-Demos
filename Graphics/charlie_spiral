@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/charlie_spiral
+CHANGED FALSE
+10 paper 0: ink 8: over 12: cls:
+ for f=1 to 255: palette hsv f,f*1.4,255,255: next f:
+ t=0,s=7
+20 do:
+    cls:
+    for c=1 to 2000:
+       h=c+t,cx=s*(15*(sin(6*h/pi)+sin(3*h))+57.14),
+       h=c+t*2,cy=s*(15*(cos(6*h/pi)+cos(3*h))+34.29):
+       circle cx,cy,5 fill:
+    next c:
+    wait screen:
+    t+=.003:
+ loop

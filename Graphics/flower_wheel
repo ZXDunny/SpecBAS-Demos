@@ -1,0 +1,22 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/flower_wheel
+CHANGED FALSE
+10 def proc c(x,y,r,a,n,o):
+    if n>0 then
+       for t=0 to tau step pi/3:
+          xx=x+r*cos(t+o),
+          yy=y+r*sin(t+o):
+          circle ink 14-n;xx,yy,r:
+          proc c(xx,yy,a*r,a,n-1,-o-n*pi/180):
+       next t:
+    end if:
+ end proc
+20 paper 0: ink 15:
+ o=0:
+ do:
+    o+=pi/180:
+    cls:
+    proc c(scrw/2,scrh/2,scrw/5,.25,4,o):
+    wait screen:
+ loop

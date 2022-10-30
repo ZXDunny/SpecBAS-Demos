@@ -1,0 +1,23 @@
+ZXASCII
+AUTO -1
+PROG /demos/Fractals/rotating_attractor
+CHANGED FALSE
+10 const p=28,s=10,h=0.01,b=8/3:
+ rot=0,sw=scrw/2:
+ screen lock: ink 14: paper 0:
+ Do:
+    Cls:
+    rot+=0.01,x=0.3,y=0.3,z=0.456,
+    xx=x*Cos rot-y*Sin rot,
+    yy=x*Sin rot+y*Cos rot+2500:
+    plot sw+35*xx*700/yy,scrh-37*z*650/yy:
+    For i=0 To 7000:
+        x=x+h*s*(y-x),
+        y=y+h*(x*(p-z)-y),
+        z=z+h*(x*y-b*z),
+        xx=x*Cos rot-y*Sin rot,
+        yy=x*Sin rot+y*Cos rot+2500:
+        draw to sw+35*xx*700/yy,scrh-37*z*650/yy:
+    Next i:
+    wait screen:
+ Loop

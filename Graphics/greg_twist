@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/greg_twist
+CHANGED FALSE
+10 REM from BBC Bot (@greg_p_kennedy)
+20 C=0: paper 0: cls: radians:
+ dim k$(33):
+ def fn S(J)=ceil(20+15*SIN(PI*(J-50)/66)):
+ def fn K$(J)="ª"*(FN S(J+33)-FN S(J))
+30 option "scrollcnt",255:
+ A$=CHR$ 16+QCHR$(10+(4*C)),
+ B$=CHR$ 16+QCHR$(14-(4*C)):
+ FOR J=1 TO 33:
+    PRINT tab 28+FN S(J);A$+FN K$(J)+B$+FN K$(34-J):
+ NEXT J:
+ C=1-C:
+ GO TO 30

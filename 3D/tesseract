@@ -1,0 +1,36 @@
+ZXASCII
+AUTO -1
+PROG demos:3d/tesseract
+CHANGED FALSE
+10 rem Rotating tesseract
+20 rem adapted from Charlie Veniot's code
+30 option "base",0:
+ dim x(16),y(16),z(16),w(16),n=-1,1,1,-1:
+ for i=0 to 15:
+    i3=i&3,i7=i&7,
+    w(i)=(i>7)-(i<8),z(i)=(i7>3)-(i7<4),
+    y(i)=(i3>1)-(i3<2),x(i)=n(i3):
+ next i:
+ t=0,z0=1500,d=700,a=pi/3,b=pi/12,sc=90,
+ ca=cos a,sa=sin a,cb=cos b,sb=sin b
+40 do:
+    cls 0: ink 4: ct=cos t,st=sin t:
+    proc t(0,0);t(1,1);t(2,1);t(3,1)
+50    proc t(0,1);t(4,0);t(4,1);t(5,1);t(6,1);t(7,1)
+60    proc t(4,1): for i=0 to 3: proc t(i,0);t(i+4,1): next i: ink 2
+70    proc t(8,0);t(9,1);t(10,1);t(11,1)
+80    proc t(8,1);t(12,0);t(12,1);t(13,1);t(14,1);t(15,1)
+90    proc t(12,1): for i=8 to 11: proc t(i,0);t(i+4,1): next i:ink 3
+100    for i=0 to 7: proc t(i,0);t(i+8,1): next i
+110    t+=.01:
+    wait screen:
+ loop
+120 def proc t(i,j):
+    x2=x(i),y2=y(i)*ct-w(i)*st,z2=z(i),
+    w2=3/(3+(y(i)*st+w(i)*ct)),x2*=w2,y2*=w2,z2*=w2,
+    x3=x2*ct-z2*st,z3=x2*st+z2*ct,x2=x3,z2=z3,
+    x3=x2*ca-y2*sa,y3=x2*sa+y2*ca,x2=x3*sc,y2=y3,
+    y3=y2*cb-z2*sb,z3=y2*sb+z2*cb,y2=y3*sc,z2=z3*sc,
+    p=scrw/2+2*x2*d/(y2+z0),q=scrh/2-2*z2*d/(y2+z0):
+    if j then draw to p,q else plot p,q
+130 end proc

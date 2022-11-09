@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/fn(pills)
+CHANGED FALSE
+10 PALETTE 255,$FFFFFF: RAINBOW 0 TO 255
+20 for xp=0 to scrw-1:
+    for yp=0 to scrh-1:
+       x=xp/20,y=yp/20,
+       i=sqr(abs(sin(x+cos(y+sin(x+cos y)))*sin(y+cos(x+sin(y+cos x)))))*255:
+       plot ink i;xp,yp:
+    next yp:
+ next xp

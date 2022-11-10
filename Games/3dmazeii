@@ -34,11 +34,11 @@ CHANGED FALSE
 300 IF KEYST KEY_DOWN THEN INC px,IIF(mp(int(px-dx*2*ms),int py)=0,-dx*ms,0): INC py,IIF(mp(int px,int(py-dy*2*ms))=0,-dy*ms,0)
 310 CLS : GO TO 60
 320 REM Generate maze
-330 LET m$="1"*mw*mh: LET b$="1"*mw+(("1"+(" "*(mw-2))+"1")*(mh-2))+("1"*mw): LET cc=mw+2: DIM of=-1,-mw,1,mw: LET m$(cc)="0": LET stk$=QCHR$ cc: DIM nb(4)
+330 LET m$="1"*mw*mh: LET b$="1"*mw+(("1"+(" "*(mw-2))+"1")*(mh-2))+("1"*mw): LET cc=mw+2: DIM of=-1,-mw,1,mw: LET m$(cc)="0": LET stak$=QCHR$ cc: DIM nb(4)
 340 LET nn=0: FOR n=1 TO 4: IF b$(cc+of(n))<>"1" THEN IF m$(cc+(of(n)*2))<>"0" THEN INC nn: LET nb(nn)=n
 350 NEXT n
-360 IF nn>0 THEN LET o=of(nb(INT(RND*nn)+1)): LET m$(cc+o)="0": LET m$(cc+(o*2))="0": LET stk$=(QCHR$(cc) AND nn>1)+stk$: INC cc,o*2: GO TO 340
-370 IF stk$<>"" THEN LET cc=QCODE stk$: LET stk$=stk$(5 TO): GO TO 340
+360 IF nn>0 THEN LET o=of(nb(INT(RND*nn)+1)): LET m$(cc+o)="0": LET m$(cc+(o*2))="0": LET stak$=(QCHR$(cc) AND nn>1)+stak$: INC cc,o*2: GO TO 340
+370 IF stak$<>"" THEN LET cc=QCODE stak$: LET stak$=stak$(5 TO): GO TO 340
 380 FOR n=0 TO LEN m$-1: LET mp(n MOD mw,n DIV mw)=VAL m$(n+1)*138: NEXT N: LET mp(mw-1,mh-2)=0: RETURN
 390 REM Set up palette
 400 PALETTE 3,128,80,0: PALETTE 1,192,128,0: PALETTE 2,80,80,0: PALETTE 4,192,192,0: PALETTE 6,0,128,0: PALETTE 8,255,0,0

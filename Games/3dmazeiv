@@ -89,7 +89,7 @@ CHANGED FALSE
        ftx=((wt*fwx+(1-wt)*px)*txw) MOD txw,
        fty=((wt*fwy+(1-wt)*py)*txh) MOD txh,
        nx=int x,ny=int y:
-							PLOT INK GPOINT(wall,ftx+600,fty);nx,ny;INK GPOINT(wall,ftx+750,fty);nx,h-ny:
+       PLOT INK GPOINT(wall,ftx+600,fty);nx,ny;INK GPOINT(wall,ftx+750,fty);nx,h-ny:
     NEXT y
 250 NEXT x
 260 REM Minimap
@@ -131,7 +131,7 @@ CHANGED FALSE
  cc=mw+2:
  DIM of=-1,-mw,1,mw:
  m$(cc)="0":
- stk$=QCHR$ cc:
+ stak$=QCHR$ cc:
  DIM nb(4)
 400 nn=0:
  FOR n=1 TO 4:
@@ -144,11 +144,11 @@ CHANGED FALSE
     o=of(nb(INT(RND*nn)+1)),
     m$(cc+o)="0",
     m$(cc+(o*2))="0",
-    stk$=(QCHR$(cc) AND nn>1)+stk$,
+    satk$=(QCHR$(cc) AND nn>1)+stak$,
     cc+=o*2:
     GO TO 400
-430 IF stk$<>"" THEN
-    cc=QCODE stk$,stk$=stk$(5 TO):
+430 IF stak$<>"" THEN
+    cc=QCODE stak$,stak$=stak$(5 TO):
     GO TO 400
 440 FOR n=0 TO LEN m$-1:
     mp(n MOD mw,n DIV mw)=VAL m$(n+1)*138:

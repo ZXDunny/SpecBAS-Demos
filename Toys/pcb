@@ -5,12 +5,12 @@ CHANGED FALSE
 10 REM PCB
 20 PALETTE 8,3,$22,3: PALETTE 0,$f1,$f9,$0d: PAPER 8: INK 0: CLS
 30 cs=8,cnt=15,mw=SCRw/cs,mh=SCRh/cs,dn=0: DIM mp(mw,mh),n(cnt,5): DIM mx=-1,0,1,1,1,0,-1,-1: DIM my=-1,-1,-1,0,1,1,1,0: DIM ld=8,1,2,3,4,5,6,7: DIM rd=2,3,4,5,6,7,8,1: FOR x=1 TO mw: mp(x,1),mp(x,mh-1)=1: NEXT x: FOR y=1 TO mh: mp(1,y),mp(mw-1,y)=1: NEXT y
-40 FOR f=1 TO cnt: INK 8: GO SUB 90: INK 0: CIRCLE n(f,1)*cs,n(f,2)*cs,3 FILL: NEXT f
+40 FOR f=1 TO cnt: INK 8: GO SUB 90: INK 0: CIRCLE n(f,1)*cs,n(f,2)*cs,1.5 FILL: NEXT f
 50 FOR f=1 TO cnt: ox=n(f,1),oy=n(f,2),nx=ox+mx(n(f,3)),ny=oy+my(n(f,3)): IF mp(nx,ny)<>0 THEN GO SUB 120: GO TO 80
 60 m=mp(nx+mx(ld(n(f,3))),ny+my(ld(n(f,3))))
 70 n(f,1)=nx,n(f,2)=ny,mp(nx,ny)=n(f,3): DRAW ox*cs,oy*cs TO nx*cs,ny*cs: n(f,5)-=1: IF n(f,5)<=0 OR m<>0 THEN GO SUB 120
 80 NEXT f: WAIT SCREEN: GO TO 50
-90 CIRCLE n(f,1)*cs,n(f,2)*cs,3 FILL : DO: nx=2+INT(RND*(mw-4)),ny=2+INT(RND*(mh-4)): LOOP UNTIL mp(nx,ny)=0: n(f,1)=nx,n(f,2)=ny,n(f,4)=0: CIRCLE nx*cs,ny*cs,3 FILL: dn+=1: IF dn=500 THEN PAUSE 200: RUN
+90 CIRCLE n(f,1)*cs,n(f,2)*cs,1.5 FILL : DO: nx=2+INT(RND*(mw-4)),ny=2+INT(RND*(mh-4)): LOOP UNTIL mp(nx,ny)=0: n(f,1)=nx,n(f,2)=ny,n(f,4)=0: CIRCLE nx*cs,ny*cs,1.5 FILL: dn+=1: IF dn=500 THEN PAUSE 200: RUN
 100 e$="": FOR n=1 TO 8: IF mp(nx+mx(n),ny+my(n))=0 THEN e$=e$+CHR$ n: END IF: NEXT n: IF e$<>"" THEN a=CODE e$(1+INT(RND*LEN e$)): n(f,3)=a,n(f,5)=INT(RND*MAX(mw,mh)): RETURN
 110 GO TO 90
 120 IF RND>.2 AND n(f,4)<2 THEN INC n(f,3),1,1 TO 8: n(f,4)+=1,n(f,5)=INT(RND*MAX(mw,mh)): ELSE GO TO 90

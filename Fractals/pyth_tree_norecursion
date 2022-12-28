@@ -1,0 +1,25 @@
+ZXASCII
+AUTO -1
+PROG /demos/fractals/pyth_tree_norecursion
+CHANGED FALSE
+100 dim p(13,13):over 4:
+ w=scrw,h=w*0.6,w2=w/2,diff=w/14,d=1:
+ p(1,1)=w2-diff,p(1,2)=h-10,
+ p(1,3)=w2+diff,p(1,4)=h-10,p(1,13)=110:
+ GO TO 1000
+110 stop
+1000 p(d,5)=p(d,3)-p(d,1),p(d,6)=p(d,2)-p(d,4),
+ p(d,7)=p(d,3)-p(d,6),p(d,8)=p(d,4)-p(d,5),
+ p(d,9)=p(d,1)-p(d,6),p(d,10)=p(d,2)-p(d,5),
+ p(d,11)=p(d,9)+(p(d,5)-p(d,6))/2,p(d,12)=p(d,10)-(p(d,5)+p(d,6))/2:
+ polygon ink d;p(d,1),p(d,2) to p(d,3),p(d,4) to p(d,7),p(d,8) to p(d,9),p(d,10) fill:
+ if d<=12 then
+    d+=1:
+    p(d,1)=p(d-1,9),p(d,2)=p(d-1,10),p(d,3)=p(d-1,11),p(d,4)=p(d-1,12),p(d,13)=1010:
+    GO to 1000
+ else
+    go to 1030
+1010    p(d,1)=p(d-1,11),p(d,2)=p(d-1,12),p(d,3)=p(d-1,7),p(d,4)=p(d-1,8),p(d,13)=1020:
+    GO to 1000
+1020    d-=1
+1030 GO To p(d,13)

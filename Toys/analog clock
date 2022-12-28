@@ -69,7 +69,7 @@ CHANGED FALSE
                xc+COS(h-180)*20,yc+SIN(h-180)*20 FILL
 170 CIRCLE INK 11;xc,yc,8 FILL:
  CIRCLE INK 0;xc,yc,4 FILL
-180 IF (pm<>cm) and (cm IN [0,15,30,45]) THEN
+180 IF (pm<>cm) and (cm IN [0,15,30,45]) and cs=0 THEN
     pm=cm:
     GO SUb 260
 190 WAIT SCREEN:

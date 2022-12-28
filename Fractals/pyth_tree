@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG /demos/fractals/pyth_tree
+CHANGED FALSE
+10 rem Pythagoras tree
+20 def proc t(x1,y1,x2,y2,d):
+    If d<=12 Then 
+       local dx=x2-x1,dy=y1-y2,
+             x3=x2-dy,y3=y2-dx,
+             x4=x1-dy,y4=y1-dx,
+             x5=x4+(dx-dy)/2,y5=y4-(dx+dy)/2:
+       polygon x1,y1 to x2,y2 to x3,y3 to x4,y4:
+       proc t(x4,y4,x5,y5,d+1):
+       proc t(x5,y5,x3,y3,d+1)
+30 End proc
+40 w=scrw,h=w*0.6,w2=w/2,diff=w/14:
+ proc t(w2-diff,h-10,w2+diff,h-10,0)

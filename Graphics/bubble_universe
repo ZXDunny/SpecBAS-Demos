@@ -4,17 +4,17 @@ PROG demos:graphics/bubble_universe
 CHANGED FALSE
 10 const n=200,r=tau/235:
  x,y,v,t=0,sz=200,sw=scrw/sz,sh=scrh/sz:
- window depth 0,32:
+ window depth 0,32: cls 0:
  origin -sw,-sh to sw,sh:
  screen lock:
  do:
-    cls 0:
-    for i=0 to n;j=0 to n:
+    rectangle alpha ink $30000000;-2.01,-2.01 to 2.01,2.01 fill:
+    for i=0 to n step 2;j=0 to n step 2:
        u=sin(i+v)+sin(r*i+x),
        v=cos(i+v)+cos(r*i+x),
        x=u+t:
-       plot ink rgbtoint(i,j,99);u,v:
+       circle ink rgbtoint(i,j,99);u,v,0.006 fill:
     next j;i:
-    t+=.025:
+    t+=.00625:
     wait screen:
  loop

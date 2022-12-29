@@ -1,7 +1,8 @@
 ZXASCII
 AUTO -1
-PROG polyhedra
-5 RADIANS: PAPER 6: CLS 
+PROG demos:graphics/polyhedra
+CHANGED FALSE
+5 RADIANS: PAPER 6: ink 1: CLS
 10 INPUT "How many sides? ";n
 20 FOR r=20 TO SCRh/2-20 STEP 2
 25 LET x=SCRw/2: LET y=SCRh/2

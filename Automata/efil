@@ -3,7 +3,7 @@ AUTO -1
 PROG demos:automata/efil
 CHANGED FALSE
 10 REM Efil remake from Your Sinclair
-20 LET sx=32,sy=24,cs=MIN(SCRw/(sx+3),SCRh/(sy+3)),hcs=cs/2.35,dmo=0,offx=hcs+((SCRw-(cs*sx))/2),offy=hcs+((SCRh-(cs*sy))/2): DIM af(8),cl(8),d(sx,sy),e(sx,sy),xo=-1,0,1,1,1,0,-1,-1: DIM yo=-1,-1,-1,0,1,1,1,0
+20 LET sx=32,sy=24,cs=trunc(MIN(SCRw/(sx+3),SCRh/(sy+3))),hcs=cs/2.25,dmo=0,offx=hcs+((SCRw-(cs*sx))/2),offy=hcs+((SCRh-(cs*sy))/2): DIM af(8),cl(8),d(sx,sy),e(sx,sy),xo=-1,0,1,1,1,0,-1,-1: DIM yo=-1,-1,-1,0,1,1,1,0
 30 PAPER 0: CLS: RESTORE 220+(dmo*40): GO SUB 70: CLEAR d(),7
 40 EXECUTE e$
 50 LET xp=offx,yp=offy: FOR x=1 TO sx: FOR y=1 TO sy: CIRCLE INK e(x,y);xp,yp,hcs FILL: yp+=cs: NEXT y: xp+=cs,yp=offy: NEXT x: MAT d()=e(): WAIT SCREEN: IF INKEY$="" THEN GO TO 40

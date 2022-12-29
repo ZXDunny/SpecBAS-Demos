@@ -6,4 +6,4 @@ CHANGED FALSE
 20 s=1
 30 n=s: PRINT INK 2;n;" ";
 40 n=IIF(EVEN n,n/2,(n*3)+1): IF n<>1 THEN PRINT n;",";: GO TO 40
-50 PRINT n: s+=1: PAUSE 0: CLS: GO TO 30
+50 PRINT n: s+=1: wait keydown: CLS: GO TO 30

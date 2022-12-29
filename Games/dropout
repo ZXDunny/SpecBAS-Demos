@@ -1,14 +1,15 @@
 ZXASCII
 AUTO -1
-PROG dropout
+PROG demos:games/dropout
+CHANGED FALSE
 10 REM DROPOUT, catching coins
 20 SCREEN LOCK : LET p,t=0
 30 FOR z=1 TO 10: PRINT AT 12,0;t
 40 LET r=INT(RND*17): FOR y=0 TO 10: LET tm=mSECS,o=1
-50 PRINT AT y,r;"O";AT 11,p;"ïî": WAIT SCREEN 
+50 PRINT AT y,r;"O";AT 11,p;"¦¥î": WAIT SCREEN
 60 LET n=p+(o*((INKEY$="4" AND p<15)-(INKEY$="1" AND p>0)))
-70 IF n<>p THEN PRINT AT 11,p;"  ": LET o=0,p=n
+70 IF n<>p THEN PRINT AT 11,p;"   ": LET o=0,p=n
 80 IF mSECS-tm<250 THEN GO TO 50
 90 PRINT AT y,r;" ": NEXT y
-100 INC t,(p=r OR p+1=r): NEXT z
-110 SCREEN UNLOCK : PRINT AT 12,0;"You scored ";t;"/10": PAUSE 0: RUN 
+100 INC t,(p=r OR p+1=r or p-1=r): NEXT z
+110 SCREEN UNLOCK : PRINT AT 12,0;"You scored ";t;"/10": PAUSE 0: RUN

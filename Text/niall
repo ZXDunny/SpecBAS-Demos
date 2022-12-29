@@ -1,6 +1,7 @@
 ZXASCII
 AUTO -1
-PROG niall
+PROG demos:text/niall
+CHANGED FALSE
 10 REM NIALL - The Non-intelligent AMOS
 20 REM Language learner
 30 PAPER 0: INK 15:: CLS
@@ -47,25 +48,25 @@ PROG niall
 440 IF fs=1 THEN LET fs=0: LET t$=q$: GO TO @FULLSTOP
 450 RETURN
 460 LABEL @ANALYSE_SENTENCE
-470 LET old=0
+470 LET od=0
 480 FOR h=1 TO w+1
 490 IF h=w+1 THEN LET f=mnw: GO TO @FOUNDIT
 500 FOR f=1 TO num: IF w$(h)=word$(f,0) THEN GO TO @FOUNDIT
 510 NEXT f
 520 INC num: LET word$(num,0)=w$(h): LET f=num
 530 LABEL @FOUNDIT
-540 IF word$(old,1)="" THEN LET word$(old,1)="1|"+STR$ f+"(1)": GO TO @ALLDONE
-550 LET c$=word$(old,1): LET c$=STR$(IVAL c$+1)+RIGHT$(c$,LEN c$-POS("|",c$)+1)
+540 IF word$(od,1)="" THEN LET word$(od,1)="1|"+STR$ f+"(1)": GO TO @ALLDONE
+550 LET c$=word$(od,1): LET c$=STR$(IVAL c$+1)+RIGHT$(c$,LEN c$-POS("|",c$)+1)
 560 FOR g=POS("|",c$)+1 TO LEN c$
 570 IF IVAL(RIGHT$(c$,LEN c$-g))=F THEN GO TO @HERE
 580 LET g=POS(")",c$,g)
 590 NEXT g
-600 LET c$=c$+STR$(f)+"(1)": LET word$(old,1)=c$: GO TO @ALLDONE
+600 LET c$=c$+STR$(f)+"(1)": LET word$(od,1)=c$: GO TO @ALLDONE
 610 LABEL @HERE
 620 LET g=POS("(",c$,g): LET i=POS(")",c$,g)-1: LET c$=LEFT$(c$,g)+STR$(IVAL(RIGHT$(c$,LEN c$-g))+1)+RIGHT$(c$,LEN c$-i)
-630 LET word$(old,1)=c$
+630 LET word$(od,1)=c$
 640 LABEL @ALLDONE
-650 LET old=f: NEXT h: RETURN
+650 LET od=f: NEXT h: RETURN
 660 LABEL @NIALL_REPLIES
 670 IF num=0 THEN PRINT SCALE 1,2;INK 5;"NIALL:";INK 2;" I cannot speak yet!": RETURN
 680 LET RP$="": LET c=0

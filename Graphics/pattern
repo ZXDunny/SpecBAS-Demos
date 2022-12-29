@@ -3,22 +3,23 @@ AUTO -1
 PROG demos:graphics/pattern
 CHANGED FALSE
 10 addr=UDG "a":
-	poke$ 1,addr+=7,128*#0:
-	DO 8: 
-	   POKE 1,addr,1: 
-				addr+=7:
-	LOOP: 
-	addr+=1: 
-	DO 8: 
-	   POKE 1,addr,1: 
-				addr+=9:
-	LOOP
-20 INK 0: paper 8: cls: 
-	DO txtw*txth-1: 
-	   print IIF$(RND>.5,"á","â");: 
-	LOOP
+ poke$ 1,addr,128*#0:
+ addr+=7:
+ DO 8:
+    POKE 1,addr,1:
+    addr+=7:
+ LOOP:
+ addr+=1:
+ DO 8:
+    POKE 1,addr,1:
+    addr+=9:
+ LOOP
+20 INK 0: paper 8: cls:
+ DO txtw*txth-1:
+    print IIF$(RND>.5,"á","â");:
+ LOOP
 40 FOR x=0 TO SCRw-1 STEP 7;y=2 TO SCRh-1 STEP 7
 50    IF POINT(x,y)=8 THEN FILL INK (RND*254)+1;x,y
-60 NEXT y;x: 
-	PAUSE 0: 
-	GO TO 20
+60 NEXT y;x:
+ wait keydown:
+ GO TO 20

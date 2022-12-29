@@ -3,40 +3,40 @@ AUTO -1
 PROG demos:fractals/julia_art
 CHANGED FALSE
 10 paper 225: cls:screen lock:
-	ON ERROR GO To 60:
+ ON ERROR GO To 60:
 20 detail=(rnd*.1)+.1,
-	ox,oy=(rnd*2)-1,
-	lw=((rnd*3)/100)+.06,
-	lsh=(rnd*1.5)+.1,
-	s$="UV"(1+RND):
-	for f=1 to 2+(rnd*5):
-	   a,b=1+rnd*17:
-				s$=s$+"++/++-+*+^+*+*+*+*"(a)+"UVUXYVUVUV23UVXY23"(b):
-	next f:
-	s$=token$ s$:
-	mn=.0000000000000000001
+ ox,oy=(rnd*2)-1,
+ lw=((rnd*3)/100)+.06,
+ lsh=(rnd*1.5)+.1,
+ s$="UV"(1+RND):
+ for f=1 to 2+(rnd*5):
+    a,b=1+rnd*17:
+    s$=s$+"++/++-+*+^+*+*+*+*"(a)+"UVUXYVUVUV23UVXY23"(b):
+ next f:
+ s$=token$ s$:
+ mn=.0000000000000000001
 30 sw=scrw/2,sh=scrh/2,sc=sw/2
 40 A=sw/2,c=0:GO SUB 80:IF c=0 THEN GO To 20
 50 cls:
-	For A=0 TO sw:
+ For A=0 TO sw:
     GO SUb 80:
-				if inkey$<>"" Then
-				   RUN
-				ELSE
-				   screen update:
+    if inkey$<>"" Then
+       RUN
+    ELSE
+       screen update:
  NEXT A
 60 clear error:
-	wait screen:
-	if a=sw then 
-	   pause 0:
-				if inkey$=" " then 
-				   if scrw=800 then
-							   screen full 1920,1080
-							else
-							   screen window 800,480:
-							end if:
-							do: loop until inkey$="":
-							GO To 30
+ wait screen:
+ if a>=sw then
+    pause 0:
+    if inkey$=" " then
+       if scrw=800 then
+          screen full 1920,1080
+       else
+          screen window 800,480:
+       end if:
+       do: loop until inkey$="":
+       GO To 30
 70 run
 80 For B=0 TO scrh:
     X=mn+(A-sw)/sc,
@@ -55,7 +55,7 @@ CHANGED FALSE
 110    GO TO 90
 120    i=iif(d<lw,((i+8) mod 15),0),c+=i
 130    ink i:
-				PLOT A,B:
+    PLOT A,B:
     plot scrw-A,scrh-B:
  NEXT B:
-	return
+ return

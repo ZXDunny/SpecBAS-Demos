@@ -4,9 +4,9 @@ PROG demos:graphics/ripples2
 CHANGED FALSE
 10 GRAPHIC NEW circles,320,256:
  WINDOW GRAPHIC circles
-20 CLS 8:
+20 CLS GETOPT "cpaper":
  mf=32:
- FOR a=7 TO 1:
+ FOR a=7 TO 1 step -1:
     CIRCLE INK 7-a;160,128,10*a FILL:
  NEXT a
 30 DIM pic$(257) BASE 0:

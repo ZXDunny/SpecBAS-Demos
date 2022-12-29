@@ -1,6 +1,16 @@
 ZXASCII
 AUTO -1
-PROG mutatorworm
+PROG demos:graphics/mutatorworm
+CHANGED FALSE
 10 REM Mutation worm
-20 l=255,j=1: FOR i=1 TO 6.4 STEP 6.4/l: PALETTE j,(i*70) MOD 255,(i*60) MOD 255,(i*50) MOD 255: j+=1: NEXT i: PALETTE 0,128,128,28: PAPER 0: CLS: a=0
-30 j=0: FOR i=1 TO l/10 STEP .1: x=SIN i*100+300,y=COS i*100+200,j+=1: CIRCLE INK j;x+100+SIN(a*i)*70,y+20+COS(a*i)*50,40 FILL: NEXT i: WAIT SCREEN: CLS: a+=.32/l: GO TO 30
+20 PAPER 8: CLS: a=0,l=255
+30 j=0: 
+ FOR i=1 TO l/10 STEP .1: 
+    x=SIN i*100+300,y=COS i*100+200,j+=1,
+    x1=x+100+SIN(a*i)*70,y1=y+20+COS(a*i)*50: 
+    CIRCLE INK 7;x1,y1,40 FILL;ink 0;x1,y1,40: 
+ NEXT i: 
+ WAIT SCREEN: 
+ CLS: 
+ a+=.32/l: 
+ GO TO 30

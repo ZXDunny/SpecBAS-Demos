@@ -1,6 +1,7 @@
 ZXASCII
 AUTO -1
-PROG being
+PROG demos:graphics/being
+CHANGED FALSE
 10 paper 60:
  GRAPHIC NEW gfx LOAD "pumpkin.bmp" TRANSPARENT 0:
  PALETTE COPY gfx,0,256 TO 0:
@@ -22,7 +23,7 @@ PROG being
        p(i,1)=p(i-1,1)+COS(p(i,5))*p(i,3),
        p(i,2)=p(i-1,2)+SIN(p(i,5))*p(i,4)
 70    WINDOW PUT GRAPHIC gfx,0,p(i,1),p(i,2)
-80    p(i,5)+=DEGTORAD p(i,6)
+80    p(i,5)+=DEGTORAD p(i,6)/3
 90 NEXT i
 100 WAIT SCREEN:
  CLS:

@@ -3,7 +3,7 @@ AUTO -1
 PROG demos:automata/langton
 CHANGED FALSE
 10 REM Langton's Ant
-20 CLS 8: INK 0: LET a$="": PRINT AT 0,0;"Please specify a colour seed for the ant."'"Use L and R for each colour, or type a number for an example."'"Examples may be:"''"1. LR - 2 colours, traditional."'"2. RLR: Three colours, chaotic."'"3. LLRR: Four colours, symmetrical."'"4. LRRRRRLLR: Nine colours, square filling."'"5. LLRRRLRLRLLR: Twelve colours, convoluted highway."'"6. RRLLLRLLLRRR: Filled triangle."''"Type G<n> to generate a random sequence of <n> steps."
+20 paper 8: CLS: INK 0: LET a$="": PRINT AT 0,0;"Please specify a colour seed for the ant."'"Use L and R for each colour, or type a number for an example."'"Examples may be:"''"1. LR - 2 colours, traditional."'"2. RLR: Three colours, chaotic."'"3. LLRR: Four colours, symmetrical."'"4. LRRRRRLLR: Nine colours, square filling."'"5. LLRRRLRLRLLR: Twelve colours, convoluted highway."'"6. RRLLLRLLLRRR: Filled triangle."''"Type G<n> to generate a random sequence of <n> steps."
 30 DO WHILE a$="": INPUT AT 15,0;"Enter 1 TO 6, or create a sequence: ";a$: LOOP
 40 IF a$(1) IN ["1" TO "6"] THEN RESTORE 1000+CODE a$(1)-48: READ a$ ELSE IF a$(1) IN ["g","G"] THEN GO SUB 500
 50 DIM ant(LEN a$): LET a$=UP$ a$: LET nc=LEN a$

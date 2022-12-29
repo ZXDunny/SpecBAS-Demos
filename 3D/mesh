@@ -68,8 +68,8 @@ CHANGED FALSE
           cn(a,b,i)=(((tz+1)*ck) MOD 255)+1:
        NEXT b:
     NEXT a
-150    FOR a=sz-1 TO 0:
-       FOR b=sz-1 TO 0:
+150    FOR a=sz-1 TO 0 step -1:
+       FOR b=sz-1 TO 0 step -1:
           INK cn(a,b,i):
           POLYGON cn(a,b,sx),cn(a,b,sy) TO
                   cn(a+1,b,sx),cn(a+1,b,sy) TO

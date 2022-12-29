@@ -1,6 +1,7 @@
 ZXASCII
 AUTO -1
-PROG elastic
+PROG demos:graphics/elastic
+CHANGED FALSE
 10 REM Elastic grid
 20 LET cellsizea=20: LET cellsizeb=20: LET grida=SCRw/cellsizea: LET gridb=SCRh/cellsizeb: LET nodesize=4: LET relax=0.99: LET fade=0.99: LET vel=7: LET dist=800: SCREEN LOCK: INK 15
 30 PALETTE 1,128,128,128: FOR f=2 TO 255: LET i=128+(f/2): PALETTE f,128,i,i: NEXT f
@@ -18,8 +19,15 @@ PROG elastic
 150 WAIT SCREEN: GO TO 80
 160 FOR a=1 TO grida-1: FOR b=1 TO gridb-1
 170 LET newmousex=MOUSEx: LET newmousey=MOUSEy
-180 IF MOUSEBTN=1 THEN LET xb=newmousey-workb(a,b): LET ya=newmousex-worka(a,b): IF xb<>0 THEN LET dir1(a,b)=2*ATN((SQR(POWERTWO ya+POWERTWO xb)-ya)/xb): LET vel1(a,b)=MIN(dist/SQR((oldmousey-workb(a,b))^2+(oldmousex-worka(a,b))^2),vel): ELSE LET dir2(a,b)=0
+180 IF MOUSEBTN=1 THEN 
+    LET xb=newmousey-workb(a,b): 
+    LET ya=newmousex-worka(a,b): 
+    IF xb<>0 THEN 
+       LET dir1(a,b)=2*ATN((SQR(POWERTWO ya+POWERTWO xb)-ya)/xb): 
+       LET vel1(a,b)=MIN(dist/SQR abs((oldmousey-workb(a,b))^2+(oldmousex-worka(a,b))^2),vel): 
+    ELSE 
+       LET dir2(a,b)=0
 190 LET xb=origb(a,b)-workb(a,b): LET ya=origa(a,b)-worka(a,b)
-200 IF xb<>0 THEN LET dir2(a,b)=2*ATN((SQR(POWERTWO ya+POWERTWO xb)-ya)/xb): LET vel2(a,b)=SQR((origb(a,b)-workb(a,b))^2+(origa(a,b)-worka(a,b))^2)*.08 ELSE LET dir2(a,b)=0
+200 IF xb<>0 THEN LET dir2(a,b)=2*ATN((SQR(POWERTWO ya+POWERTWO xb)-ya)/xb): LET vel2(a,b)=SQR abs((origb(a,b)-workb(a,b))^2+(origa(a,b)-worka(a,b))^2)*.08 ELSE LET dir2(a,b)=0
 210 IF MOUSEBTN=1 THEN INC worka(a,b),vel1(a,b)*COS(dir1(a,b))+vel2(a,b)*COS(dir2(a,b)): INC workb(a,b),vel1(a,b)*SIN(dir1(a,b))+vel2(a,b)*SIN(dir2(a,b)) ELSE INC worka(a,b),vel2(a,b)*COS(dir2(a,b))*relax: INC workb(a,b),vel2(a,b)*SIN(dir2(a,b))*relax
-220 NEXT b: NEXT a: RETURN 
+220 NEXT b: NEXT a: RETURN

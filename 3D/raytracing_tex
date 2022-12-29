@@ -2,9 +2,7 @@ ZXASCII
 AUTO -1
 PROG demos:3d/raytracing_tex
 CHANGED FALSE
-10 PAPER 0: INK 15: CLS: 
- option "intscaling",1:
- window size 0,320,200: screen full:
+10 PAPER 0: INK 15: CLS:
  sh=2,so=32,ss=(256-so),hh=int(ss*0.0666667):
  palette so,255,255,255:
  palette so+hh,0,192,255:

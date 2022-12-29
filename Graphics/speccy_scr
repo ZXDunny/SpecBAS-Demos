@@ -1,6 +1,7 @@
 ZXASCII
 AUTO -1
-PROG speccy_scr
+PROG demos:graphics/speccy_scr
+CHANGED FALSE
 10 STREAM NEW SCR,"Sabre Wulf.SCR": IF STREAMLEN scr=0 THEN STOP
 20 STREAM READ scr,a$,6912
 30 CLS 7: PALETTE 8,0,0,0
@@ -9,7 +10,7 @@ PROG speccy_scr
     ScreenOffsets(f)=
     (INT((f & 1792)/256))+(INT((f & 224)/32))*8+(INT((f & 6144)/2048))*64:
  NEXT f:
- s=1
+ s=2
 50 FOR f=0 TO 6143:
     x=(f & 31)*8,
     y=ScreenOffsets(f),
@@ -19,7 +20,7 @@ PROG speccy_scr
     i,p+=8*(att & 64>0),
     byteval=CODE a$(f+1),
     x,y*=s:
-    FOR bt=7 TO 0:
+    FOR bt=7 TO 0 step -1:
        rectangle INK IIF(BIT(byteval,bt),i,p);(x+=s)-s,y,s,s fill:
     NEXT bt:
  NEXT f:

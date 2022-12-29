@@ -23,7 +23,7 @@ CHANGED FALSE
  window grab b$,0,0,0,r2,r2 trans 0
 50 cls:
  for f=1 to nc: palette f,iif(int(f/nc2) mod 2,$FFFFFF,$FF0000): next f:
- for f=nc-1 to nc-8: palette f,$FFCCBB: next f
+ for f=nc-1 to nc-8 step -1: palette f,$FFCCBB: next f
 60 PAPER 252: CLS: ss=scrw/24,sc=int(scrw/ss),sm=scrh/ss: ink 254
 70 for y=1 to sm-1: rectangle ss,y*ss,ss*(sc-2),2 fill: next y:
  for x=ss to ss*sc step ss: RECTANGLE x,ss,2,ss*12+2 fill: next x:

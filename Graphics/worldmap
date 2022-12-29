@@ -1,6 +1,7 @@
 ZXASCII
 AUTO -1
-PROG worldmap
+PROG demos:graphics/worldmap
+CHANGED FALSE
 10 REM Blocky World Map
 20 DATA "eEEDDNPPLcIbJbCIh"
 30 DATA "dGEaDaBPPKbBcJbPEMaEe"
@@ -26,8 +27,8 @@ PROG worldmap
 250 READ a$
 260 LET z$=""
 270 FOR i=1 TO LEN a$
-280 IF a$(i)<"A" THEN FOR b=1 TO CODE a$(i)-48: LET z$=z$+"ð": NEXT b: GO TO 310
-290 IF a$(i)<"a" THEN LET z$=z$+#1+CHR$(CODE a$(i)+160): GO TO 310
+280 IF a$(i)<"A" THEN FOR b=1 TO CODE a$(i)-48: LET z$=z$+"ª": NEXT b: GO TO 310
+290 IF a$(i)<"a" THEN LET z$=z$+CHR$(CODE a$(i)+160): GO TO 310
 300 FOR b=1 TO CODE a$(i)-96: LET z$=z$+" ": NEXT b
 310 NEXT i
 320 PRINT INK 4;PAPER 1;AT 4+f,9;z$

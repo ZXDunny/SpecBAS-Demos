@@ -6,6 +6,7 @@ CHANGED FALSE
  DIM p(nd,4):
  FPS 60:
  SCREEN LOCK:
+ paper 8: ink 0:
  DEGREES
 20 rx,ry,rz=RND*2-1,hx,hy,hz=0,sc=1.5*scl:
  DIM a$="sin(","cos(";b$="xd)","t*360/nd)";e$(3):
@@ -22,7 +23,7 @@ CHANGED FALSE
     p(t,1)=VAL e$(1)*sc,p(t,2)=VAL e$(2)*sc,p(t,3)=VAL e$(3)*sc:
  NEXT t
 30 TRANSFORM3D p() to t() ROTATE hx,hy,hz:
-	hx+=rx,hy+=ry,hz+=rz:
+ hx+=rx,hy+=ry,hz+=rz:
  PROJECT3D t() TO d()
 40 CLS:print at 0,0;"Press 'l' to switch between points and lines"'"any other key for a new shape":
  IF m THEN

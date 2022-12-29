@@ -2,7 +2,7 @@ ZXASCII
 AUTO -1
 PROG demos:graphics/scribble
 CHANGED FALSE
-10 sw=scrw/2,sh=scrh/2,d,u=2*PI*RND,ox=sw,oy=sh
+10 paper 8: ink 0: cls: sw=scrw/2,sh=scrh/2,d,u=2*PI*RND,ox=sw,oy=sh
 20 DRAW ox,oy to ox+=6*((1-ox/sw)+COS u),oy+=6*((1-oy/sh)+SIN u):
  u+=.13*SIN d+.1*RND,d+=+.01+.1*RND*RND:
  wait screen: GO TO 20

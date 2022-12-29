@@ -11,16 +11,16 @@ CHANGED FALSE
  dim r(nr,4);r$(nr):
  for f=1 to nr: go sub 80: next f
 40 for f=1 to nr:
-	   y=r(f,2),x=r(f,1),l=r(f,3):
-	   if y>=0 then
+    y=r(f,2),x=r(f,1),l=r(f,3):
+    if y>=0 then
        text at y,x;ink 1;r$(f)(y+1):
        if y>1 then
-							   clr=2,h=y-1:
-          for g=h to max(y-l,-1):
+          clr=2,h=y-1:
+          for g=h to max(y-l,-1) step -1:
              text at g,x;ink clr;r$(f)(max(1,h+1)):
              h-=1,clr+=64/l:
           next g:
-										do 3: r$(f)(1+(rnd*len r$(f)))=fn c$: loop
+          do 3: r$(f)(1+(rnd*len r$(f)))=fn c$: loop
 50    r(f,2)+=r(f,4):
     if y>l+txth then
        go sub 80

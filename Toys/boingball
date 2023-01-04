@@ -39,7 +39,7 @@ CHANGED FALSE
        xd=-sgn xd*((RND*3)+2): x=iif(x<0,0,scrw-r2)
 110    if y+yd>scrh-r2 then
        yd=-((rnd*4)+2): y=scrh-r2:
-       SAMPLE PLAY boing RATE 3000 pan map(x+rad,0 to scrw,-1 to 1)
+       SAMPLE PLAY boing RATE 3000 pan map(x+rad,rad to scrw-rad,-1 to 1)
 120    ox=int x,x+=xd,y+=yd,yd+=ya,ox=abs(ox-int x)*2,a+=ox:
     do while a>=1:
        a-=1: palette shr sgn xd,1 to nc:

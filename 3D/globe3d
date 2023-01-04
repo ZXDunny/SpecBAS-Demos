@@ -29,7 +29,7 @@ CHANGED FALSE
 270 LET z$,x$=""
 280 FOR i=1 TO LEN a$
 290 IF a$(i)<"A" THEN FOR b=1 TO CODE a$(i)-48: LET z$=z$+"ª": NEXT b: GO TO 320
-300 IF a$(i)<"a" THEN LET z$=z$+CHR$(CODE a$(i)+160): GO TO 320
+300 IF a$(i)<"a" THEN LET z$=z$+CHR$(CODE a$(i)+63): GO TO 320
 310 FOR b=1 TO CODE a$(i)-96: LET z$=z$+" ": NEXT b
 320 NEXT i
 330 PRINT INK 4;PAPER 1;AT 4+f,9;z$

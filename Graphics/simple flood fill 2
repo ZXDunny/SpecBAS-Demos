@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/simple flood fill 2
+CHANGED FALSE
+10 paper 0: ink 5: cls: CIRCLE 128,88,40: CIRCLE 128,88,30
+20 LET x=100: LET y=100: LET m=0
+30 proc dofill(x,y)
+1000 def proc dofill(x,y):
+    if not point(x,y) then
+       plot x,y:m+=1: if not m mod 16 then wait screen: END IF:
+       if not point(x-1,y) then proc dofill(x-1,y): end if:
+       if not point(x,y+1) then proc dofill(x,y+1): end if:
+       if not point(x,y-1) then proc dofill(x,y-1): end if:
+       if not point(x+1,y) then proc dofill(x+1,y): end if
+1010 end proc

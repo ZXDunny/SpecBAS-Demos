@@ -1,0 +1,27 @@
+ZXASCII
+AUTO -1
+PROG demos:text/rnd_hoax
+CHANGED FALSE
+10 a$="",b$="HELLO"
+20 i=0
+30 randomize i
+40 FOR f=1 TO len b$:
+    a$=a$+CHR$(RND*26+65):
+    IF a$(f)<>b$(f) THEN GO To 60: END IF:
+ NEXT f
+50 STOP
+60 print at 0,0;i'a$;" "*len b$:
+ i+=1,a$="":
+ GO To 30
+
+
+100 lb=5:
+ for i=1 to 2:
+    read r:
+    RANDOMIZE r:
+    FOR f=1 TO lb:
+       PRINT CHR$(RND*26+65);:
+    NEXT f:
+    print " ";:
+ next i:
+ data 2971429,13535458

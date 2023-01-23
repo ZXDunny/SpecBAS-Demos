@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG /demos/Text/vignere cypher
+CHANGED FALSE
+10 rem Vignere square - FN e$() encodes, FN d$() decodes
+20 DEF FN e$(x$,y$)=chr$(65+((code y$+code x$) MOD 26))
+30 def fn d$(x$,y$)=chr$((code x$-code y$) mod 26+65)
+40 k$="BASIC": for m=1 to 3: read a$
+50 FOR i=1 TO LEN a$: PRINT fn d$(a$(i),k$((i-1) mod len k$+1));: next i
+60 print: next m
+70 data "JLGDGCAKQE","QRGOTBMEQPH","DHSTNFNYMU"

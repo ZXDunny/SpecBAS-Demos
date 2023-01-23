@@ -23,13 +23,13 @@ CHANGED FALSE
 190 IF a$="" THEN PRINT AT y,x;INK IIF(clr=1,d(ba,x,y)*15,IIF(clr=2,n*d(ba,x,y),n));"ª": NEXT y: NEXT x: SWAP ba,bb: IF c THEN PRINT AT 0,0;"Generation: ";g: WAIT SCREEN: GO TO 150
 200 IF a$ IN ["1","2","3"] THEN LET clr=VAL a$: DO: LOOP UNTIL INKEY$="": LET a$="": GO TO 190
 210 REM End of simulation
-220 SCREEN UNLOCK : IF c=0 AND INKEY$="" THEN PRINT SCALE 4,4;CENTRE 3;PAPER 1;INK 6;"Press any key": PAUSE 0
+220 SCREEN UNLOCK : IF c=0 AND INKEY$="" THEN PRINT SCALE 4,4;CENTRE 1;PAPER 1;INK 6;"Press any key": PAUSE 0
 230 DO : LOOP UNTIL INKEY$="": GO TO 40
 240 REM Main Menu
 250 CLS : PRINT SCALE 4,4;CENTRE 1;"Game of Life"
 260 RESTORE : READ numrules: DIM b$(numrules)
 270 PRINT '''TAB 28;"Select a rulestring to start,"'TAB 28;"Or type your own in [survive/birth] format."
-280 FOR f=1 TO numrules: READ b$(f),c$: PRINT AT f+11,28;USING$("* ##",f);". [";b$(f);"] ";at f+11,48;c$: NEXT f: PRINT ''TAB 28;"Press 1,2 or 3 during simulation to"'TAB 28;"toggle colouring mode:"''TAB 28;"1: Mono"'TAB 28;"2: Colour living"'TAB 28;"3: Colour all"
+280 FOR f=1 TO numrules: READ b$(f),c$: PRINT AT f+14,28;USING$("* ##",f);". [";b$(f);"] ";at f+14,48;c$: NEXT f: PRINT ''TAB 28;"Press 1,2 or 3 during simulation to"'TAB 28;"toggle colouring mode:"''TAB 28;"1: Mono"'TAB 28;"2: Colour living"'TAB 28;"3: Colour all"
 290 INPUT rule$: IF rule$="" THEN GO TO 290 else do: loop until inkey$=""
 300 IF rule$(1)="[" THEN GO SUB 630 ELSE IF VAL rule$<=numrules AND VAL rule$>0 THEN LET rule$=b$(VAL rule$): RETURN ELSE GO TO 290
 310 IF err=1 THEN CLS 2: WAIT SCREEN: GO TO 250 ELSE RETURN

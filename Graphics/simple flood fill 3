@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/simple flood fill 3
+CHANGED FALSE
+10 paper 0: ink 5: cls: CIRCLE 128,88,40: CIRCLE 128,88,20
+20 x=100,y=100,m=0
+30 q$=qchr$ x+qchr$ y
+40 do while q$<>"":
+    x=qcode q$( to 4),y=qcode q$(5 to 8),q$=q$(9 to )
+50    if not point(x,y) then
+       plot x,y:
+       q$=q$+qchr$ x+qchr$(y+1)+qchr$ x+qchr$(y-1)+qchr$(x+1)+qchr$ y+qchr$(x-1)+qchr$ y
+60    m+=1: if not m mod 16 then wait screen
+70 LOOP

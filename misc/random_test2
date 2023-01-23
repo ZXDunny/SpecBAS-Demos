@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG /demos/misc/random_test2
+CHANGED FALSE
+10 paper 236: cls: screen lock: randomize msecs:
+ n=16,sh=scrh/2,sw=(scrw-(n*20))/2,m=0
+20 dim v(n) base 0
+30 m+=1,o=rnd,v(m mod n)+=(o<.5)-(o>=.5)
+50 if not m mod 32 then 
+    for f=0 to n-1: 
+       x=f*20+sw:
+       rectangle ink f;x,sh to x+18,sh+v(f) fill;ink 0;x,sh to x+18,sh+v(f):
+       text move x+5-4*(f>9),iif(v(f)>0,sh+v(f)+2,sh+v(f)-10);ink f;f:
+    next f:
+    wait screen: 
+    cls
+60 GO To 30

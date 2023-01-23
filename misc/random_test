@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG /demos/misc/random_test
+CHANGED FALSE
+10 origin 0,0 to 800,105000 flip
+20 dim v(10)
+30 for f=1 to 1000000
+40 x=int(rnd*10)+1
+50 v(x)+=1
+60 rectangle ink x;x*20,0 to (x*20)+19,v(x) fill
+70 text move (x*20)+4,v(x)-1000;ink x+8;paper x;x-1
+80 next f

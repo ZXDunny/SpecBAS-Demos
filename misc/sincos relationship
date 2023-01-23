@@ -1,0 +1,25 @@
+ZXASCII
+AUTO -1
+PROG demos:misc/sincos relationship
+CHANGED FALSE
+10 rem SIN/COS relationship to circles
+20 s=.04: origin -400,-240 to 400,240: r=scrw/logw
+30 for a=0 to tau step s
+40    cls: circle 0,0,50
+50    for x=0 to 315 step 1/r
+60       aa=a+tau/316*x,sy=sin aa*50,cx=cos aa*50
+70       plot x-400,sy;x+85+r,sy;cx,x-400;cx,x+85+r
+80    next x
+90    sa=sin a,ca=cos a
+100    polygon ink 6;0,0 to ca*50,sa*50 to ca*50,0 fill;
+            ink 0;0,0 to ca*50,sa*50 to ca*50,0
+110    circle ca*50,sa*50,3 fill
+120    for x=-86 to 83 step 4/r:
+       plot x,sa*50;ca*50,x:
+    next x
+130    draw 0,-240 to 0,-85;0,85 to 0,240;-400,0 to -85,0;85,0 to 400,0
+140    drAW -85,-50 TO -85,50;85,-50 to 85,50;-50,-85 TO 50,-85;-50,85 to 50,85
+150    print move 70,-180;"x=COS a";move -300,70;"y=SIN a"
+160    Wait screen
+170 next a
+180 GO To 30

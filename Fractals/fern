@@ -1,35 +1,30 @@
 ZXASCII
 AUTO -1
-PROG fern
+PROG demos:fractals/fern
+CHANGED FALSE
 10 REM Fractal Fern
-20 PALETTE 0,128,128,128: 
- PALETTE 1,0,255,0: 
- PALETTE 30,0,23,0: 
- RAINBOW 1 TO 30: 
- PALETTE 31,0,32,0: 
- PALETTE 255,0,32,0: 
- RAINBOW 31 TO 255: 
- PAPER 0: 
+20 PALETTE 0,128,128,128;1,0,255,0;30,0,23,0;31,0,32,0;255,0,32,0:
+ RAINBOW 1 TO 30;31 TO 255:
+ PAPER 0: ink 1: oVER 12:
+ origin 0,0 to 1,1.01 flip:
  CLS
-30 maxpoints=scrw*scrh*2.6,x,y=0
+30 maxpoints=scrw*scrh*3.5,x,y=0.5
 40 FOR n=1 TO maxpoints
 50    p=RND*100,
     xt=x
-60    CASE 1
-70       WHEN p<77: 
+60    CASE true
+70       WHEN p<77:
           x=0.85*x+0.04*y+0.075,
           y=-0.04*xt+0.85*y+0.18
 80       WHEN p<89:
           x=0.20*x-0.26*y+0.4,
           y=0.23*xt+0.22*y+0.045
-90       WHEN p<99: 
+90       WHEN p<99:
           x=-0.15*x+0.28*y+0.575,
           y=0.26*xt+0.24*y-0.086
-100       OTHERWISE: 
-          x=0.5,y=0.26*y
+100       OTHERWISE:
+          x=0.5,y*=0.26
 110    END CASE
-120    IF n>100 THEN 
-       xn=x*SCRw,yn=SCRh-y*SCRh: 
-       PLOT INK MIN(POINT(xn,yn)+1,255);xn,yn
+120    PLOT x,y
 130 NEXT n
-140 PAUSE 0
+

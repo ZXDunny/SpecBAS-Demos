@@ -87,7 +87,7 @@ CHANGED FALSE
  do:
     wait keydown:
     a$=inkey$:
-    if a$="c" then 
+    if a$="c" then
        cm=1-cm:
        GO To 70:
     end if:

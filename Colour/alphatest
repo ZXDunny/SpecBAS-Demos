@@ -1,25 +1,28 @@
 ZXASCII
 AUTO -1
-PROG sys:/demos/Colour/alphatest
+PROG demos:colour/alphatest
 CHANGED FALSE
 10 LET a=UDG("z"):
-	FOR f=1 TO 4:
-	   RESTORE 60:
-				FOR g=1 TO 16:
-				   READ b:
-							POKE 1,a+((f-1)*16)+g-1,b:
-				NEXT g:
-	NEXT f
+ FOR f=1 TO 4:
+    RESTORE 60:
+    FOR g=1 TO 16:
+       READ b:
+       POKE 1,a+((f-1)*16)+g-1,b:
+    NEXT g:
+ NEXT f
 20 FOR f=1 TO SCRw/FONTw*SCRh/FONTh:
-	   PRINT INK RND*255;PAPER RND*255;"ú";:
-	NEXT f
+    PRINT INK RND*255;PAPER RND*255;"ú";:
+ NEXT f
 30 WINDOW NEW w,10,10,256,256 BPP 32 ALPHA:
-	FOR x=0 TO 255:
-	   FOR y=0 TO 255:
-				   PLOT INK $0080FF+(((x+y)/2) SHL 24);x,y:
-				NEXT y:
-	NEXT x:
-	WINDOW 0
+ FOR x=0 TO 255:
+    FOR y=0 TO 255:
+       PLOT INK $0080FF+(((x+y)/2) SHL 24);x,y:
+    NEXT y:
+ NEXT x:
+ WINDOW 0
 40 WINDOW ROLL 0,-1,-1
-50 WINDOW MOVE w,mousex-128,mousey-128:WAIT SCREEN: PALETTE SHL 1,0 TO 255: GO TO 40
+50 WINDOW MOVE w,mousex-128,mousey-128:
+ WAIT SCREEN:
+ PALETTE SHL 1,0 TO 255:
+ GO TO 40
 60 DATA 1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1

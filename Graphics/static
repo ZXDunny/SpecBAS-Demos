@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/static
+CHANGED FALSE
+10 REM Make a greyscale palette
+20 palette 0,0;255,$FFFFFF: rainbow 0 to 255
+30 REM Plot random colours
+40 for x=0 to scrw-1;y=0 to scrh-1: plot ink rnd*255;x,y: next y;x
+50 rem Loop, palette cycling and jumbling as we go
+60 palette shl 1,0 to 255:
+ a,b=rnd*255,p1=rgb b,p2=rgb a: palette b,p2;a,p1:
+ wait screen: GO To 60

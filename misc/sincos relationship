@@ -4,10 +4,10 @@ PROG demos:misc/sincos relationship
 CHANGED FALSE
 10 rem SIN/COS relationship to circles
 20 s=.04: origin -400,-240 to 400,240: r=scrw/logw
-30 for a=0 to tau step s
+30 for a=tau to 0 step -s
 40    cls: circle 0,0,50
 50    for x=0 to 315 step 1/r
-60       aa=a+tau/316*x,sy=sin aa*50,cx=cos aa*50
+60       aa=a-tau/316*x,sy=sin aa*50,cx=cos aa*50
 70       plot x-400,sy;x+85+r,sy;cx,x-400;cx,x+85+r
 80    next x
 90    sa=sin a,ca=cos a

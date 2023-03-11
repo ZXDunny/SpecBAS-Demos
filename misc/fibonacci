@@ -1,0 +1,7 @@
+ZXASCII
+AUTO -1
+PROG /demos/misc/fibonacci
+CHANGED FALSE
+10 p=(1+ sqr 5)/2
+20 def fn fib(n)=int((p^n-(-p)^-n)/sqr 5+.5)
+30 for f=0 to 20: PRINT FN fib(f): next f

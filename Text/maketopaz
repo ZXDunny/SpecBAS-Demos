@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG demos:text/maketopaz
+CHANGED FALSE
+10 graphic new m load "topaznew.png"
+20 window put graphic m,0,0,0
+25 font new fnt,8,9,font_mono
+30 x,y=0:
+ for f=32 to 127
+40    addr=(f*72)+8,
+    px=x,py=y:
+    for g=0 to 63:
+       poke fnt,addr,point(px,py):
+       addr+=1:
+       px+=1:
+       if px=x+8 then
+          px=x,py+=2:
+       end if:
+    next g:
+    x+=8:
+    if x=256 then
+       x=0,y+=16:
+    end if:
+ next f
+50 CLS: scale 1,2: font fnt:
+ FOR f=32 TO 127: PRINT CHR$ f;: NEXT f

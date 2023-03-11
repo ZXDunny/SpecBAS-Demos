@@ -2,7 +2,7 @@ ZXASCII
 AUTO -1
 PROG demos:graphics/dotty_contours
 CHANGED FALSE
-10 t=msecs*.0025,w=960
+10 t=msecs*.0025,w=960: screen lock
 20 f=map(sin(t+=.0025),-1 to 1,64 to 200):
  for y=0 to scrh step 8:
     for x=0 to scrw step 8:

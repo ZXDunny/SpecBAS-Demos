@@ -1,0 +1,23 @@
+ZXASCII
+AUTO -1
+PROG /demos/Text/charset
+CHANGED FALSE
+5 REM Program to draw a character chart
+6 REM for the first 255 code points.
+10 CLS
+20 GO SUB 200
+30 GO SUB 100
+40 stop
+100 REM Draw Text Chart
+120 FOR C=32 TO 255
+130 COL=INT(C/24): ROW=C MOD 24+2
+140 PRINT at ROW,1+COL*6;CHR$ C
+150 PRINT AT ROW,1+COL*6+2;C
+160 NEXT C
+170 RETURN
+200 REM Draw Divider Lines
+210 FOR COL=1 TO 10
+220 X=COL*(8*6)+4
+230 PLOT X,16: draw to X,208
+240 NEXT COL
+250 RETURN

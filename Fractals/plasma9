@@ -1,9 +1,9 @@
 ZXASCII
 AUTO -1
-PROG /demos/Fractals/plasma9
+PROG demos:fractals/plasma9
 CHANGED FALSE
 10 FOR h=0 TO 255: PALETTE HSV h,h*1.4,255,255: NEXT h
-20 r=1,J=256,w=160,h=96
+20 r=1,J=256,w=160,h=w*scrh/scrw
 30 WINDOW SIZE 0,w,h
 40 J+=1,jm=J MOD 284,R=64*((J&1=1)|1)
 60 FOR y=0 TO h-1

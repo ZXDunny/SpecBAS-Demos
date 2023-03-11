@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG demos:3d/gears
+CHANGED FALSE
+10 cls 0:
+ For N=0 To 15:
+    Palette N,N*1052688:
+ Next N
+20 For Z=0 To 100:
+    For A=0 To tau Step .0008:
+       R=100+Cos(20*A+Z/20)*15,
+       X1=Cos A*R+220,Y1=Sin A*R/3+240-Z/2,
+       R=50+Sin(-10*A+Z/20)*15,
+       X2=Cos A*R+370,Y2=Sin A*R/3+240-Z/2:
+       plot ink Z*.125+2.5;X1,Y1;X2,Y2:
+       If Z=100 Then draw ink 8;220,240-Z/2 to X1,Y1;ink 5;370,240-Z/2 to X2,Y2
+30    Next A:
+ Next Z

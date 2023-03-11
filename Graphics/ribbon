@@ -1,0 +1,25 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/ribbon
+CHANGED FALSE
+10 REM Original by @chordbug for BBCMicroBot
+20 RADIANS: ORIGIN 0,0 TO 1280,768:
+ paper 0: CLS: screen lock:
+ BI=0,S=2,st=1280/scrw:dim OY(1280) base 0
+30 FOR F=0 TO 16: READ A: PALETTE F,A: NEXT F
+40 DATA 0,$20,$40,$80,$A0,$80FF,$FFFF,$FF00,$FFFF00,$FF8000,$FF0000,0,0,0,0,0,0
+50 FOR I=BI to BI+9/S step .125:
+    ink (I-BI)*S+1
+60    FOR J=0 TO 1279 STEP st:
+       Y=384+SIN(J/50+SIN(J/60)*1+I*pi/12)*290/(abs((J-640)/200)^2+1)
+70       IF I=BI THEN
+          PLOT J,Y
+       ELSE
+          rectangle J,Y TO J+st-1,OY(J)
+80       OY(J)=Y
+90    NEXT J:
+ NEXT I:
+ BI+=1:
+ wait screen:
+ CLS:
+ GO TO 50

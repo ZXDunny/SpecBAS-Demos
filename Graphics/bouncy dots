@@ -1,0 +1,20 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/bouncy dots
+CHANGED FALSE
+10 np=2000: screen lock
+20 dim p(np,5): a=tau/np,lx1=(scrw-scrh)/2,lx2=scrw-lx1:
+ for f=1 to np:
+    p(f,1)=scrw/2,p(f,2)=scrh/2,
+    p(f,3)=sin(a*f),p(f,4)=cos(a*f),
+    p(f,5)=(f/100) mod 14+1:
+ next f
+40 do:
+    cls 0:
+    for f=1 to np:
+       circle ink p(f,5);p(f,1),p(f,2),2 fill:
+       p(f,1)+=(p(f,3)*=(1-2*(p(f,1)<lx1 or p(f,1)>lx2))),
+       p(f,2)+=(p(f,4)*=(1-2*(p(f,2)<0 or p(f,2)>scrh))):
+    next f:
+    wait screen:
+ loop

@@ -1,0 +1,35 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/dustyhole_zoom
+CHANGED FALSE
+10 rem Black hole by Dusty Murray, zoom by ZXDunny
+20 palette 96,$FF0000;255,$FFFF00: rainbow 0 to 96;96 to 255:
+ paper 0: ink 1: cls
+30 mw=scrw/2,mh=scrh/2:
+ dim c$=token$ "rd=rds",token$ "rd=-rds*.991",
+        token$ "ad=ads",token$ "ad=-ads" base 0
+40 DIM buffer(2) BASE 0:
+ FOR f=0 TO 1:
+    WINDOW NEW buffer(f),0,-60,800,600:
+ NEXT f:
+ WINDOW HIDE buffer(1)
+50 sz=32,ps=0,xs=800/sz,ys=600/sz: WINDOW buffer(0)
+60 GO SUb 90
+70 ps+=1,shift=BREV(ps,5)
+80 FOR y=0 TO ys-1;x=0 TO xs-1:
+    WINDOW COPY buffer(0),x*sz+shift+(16-y)-x,y*sz+shift+x+(16-y),sz,sz TO buffer(1),x*sz+shift,y*sz+shift+16:
+ NEXT x;y:
+ WINDOW COPY buffer(1),0,0,800,600 TO buffer(0),0,0:
+ WAIT screen:
+ Go to 60
+90 for f=1 to 3:
+    ads=.005,rds=.5,r=5,rd,an=0,ad=rds:
+    for t=0 to 2000:
+       execute c$(int(rnd*4)):
+       r=clamp(r+rd,10 to scrw),an+=ad,ar=r/50:
+       plot over 12;(sin(an+ar)*r)+300,(cos(an+ar)*r)+286:
+    next t:
+ next f:
+ return
+
+

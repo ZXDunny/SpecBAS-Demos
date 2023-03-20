@@ -1,0 +1,19 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/dustyhole
+CHANGED FALSE
+10 rem Black hole by Dusty Murray
+20 palette 96,$FF0000;255,$FFFF00: rainbow 0 to 96;96 to 255:
+ paper 0: ink 8: over 12: cls
+30 mw=scrw/2,mh=scrh/2:
+ dim c$=token$ "rd=rds",token$ "rd=-rds*.991",
+        token$ "ad=ads",token$ "ad=-ads" base 0
+40 FOR f=1 TO 16:
+    ads=.005,rds=.5,r=5,rd,a=0,ad=rds:
+    for t=0 to 60000:
+       execute c$(int(rnd*4)):
+       r=clamp(r+rd,10 to scrw),a+=ad,ar=r/50:
+       plot (sin(a+ar)*r)+mw,(cos(a+ar)*r)+mh:
+    next t:
+ NEXT f
+

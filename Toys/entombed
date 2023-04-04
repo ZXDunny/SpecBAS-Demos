@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG demos:toys/entombed
+CHANGED FALSE
+10 cl=8,r$="ªªªr  rrªªªªr   ªªªr    r ªrr   ",dr$=" "*cl,cr$=dr$
+20 screen lock:
+ do:
+    pr$=cr$,cr$="":
+    for c=1 to cl:
+       o=iif(c>2,cr$(c-2)="ª",c=1)*16+iif(c=1,0,cr$(c-1)="ª")*8+Iif(c=1,int(rnd*2),pr$(c-1)="ª")*4+(pr$(c)="ª")*2+iif(c=cl,int(rnd*2),pr$(c+1)="ª"),
+       cr$=cr$+iif$(r$(o+1)="r","ª "(int(rnd*2)+1),r$(o+1)):
+    next c
+30    t$="ªª"+cr$:
+    print tab (txtw-(cl*2+2))/2;t$;rev$ t$:
+    option "scrollcnt",2:
+    wait screen:
+ loop

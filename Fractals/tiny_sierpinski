@@ -1,8 +1,9 @@
 ZXASCII
 AUTO -1
-PROG /demos/Fractals/tiny_sierpinski
+PROG demos:fractals/tiny_sierpinski
 CHANGED FALSE
-10 dim p=0,scrh-1,scrw-1,scrh-1,scrw/2,0:x=p(1),y=p(2)
-20 p=int(rnd*3)*2+1:
- plot x+=(p(p)-x)/2,y+=(p(p+1)-y)/2:
+10 dim p=((0,scrh-1),(scrw-1,scrh-1),(scrw/2,0)):
+ x=p(1,1),y=p(1,2)
+20 p=int(rnd*3)+1:
+ plot x+=(p(p,1)-x)/2,y+=(p(p,2)-y)/2:
  GO To 20

@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG /demos/Fractals/Tinkerbell
+CHANGED FALSE
+1 REM By Uwe Geiken
+10 origin 0,0 to 296,176 flip: 
+ PRINT "Tinkerbell Map"
+20 LET a=.9: LET b=-.6: LET c=2: LET d=.5: LET s=80
+30 PRINT '"a=";a'"b=";b'"c=";c'"d=";d
+40 LET x=-.72: LET y=-.64
+50 LET u=172+s*x: LET v=50-s*y: PLOT u,v
+60 LET t=x*x-y*y+a*x+b*y: LET y=2*x*y+c*x+d*y: LET x=t
+70 GO TO 50

@@ -4,9 +4,9 @@ PROG demos:toys/boingball
 CHANGED FALSE
 10 REM Amiga Boing Ball
 20 PALETTE 0,0;16,0;252,$808080;253,$606060;254,$A000A0;255,$600060: RAINBOW 0 TO 16:
- screen lock
-30 rad=109,r2=rad*2,rad2=rad^2,scl=1024,nc=128,nc2=nc/2,
- norm=TAU/scl,ang=DEGTORAD 18,k=2,amb=.9,vv=.25
+ screen lock:wscl=scrw/800
+30 rad=109*wscl,r2=rad*2,rad2=rad^2,scl=1024,nc=128,nc2=nc/2,
+ norm=TAU/scl,ang=DEGTORAD 18,k=2,amb=.9,vv=.25,ns=12
 40 CLS 0:DIM p(2,2);l=-0.348,0.348,-0.87 BASE 0:
  window new w,0,0,rad*2,rad*2 bpp 32 alpha: cls $0:
  for y=-rad to rad step .75:
@@ -29,10 +29,10 @@ CHANGED FALSE
 50 cls:
  for f=1 to nc: palette f,iif(int(f/nc2) mod 2,$FFFFFF,$FF0000): next f:
  for f=nc-1 to nc-8 step -1: palette f,$FFCCBB: next f
-60 PAPER 252: CLS: ss=scrw/24,sc=int(scrw/ss),sm=scrh/ss: ink 254
-70 for y=1 to sm-1: rectangle ss,y*ss,ss*(sc-2),2 fill: next y:
- for x=ss to ss*sc step ss: RECTANGLE x,ss,2,ss*12+2 fill: next x:
- window grab s$,0,0,0,scrw,scrh:
+60 PAPER 252: CLS: ink 254: gs=scrh/(ns+2),gcx=int(scrw/gs),gxo=(scrw-gcx*gs)/2:
+ for x=1 to gcx-1: rectangle gxo+x*gs,gs,2,gs*ns fill: next x: gcx-=2:
+ for y=1 to ns+1: rectangle gxo+gs,(y*gs)-2,2+gcx*gs,2 fill: next y
+70 window grab s$,0,0,0,scrw,scrh:
  SAMPLE NEW boing,"boing.wav"
 80 x=scrw/2-rad,y=20,xd=3,yd=0,ya=0.05,a=0
 90 DO:
@@ -46,9 +46,9 @@ CHANGED FALSE
 110    if y+yd>scrh-r2 then
        yd=-((rnd*4)+2): y=scrh-r2:
        SAMPLE PLAY boing RATE 3000 pan map(x+rad,rad to scrw-rad,-1 to 1) volume vv
-120    ox=int x,x+=xd,y+=yd,yd+=ya,ox=abs(ox-int x)*2,a+=ox:
-    do while a>=1:
-       a-=1: palette shr sgn xd,1 to nc:
+120    ox=int x,x+=xd*wscl,y+=yd*wscl,yd+=ya,ox=abs(ox-int x)*2,a+=ox/wscl:
+    do while (a-=1)>=1:
+       palette shr sgn xd,1 to nc:
     loop
 130    wait screen:
  loop

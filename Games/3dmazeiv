@@ -144,7 +144,7 @@ CHANGED FALSE
     o=of(nb(INT(RND*nn)+1)),
     m$(cc+o)="0",
     m$(cc+(o*2))="0",
-    satk$=(QCHR$(cc) AND nn>1)+stak$,
+    stak$=(QCHR$(cc) AND nn>1)+stak$,
     cc+=o*2:
     GO TO 400
 430 IF stak$<>"" THEN

@@ -1,0 +1,24 @@
+ZXASCII
+AUTO -1
+PROG /demos/graphics/rtb_circles_voronoi
+CHANGED FALSE
+10 window depth 0,32:
+ circles=100:
+ dim y(circles),x(circles),k(circles):
+ sw=scrw/2,sh=scrh/2:
+ for i=1 to circles:
+    x(i)=rnd*scrw,y(i)=rnd*scrh,
+    g=127-127*(ABS(sw-x(i))/sw)+127-127*(ABS(sh-y(i))/sh),
+    k(i)=RGBtoINT(255-x(i)/SCRw*255,g,y(i)/SCRh*255):
+ next i:
+ j,mr=0:
+ for x=0 to scrw-1;y=0 to scrh-1:
+    r=scrw:
+    for i=1 to circles:
+       r1=pyth(x-x(i),y-y(i)):
+       if r1<r then
+          r=r1,j=i,mr=max(r,mr):
+       end if:
+    next i:
+    plot ink (r/4 & 1)*k(j);x,y:
+ next y;x

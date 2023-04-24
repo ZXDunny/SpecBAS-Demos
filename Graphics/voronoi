@@ -1,9 +1,24 @@
 ZXASCII
 AUTO -1
-PROG voronoi
+PROG demos:graphics/voronoi
+CHANGED FALSE
 10 REM Voronoi
 20 WINDOW DEPTH 0,32
-30 LET sw=SCRw/2,sh=SCRh/2,p=240,mx=SCRw*SCRw+SCRh*SCRh: DIM x(),y(),k()
-40 FOR i=1 TO p: LET x(i)=RND*SCRw,y(i)=RND*SCRh,g=127-127*(ABS(sw-x(i))/sw)+127-127*(ABS(sh-y(i))/sh),k(i)=RGBtoINT(255-x(i)/SCRw*255,g,y(i)/SCRh*255): NEXT i
-50 FOR x=0 TO SCRw-1: FOR y=0 TO SCRh-1: LET d=mx: FOR i=1 TO p: LET q=POLARDIST(x(i)-x,y(i)-y): IF q<d THEN LET d=q,k=i
-60 NEXT i: PLOT INK k(k);x,y: NEXT y: NEXT x
+30 sw=SCRw/2,sh=SCRh/2,p=120,mx=SCRw*SCRw+SCRh*SCRh:
+ DIM x(),y(),k()
+40 FOR i=1 TO p:
+    x(i)=int(RND*SCRw),y(i)=int(RND*SCRh),
+    g=127-127*(ABS(sw-x(i))/sw)+127-127*(ABS(sh-y(i))/sh),
+    k(i)=RGBtoINT(255-x(i)/SCRw*255,g,y(i)/SCRh*255):
+ NEXT i
+50 FOR x=0 TO SCRw-1:
+    FOR y=0 TO SCRh-1:
+       d=mx:
+       FOR i=1 TO p:
+          q=POLARDIST(x(i)-x,y(i)-y):
+          IF q<d THEN
+             d=q,k=i
+60       NEXT i:
+       PLOT INK k(k);x,y:
+    NEXT y:
+ NEXT x

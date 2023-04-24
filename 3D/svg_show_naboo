@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG /demos/3d/svg_show_naboo
+CHANGED FALSE
+10 paper 0: ink 1: cls:
+ palette 0,$0352A8;1,$69B8FF
+20 stream new s,"demos:3d/models/naboo.txt":
+ stream read s,f$,streamlen s:
+ stream close s:
+ f$=#155+f$
+30 do:
+    read s$,r$:
+    f$=replace$(f$,s$,r$):
+ loop until s$=""
+40 daTa #155+"0,",": PLOT ",#155+"1,",": DRAW TO ",#155+"3,0,0"+#155,": STOP","",""
+50 origin 0,0 to 320,192:
+ EXECUTE f$

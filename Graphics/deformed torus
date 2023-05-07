@@ -1,0 +1,24 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/deformed torus
+CHANGED FALSE
+10 palette 1,$FF0000;255,$FF00FF:
+ rainbow 1 to 255: paper 0: ink 128:
+ screen lock
+20 r=50,rr=100,t=0,p2=pi/2:
+ DO:
+    cls:
+    t+=.1/4,st=sin t,ct=cos t,h=100*st,
+    ct1=100*ct,st1=100*st,cs=p2*st,cc=p2*ct:
+    FOR u=0 TO 7 STEP .05:
+       cu=(100+50*COS u):
+       FOR v=0 TO 7 STEP .1:
+          sv=sin v,
+          x=cu*COS v+h,
+          y=(ct1+r*COS(u+cs))*(sv*ct+st),
+          z=(st1+r*COS(u+cc))*(sv*st+ct)*0.707:
+          plot ink clamp(z*10,1 to 255);x+z+400,y+z+240:
+       NEXT v:
+    NEXT u:
+    wait screen:
+ LOOP

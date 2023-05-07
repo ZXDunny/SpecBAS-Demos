@@ -1,0 +1,16 @@
+ZXASCII
+AUTO -1
+PROG /demos/Sound/midi_stuff
+CHANGED FALSE
+10 REM Do stuff while playing MIDI
+20 LET h$="Y9N9F)":                     rem lead
+30 LET d$="Y10O2N1#G)":                 rem hats
+40 LET e$="Y10O2N3&DN1&N3DN1&)":        rem snares
+50 LET f$="Y10O1N3A&)":                 rem rim 
+60 LET g$="Y1O1N11GGGN5CN11#AA#AN3CD)": rem bass
+70 play d$,e$,f$,g$,h$ async
+80 paper 128: cls: ellipse ink 6; paper 8;200,100,100,50 fill #16#1#0#0#0"S"#16#2#0#0#0"p"#16#3#0#0#0"e"#16#4#0#0#0"c"#16#5#0#0#0"B"#16#6#0#0#0"a"#16#7#0#0#0"s! "
+90 window grab a$,0,100,50,200,100
+100 screen lock: angle=180: s=1: degrees
+110 cls: window put a$,0,(scrw/2)-(s*200/2),(scrh/2)-(s*100/2) rotate sin angle*600 scale s
+120 angle+=1,s=abs(sin angle*2)+.1: print scale 8,8;centre 2;ink (angle/5) mod 15;trans 1;"DOING";CENTRE 3;"STUFF";scale 6,6;centre 6;"WHILE PLAYING";centre 7;"MIDI": WAIT SCREEN: GO To 110

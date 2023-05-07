@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/quake portal warp
+CHANGED FALSE
+10 REM Quake portal fx
+20 graphic new gfx load "/demos/3d/portal.png":
+ palette copy gfx,0, 255 to 0:
+ w=192,h=192,gw=gfxw gfx,gh=gfxh gfx,sw=scrw/2,sh=scrh/2,t=0:
+ origin -sw+w/2,-sh+h/2 to sw+w/2,sh+h/2: screen lock:
+ sample new hum,"/demos/3d/hum1.wav": sample play hum volume 0.25 loop:
+ cls rgbn 0
+30 do:
+    t+=1/200:
+    for x=0 to w-1;y=0 to h-1:
+       plot ink gpoint(gfx,(x+16*sin(6*(y/256+t))) mod gw,(y+16*cos(6*(x/256+t))) mod gh);x,y:
+    next y;x:
+    wait screen:
+ loop

@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG /demos/Toys/charlie chars
+CHANGED FALSE
+10 rem Charlie's chars
+20 dim p$="сст","стс","тсс"
+30 a1=udg "a"-1,a2=a1+129,fb=fontbank:
+ do 64: 
+    b=int(rnd*2):
+    poke fb,a1+=1,b;fb,a2-=1,b:
+ loop
+40 ink 1+rnd*15: scale 5,5: paper 0: cls
+50 p=int(rnd*3)+1
+60 for i=1 to txtw*txth/3:
+    print p$(p);:
+ next i
+70 wait keydown:
+ GO To 30

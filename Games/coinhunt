@@ -1,0 +1,143 @@
+ZXASCII
+AUTO -1
+PROG /coinhunt
+CHANGED FALSE
+10 option "intscaling",1:
+ screen full:
+ window size 0,getopt "natwidth"/2,getopt "natheight"/2:
+ paper 0: ink 14: cls
+20 GO SUb 480: REM Set up UDGs
+30 GO SUb 250: REM Clear with border
+
+40 rem display welcome message
+50 restore 260:
+ for i=0 to 8:
+    read a$:
+    print centre i+25;ink 14;a$:
+ next i:
+ pause 0: volume .5
+
+60 rem Set up initial state+display
+70 level,cycle=1,score=0,lives=3,coin$="сту"
+
+80 px=scrw/2,py=scrh/2,coinCount=20+(Level-1)*5,
+ monsterCount=10+(Level-1)*5,remcoins=coinCount,
+ monsterSpeed=.9+(level/20)
+
+90 dim monsters(monsterCount,5);coins(coinCount,4):
+ pdist=100:
+ for i=1 to coinCount:
+    GO SUb 270:
+ next i:
+ for i=1 to monsterCount:
+    GO SUb 290:
+ next i
+
+100 rem screen furniture display
+110 GO SUb 250:
+ print trans 0;ink 15;centre 0;" Coin Hunt! by MagicalWizzy (SpecBAS version by ZXDunny) ";
+ ink 13;move 16,scrh-8;" Score: ";Score;" ";move scrw/2-40,scrh-8;" Level: "+str$ Level+" ";move scrw-96,scrh-8;" Lives: ";lives;" "
+120 for i=1 to coinCount:
+    if coins(i,4) then
+       if pyth(coins(i,1)-px,coins(i,2)-py)<=6 then
+          GO SUb 330
+       end if:
+       print trans 1;move coins(i,1),coins(i,2);ink 14;coin$(((coins(i,3)+(cycle/10)) mod 3)+1)
+130 next i
+140 for i=1 to monsterCount:
+    GO SUb 360:
+    text trans 1;move monsters(i,1),monsters(i,2); ink 10+(rnd*monsters(i,5));"ф":
+ next i
+
+150 rem display and move the player
+160 px+=(keyst key_d and px<scrw-16)-(keyst key_a and px>8),
+ py+=(keyst key_s and py<scrh-16)-(keyst key_w and py>8)
+170 print move px,py;ink 15;"х"
+
+180 cycle+=1:
+ wait screen:
+ GO To 110
+
+190 rem Win the level
+200 print centre txth/2;ink 13;"Great job - You got all the coins! Level up.":
+ wait keydown:
+ level+=1:
+ GO To 80
+
+210 rem Lose a life
+220 print centre txth/2;ink 13;"A monster just ate you for breakfast!":
+ wait keydown:
+ lives-=1:
+ coinCount=remCoins:
+ if lives=0 then cls:
+    print centre txth/2;ink 14;"You got "+str$ score+" coins. Well done. You did well. Game over.":
+    STOP
+230 GO To 90
+
+240 rem clear screen, set border
+250 cls: rectangle ink 9;2,2,scrw-4,scrh-4;5,5,scrw-10,scrh-10: return
+
+260 data "---- Welcome to Coin Hunt! ----","MagicalWizzy (2022)","(SpecBAS version by ZXDunny)","","Collect all the coins without being attacked by the monsters :)","Press any key to begin","","",#16#6#0#0#0"Press ESC at any time to quit"
+
+270 rem Create a coin
+280 coins(i,1)=int(rnd*(scrw-20))+10,
+ coins(i,2)=int(rnd*(scrh-32))+16,
+ coins(i,3)=int(rnd*3)+1,
+ coins(i,4)=1:
+ return
+
+290 rem create a monster
+300 monsters(i,1)=int(rnd*(scrw-20))+10,monsters(i,2)=int(rnd*(scrh-32))+16
+310 IF PYTH(monsters(i,1)-px,monsters(i,2)-py)<80 THEN GO To 300
+320 GO sub 400: return
+
+330 rem collect a coin
+340 PLAY "T240O6N1bUX10000W0N9E" ASYNC:
+ score+=1,coins(i,4)=0,remcoins-=1:
+ IF remcoins=0 THEN GO To 190
+350 return
+
+360 rem move a MONSTER
+370 mx=monsters(i,1),my=monsters(i,2),
+ dx=mx-monsters(i,3),dy=my-monsters(i,4),
+ pdist=pyth(mx-px,my-py),
+ monsters(i,5)=0:
+ if pdist<50 then
+    monsters(i,3)=px,monsters(i,4)=py,monsters(i,5)=6
+380 if pyth(dx,dy)<7 then
+    GO SUb 400
+ else
+    a=polar(dx,dy),
+    monsters(i,1)-=(monsterSpeed*cos a),
+    monsters(i,2)-=(monsterSpeed*sin a)
+390 return
+
+400 rem Choose new target for monster - a random spot on level 1, may choose
+     a coin to guard on level 2 and up.
+410 IF pdist<7 THEN GO To 210
+420 mx=monsters(i,1),my=monsters(i,2):
+ IF level<2 or remCoins=0 or rnd>.25 THEN GO To 460
+430 j=int(rnd*remcoins)+1:
+ for k=1 to coinCount:
+    if coins(k,4) then
+       j-=1:
+       if j=0 then
+          GO To 450
+440 next k
+450 mx=coins(k,1),my=coins(k,2)
+460 a=rnd*tau,r=(rnd*32)+32:
+ mdx=r*sin a+mx,
+ mdy=r*cos a+my:
+ if mdx<16 or mdx>scrw-16 or mdy<16 or mdy>scrh-16 then go to 460
+470 monsters(i,3)=mdx,monsters(i,4)=mdy:
+ return
+
+480 rem Set up UDGs
+490 restore 510:
+ addr=UDG "a"-1:
+ for i=0 to 39:
+    read d: b=256:
+    do 8: poke fontbank,addr+=1,d&(b/=2)<>0: loop:
+ next i
+500 return
+510 DATA 0,24,24,24,24,24,24,0,0,24,60,60,60,60,24,0,0,60,126,126,126,126,60,0,24,60,126,60,24,60,36,102,60,126,219,255,219,231,126,60

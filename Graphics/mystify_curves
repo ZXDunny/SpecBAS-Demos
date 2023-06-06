@@ -1,19 +1,20 @@
 ZXASCII
 AUTO -1
-PROG mystify_curves
+PROG demos:graphics/mystify_curves
+CHANGED FALSE
 10 REM Line art
 20 IF INKEY$<>"" THEN GO TO 20
 30 CLS 0
 40 LET a=0: LET b=4: LET x1,y1,x2,y2,x3,y3=0: LET dx1,dy1,dx2,dy2,dx3,dy3=-1: LET maxx=SCRw: LET maxy=SCRh: LET rmod=(RND*.5)+.5: LET gmod=(RND*.5)+.5: LET bmod=(RND*.5)+.5: RANDOMIZE mSECS: LET nl=0
 50 FOR f=0 TO 127: PALETTE f,f*2*rmod,f*2*gmod,f*2*bmod: PALETTE f+128,(127-f)*2*rmod,(127-f)*2*gmod,(127-f)*2*bmod: NEXT f
-60 DO 
-70 IF x1+dx1<0 OR x1+dx1>maxx OR y1+dy1<0 OR y1+dy1>maxy OR (dx1=0 AND dy1=0) THEN LET dx1=INT(RND*10)-5: LET dy1=INT(RND*10)-5: GO TO 70
-80 IF x2+dx2<0 OR x2+dx2>maxx OR y2+dy2<0 OR y2+dy2>maxy OR (dx2=0 AND dy2=0) THEN LET dx2=INT(RND*10)-5: LET dy2=INT(RND*10)-5: GO TO 80
-90 IF x3+dx3<0 OR x3+dx3>maxx OR y3+dy3<0 OR y3+dy3>maxy OR (dx3=0 AND dy3=0) THEN LET dx3=INT(RND*10)-5: LET dy3=INT(RND*10)-5: GO TO 90
+60 DO
+70 IF x1+dx1<0 OR x1+dx1>maxx OR y1+dy1<0 OR y1+dy1>maxy OR (dx1=0 AND dy1=0) THEN LET dx1=(RND*10)-5: LET dy1=(RND*10)-5: GO TO 70
+80 IF x2+dx2<0 OR x2+dx2>maxx OR y2+dy2<0 OR y2+dy2>maxy OR (dx2=0 AND dy2=0) THEN LET dx2=(RND*10)-5: LET dy2=(RND*10)-5: GO TO 80
+90 IF x3+dx3<0 OR x3+dx3>maxx OR y3+dy3<0 OR y3+dy3>maxy OR (dx3=0 AND dy3=0) THEN LET dx3=(RND*10)-5: LET dy3=(RND*10)-5: GO TO 90
 100 INC x1,dx1: INC y1,dy1: INC x2,dx2: INC y2,dy2: INC x3,dx3: INC y3,dy3: INC a,b
 110 IF a>250 THEN LET b=-b: LET a=254
 120 IF a<5 THEN LET b=-b: LET a=4
 130 INK a
 140 CURVE x1,y1 TO x2,y2 TO x3,y3,50: CURVE SCRw-x1,y1 TO SCRw-x2,y2 TO SCRw-x3,y3,50: CURVE x1,SCRh-y1 TO x2,SCRh-y2 TO x3,SCRh-y3,50: CURVE SCRw-x1,SCRh-y1 TO SCRw-x2,SCRh-y2 TO SCRw-x3,SCRh-y3,50
-150 INC nl: PALETTE SHL 1,1 TO 255: IF nl=4 THEN WAIT SCREEN: LET nl=0
-160 IF INKEY$="" THEN LOOP ELSE RUN 
+150 INC nl: PALETTE SHL 1,1 TO 255: IF nl=4 THEN do 2:WAIT SCREEN: loop: LET nl=0
+160 IF INKEY$="" THEN LOOP ELSE RUN

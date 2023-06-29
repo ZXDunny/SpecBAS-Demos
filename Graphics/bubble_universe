@@ -8,12 +8,12 @@ CHANGED FALSE
  origin -sw,-sh to sw,sh:
  screen lock:
  do:
-    rectangle alpha ink $10000000;-2.01,-2.01 to 2.01,2.01 fill:
+    rectangle alpha ink $05000000;-2.01,-2.01 to 2.01,2.01 fill:
     for i=0 to n step 2;j=0 to n step 2:
        u=sin(i+v)+sin(r*i+x),
        v=cos(i+v)+cos(r*i+x),
        x=u+t:
-       circle ink rgbtoint(i,j,99);u,v,0.006 fill:
+       circle alpha ink rgbtoint(i,j,99)+$40000000;u,v,0.006 fill:
     next j;i:
     t+=.00625:
     wait screen:

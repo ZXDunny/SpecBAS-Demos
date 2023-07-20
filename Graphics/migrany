@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/migrany
+CHANGED FALSE
+10 palette 1,$FF8000: PAPER 0: INK 1: CLS: SCREEN LOCK 
+20 sz=6,t,za,a=0,sw=scrw/2,sh=scrh
+30 z=(sin za+3)*80:
+ for x=0 to scrw-1 step sz:
+    for y=0 to scrh-1 step sz:
+       ca=cos a,sa=sin a,xn=(x-sw)/z,yn=(y-sh)/z,
+       p=even(noise(xn*ca-yn*sa+1e4,xn*sa+yn*ca+1e4,t)*5):
+       draw x,y+p*sz to x+sz,y+(not p)*sz:
+    next y:
+ next x:
+ wait screen: cls:
+ t,a+=.005,za+=.01:
+ GO To 30

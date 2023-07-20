@@ -1,0 +1,37 @@
+ZXASCII
+AUTO -1
+PROG demos:3d/spinny3
+CHANGED FALSE
+10 REM Spinny Cube by Dean Belfield
+20 option "base",0: ink 15:
+ dim a(8);b(8):
+ xd,yd,xo,yo=0,sd=1024,od=256,sw=scrw/2,sh=scrh/2,a=25:
+ dim sp=((-a,a,a),(a,a,a),(-a,-a,a),(a,-a,a),(-a,a,-a),(a,a,-a),(-a,-a,-a),(a,-a,-a)):
+ dim sh=((0,1,3,2),(6,7,5,4),(1,5,7,3),(2,6,4,0),(2,3,7,6),(0,4,5,1))
+30 the,psi,phi=0:
+ do:
+    cls 0:
+    for sc=.01 to 2 step .1:
+       d=sin sc,
+       thea=the+sc/d,psia=psi+sc/d,phia=phi+sc/d:
+       GO SUb 40:
+    next sc:
+    the+=.01,psi+=.03,phi-=.02:
+    wait screen:
+ loop
+40 cphi=cos phia,sphi=sin phia,cthe=cos thea,sthe=sin thea,
+ cpsi=cos psia,spsi=sin psia:
+ For i=0 to 7:
+    xx=sp(i,0)*sc,yy=sp(i,1)*sc,zz=sp(i,2)*sc,
+    y=yy*cphi-zz*sphi,zz=yy*sphi+zz*cphi,
+    x=xx*cthe-zz*sthe,zz=xx*sthe+zz*cthe,
+    xx=(x*cpsi-y*spsi)+xo+xd,yy=(x*spsi+y*cpsi)+yo+yd,
+    a(i)=sw+xx*sd/(od-zz),
+    b(i)=sh+yy*sd/(od-zz):
+ next i:
+ for i=0 to 5:
+    x1=a(sh(i,0)),x2=a(sh(i,1)),x3=a(sh(i,2)),x4=a(sh(i,3)),
+    y1=b(sh(i,0)),y2=b(sh(i,1)),y3=b(sh(i,2)),y4=b(sh(i,3)):
+    polygon x1,y1 to x2, y2 to x3,y3 to x4,y4
+50 next i:
+ return

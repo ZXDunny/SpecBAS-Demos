@@ -1,0 +1,22 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/snakey gradient 2
+CHANGED FALSE
+10 paper 0: cls: screen lock:
+ wait screen:
+ for i=0 to 8:
+    read j:
+    k=min(i*32,255):
+    palette k,j:
+    rainbow (i-1)*32 to k:
+ next i:
+ data $0,$0,$FF0000,$FCAB29,$FD9C8A,$F541DB,$6075FE,$02F3FF,$FFFFFF
+20 tp=480,ip=255/tp,t=0,w1=0,w2=scrw-1
+30 t+=2:
+ for i=0 to tp -1:
+    ellipse ink i*ip;scrw*(.5+.25*(i/tp*1.6)*sin((i+t)/50)),i,50,20 fill:
+ next i:
+ if t>300 then
+    wait screen:
+    rectangle ink 2; over 13;w1,0,w2,scrh fill
+40 GO To 30

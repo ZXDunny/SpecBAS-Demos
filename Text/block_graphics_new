@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG /demos/Text/block_graphics_new
+CHANGED FALSE
+10 REM 4x4 Pixel magnifier
+20 paper 0: ink 6: cls
+30 INPUT "Characters to render: ";a$
+50 PRINT AT 0,0; INK 1;a$
+60 FOR x=0 TO LEN (a$)*8-1 STEP 2
+70    FOR y=0 TO 8 STEP 2
+90       PRINT AT 16+y/2,x/2;CHR$ (128+8*POINT(x,y+1)+4*POINT(x+1,y+1)+2*POINT(x,y)+POINT(x+1,y))
+100    NEXT y
+110 NEXT x
+120 wait keydown
+130 run

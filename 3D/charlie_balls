@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG /demos/3D/charlie_balls
+CHANGED FALSE
+10 paper 0: window depth 0,32: cls
+20 proc ball(rnd*scrw,rnd*Scrh,int(rnd*255)+25,rnd*255,rnd*255,rnd*255)
+30 wait screen
+40 GO To 20
+ 
+100 def proc ball(x,y,sz,r,g,b):
+    for r=sz to 1 step -1:
+       v=sin((1-r/sz)*pi/2):
+       circle ink rgbtoint(r*v,g*v,b*v);x,y,r fill:
+    next r:
+ end proc

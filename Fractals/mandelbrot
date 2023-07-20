@@ -12,7 +12,7 @@ CHANGED FALSE
  GO TO 30
 40 PROC aspect(xmin,xmax,ymin,ymax):
  hs+=1,xn(hs)=xmin,yn(hs)=ymin,xm(hs)=xmax,ym(hs)=ymax
-50 maxiters=INT(5*(1.5^(ABS(LN((xmax-xmin)/SCRw))))),xs=(xmax-xmin)/SCRw,ys=(ymax-ymin)/SCRh
+50 maxiters=INT(5*(1.5^ABS LN((xmax-xmin)/SCRw))),xs=(xmax-xmin)/SCRw,ys=(ymax-ymin)/SCRh
 60 y1=ymin:
  FOR y=0 TO SCRh-1:
     x1=xmin:

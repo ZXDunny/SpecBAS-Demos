@@ -1,0 +1,50 @@
+ZXASCII
+AUTO -1
+PROG /demos/3D/planets2
+CHANGED FALSE
+10 rem Lightsource shaded spheres.
+     mouse pointer is the light source.
+20 palette 255,$FFFFFF: rainbow 0 to 255:
+ mnr=20,mxr=100,np=8
+30 amb=0.03,k=2,n=48,mxp=(1-amb)*256:
+ DIM win(np):
+ dim no(mxr*2+1,mxr*2+1) base 0:
+ for x=-mxr to mxr:
+    for y=-mxr to mxr:
+       no(x+mxr,y+mxr)=rnd*n:
+    next y:
+ next x
+40 paper 0: cls:
+ do 400: plot ink rnd*255;rnd*scrw,rnd*scrh: loop:
+ mx=mousex,my=mousey:
+ for p=1 to np:
+    xc=rnd*scrw,yc=rnd*scrh,r=mnr+(rnd*(mxr-mnr)),r2=r*r:
+    lx=xc-mx,ly=yc-my,lz=-75,ik=int(rnd*7)+1:
+    GO SUB 1000:
+ next p
+50 wait keydown:
+ for i=1 to np: 
+    window erase win(i):
+ next i:
+ cls:
+ GO To 40
+1000 window new win(p),xc-r,yc-r,r*2,r*2 trans 255:
+ palette 254,($FF0000*(ik&4>0))+($FF00*(ik&2>0))+($FF*(ik&1>0)):
+ rainbow 0 to 254: cls 255:
+ l=sqr(lx*lx+ly*ly+lz*lz),
+ nlx=lx/l,nly=ly/l,nlz=lz/l:
+ for x=-r to r:
+    x2=x*x:
+    for y=-r to r:
+       y2=y*y:
+       if x2+y2<=r2 then
+          v2=sqr(r2-x2-y2),
+          l=sqr(x2+y2+v2*v2),
+          v0=x/l,v1=y/l,v2/=l,
+          d=nlx*v0+nly*v1+nlz*v2,
+          i=mxp*(iif(d<0,-d^k,0)+amb)-no(x+r,y+r):
+          plot ink clamp(i,0 to 254);x+r,y+r
+1010    next y:
+ next x:
+ window 0:
+ return

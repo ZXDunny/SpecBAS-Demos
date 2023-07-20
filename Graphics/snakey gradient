@@ -1,0 +1,24 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/snakey gradient
+CHANGED FALSE
+10 paper 0: cls: screen lock:
+ print centre txth/2;ink 255;"Wait...":
+ wait screen:
+ for i=1 to 8:
+    read j:
+    k=min(i*32,255):
+    palette k,j:
+    rainbow (i-1)*32 to k:
+ next i:
+ rainbow 0 to 32:
+ data $0,$FF0000,$FCAB29,$FD9C8A,$F541DB,$6075FE,$02F3FF,$FFFFFF
+20 tp=480,ip=255/tp,t=0,w1=scrw*.25-50,w2=scrw*.5+101
+30 t+=2:
+ for i=0 to tp -1:
+    circle ink i*ip;scrw*(.5+.25*sin((i+t)/50)),i,50 fill:
+ next i:
+ if t>300 then 
+    wait screen:
+    rectangle ink 1; over 12;w1,0,w2,scrh fill
+40 GO To 30

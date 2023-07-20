@@ -2,18 +2,15 @@ ZXASCII
 AUTO -1
 PROG demos:graphics/timestables
 CHANGED FALSE
-10 degrees: paper 0: ink 48: 
- palette 255,$FFFF00: RAINBOW 0 to 255: over 12: 
- cls:
- r=SCRh/2.1,cx=SCRw/2,cy=SCRh/2,n=150,s=360/n
+10 degrees: paper 0: window depth 0,32:
+ r=SCRh/2.25,rs=r*2+1,cx=SCRw/2,cy=SCRh/2,n=180,s=360/n
 20 t=1:
  DO:
-    cls:
-    circle cx-1,cy,r:
+    rectangle alpha ink $40000000;cx-r,cy-r,rs,rs fill:
     for i=1 to n:
-       a1=s*i,a2=s*i*t:
-       draw cx+sin a1*r,cy+cos a1*r to cx+sin a2*r,cy+cos a2*r:
+       a1=s*i,a2=s*i*t,ik=hsvtorgb(s*i,255,255)+$80000000:
+       draw alpha ink ik;cx+sin a1*r,cy+cos a1*r to cx+sin a2*r,cy+cos a2*r:
     next i:
-    t+=.01:
+    t+=.005:
     wait screen:
  loop

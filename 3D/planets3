@@ -1,0 +1,46 @@
+ZXASCII
+AUTO -1
+PROG demos:3d/planets3
+CHANGED FALSE
+10 rem Lightsource shaded spheres.
+20 palette 254,$FFFFFF: rainbow 0 to 255:
+ mnr=20,mxr=100,np=7
+30 amb=0.08,mxp=(1-amb)*256:
+ DIM win(np):
+ window new sun,0,0,16,16 transparent 0: circle ink 255;8,8,7 fill: window 0
+40 paper 0: cls: i$="1234567":
+ do 400: plot ink rnd*255;rnd*scrw,rnd*scrh: loop:
+ mx=rnd*scrw,my=rnd*Scrh:
+ for p=1 to np:
+    xc=rnd*scrw,yc=rnd*scrh,r=mnr+(rnd*(mxr-mnr)),r2=r*r,
+    lx=xc-mx,ly=yc-my,lz=-rnd*200,k=sqr(lx*lx+ly*ly)/150,dt=25+rnd*75,
+    n=int(rnd*len i$)+1,ik=val i$(n),i$=i$( to n-1)+i$(n+1 to):
+    GO SUB 1000:
+ next p:
+ window move sun,mx-4,my-4: window front sun
+50 pause 300:
+ for i=1 to np:
+    window erase win(i):
+ next i:
+ cls:
+ GO To 40
+1000 window new win(p),xc-r-1,yc-r-1,r*2+2,r*2+2 trans 255:
+ palette 254,($FF0000*(ik&4>0))+($FF00*(ik&2>0))+($FF*(ik&1>0)):
+ rainbow 0 to 254: cls 255:
+ l=sqr(lx*lx+ly*ly+lz*lz),
+ nlx=lx/l,nly=ly/l,nlz=lz/l:
+ for x=-r to r:
+    x2=x*x:
+    for y=-r to r:
+       y2=y*y:
+       if x2+y2<=r2 then
+          v2=sqr(r2-x2-y2),
+          l=sqr(x2+y2+v2*v2),
+          v0=x/l,v1=y/l,v2/=l,
+          d=nlx*v0+nly*v1+nlz*v2,
+          i=mxp*(iif(d<0,-d^k,0)+amb)-(rnd*dt):
+          plot ink clamp(i,0 to 254);x+r,y+r
+1010    next y:
+ next x:
+ window 0:
+ return

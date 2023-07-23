@@ -4,18 +4,18 @@ PROG demos:graphics/rainbow scales
 CHANGED FALSE
 10 paper 0: ink 1: cls: screen lock
 20 for i=1 to 33:
-    palette hsv i,(i-1)*10,255,255:
-    palette hsv i+32,(i-1)*10,128,255:
+    palette hsv i,(i-1)*11.25,255,255:
+    palette hsv i+32,(i-1)*11.25,128,255:
  next i
 30 ysc=scrh/32,amp=15,c=1
-40 for amp=0 to 20 step .05:
+40 for amp=0 to 20 step .25:
     for y=0 to 31:
        angle=0:
        for x=0 to scrw:
           y1=amp*sin angle+(y*ysc):
           plot ink 0;x,y1;ink y+34;x,y1+1:
           draw ink y+1;x,y1+2 to x,scrh:
-          angle+=.0076*y:
+          angle+=.0079*y:
        next x:
     next y:
     wait screen:

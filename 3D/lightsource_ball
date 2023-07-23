@@ -1,19 +1,20 @@
 ZXASCII
 AUTO -1
-PROG /demos/3D/lightsource_ball
+PROG demos:3d/lightsource_ball
 CHANGED FALSE
 10 rem Sphere shader. Slow as.
      lx,ly,lz=light source coords
 20 palette 255,$FFFFFF: rainbow 0 to 255: screen lock:
  for f=0 to 400: plot ink rnd*255;rnd*scrw,rnd*scrh: next f
-30 llx,lly=0,xc=scrw/3,yc=scrh/2,r=75,amb=0.03,k=2,n=24,mxp=(1-amb)*256,r2=r*r:
+30 llx,lly=0,xc=scrw/3,yc=scrh/2,r=75,amb=0.03,n=24,mxp=(1-amb)*256,r2=r*r:
  dim no(r*2+1,r*2+1) base 0:
  for x=-r to r:
     for y=-r to r:
        no(x+r,y+r)=rnd*n:
     next y:
  next x
-40 lx=xc-mousex,ly=yc-mousey,lz=-75:
+40 lx=xc-mousex,ly=yc-mousey,lz=-75,
+ k=sqr(lx*lx+ly*ly)/150:
  if lx<>llx or ly<>lly then
     GO SUB 1000:
     llx=lx,lly=ly

@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/phil_spiral
+CHANGED FALSE
+10 rem Spiral
+20 offx=scrw/2.5
+30 offy=scrh/3: lp=0
+40 CLS
+50 DO
+60    x1=COS(lp)*5*lp+80+offx
+70    y1=SIN(lp)*5*lp+80+offy
+80    a=lp+2*PI/3
+90    x2=COS(a)*5*a+80+offx
+100    y2=SIN(a)*5*a+80+offy
+110    draw x1,y1 to x2,y2
+120    lp=lp+PI/20
+130    wait screen
+140 loop UNTIL lop>=15*PI

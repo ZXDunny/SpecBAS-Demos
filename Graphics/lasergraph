@@ -1,0 +1,31 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/lasergraph
+CHANGED FALSE
+10 degrees: window depth 0,32: paper 0: cls:
+20 nc=2,lik,ik=0: dim p(nc,3)
+30 for f=1 to nc:
+    p(f,1)=50+int(rnd*75),
+    p(f,2)=0,
+    p(f,3)=rnd*2-1:
+ next f:
+ t=msecs,c=0
+40 do: ik=int(rnd*7)+1: loop until lik<>ik: lik=ik:
+ ink ($FF0000*(ik&4>0))+($FF00*(ik&2>0))+($FF*(ik&1>0)):
+50 xc=scrw/2,yc=scrh/2:
+ for f=1 to nc:
+    xc=p(f,1)*sin p(f,2)+xc,
+    yc=p(f,1)*cos p(f,2)+yc:
+    p(f,2)+=p(f,3):
+ next f:
+ if c then draw to xc,yc else plot xc,yc: end if:
+ c+=1:
+ if inkey$="" and msecs-t<3000 then
+    if c mod 128=0 then
+       rectangle alpha ink $10000000;0,0,scrw,scrh fill:
+       wait screen:
+    end if:
+    GO To 50
+ else
+    wait keyup:
+    GO To 30

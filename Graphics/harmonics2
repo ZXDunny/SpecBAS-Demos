@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/harmonics2
+CHANGED FALSE
+10 WINDOW DEPTH 0,32: paper $808080: cls
+20 radians:
+ for i=1 to 100:
+    for x=0 to scrw-1:
+       plot x,(scrh/2)+((scrh/2.25)/i)*sin(x*((pi*i)/scrw)):
+    next x:
+    rectangle alpha ink $0a808080;0,0,scrw,scrh fill:
+    wait screen:
+ next i

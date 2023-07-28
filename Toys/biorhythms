@@ -18,12 +18,11 @@ CHANGED FALSE
  gs=60,xsc=scrw/gs,sh=scrh/2,yo=sh-120,so=t-(gs/2),n=0
 40 cls: days=t:
  for y=0 to scrh step xsc:
-    plot 0,y:
-    draw ink 235;scrw,0:
+    draw ink 235;0,y to scrw,y:
  next y:
  for x=-gs/2 to gs/2:
     x1=(t+x-so)*xsc:
-    plot x1,0:Draw ink 235;0,scrh:
+    Draw ink 235;x1,0 to x1,scrh:
     if x=0 then
        rectangle ink 236;x1-1,0 to x1+1,scrh fill:
     end if:

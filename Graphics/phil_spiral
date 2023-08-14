@@ -15,4 +15,4 @@ CHANGED FALSE
 110    draw x1,y1 to x2,y2
 120    lp=lp+PI/20
 130    wait screen
-140 loop UNTIL lop>=15*PI
+140 loop UNTIL lp>=15*PI

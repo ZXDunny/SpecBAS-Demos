@@ -1,0 +1,47 @@
+ZXASCII
+AUTO -1
+PROG demos:misc/ascii fish
+CHANGED FALSE
+10 rem Fish!
+20 nFish=20: dim fish(nFish,4);fish$(nFish);kelp(txtw,txth) base 0;k$(23)
+30 paper 1: for i=2 to 127: palette i,i shl 8;i+128,i*2,i*2,i*2: next i: palette 1,60:
+ GO SUB 120: FOR i=1 TO nFish: GO SUB 190: next i: screen lock: c=0
+40 cls
+50 FOR i=1 TO nFish/2: GO SUb 90: next i
+60 c+=.1: randomize int c: GO SUb 160
+70 FOR i=nFish/2+1 TO nFish: GO SUB 90: next i
+80 wait screen: GO To 40
+90 text ink fish(i,4);trans 1;move fish(i,1),fish(i,2);fish$(i):
+ fish(i,1)+=fish(i,3):
+ if (fish(i,3)<0 and fish(i,1)<-len fish$(i)*8) or
+    (fish(i,3)>0 and fish(i,1)>scrw) THEN GO SUb 190
+100 return
+110 rem ****** Grow Kelp ******
+120 kelps=(rnd*15)+15: mat kelp()=zer:
+ k$="if x>0 then kelp(x-1,y)=k",
+ l$="kelp(x,y)=k",
+ m$="if x<txtw-1 then kelp(x+1,y)=k",
+ n$=k$+":end if:"+m$:
+ for i=1 to 21: read a$: k$(i)=token$ a$: next i:
+ for x=1 to kelps: kelp(Int(Rnd*txtw),txth-1)=rnd*64+63: NEXT x
+130 for y=txth-2 to 0 step -1;x=0 to txtw-1:
+    k=kelp(x,y+1):
+    if k then execute k$(int(rnd*23)+1)
+140 next x;y:
+ return
+150 rem ****** Draw Kelp ******
+160 for x=0 to txtw-1;y=0 to txth-1:
+    k=kelp(x,y):
+    if k then text at y,x;ink k;trans 1;"kelp"(int(rnd*4)+1)
+170 next y;x:
+ return
+180 rem ****** New Fish ******
+190 lh$="<*",lb$=")",lt$="<{",rh$="*>",rb$="(",rt$="}<",
+ g=130+((i>nFish/2)*62)+rnd*62,l=Int(Rnd*5)+2*(g>192)+1,
+ nf=fish(i,3)=0,dx=rnd*8-4:
+ if dx<0 then fish$(i)=lh$+(lb$*l)+lt$ else fish$(i)=rt$+(rb$*l)+rh$
+200 if nf then nx=rnd*scrw else if dx<0 then nx=scrw else nx=-len fish$(i)*8
+210 fish(i,1)=nx,fish(i,2)=rnd*scrh,fish(i,3)=dx,fish(i,4)=g:
+ return
+215 rem ****** SMC Data ******
+220 data k$,k$,k$,l$,l$,l$,l$,l$,l$,m$,m$,m$,n$,n$,n$,n$,n$,k$,n$,m$,l$

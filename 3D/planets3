@@ -14,18 +14,20 @@ CHANGED FALSE
  for p=1 to np:
     xc=rnd*scrw,yc=rnd*scrh,r=mnr+(rnd*(mxr-mnr)),r2=r*r,
     lx=xc-mx,ly=yc-my,lz=-rnd*200,k=sqr(lx*lx+ly*ly)/150,dt=25+rnd*75,
-    n=int(rnd*len i$)+1,ik=val i$(n),i$=i$( to n-1)+i$(n+1 to):
+    sh=int(rnd*7)+1,n=int(rnd*len i$)+1,ik=val i$(n),i$=i$( to n-1)+i$(n+1 to):
     GO SUB 1000:
  next p:
  window move sun,mx-4,my-4: window front sun
 50 pause 300:
+ wait keyup:
  for i=1 to np:
     window erase win(i):
  next i:
  cls:
  GO To 40
 1000 window new win(p),xc-r-1,yc-r-1,r*2+2,r*2+2 trans 255:
- palette 254,($FF0000*(ik&4>0))+($FF00*(ik&2>0))+($FF*(ik&1>0)):
+ rs=$7F+$20*(sh&4) shl 16,gs=$7F+$20*(sh&2) shl 8,bs=$7F+$20*(sh&1):
+ palette 254,(rs*(ik&4>0))+(gs*(ik&2>0))+(bs*(ik&1>0)):
  rainbow 0 to 254: cls 255:
  l=sqr(lx*lx+ly*ly+lz*lz),
  nlx=lx/l,nly=ly/l,nlz=lz/l:

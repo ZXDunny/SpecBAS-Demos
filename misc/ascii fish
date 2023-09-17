@@ -17,7 +17,7 @@ CHANGED FALSE
     (fish(i,3)>0 and fish(i,1)>scrw) THEN GO SUb 190
 100 return
 110 rem ****** Grow Kelp ******
-120 kelps=(rnd*15)+15: mat kelp()=zer:
+120 kelps=(rnd*15)+7: mat kelp()=zer:
  k$="if x>0 then kelp(x-1,y)=k",
  l$="kelp(x,y)=k",
  m$="if x<txtw-1 then kelp(x+1,y)=k",

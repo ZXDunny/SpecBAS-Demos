@@ -1,0 +1,34 @@
+ZXASCII
+AUTO -1
+PROG demos:toys/fibonacci clock
+CHANGED FALSE
+10 rem Fibonacci Clock!
+     Green=mins, red=hours, blue=both
+20 dim fib=1,1,2,3,5;fs(5)
+30 h=hour time,m=minutes time,hr=h mod 12
+40 mat fs()=zer
+50 proc conv(hr,1);conv(m div 5,2)
+60 rem draw the clock
+70 ul=scrw/16,ofx=scrw/4
+80 dim c=((ofx,ul),(ofx+ul*2,ul),(ofx+ul*2,ul*2),(ofx,ul*3),(ofx+ul*3,ul));
+     w=ul*2,ul,ul,ul*3,ul*5;
+     i=3,1,2,4,5
+90 palette 0,$505050;1,$C00000;2,$8000;3,$c0;4,0: ink 4
+100 for f=1 to 5:
+    rectangle c(f,1),c(f,2),w(f),w(f):
+    fill ink fs(i(f));c(f,1)+1,c(f,2)+1:
+    print trans 1;move c(f,1)+1,c(f,2)+1;fib(i(f)):
+ next f:
+ rectangle c(1,1)-1,c(1,2)-1,ul*8+2,ul*5+2
+110 dv$=": "((msecs mod 1e3<500)+1),
+ pm$="AP"((h>11)+1)+"M":
+ print scale 4,4;ink 4;centre 10;hr;dv$;"0" and m<10;m;" ";pm$
+120 wait screen
+130 cls: GO To 30
+140 def proc conv(v,a):
+    for i=5 to 1 step -1:
+       if v>=fib(i) then
+          fs(i)+=a,
+          v-=fib(i)
+150    next i:
+ end proc

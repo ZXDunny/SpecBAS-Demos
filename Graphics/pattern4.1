@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/pattern4.1
+CHANGED FALSE
+5 PAPER 0: CLS: s=4
+10 FOR x=0 TO scrw STEP s:
+    FOR y=0 TO scrh STEP s:
+20       z=int(RND*2):
+       draw ink rnd*255;x,y-s+(z*s) to x+s,y-z*s
+40    NEXT y:
+ NEXT x
+

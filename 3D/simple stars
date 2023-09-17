@@ -1,0 +1,36 @@
+ZXASCII
+AUTO -1
+PROG demos:3d/simple stars
+CHANGED FALSE
+10 REM 3D Stars
+20 maxstars=500,lens=256,xmid=scrw/2,ymid=scrh/2:
+ DIM stars(maxstars,4)
+30 for f=0 to 255: palette f,f,f,f: next f
+40 FOR f=1 TO maxstars: GO SUb 110: NEXT f
+50 SCREEN LOCK:
+ DO:
+    cls 0
+60    FOR f=1 TO maxstars:
+       stars(f,3)+=stars(f,4)
+70       tsx=stars(f,1),
+       tsy=stars(f,2),
+       sz=stars(f,3),
+       distance=lens-sz
+80       IF distance>0 THEN
+          x=xmid+(lens*tsx/distance),
+          y=ymid-(lens*tsy/distance):
+          if x>=0 and x<scrw and y>0 and y<scrh then
+             i=256-distance:
+             CIRCLE INK i/(1+(i>50))*2;x,y,.0075*i fill
+          else
+             GO SUb 110
+       else
+          GO SUb 110
+90    NEXT f
+100    WAIT SCREEN:
+ LOOP
+110 stars(f,1)=-xmid/2+INT(RND*scrw),
+ stars(f,2)=-ymid/2+INT(RND*scrh),
+ stars(f,3)=INT(RND*lens),
+ stars(f,4)=1+rnd:
+ return

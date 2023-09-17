@@ -28,7 +28,6 @@ CHANGED FALSE
        y1=x*sin b+y*cos b,
        b=(j*2)*pn:
        draw to x1,y1:
-       plot ink 0;over 0;x1,y1:
     next j:
     t+=1/60:
     wait screen:

@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG /draw_test
+CHANGED FALSE
+10 window size 0,400,240:
+ x=SCRw/2,y=SCRh/2
+20 mouse hide: cls:
+ draw ink 7;mousex,0 to mousex,scrh;0,mousey to scrw,mousey:
+ plot ink 2;x,y:
+ draw ink 4;mousex-x,mousey-y: 
+ wait screen:
+ GO To 20

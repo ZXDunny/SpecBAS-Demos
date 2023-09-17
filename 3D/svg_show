@@ -13,7 +13,7 @@ CHANGED FALSE
     f$=replace$(f$,s$,r$):
  loop until s$=""
 40 daTa "M ;","",#13,"",#10,""," ","",";","","L",
-      ": draw to ","M",": plot ","END","","",""
+      ": draw to ","M",": move to ","END","","",""
 50 w=6000:
  origin -w/8,0 to (w/8)*7,w*scrh/scrw flip:
  EXECUTE f$(3 to )

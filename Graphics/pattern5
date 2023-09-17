@@ -2,24 +2,27 @@ ZXASCII
 AUTO -1
 PROG demos:graphics/pattern5
 CHANGED FALSE
-10 DIM S(50) base 0:
- degrees:
- sc=3:
- origin -400,-240 to 400,240:
- FOR L=0 TO 49:
-    S(L)=SIN(L*9):
- NEXT L:
- FOR L=20 TO 1010*SC/2:
+10 degrees: origin -400,-240 to 400,240
+20 def fn S(L)=SIN(L*9):
+ dim E$=TOKEN$ "DRAW L*S,L*C TO O*T,O*D",
+        TOKEN$ "DRAW L*T,L*D TO O*S,O*C"
+
+30 SC=3:
+ FOR L=0 TO 1010*SC/2:
     O=L-40:
     P=L MOD 40:
     Q=(L+1) MOD 40:
-    S=S(P)/SC:
-    C=S(P+10)/SC:
-    T=S(Q)/SC:
-    D=S(Q+10)/SC:
-    IF RND>.5 then
-       DRAW L*S,L*C to O*T,O*D:
-    ELSE
-       draw L*T,L*D to O*S,O*C:
-    end if:
+    S=fn S(P)/SC:
+    C=fn S(P+10)/SC:
+    T=fn S(Q)/SC:
+    D=fn S(Q+10)/SC:
+    EXECUTE E$(INT(RND*2)+1):
  NEXT L
+
+40 for x=-400 to 400 step 2;y=-240 to 240 step 2:
+    if point(x,y)=8 then fill ink int(rnd*15)+1;x,y
+50 next y;x
+
+60 wait keydown:
+ cls:
+ GO To 10

@@ -1,12 +1,16 @@
 ZXASCII
 AUTO -1
-PROG balls
+PROG demos:graphics/balls
+CHANGED FALSE
 10 REM BALLS!
+ 
 20 degrees: paper 0: cls: screen lock
 30 x=1,y=2,c=3,r=4,m=5,dx=6,dy=7
-40 s=scrh/480,pegr=17*s,rows=10,cols=(scrw)/(pegr*5),
- br=11*s
-50 nb=(rows*cols)+320:
+40 s=scrh/480,pegr=16*s,rows=10,cols=(scrw)/(pegr*5),
+ br=8*s
+ 
+50 rem set up Pegs
+60 nb=(rows*cols)+320:
  dim b(nb,7):
  p=1:
  for py=1 to rows:
@@ -18,20 +22,23 @@ PROG balls
        p+=1:
     next pr:
  next py
-60 FOR f=p TO nb:
-    b(f,x)=100+(rnd*(scrw-180)),b(f,y)=-(rnd*(15*p)),
-    b(f,c)=1+(rnd*6),b(f,r)=br,b(f,m)=1000,
-    b(f,dx)=0,b(f,dy)=0:
- next f
-70 PARTICLE b() FRICTION 0.7 GRAVITY 90,0.2*s
-80 for f=p to nb:
-    if b(f,y)>scrh then
-       b(f,y)=-500*s:
-       b(f,x)=100+(rnd*(scrw-180)):
-       b(f,dx),b(f,dy)=0,
-       b(f,m)=10+(rnd*100),
-       b(f,r)=(9+(int(rnd*2)*2))*s
-90 next f
+ 
+70 rem set up balls
+80 FOR f=p TO nb: GO SUb 150: next f: f=p
+ 
+90 rem main loop
+100 PARTICLE b() FRICTION 0.7 GRAVITY 90,0.2*s
+110 f+=iif(f<nb,1,-(nb-p)):
+ IF b(f,y)>SCRH THEN GO SUb 150
 120 CLS: PLOT b()
 130 WAIT SCREEN:
- GO TO 70
+ GO TO 100
+ 
+140 rem new ball
+150 b(f,y)=-rnd*500*s,
+ b(f,x)=100+(rnd*(scrw-180)),
+ b(f,dx),b(f,dy)=0,
+ b(f,m)=10+(rnd*100),
+ b(f,r)=(5+(int(rnd*5)*2))*s,
+ b(f,c)=int(rnd*7)+1:
+ return

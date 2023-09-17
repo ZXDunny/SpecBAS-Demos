@@ -2,20 +2,16 @@ ZXASCII
 AUTO -1
 PROG demos:graphics/microlive
 CHANGED FALSE
-10 for f=0 to 63: poke 1,udg "a"+f,0: next f:
-	FOR f=0 TO 3;g=0 to 7:POKE 1,UDG "a"+f*16+g,even g:NEXT g;f:
-	cs=scrh/40,gs=cs*1.75,
-	xo=(scrw-(gs*16))/2,yo=(scrh-(gs*20))/2
-20 paper 0: cls:
-	for y=0 to 20:
-	   read n:
-				p=65536:
-				for x=0 to 16:
-				   x0=xo+x*gs,y0=yo+y*gs,r=cs*(n & p>0):
-				   circle ink 6;paper 2;x0,y0,r fill "á";ink 14;x0,y0,r:
-				   p/=2:
-				next x:
-	next y:
-	wait screen:
-	wait keydown
+10 FOR f=0 TO 3;g=0 to 7: POKE 1,udg " "+f*16+g,even g: NEXT g;f:
+ cs=scrh/40,gs=cs*1.5707,
+ xo=(scrw-(gs*16))/2,yo=(scrh-(gs*21.3))/2
+20 paper 2: ink 6: cls 0:
+ for y=0 to 20:
+    read n:
+    for x=0 to 16:
+       x0=xo+x*gs,y0=yo+y*gs,r=cs*(n&1 shl 16-x>0):
+       circle x0,y0,r fill " ";ink 14;x0,y0,r:
+    next x:
+ next y:
+ wait keydown
 30 Data 87381,33410,69905,10280,69649,33410,82181,40968,87377,43520,87297,43520,21761,10880,5441,2720,1361,552,1093,43682,1

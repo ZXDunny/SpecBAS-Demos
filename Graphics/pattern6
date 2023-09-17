@@ -1,20 +1,18 @@
 ZXASCII
 AUTO -1
-PROG /demos/Graphics/pattern6
+PROG demos:graphics/pattern6
 CHANGED FALSE
 10 a=udg "a":
- for f=0 to 7:
-    for g=0 to 7:
-       poke 1,(f*8)+g+a,g>=f;1,((7-f)*8)+g+a+64,f>=g:
-    next g:
- next f
-20 b=1: 
+ for f=0 to 7;g=0 to 7:
+    poke 1,(f*8)+g+a,g>=f;1,((7-f)*8)+g+a+64,f>=g:
+ next g;f
+20 b=1:
  paper 239: scale 2,2: cls
-30 b=1-b:
+30 b=not b:
  do txtw:
-    b=1-b,z=int(rnd*2)+1:
-    print inverse b;ink 234+(z-1)*10;"ст"(z);:
-    wait screen: 
+    z=int(rnd*2)+1:
+    print inverse b!=b;ink 234+(z-1)*10;"ст"(z);:
+    wait screen:
  loop:
  option "SCROLLCNT",2:
  GO To 30

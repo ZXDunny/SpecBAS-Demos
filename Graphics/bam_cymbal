@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/bam_cymbal
+CHANGED FALSE
+10 FOR F=0 TO 255: PALETTE F,0,0,F: NEXT F:
+ C,R=0
+20 DO:
+    FOR A=0 TO TAU step .00125:
+       plot ink (A*80+C) MOD 256;COS A*R+400,SIN A*R+240:
+    NEXT A:
+    C=C+1,
+    R=RND*240:
+ LOOP

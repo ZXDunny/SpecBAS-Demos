@@ -5,8 +5,20 @@ CHANGED FALSE
 10 REM Commodore logo by Chris Yaneff, 1965
 20 A=scrh*.75: ORIGIN -(SCRW-A)/2,-(SCRH-A)/2:PALETTE 1,51,52,144;2,204,35,42
 30 B=.034*A,C=.166*A,D=.3*A,E=.364*A,F=.52*A,G=.53*A,H=.636*A,I=D+D+C+C+B
-40 circle INK 1;I/2,I/2,I/2 FILL
+40 CIRCLE INK 1;I/2,I/2,I/2 FILL
 50 ELLIPSE INK 8;A/2,I/2,G/2,F/2 FILL
 60 RECTANGLE INK 8;H,0 TO A,I FILL
 70 POLYGON INK 1;A-E,D TO A,D TO A-C,D+C TO A-E,D+C FILL
 80 POLYGON INK 2;A-E,I-D TO A,I-D TO A-C,I-D-C TO A-E,I-D-C FILL
+90 rem Construction lines next
+100 pause 150
+110 rectangle 0,0 to A,I
+120 circle I/2,I/2,I/2
+130 ellipse A/2,I/2,G/2,F/2
+140 draw H,I TO H,0
+150 draw 0,D to A,D
+160 draw 0,D+C TO A,D+C
+170 DRAW 0,I-D TO A,I-D
+180 DRAW 0,I-D-C TO A,I-D-C
+190 DRAW A,D TO A-(C+C+B+D),I
+200 draw A,I-D TO A-(C+C+B+D),0

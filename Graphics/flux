@@ -20,7 +20,7 @@ CHANGED FALSE
     for i=1 to n:
        plot 0,240:
        for x=0 to scrw-1:
-          draw ink (frac(l(i,7)+(x*.0007))*254)+1;to x,240+(sin(pi/scrw*x)*((noise((x-l(i,5)+l(i,8))/50,l(i,1),l(i,2))-.5)*(100+(mj*20)))):
+          draw ink (frac(l(i,7)+(x*.0007))*254)+1;to x,240+int(sin(pi/scrw*x)*((noise((x-l(i,5)+l(i,8))/50,l(i,1),l(i,2))-.5)*(100+(mj*20)))):
        next x:
        l(i,1)+=l(i,3)*mj2,l(i,2)+=l(i,4)*mj2,
        l(i,5)+=l(i,6)*mj,l(i,7)+=.001:

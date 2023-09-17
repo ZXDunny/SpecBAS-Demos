@@ -1,0 +1,19 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/kaleidoscope
+CHANGED FALSE
+10 window depth 0,32:
+ paper 0:
+ cls
+20 x=RND*400:
+ y=RND*240:
+ clr=RND*$FFFFFF+1,l=rnd*15+6,a=255/l:
+ FOR i=0 to l:
+    ink clr|(255-(a*i)) shl 24:
+    Rectangle alpha x-i,y-i to x+i,y+i:
+    Rectangle alpha scrw-x-i,y-i to scrw-x+i,y+i:
+    Rectangle alpha x-i,scrh-y-i to x+i,scrh-y+i:
+    Rectangle alpha scrw-x-i,scrh-y-i to scrw-x+i,scrh-y+i:
+    wait screen:
+ NEXT i:
+ GO To 20

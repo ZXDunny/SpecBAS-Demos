@@ -1,0 +1,20 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/curves2
+CHANGED FALSE
+10 a,b,c,d,e,f,g,h=int(rnd*10)+1:
+ a$=token$(str$ a+"*sin("+str$ b+"*t)+"+str$ c+"*cos("+str$ d+"*t)"),
+ b$=token$(str$ e+"*sin("+str$ f+"*t)+"+str$ g+"*cos("+str$ h+"*t)"),
+ sw=scrw/2,sh=scrh/2
+20 t=0:
+ do:
+    x=sw+val a$*10,
+    y=sh+val b$*10:
+    if not t then
+       plot x,y
+    else
+       draw to x,y:
+30    t+=.0005,c+=1:
+    if not c mod 100 then wait screen
+40    if inkey$<>"" then run
+50 loop

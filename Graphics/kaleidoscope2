@@ -1,0 +1,30 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/kaleidoscope2
+CHANGED FALSE
+10 window depth 0,32: paper 0: cls:
+ nb=10: dim box(nb,6):
+ const x=1,y=2,clr=3,l=4,a=5,i=6
+20 for f=1 to nb: GO SUb 40: next f
+30 for f=1 to nb:
+    i1=box(f,i),i2=i1*2,x1=box(f,x),y1=box(f,y):
+    ink box(f,clr)|(255-(box(f,a)*i1)) shl 24:
+    Rectangle alpha x1-i1,y1-i1,i2,i2:
+    Rectangle alpha scrw-x1-i1,y1-i1,i2,i2:
+    Rectangle alpha x1-i1,scrh-y1-i1,i2,i2:
+    Rectangle alpha scrw-x1-i1,scrh-y1-i1,i2,i2:
+    box(f,i)=i1+1:
+    if i1>=box(f,l)-1 then
+       GO SUb 40:
+    end if:
+ next f:
+ rectangle alpha ink 2 shl 24;0,0 to scrw,scrh fill:
+ wait screen:
+ GO To 30
+40 box(f,x)=RND*scrw,
+ box(f,y)=RND*scrh,
+ box(f,clr)=RND*$FFFFFF+1,
+ box(f,l)=rnd*45+6,
+ box(f,a)=255/box(f,l),
+ box(f,i)=0:
+ return

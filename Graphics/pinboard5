@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/pinboard5
+CHANGED FALSE
+10 paper 0: ink int(rnd*7)+1: screen lock:
+ np=5+int(rnd*15),i=tau,sw=scrw/2,sh=scrh/2
+20 def fn x(n)=sw+sin(i*(n/np))*(sh-4):
+ def fn y(n)=sh+cos(i*(n/np))*(sh-4)
+30 do:
+    cls:
+    print np+1;" points":
+    circle sw,sh,sh-4:
+    for f=0 to np:
+       x1=fn x(f),y1=fn y(f):
+       circle x1,y1,3 fill:
+       for g=f+1 to np:
+          draw x1,y1 to fn x(g),fn y(g):
+       next g:
+    next f:
+    i+=.02:
+    wait screen:
+    if inkey$="" then
+       loop
+    else
+       wait keyup:
+       run

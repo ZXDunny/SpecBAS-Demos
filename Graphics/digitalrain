@@ -7,7 +7,7 @@ CHANGED FALSE
  FOR f=1 to 64: palette 70-f,0,(f/64)*255,0: next f: rainbow 1 to 6:
  scale sc,sc
 20 def fn c$=CHR$((rnd*94)+33)
-30 nr=100/sc:
+30 nr=200/sc:
  dim r(nr,4);r$(nr):
  for f=1 to nr: go sub 80: next f
 40 for f=1 to nr:
@@ -31,7 +31,7 @@ CHANGED FALSE
 80 r(f,1)=int(rnd*txtw)
 90 r(f,2)=-rnd*txth,
  r(f,3)=int(rnd*(txth)/3)+15,
- r(f,4)=(.25+rnd)/2.5,
+ r(f,4)=(.25+sqr rnd)/2.5,
  r$(f)="":
  for g=1 to txth*2:
     r$(f)=r$(f)+fn c$:

@@ -1,10 +1,12 @@
 ZXASCII
 AUTO -1
-PROG rainbow
-50 rem Rainbow - adapted from
-60 rem Sinclair Programs issue 2
-70 rem By Richard Altwasser '82
-100 ink 7: paper 0:cls: restore 1000: for m=0  to 7
-110 read a,b,c: for n=0 to 31*(m<7): plot ink c;0,scrh-(n+32*m):draw paper b;ink c;inverse a;scrw,0,2
-120 next n: next m
-1000 data 0,0,2,1,6,2,0,6,4,1,5,4,0,5,1,1,3,1,0,3,0,1,0,0
+PROG demos:graphics/rainbow
+CHANGED FALSE
+10 ink 7: paper 0: cls: t=5:
+ for m=0 to 6:
+    read c: ink c: o=m*t+1:
+    plot -o,scrh-(o+=o):
+    draw scrw+o,0,2:
+    fill scrw/2,scrh-240-o*1.25:
+ next m:
+20 data 2,6,4,5,1,3,0

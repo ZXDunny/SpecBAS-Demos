@@ -1,0 +1,55 @@
+ZXASCII
+AUTO -1
+PROG demos:toys/shadows_edit
+CHANGED FALSE
+10 scl=scrw/800,cr=256*scl,mxb=500,nb=0,dw=8,ci=1;sl=20000: screen lock:
+ palette 128,$FFFFFF;255,0: rainbow 128 to 255:
+ FOR f=0 TO 63: POKE 1,f+udg "a",(int(f/8)&1)+f&1: NEXT f
+20 graphic new c,cr*2,cr*2: window graphic c: cls 0:
+ for r=cr to 0 step -1: circle ink 128+r/(cr/128);cr,cr,r fill: next r:
+ window 0
+30 dim xc(mxb,4);yc(mxb,4);x(mxb);y(mxb);w(mxb),h(mxb),cl(mxb);
+     v=((1,4),(3,2),(0,0),(4,3),(1,3),(4,2),(0,0),(2,1),(2,4),(3,1));
+     clr$="Blue","Red","Magenta","Green","Cyan","Yellow","White"
+40 mx,my=0,ms=0.125,mode=0
+50 cls 0: a$=inkey$
+60 mx+=(mousex-mx)*ms,my+=(mousey-my)*ms,d=max(keyst key_shift*dw,1),
+ nx=int mx,ny=int my:
+ window put graphic c,0,nx-cr,ny-cr
+70 for i=1 to nb:
+    x=x(i),y=y(i),w=w(i),h=h(i),
+    oc=((nx<x)|((nx>=x+w)*2)|((ny>=y+h)*4)|((ny<y)*8))
+80    if oc>0 then
+       x1=xc(i,v(oc,1)),y1=yc(i,v(oc,1)),x2=xc(i,v(oc,2)),y2=yc(i,v(oc,2)):
+       t=polar(x1-nx,y1-ny)-.03,x3=x1+cos t*sl,y3=y1+sin t*sl,
+       t=polar(x2-nx,y2-ny)+.03,x4=x2+cos t*sl,y4=y2+sin t*sl
+    else
+       x1,x2,y1,y3=0,x3,x4,y4,y2=scrw:
+    end if:
+    polygon ink 0;x1,y1 to x3,y3 to x4,y4 to x2,y2 fill
+90 next i:
+95 nx=nx div d*d,ny=ny div d*d
+100 if mode=0 then
+    if mousebtn=1 then
+       bx1=nx,by1=ny,bx2=nx,by2=ny,mode=1:
+    end if:
+ else
+    if mousebtn=1 then
+       bx2=nx+(d*(bx2>bx1)),by2=ny+(d*(by2>by1)):
+    else
+       mode=0,nb+=1,x(nb)=min(bx1,bx2),y(nb)=min(by1,by2),
+       w(nb)=max(d,max(bx1,bx2)-x(nb)),h(nb)=max(d,max(by1,by2)-y(nb)),
+       cl(i)=ci+8: GO SUb 140
+110 for j=1 to nb:
+    rectangle ink cl(j);x(j),y(j),w(j),h(j) fill:
+ next j:
+ if mode=1 then
+    px=min(bx1,bx2),py=min(by1,by2),pw=max(d,max(bx1,bx2)-px),ph=max(d,max(by1,by2)-py):
+    rectangle ink ci;trans 1;px,py,pw,ph fill "á"
+120 if a$>="1" and a$<="7" then ci=val a$
+130 print at 0,0;trans 1; ink ci+8;clr$(ci): WAIT SCREEN:
+ GO To 50
+140 xc(nb,1)=x(nb),xc(nb,2)=x(nb)+w(nb)-1,xc(nb,3)=x(nb)+w(nb)-1,xc(nb,4)=x(nb):
+ yc(nb,1)=y(nb),yc(nb,2)=y(nb),yc(nb,3)=y(nb)+h(nb)-1,yc(nb,4)=y(nb)+h(nb)-1:
+ return
+

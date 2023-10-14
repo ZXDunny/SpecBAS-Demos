@@ -31,7 +31,7 @@ CHANGED FALSE
           l=sqr(x2+y2+v2*v2),
           v0=x/l,v1=y/l,v2/=l,
           d=nlx*v0+nly*v1+nlz*v2,
-          i=mxp*(iif(d<0,-d^k,0)+amb)-no(x+r,y+r):
+          i=mxp*(iif(d<0,(-d)^k,0)+amb)-no(x+r,y+r):
           plot ink clamp(i,0 to 255);x+xc,y+yc
 1010    next y:
  next x:

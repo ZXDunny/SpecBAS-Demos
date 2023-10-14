@@ -1,0 +1,24 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/nautilus
+CHANGED FALSE
+10 window depth 0,32: paper 0: cls
+20 def fn c(a)=sh*(127+127*Sin(a*pn))
+30 dim x(1600) base 0,y(1600) base 0
+40 cx=400,cy=290,ra,dr,i=0
+50 for a=0 to pi*8 step pi/200:
+    x(i)=cx+ra*cos a,y(i)=cy+ra*sin a,
+    dr+=1/2000,ra+=dr^2,i+=1:
+ next a
+60 r,g,b=rnd^2,pn=0:
+ for i=0 to 1139:
+    dx=x(i+400)-x(i),dy=y(i+400)-y(i),
+    dist=sqr(dx*dx+dy*dy),dx,dy/=dist,pn+=.73,d2=dist/2,
+    sz=iif(i>820,3,iif(i>380,2,1)):
+    for j=0 to dist:
+       sh=1-abs((d2-j+.5)/d2)^2:
+       circle ink rgbtoint(fn c(r),fn c(g),fn c(b));x(i)+j*dx,y(i)+j*dy,sz fill:
+    next j:
+ next i:
+ pause 100:
+ GO TO 60

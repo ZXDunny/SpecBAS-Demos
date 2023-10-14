@@ -1,0 +1,45 @@
+ZXASCII
+AUTO -1
+PROG demos:toys/shadows
+CHANGED FALSE
+10 scl=scrw/800,cr=256*scl,nb=50,w=12*scl,h=12*scl,
+ sl=20000,sw=scrw/w,sh=scrh/h: screen lock:
+ palette 128,$FFFFFF;255,0: rainbow 128 to 255
+
+20 graphic new c,cr*2,cr*2: window graphic c: cls 0:
+ for r=cr to 0 step -1:
+    circle ink 128+r/(cr/128);cr,cr,r fill:
+ next r:
+ window 0
+
+30 dim xc(nb,4);yc(nb,4);x(nb);y(nb);
+     v=((1,4),(3,2),(0,0),(4,3),(1,3),(4,2),(0,0),(2,1),(2,4),(3,1))
+40 for i=1 to nb:
+    x(i)=int(rnd*sw)*w,y(i)=int(rnd*sh)*h:
+    xc(i,1)=x(i),xc(i,2)=x(i)+w-1,xc(i,3)=x(i)+w-1,xc(i,4)=x(i):
+    yc(i,1)=y(i),yc(i,2)=y(i),yc(i,3)=y(i)+h-1,yc(i,4)=y(i)+h-1:
+ next i
+
+50 mx,my=0,ms=0.125
+60 cls 0
+70 mx+=(mousex-mx)*ms,my+=(mousey-my)*ms,
+ nx=int(mx+.5),ny=int(my+.5):
+ window put graphic c,0,nx-cr,ny-cr
+80 for i=1 to nb:
+    x=x(i),y=y(i):
+    IF PYTH(nx-x,ny-y)>cr THEN GO To 110
+90    oc=((nx<x)|((nx>=x+w)*2)|((ny>=y+h)*4)|((ny<y)*8))
+100    if oc>0 then
+       x1=xc(i,v(oc,1)),y1=yc(i,v(oc,1)),x2=xc(i,v(oc,2)),y2=yc(i,v(oc,2)):
+       t=polar(x1-nx,y1-ny)-.03,x3=x1+cos t*sl,y3=y1+sin t*sl,
+       t=polar(x2-nx,y2-ny)+.03,x4=x2+cos t*sl,y4=y2+sin t*sl
+    else
+       x1,x2,y1,y3=0,x3,x4,y4,y2=scrw:
+    end if:
+    polygon ink 0;x1,y1 to x3,y3 to x4,y4 to x2,y2 fill
+110 next i
+120 for i=1 to nb:
+    rectangle ink i;x(i),y(i),w,h fill:
+ next i
+130 WAIT SCREEN:
+ GO To 60

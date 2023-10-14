@@ -1,0 +1,30 @@
+ZXASCII
+AUTO -1
+PROG demos:toys/unlimited bobs
+CHANGED FALSE
+10 REM Unlimited Bobs!
+20 graphic new ball load "demos:toys/boing_small.png" trans 0:
+ palette copy ball,0,255 to 0: p=rgbn $808080:
+30 ns=7: dim scr(ns):
+ for i=1 to ns:
+    window new scr(i),0,0,scrw,scrh:
+    window hide scr(i):
+ next i
+40 for i=1 to ns: window scr(i): cls p: next i
+50 sw=scrw/2-32,sh=scrh/2-32,a,b,c,d,e,f,g,h=int(rnd*10)+1:
+ window 0: ink 15
+60 si=0,t=0
+70 do:
+    si=iif(si>ns-1,1,si+1),
+    x=sw+(a*sin(b*t)+c*cos(d*t))*18,
+    y=sh+(e*sin(f*t)+g*cos(h*t))*18:
+    window put graphic ball,scr(si),x,y rotate t*20:
+    window copy scr(si),0,0,scrw,scrh to 0,0,0:
+    wait screen:
+    t+=.005:
+    if inkey$="" then 
+       loop
+    else
+       cls p:
+       wait keyup:
+       GO To 40

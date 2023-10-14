@@ -4,7 +4,7 @@ PROG demos:games/minesweeper
 CHANGED FALSE
 10 PALETTE DEFAULT: paper 7: CLS 7: screen lock:
  font new fnt,10,10,1 trans 14: font fnt: fw=FONTW,fh=FONTH:
- plot 0,0: for f=1 to 8: read i,x,y: draw ink i;x,y: next f:
+ plot ink 15;0,0: for f=1 to 8: read i,x,y: draw ink i;x,y: next f:
  data 15,scrw-1,0,8,0,scrh-1,i,-scrw+1,0,15,0,-scrh+2,
  i,scrw-2,0,8,0,scrh-3,i,-scrw+3,0,15,0,-scrh+3:
  proc bevel(fw-2,fh-2,(TXTW-2)*fw+3,fh*4+3,0):
@@ -165,10 +165,10 @@ CHANGED FALSE
  end proc
 230 def proc bevel(x,y,w,h,i):
     local i1=iif(i,15,8),i2=iif(i,8,15):
-    plot x,y+h: draw ink i1;0,-h;w,0:
-    plot x+1,y+h-1: draw ink i1;0,-h+2;w-2,0:
-    plot x,y+h: draw ink i2;w,0;0,-h:
-    plot x+1,y+h-1: draw ink i2;w-2,0;0,-h+2:
+    ink i1: plot x,y+h: draw 0,-h;w,0:
+    plot x+1,y+h-1: draw 0,-h+2;w-2,0:
+    ink i2: plot x,y+h: draw w,0;0,-h:
+    plot x+1,y+h-1: draw w-2,0;0,-h+2:
  end proc
 240 rem game ended
 250 wn=won,endgame=1:

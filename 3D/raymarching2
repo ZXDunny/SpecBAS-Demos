@@ -1,0 +1,38 @@
+ZXASCII
+AUTO -1
+PROG /demos/3d/raymarching2
+CHANGED FALSE
+1 REM Raymarching for the ZX Spectrum by @paulofalcao
+10 DEF FN l(x,y,z)=SQR (x*x+y*y+z*z)
+20 rem DEF FN s(x,y,z)=y+SIN (SQR (x*x+z*z)*6.0-4.5)*0.15+1.5
+21 DEF fn s(x,y,z)=FN l(x-INT(x+0.5),y-1.5,z-INT(z+0.5))-0.5
+30 CLEAR:tm=msecs
+40 LET mx=scrw:LET my=scrh
+50 FOR y=0 TO (my-1)
+60 FOR x=0 TO (mx-1)
+70 GO SUB 120
+80 IF (nrgb=1) THEN PLOT x,scrh-y
+90 NEXT x
+100 NEXT y
+110 GO TO 310
+120 REM shader
+130 LET nrgb=0
+140 LET xf=(x/mx-0.5)*0.9
+150 LET yf=((y/my-0.5)*my/mx)*0.9
+160 LET vl=FN l(xf,yf,-1.0)
+170 LET vx=xf/vl: LET vy=yf/vl: LET vz=-1/vl
+180 LET p=0
+190 FOR i=0 TO 40
+200 LET px=p*vx: LET py=p*vy: LET pz=5+p*vz
+210 LET ty=py: LET tz=pz
+220 LET py=(3*ty+4*tz)*0.2: LET pz=(-4*ty+3*tz)*0.2
+230 LET d=FN s(px,py,pz+1)
+240 IF (d<0.01) THEN GO TO 280
+250 IF (p>10) THEN RETURN
+260 LET p=p+d
+270 NEXT i
+280 rem LET a=INT (px*4)+INT (pz*4)
+281 LET a=INT (px*16)+INT (pz*16)
+290 LET nrgb=a-INT (a/2)*2
+300 RETURN
+310 print "Time: ";(msecs-tm)/1000;" Secs.": REM end

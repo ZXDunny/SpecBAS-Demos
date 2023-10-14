@@ -1,0 +1,24 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/lissajous anim
+CHANGED FALSE
+10 xph,yph=rnd*tau,xf,yf=int(1+rnd*300),s=int(rnd*600)+10,xs,ys=rnd*.004+.002
+20 paper 128: ink 48:
+ palette 255,$200000;0,$FFFFFF: rainbow 0 to 255:
+ m=min(scrw-10,scrh-10),mx=scrw/m,my=scrh/m:
+ screen lock
+30 cls:
+ origin -mx,-my to mx,my: over 12:
+ for i=0 to s:
+    w=(tau*i)/s,x=sin(xf*w+xph),y=sin(yf*w+yph):
+    if i then draw to x,y else plot x,y: end if:
+    kflag=inkey$<>"" or mousebtn<>0:
+ next i
+35 origin off: print over 0;ink 225;at 1,1;xf'" ";yf'" ";s
+40 xph+=xs,yph+=ys:
+ wait screen:
+ if kflag or (inkey$="" and mousebtn=0) then
+    GO To 30
+ else
+    kflag=0:
+    GO To 10

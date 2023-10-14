@@ -1,0 +1,22 @@
+ZXASCII
+AUTO -1
+PROG /demos/Fractals/koch_turtle
+CHANGED FALSE
+10 rem Koch snowflake via turtle
+20 l=6,s=400,sx=200,sy=125: degrees: ink 0
+30 def proc side(l,s):
+    if l=0 then
+       draw s
+    else
+       local nl=l-1,ns=s/3:
+       proc side(nl,ns): rotate 60:
+       proc side(nl,ns): rotate -120:
+       proc side(nl,ns): rotate 60:
+       proc side(nl,ns):
+    end if:
+ end proc
+40 move to sx,sy:
+ rotate 60: proc side(l,s):
+ rotate -120: proc side(l,s):
+ rotate -120: proc side(l,s):
+ ink 15: fill scrw/2,scrh/2

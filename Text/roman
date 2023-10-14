@@ -1,8 +1,16 @@
 ZXASCII
 AUTO -1
-PROG roman
+PROG demos:text/roman
+CHANGED FALSE
 10 REM Roman Numeral Converter
 20 INPUT "Decimal number: ";a
-30 DIM r=1000,900,500,400,100,90,50,40,10,9,5,4,1: DIM r$="M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"
-40 LET a$="": FOR f=1 TO 13: DO WHILE a>=r(f): LET a$=a$+r$(f): DEC a,r(f): LOOP: NEXT f
+30 DIM r=1000,900,500,400,100,90,50,40,10,9,5,4,1: 
+ DIM r$="M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"
+40 a$="": 
+ FOR f=1 TO 13: 
+    DO WHILE a>=r(f): 
+       a$=a$+r$(f): 
+       a-=r(f): 
+    LOOP: 
+ NEXT f
 50 PRINT a$

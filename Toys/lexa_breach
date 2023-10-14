@@ -1,0 +1,24 @@
+ZXASCII
+AUTO -1
+PROG demos:toys/lexa_breach
+CHANGED FALSE
+10 REM Based on https://twitter.com/lexaloffle/status/1692955134228324736
+20 t=0: turns: origin 0,0 to 214,128: paper 0: over 8
+25 for i=1 to 5:
+   read r,g,b: palette i,r,g,b:
+ next i:
+ data 0,0,255,0,255,255,0,255,0,255,255,0,255,0,0:
+ palette 255,0,0,0
+30 cls:
+ for i=0 to 9:
+    t+=.01,u=107+cos(t/24)*40,v=64+sin(t/20)*40:
+    circle ink 230;u,v,20 fill:
+    for x=0 to 33:
+       for y=0 to 30:
+          x1=x*6+y mod 2*3,y1=y*4,a=polar(u-x1,v-y1):
+          circle ink int(i/2)+1;x1-cos(a)*28,y1-sin(a)*28,.5 fill:
+       next y:
+    next x:
+ next i:
+ wait screen:
+ GO To 30

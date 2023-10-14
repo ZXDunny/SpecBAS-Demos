@@ -1,0 +1,22 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/spinner2
+CHANGED FALSE
+10 def proc arc(xc,yc,r,st,a,t):
+    ea=st+a,fr=r+t/2,fa=st+a/2,t+=r,
+    cst=cos st,sst=sin st,cea=cos ea,sea=sin ea:
+    x1=xc+r*cst,y1=yc+r*sst,x2=xc+r*cea,y2=yc+r*sea,
+    x3=xc+t*cst,y3=yc+t*sst,x4=xc+t*cea,y4=yc+t*sea:
+    draw x1,y1 to x2,y2,a: draw x3,y3 to x4,y4,a:
+    draw x1,y1 to x3,y3,pi: draw x2,y2 to x4,y4,-pi:
+    fill xc+fr*cos fa,yc+fr*sin fa:
+ end proc
+20 n=15,sw=scrw/2,sh=scrh/2,s=sh/(n+1),
+ g=max(s/3,3),ai=0.25/n,ms=0.2
+30 cls 0:
+ For i=0 To n-1:
+    ink (i mod 15)+1:
+    proc arc(sw,sh,5+s*i,msecs/80*(((i+1)*ai)+ms),pi,s-g):
+ Next i:
+ wait screen:
+ GO To 30

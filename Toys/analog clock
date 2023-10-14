@@ -4,10 +4,10 @@ PROG demos:toys/analog clock
 CHANGED FALSE
 10 REM Analog Clock with sweep-second-hand and digital 7-segment LED display
 20 PALETTE 8,0,90,82;16,72,0,0: paper 8: SCREEN LOCK:
- DEGREES: OPTION "base",0
+ DEGREES
 30 dim wq$="O4N5#g#feO3N7b5&","O4N5e#g#fO3N7b5&",
          "O4N5e#f#g7e5&","O4N5#ge#fO3N7b5&","O3N5bO4#f#g7e5&":
- DIM change$=wq$(1)+wq$(2)+wq$(3)+wq$(4),wq$(0),wq$(1)+wq$(2),wq$(3)+wq$(4)+wq$(0):
+ DIM change$=wq$(2)+wq$(3)+wq$(4)+wq$(5),wq$(1),wq$(2)+wq$(3),wq$(4)+wq$(5)+wq$(1):
  chime$="O3N9e"
 40 xc=SCRw/2,yc=SCRh/2-30,ws=1.5,wm=3,wh=4,r=156,
  mr=r/1.17,ls=mr/1.17,lm=ls/1.17,lh=lm/1.17,ps=seconds time,pm=-1:
@@ -80,19 +80,19 @@ CHANGED FALSE
  hd$="sx,sy TO sx+sw,sy-sw TO sx+sw+shw,sy-sw TO sx+sw+shw+sw,sy TO sx+sw+shw,sy+sw TO sx+sw,sy+sw",
  vd$=REPLACE$(REPLACE$(vd$,"sw",STR$ sw),"svh",STR$ svh),
  hd$=REPLACE$(REPLACE$(hd$,"sw",STR$ sw),"shw",STR$ shw)
-230 DIM digit$="123456","34","23567","23457","1347","12457","124567","234","1234567","123457" BASE 0:
- DIM coord$="sw,sw+1","sw+1,sw","sw*3+shw+2,sw+1","sw*3+shw+2,sw*3+svh+3","sw+1,sw*5+svh*2+4","sw,sw*3+svh+3","sw+1,sw*3+svh+2" BASE 1
-240 DIM led$(10) BASE 0:
- FOR f=0 TO 9:
+230 DIM digit$="123456","34","23567","23457","1347","12457","124567","234","1234567","123457":
+ DIM coord$="sw,sw+1","sw+1,sw","sw*3+shw+2,sw+1","sw*3+shw+2,sw*3+svh+3","sw+1,sw*5+svh*2+4","sw,sw*3+svh+3","sw+1,sw*3+svh+2"
+240 DIM led$(10) base 0:
+ FOR f=1 TO 10:
     b$="":
     FOR g=1 TO LEN digit$(f):
        b=VAL digit$(f)(g):
        b$=b$+REPLACE$("sx=x+"+coord$(b),",",",sy=y+")+":POLYGON "+IIF$(b IN [2,7,5],hd$,vd$)+" FILL:":
     NEXT g:
-    led$(f)=TOKEN$ b$:
+    led$(f-1)=TOKEN$ b$:
  NEXT f
 250 RETURN
-260 p$=change$(cm/15):
+260 p$=change$(cm/15+1):
  if cm=0 then
     ch=ch-(12*(ch>12)),
     ch+=12*(ch=0),

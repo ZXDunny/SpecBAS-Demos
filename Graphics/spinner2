@@ -16,7 +16,7 @@ CHANGED FALSE
 30 cls 0:
  For i=0 To n-1:
     ink (i mod 15)+1:
-    proc arc(sw,sh,5+s*i,msecs/80*(((i+1)*ai)+ms),pi,s-g):
+    proc arc(sw,sh,5+s*i,(2*odd i-1)*msecs/80*(((i+1)*ai)+ms),pi,s-g):
  Next i:
  wait screen:
  GO To 30

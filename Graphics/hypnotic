@@ -1,17 +1,18 @@
 ZXASCII
 AUTO -1
-PROG hypnotic
-10 cl=1800: const x=0,y=1,clr=2,r=3,t=4,s=5:
+PROG demos:graphics/hypnotic
+CHANGED FALSE
+10 cl=1800: const x=0,y=1,clr=2,r=3,t=4,s=5: sc=scrw/800:
  dim c(cl+1,6) base 0:
  palette 2,150,0,0:
- paper 2:cls
+ paper 2:cls: screen lock
 20 for i=0 to cl:
-    c(i,x)=scrw/2+cos(i/2)*i/4,
-    c(i,y)=scrh/2+sin(i/2)*i/4:
+    c(i,x)=scrw/2+cos(i/2)*i/4*sc,
+    c(i,y)=scrh/2+sin(i/2)*i/4*sc:
  next i
 30 do:
     for i=0 to cl:
-       c(i,r)=abs sin (c(i,t)+=.05+i/9000)*8:
+       c(i,r)=abs sin (c(i,t)+=.05+i/9000)*8*sc:
     next i:
     cls: plot c():
     WAIT SCREEN:

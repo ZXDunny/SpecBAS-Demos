@@ -1,0 +1,16 @@
+ZXASCII
+AUTO -1
+PROG /demos/graphics/pixellate
+CHANGED FALSE
+10 GRAPHIC NEW bck LOAD "butterflies.png":
+20 PALETTE COPY bck,0,256 TO 0:
+30 bsize=0
+40 WINDOW PUT GRAPHIC bck,0,0,0:
+50 for x=0 to scrw+bsize step bsize:
+    for y=0 to scrh+bsize step bsize:
+       rectangle ink point(x+bsize/2,y+bsize/2);x,y,bsize,bsize fill:
+    next y:
+ next x
+60 wait screen 160
+70 bsize+=1
+80 GO To 40

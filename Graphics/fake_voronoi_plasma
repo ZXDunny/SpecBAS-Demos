@@ -1,0 +1,16 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/fake_voronoi_plasma
+CHANGED FALSE
+10 REM fake-voronoi-plasma by Dav OCT/2023
+20 window depth 0,32: cls 0: t=4096,s=3
+30 for x=0 To scrw Step s:
+    For y=0 To scrh Step s:
+       xy=x-y,yx=y-x,
+       d=Sqr(xy*xy+t+yx*yx+t),i=RGBToINT((d+x+t)&255,(d+y+t)&255,(d+t)&255):
+       rectangle alpha ink $10000000|i;x,y,s,s fill:
+    Next y:
+ Next x:
+ t+=1:
+ wait screen:
+ GO To 30

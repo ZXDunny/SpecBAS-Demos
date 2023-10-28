@@ -73,8 +73,14 @@ CHANGED FALSE
        GO SUb 200
     else
        if grid(mx,my,0)=9 then
-          proc drawcell(mx,my):
-          GO To 240:
+          if ngs then 
+             GO SUb 530:
+             grid(mx,my,0)=0:
+             GO SUb 200:
+          else
+             proc drawcell(mx,my):
+             GO To 240:
+          end if:
        else
           proc drawcell(mx,my):
        end if:
@@ -101,10 +107,7 @@ CHANGED FALSE
  GO To 80
 140 rem Set up grid
 150 for f=1 to mrem
-160    x=1+int(rnd*gw),y=1+int(rnd*gh):
-    if (x=mx and y=my) or grid(x,y,0)>0 then
-       GO To 160
-170    grid(x,y,0)=9:
+160    GO SUb 530:
  next f
 180 for x=1 to gw:
     for y=1 to gh:
@@ -382,4 +385,10 @@ CHANGED FALSE
     end if:
     wait screen:
  LOOP until mousebtn=0:
+ return
+525 rem place a mine
+530 x=1+int(rnd*gw),y=1+int(rnd*gh):
+ if (x=mx and y=my) or grid(x,y,0)>0 then
+    GO To 530
+540 grid(x,y,0)=9:
  return

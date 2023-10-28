@@ -1,0 +1,25 @@
+ZXASCII
+AUTO -1
+PROG /demos/graphics/rtb_circles_32
+CHANGED FALSE
+10 window size 0,400,240:
+ window depth 0,32:
+ screen lock:
+ circles=rnd*15+3,
+ rd,gn,bl=rnd*rnd,t=0,s=4:
+ dim y(circles),x(circles):
+ for i=1 to circles:
+    x(i)=rnd*scrw,y(i)=rnd*scrh:
+ next i:
+ do:
+    for x=0 to scrw-1 step s;y=0 to scrh-1 step s:
+       r=scrw:
+       for i=1 to circles:
+          r=min(pyth(x-x(i),y-y(i)),r):
+       next i:
+       r+=t:
+       rectangle ink rgbtoint(127+127*Sin(Rd*r),127+127*Sin(Gn*r),127+127*Sin(Bl*r));x,y,s-1,s-1 fill:
+    next y;x:
+    wait screen:
+    t+=1:
+ if inkey$="" then loop else run

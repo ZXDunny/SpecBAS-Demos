@@ -3,67 +3,152 @@ AUTO -1
 PROG demos:automata/game of life
 CHANGED FALSE
 10 REM Automata
+
 20 REM Set up environment
-30 LET clr=2: INK 4: PAPER 0: CLS
-40 LET xs=(SCRw/FONTw)-1,ys=(SCRh/FONTh)-1,is=5: GO SUB 250
-50 REM Set up rule system
-60 DIM survive(9) BASE 0,birth(9) BASE 0: CLEAR survive(),0: CLEAR birth(),0: NEXT f
-70 LET i=1: DO WHILE rule$(i)<>"/": IF rule$(i) IN ["0" TO "8"] THEN LET survive(CODE rule$(i)-48)=1: END IF: INC i: LOOP
-80 IF rule$(i)="/" THEN INC i
-90 DO WHILE i<=LEN rule$: IF rule$(i) IN ["0" TO "8"] THEN LET birth(CODE rule$(i)-48)=1: END IF: INC i: LOOP
-100 REM Create backbuffer
-110 DIM d(2,xs,ys): LET ba=1,bb=2: DIM xo=-1,0,1,-1,1,-1,0,1: DIM yo=-1,-1,-1,0,0,1,1,1: CLS: SCREEN LOCK
-120 REM Create initial conditions
-130 CLS : FOR x=int(xs/2)-is TO int(xs/2)+is: FOR y=int(ys/2)-is TO int(ys/2)+is: LET d(ba,x,y)=((RND*3)/2)>0.5: NEXT y: NEXT x: LET g=0
-140 REM Main loop
-150 LET c=0: INC g: FOR x=2 TO xs-2: FOR y=2 TO ys-2
-160 LET n=0: FOR f=1 TO 8: INC n,d(ba,xo(f)+x,yo(f)+y): NEXT f: LET d(bb,x,y)=d(ba,x,y)
-170 IF birth(n) THEN LET d(bb,x,y)=1 ELSE IF survive(n)=0 THEN LET d(bb,x,y)=0
-180 LET c=c OR d(ba,x,y)<>d(bb,x,y): LET a$=INKEY$
-190 IF a$="" THEN PRINT AT y,x;INK IIF(clr=1,d(ba,x,y)*15,IIF(clr=2,n*d(ba,x,y),n));"ª": NEXT y: NEXT x: SWAP ba,bb: IF c THEN PRINT AT 0,0;"Generation: ";g: WAIT SCREEN: GO TO 150
-200 IF a$ IN ["1","2","3"] THEN LET clr=VAL a$: DO: LOOP UNTIL INKEY$="": LET a$="": GO TO 190
-210 REM End of simulation
-220 SCREEN UNLOCK : IF c=0 AND INKEY$="" THEN PRINT SCALE 4,4;CENTRE 1;PAPER 1;INK 6;"Press any key": PAUSE 0
-230 DO : LOOP UNTIL INKEY$="": GO TO 40
-240 REM Main Menu
-250 CLS : PRINT SCALE 4,4;CENTRE 1;"Game of Life"
-260 RESTORE : READ numrules: DIM b$(numrules)
-270 PRINT '''TAB 28;"Select a rulestring to start,"'TAB 28;"Or type your own in [survive/birth] format."
-280 FOR f=1 TO numrules: READ b$(f),c$: PRINT AT f+14,28;USING$("* ##",f);". [";b$(f);"] ";at f+14,48;c$: NEXT f: PRINT ''TAB 28;"Press 1,2 or 3 during simulation to"'TAB 28;"toggle colouring mode:"''TAB 28;"1: Mono"'TAB 28;"2: Colour living"'TAB 28;"3: Colour all"
-290 INPUT rule$: IF rule$="" THEN GO TO 290 else do: loop until inkey$=""
-300 IF rule$(1)="[" THEN GO SUB 630 ELSE IF VAL rule$<=numrules AND VAL rule$>0 THEN LET rule$=b$(VAL rule$): RETURN ELSE GO TO 290
-310 IF err=1 THEN CLS 2: WAIT SCREEN: GO TO 250 ELSE RETURN
-320 DATA 29
-330 DATA "1/1","Gnarl"
-340 DATA "1357/1357","Replicator"
-350 DATA "02468/1357","Fredkin"
-360 DATA "/2","Seeds"
-370 DATA "0/2","Live free or die"
-380 DATA "/234","Serviettes"
-390 DATA "023/3","Dotlife"
-400 DATA "23/23","Crystal Life"
-410 DATA "012345678/3","Life without death"
-420 DATA "1234/4","Mazectric"
-430 DATA "12345/3","Maze"
-440 DATA "23/3","Conway's life"
-450 DATA "45678/3","Coral"
-460 DATA "34/34","34 Life"
-470 DATA "4567/345","Assimilation"
-480 DATA "5/345","Long life"
-490 DATA "5678/35678","Diamoeba"
-500 DATA "1358/357","Amoeba"
-510 DATA "238/357","Pseudo life"
-520 DATA "125/36","2x2"
-530 DATA "23/36","Highlife"
-540 DATA "245/368","Move"
-550 DATA "235678/3678","Stains"
-560 DATA "34678/3678","Day & night"
-570 DATA "23/37","Drylife"
-580 DATA "235678/378","Coagulations"
-590 DATA "2345/45678","Walled cities"
-600 DATA "35678/4678","Vote 4/5"
-610 DATA "45678/5678","Vote"
-620 REM Custom user algorithm processing
-630 LET err=0: LET i=2: DO WHILE rule$(i) IN ["0" TO "9"]: INC i: LOOP: IF rule$(i)<>"/" THEN LET err=1: RETURN
-640 INC i: LET j=i: DO WHILE rule$(i) IN ["0" TO "9"]: INC i: LOOP: IF rule$(i)<>"]" OR j=i THEN LET err=1: RETURN
-650 RETURN
+30 lastrule$="23/3"
+40 INK 4: PAPER 0: CLS: screen lock
+50 clr=2, xs=(SCRw/FONTw)-1,ys=(SCRh/FONTh)-1,is=10:
+ GO SUB 260:
+ lastrule$=rule$
+
+60 REM Set up rule system
+70 DIM survive(9) BASE 0,birth(9) BASE 0:
+ CLEAR survive(),0: CLEAR birth(),0
+80 i=1:
+ DO WHILE rule$(i)<>"/":
+    IF rule$(i) IN ["0" TO "8"] THEN
+       survive(CODE rule$(i)-48)=1:
+    END IF:
+    i+=1:
+ LOOP
+90 i+=(rule$(i)="/")
+100 DO WHILE i<=LEN rule$:
+    IF rule$(i) IN ["0" TO "8"] THEN
+       birth(CODE rule$(i)-48)=1:
+    END IF:
+    i+=1:
+ LOOP
+
+110 REM Create backbuffer
+120 DIM buf(2,xs,ys);xo=-1,0,1,-1,1,-1,0,1;yo=-1,-1,-1,0,0,1,1,1:
+ ba=1,bb=2
+
+130 REM Create initial conditions
+140 CLS :
+ FOR x=int(xs/2)-is TO int(xs/2)+is:
+    FOR y=int(ys/2)-is TO int(ys/2)+is:
+       buf(ba,x,y)=((RND*3)/2)>0.5:
+    NEXT y:
+ NEXT x:
+ g=0
+
+150 REM Main loop
+160 c=0,g+=1:
+ FOR x=2 TO xs-2:
+    FOR y=2 TO ys-2
+170       n=0:
+       FOR f=1 TO 8:
+          n+=buf(ba,xo(f)+x,yo(f)+y):
+       NEXT f:
+       buf(bb,x,y)=buf(ba,x,y)
+180       IF birth(n) THEN
+          buf(bb,x,y)=1 ELSE
+          IF survive(n)=0 THEN
+             buf(bb,x,y)=0
+190       c=c OR buf(ba,x,y)<>buf(bb,x,y),a$=INKEY$
+200       IF a$="" THEN
+          PRINT AT y,x;INK IIF(clr=1,buf(ba,x,y)*15,IIF(clr=2,n*buf(ba,x,y),n));"ª":
+          NEXT y: NEXT x:
+          SWAP ba,bb:
+          IF c THEN
+             PRINT AT 0,0;"Generation: ";g:
+             WAIT SCREEN:
+             GO TO 160
+210       IF a$ IN ["1","2","3"] THEN
+          clr=VAL a$:
+          wait keyup:
+          a$="":
+          GO TO 200
+
+220 REM End of simulation
+230 IF c=0 AND INKEY$="" THEN
+    PRINT SCALE 4,4;CENTRE 1;PAPER 1;INK 6;"Press any key":
+    screen update:
+    wait keydown
+240 wait keyup:
+ GO TO 50
+
+250 REM Main Menu
+260 CLS : PRINT SCALE 4,4;CENTRE 1;"Game of Life"
+270 RESTORE : READ numrules: DIM b$(numrules)
+280 PRINT '''TAB 28;"Select a rulestring to start,"'TAB 28;"Or type your own in [survive/birth] format."
+290 FOR f=1 TO numrules:
+    READ b$(f),c$:
+    PRINT AT f+14,28;USING$("* ##",f);". [";b$(f);"] ";at f+14,48;c$:
+ NEXT f:
+ PRINT ''TAB 28;"Press 1,2 or 3 during simulation to"'TAB 28;"toggle colouring mode:"''TAB 28;"1: Mono"'TAB 28;"2: Colour living"'TAB 28;"3: Colour all"
+300 INPUT rule$:
+ IF rule$="" THEN
+    rule$=lastrule$:
+    return
+310 IF rule$(1)="[" THEN
+    GO SUB 650
+ ELSE
+    IF VAL rule$<=numrules AND VAL rule$>0 THEN
+       rule$=b$(VAL rule$):
+       RETURN
+    ELSE
+       GO TO 300
+320 IF err=1 THEN
+    CLS 2:
+    WAIT SCREEN:
+    GO TO 260
+ ELSE
+    RETURN
+
+330 rem Presets
+340 DATA 29
+350 DATA "1/1","Gnarl"
+360 DATA "1357/1357","Replicator"
+370 DATA "02468/1357","Fredkin"
+380 DATA "/2","Seeds"
+390 DATA "0/2","Live free or die"
+400 DATA "/234","Serviettes"
+410 DATA "023/3","Dotlife"
+420 DATA "23/23","Crystal Life"
+430 DATA "012345678/3","Life without death"
+440 DATA "1234/4","Mazectric"
+450 DATA "12345/3","Maze"
+460 DATA "23/3","Conway's life"
+470 DATA "45678/3","Coral"
+480 DATA "34/34","34 Life"
+490 DATA "4567/345","Assimilation"
+500 DATA "5/345","Long life"
+510 DATA "5678/35678","Diamoeba"
+520 DATA "1358/357","Amoeba"
+530 DATA "238/357","Pseudo life"
+540 DATA "125/36","2x2"
+550 DATA "23/36","Highlife"
+560 DATA "245/368","Move"
+570 DATA "235678/3678","Stains"
+580 DATA "34678/3678","Day & night"
+590 DATA "23/37","Drylife"
+600 DATA "235678/378","Coagulations"
+610 DATA "2345/45678","Walled cities"
+620 DATA "35678/4678","Vote 4/5"
+630 DATA "45678/5678","Vote"
+
+640 REM Custom user algorithm processing - syntax check
+650 err=0,i=2:
+ DO WHILE rule$(i) IN ["0" TO "9"]:
+    i+=1:
+ LOOP:
+ IF rule$(i)<>"/" THEN
+    err=1:
+    RETURN
+660 i+=1,j=i:
+ DO WHILE rule$(i) IN ["0" TO "9"]:
+    i+=1:
+ LOOP:
+ err=(rule$(i)<>"]" OR j=i)
+670 RETURN

@@ -1,8 +1,18 @@
 ZXASCII
 AUTO -1
-PROG window
+PROG demos:toys/window
+CHANGED FALSE
 10 WINDOW NEW mywin,10,10,200,50
 20 PROC decorate(mywin,"My Window",1)
-30 STOP 
-100 DEF PROC decorate(WindowID,Title$,SizeGrip): WINDOW WindowID: FILL INK 15;0,0: RECTANGLE INK 0;0,0 TO WINw(windowid)-1,WINh(windowid)-1: RECTANGLE PAPER 0;0,0 TO WINw(windowid)-1,FONTh+1 FILL: PRINT MOVE 1,1;#16#15#0#0#0;#17#0#0#0#0;title$;MOVE WINw(windowid)-(6*FONTw),1;#16#10#0#0#0#255#16#14#0#0#0#17#10#0#0#0#255#16#12#0#0#0#17#14#0#0#0#255#16#13#0#0#0#17#12#0#0#0#255#16#0#0#0#0#17#13#0#0#0#255: IF SizeGrip THEN PRINT MOVE WINw(windowid)-10,WINh(windowid)-10;#16#0#0#0#0#17#15#0#0#0#250
+30 STOP
+100 DEF PROC decorate(WindowID,Title$,SizeGrip): 
+    WINDOW WindowID: 
+    FILL INK 15;0,0: 
+    RECTANGLE INK 0;0,0 TO WINw(windowid)-1,WINh(windowid)-1: 
+    RECTANGLE PAPER 0;0,0 TO WINw(windowid)-1,FONTh+1 FILL: 
+    PRINT MOVE 1,1;#16#15#0#0#0;#17#0#0#0#0;title$;
+          MOVE WINw(windowid)-(6*FONTw),1;
+          #16#10#0#0#0#255#16#14#0#0#0#17#10#0#0#0#255#16#12#0#0#0#17#14#0#0#0#255#16#13#0#0#0#17#12#0#0#0#255#16#0#0#0#0#17#13#0#0#0#255: 
+    IF SizeGrip THEN 
+       PRINT MOVE WINw(windowid)-10,WINh(windowid)-10;#16#0#0#0#0#17#15#0#0#0#250
 110 END PROC

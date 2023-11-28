@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG /demos/3D/sphere_dots
+CHANGED FALSE
+10 xc=scrw/2,yc=scrh/2,r=239,j=2,i=r
+20 circle xc,yc,r
+30 do while i>0
+40    FOR k=-PI TO PI STEP 3/r
+50       PLOT xc+i*sin k,yc+r*cos k
+60       PLOT xc+r*sin k,yc+(i-1)*cos k
+70    NEXT k
+80    j+=1,i-=j
+90 LOOP

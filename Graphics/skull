@@ -1,0 +1,33 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/skull
+CHANGED FALSE
+10 REM Original by @Bazzargh, plasma update by B+
+20 K=360: option "Base",0: Window Depth 0,32:
+ SW=SCRw/2,SH=SCRh/2,SC=1600/Scrw,CN=0:
+ DIM S(K+1): DIM C(K+1):
+ FOR I=0 TO K:
+    T=I*2*PI/K,S(I)=SIN T,C(I)=COS T:
+ NEXT I
+30 DEF FN R(i)=INT(RND*i)+1:
+ def fn P=RGBToInt(127+127*Sin(PR*(CN+=.2)),127+127*Sin(PG*U),127+127*Sin(PB*V))
+40 PAPER 0: INK $FF0000: CLS 0
+50 U=160,V=-60,D=2,N=7,A=70,PR,PG,PB=RND^2
+60 FOR J=1 TO 60:
+    FOR T=0 TO K*2:
+       Z=A*C(((T*N) DIV D) MOD K),
+       X=U+Z*C(T MOD K),Y=V+Z*S(T MOD K),
+       E=X*X,R=SQR(E+Y*Y),
+       F=Y+K,G=SQR(E+F*F),
+       L=Y+60,I=X-160,H=SQR(I*I+L*L):
+       IF (G<=220 OR R<=K) AND
+          (R<=380 OR R>=480 OR ABS X>=160 OR ABS(X MOD 32)<=4 OR R MOD 48<=4) AND
+          (J<=1 OR H>=90) AND
+          (Y<-300 OR Y>=-160 OR -X*2-Y<=180) then
+          Y=SCRH-(SH+((Y+110)/SC)),X/=SC:
+          PLOT SW+X,Y;SW-X,Y
+70    NEXT T
+80    D=fn R(3),N=fn R(5)+2,A=fn R(80)+50,U=fn R(K),V=fn r(940)-520: INK Fn P
+90 NEXT J
+100 wait keydown:
+ GO To 40

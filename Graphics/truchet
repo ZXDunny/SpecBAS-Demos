@@ -3,28 +3,26 @@ AUTO -1
 PROG demos:graphics/truchet
 CHANGED FALSE
 10 REM Truchet Tiling
-20 sz=(INT(RND*192)*2)+8: 
-	DO: 
-	   w=2+INT(RND*sz);sq=((sz/2)+(w/2))*0.7071: 
-	LOOP UNTIL sq-1<=sz-sq: 
-	DEGREES: 
-	SCREEN LOCK: CLS 0
-30 mp=sz/2,mw=w/2,gs=256/w,mn=mp-mw,mx=mp+mw: 
-	FOR x=0 TO mx-1;y=0 TO mx-1: 
-	   a=SQR(x*x+y*y),l=iif(a<=mn or a>mx,0,(a-mn)*gs):
+20 sz=(INT(RND*192)*2)+8:
+ DO:
+    w=2+INT(RND*sz),sq=((sz/2)+w)*0.7071:
+ LOOP UNTIL sq-1<=sz-sq:
+ CLS 0
+30 p=RND*360,q=min((2+INT(RND*4))*64,255):
+ FOR f=0 TO 255:
+    PALETTE HSV f,p,q,sin(f*pi/255)*255:
+ NEXT f
+40 mp=sz/2,mw=w/2,gs=256/w,mn=mp-mw,mx=mp+mw:
+ FOR x=0 TO mx;y=0 TO mx:
+    a=SQR(x*x+y*y),l=iif(a<=mn or a>mx,0,(a-mn)*gs):
     PLOT OVER 8;INK l;x,y;sz-x,sz-y;sz+sz-x,y;sz+x,sz-y:
  NEXT y;x
-70 DIM g$(2): 
-	WINDOW GRAB g$(1),0,0,0,sz,sz;GRAB g$(2),0,sz,0,sz,sz
-80 p=RND*360,q=(2+INT(RND*2))*64: 
-	FOR f=0 TO 255: 
-	   PALETTE HSV f,p,q,(SIN(f*(180/256))*255): 
-	NEXT f
-90 FOR x=0 TO SCRw STEP sz: 
-	   FOR y=0 TO SCRh STEP sz: 
-				   WINDOW PUT g$(INT(RND*2)+1),0,x,y: 
-				NEXT y: 
-	NEXT x: 
-	WAIT SCREEN: 
-	wait keydown: 
-	CLS 0: GO TO 20
+50 DIM g$(2):
+ WINDOW GRAB g$(1),0,0,0,sz,sz;GRAB g$(2),0,sz,0,sz,sz
+60 FOR x=0 TO SCRw STEP sz:
+    FOR y=0 TO SCRh STEP sz:
+       WINDOW PUT g$(INT(RND*2)+1),0,x,y:
+    NEXT y:
+ NEXT x:
+ pause 250:
+ CLS 0: GO TO 20

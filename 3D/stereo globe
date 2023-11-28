@@ -1,0 +1,35 @@
+ZXASCII
+AUTO -1
+PROG /demos/3d/stereo globe
+CHANGED FALSE
+10 REM Fake sphere mapping
+20 GRAPHIC NEW t LOAD "moon.png":
+ gw=gfxw t,gh=gfxh t:
+ palette copy t,0,256 to 0:
+ paper rgbn(0):
+ cls:
+ screen lock
+25 sd=48:
+ for f=1 to 400:
+    ink rnd*255:
+    y=rnd*scrh,xl=rnd*((scrw/2)-sd),xr=xl+(scrw/2)-sd:
+    plot xl,y;xr,y;xr+scrw/2-sd,y:
+ next f:
+ window new w,0,0,scrw,scrh transparent 255: window w: paper 255: cls
+30 r=scrh/4,yc=SCRh/2,xo,l=0,xl=scrw/4,xr=scrw-scrw/4:
+ do:
+    l=1-l,xc=iif(l,xl,xr):
+    for y=-r+1 to r-1:
+       x1=sqr(r*r-y*y),
+       tv=(asn(y/r)+1.5)/3:
+       for x=-x1 to x1:
+          tu=(asn(x/x1)+1.5)/6:
+          plot ink gpoint(t,(xo+tu*gw+(l*16)) mod gw,tv*gh);x+xc,y+yc:
+       next x:
+    next y:
+    if l then
+       xo+=3,xo%=gw:
+       wait screen:
+       cls:
+    end if:
+ loop

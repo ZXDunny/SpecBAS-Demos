@@ -1,0 +1,36 @@
+ZXASCII
+AUTO -1
+PROG demos:text/fortune
+CHANGED FALSE
+10 LOAD "fonts:topaz" BANK new f: font f: dim hist(): ofs,mx=0:
+ palette 1,0,85,170;2,255,138,0: paper 1: scale 1,2
+20 def fn f(a$)=qcode(a$(4)+a$(3)+a$(2)+a$(1))
+30 def fn n=iif(nc!=nc,(code a$(c) & $F0) shr 4,code a$((c+=1)-1) & $F)
+
+40 stream new s,"fortunes";read s,h$,320;read s,n$,4: n=fn f(n$)
+
+50 fort=int(rnd*n)+1,hist(ofs+=1)=fort,mx=max(mx,ofs)
+
+60 wait keyup: t=msecs:
+ stream seek s,4*fort+320;read s,n$,4;seek s,fn f(n$);read line s,a$,#0
+
+70 nc,a=0,c=1,o$=""
+80 p=FN n: IF p=1 THEN a+=1: GO To 80
+90 IF p<>0 THEN o$=o$+h$(a*16+p+1),a=0: if c<=len a$ then GO To 80
+
+100 cls: a$="Fortune #"+str$ fort+#13#13,b$=replace$(o$,#10,#13):
+ print ink 0;move 1,1;a$;move 0,36;b$: window scroll 0,1,1:
+ print at 0,0;ink 2;trans 1;a$;ink 15;b$:
+ window scroll 0,8,8
+
+110 do:
+    yield:
+    a$=inkey$:
+    if (a$=#8) or (a$=#9 and ofs<mx) then
+       fort=hist(ofs+=(a$=#9)-(a$=#8 and ofs>1)):
+       GO To 60
+    else
+       if a$<>"" or msecs-t>1e4 then
+          ofs=mx:
+          GO To 50
+120 loop

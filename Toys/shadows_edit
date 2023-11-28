@@ -11,9 +11,9 @@ CHANGED FALSE
 30 dim xc(mxb,4);yc(mxb,4);x(mxb);y(mxb);w(mxb),h(mxb),cl(mxb);
      v=((1,4),(3,2),(0,0),(4,3),(1,3),(4,2),(0,0),(2,1),(2,4),(3,1));
      clr$="Blue","Red","Magenta","Green","Cyan","Yellow","White"
-40 mx,my=0,ms=0.125,mode=0
-50 cls 0: a$=inkey$
-60 mx+=(mousex-mx)*ms,my+=(mousey-my)*ms,d=max(keyst key_shift*dw,1),
+40 mx,my=0,ms=0.0625,mode=0
+50 cls 0: a$=inkey$: omx=mousex,omy=mousey
+60 mx+=(omx-mx)*ms,my+=(omy-my)*ms,d=max(keyst key_shift*dw,1),
  nx=int mx,ny=int my:
  window put graphic c,0,nx-cr,ny-cr
 70 for i=1 to nb:
@@ -31,18 +31,18 @@ CHANGED FALSE
 95 nx=nx div d*d,ny=ny div d*d
 100 if mode=0 then
     if mousebtn=1 then
-       bx1=nx,by1=ny,bx2=nx,by2=ny,mode=1:
+       bx1=omx,by1=omy,bx2=omx,by2=omy,mode=1:
     end if:
  else
     if mousebtn=1 then
-       bx2=nx+(d*(bx2>bx1)),by2=ny+(d*(by2>by1)):
+       bx2=omx+(d*(bx2>bx1)),by2=omy+(d*(by2>by1)):
     else
        mode=0,nb+=1,x(nb)=min(bx1,bx2),y(nb)=min(by1,by2),
        w(nb)=max(d,max(bx1,bx2)-x(nb)),h(nb)=max(d,max(by1,by2)-y(nb)),
        cl(i)=ci+8: GO SUb 140
 110 for j=1 to nb:
     rectangle ink cl(j);x(j),y(j),w(j),h(j) fill:
- next j:
+ next j: circle ink 15;nx,ny,2 fill:
  if mode=1 then
     px=min(bx1,bx2),py=min(by1,by2),pw=max(d,max(bx1,bx2)-px),ph=max(d,max(by1,by2)-py):
     rectangle ink ci;trans 1;px,py,pw,ph fill "á"
@@ -52,4 +52,3 @@ CHANGED FALSE
 140 xc(nb,1)=x(nb),xc(nb,2)=x(nb)+w(nb)-1,xc(nb,3)=x(nb)+w(nb)-1,xc(nb,4)=x(nb):
  yc(nb,1)=y(nb),yc(nb,2)=y(nb),yc(nb,3)=y(nb)+h(nb)-1,yc(nb,4)=y(nb)+h(nb)-1:
  return
-

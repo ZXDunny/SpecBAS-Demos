@@ -8,7 +8,7 @@ CHANGED FALSE
  DO:
     C=code D$(P):
     IF C=32 then
-       PRINT F$;
+       PRINT F$
     ELSE
        C=C-59+(C<64)*40:
        INK VAL D$(C div 6)+(8*(C<30)):

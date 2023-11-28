@@ -3,42 +3,42 @@ AUTO -1
 PROG demos:graphics/ultraviolet
 CHANGED FALSE
 10 REM Ultraviolet
-20 RADIANS: PAPER 0: CLS: SCREEN LOCK
-30 sz=50,ns=50,fr=.5,tr=20,dm=.25,tn=.98,ph=RND*PI*2,amp=85,frq=.015,ofs=285,md=1
+20 RADIANS: PAPER 0: palette 0,0,0,64: CLS: SCREEN LOCK
+30 sz=50,ns=100,fr=.5,tr=20,dm=.25,tn=.98,ph=RND*PI*2,amp=85,frq=.015,ofs=285,md=1
 40 DIM sp(tr),fr(tr),nd(tr,sz,4):
-	mx=MOUSEx,my=MOUSEy
+ mx=MOUSEx,my=MOUSEy
 50 FOR i=1 TO tr:
-	   sp(i)=(.45+.025*(i/tr))+(RND*.1)-.05,
-				fr(i)=fr+(RND*.01)-.005:
-				FOR j=1 TO sz:
-				   nd(i,j,1)=mx,
-							nd(i,j,2)=my:
-				NEXT j:
-	NEXT i
+    sp(i)=(.45+.025*(i/tr))+(RND*.1)-.05,
+    fr(i)=fr+(RND*.01)-.005:
+    FOR j=1 TO sz:
+       nd(i,j,1)=mx,
+       nd(i,j,2)=my:
+    NEXT j:
+ NEXT i
 60 mx=(MOUSEx+(mx*(md-1)))/md,my=(MOUSEy+(my*(md-1)))/md
 70 FOR i=1 TO tr:
-	   INK i:
-				s=sp(i),nd(i,1,3)+=(mx-nd(i,1,1))*s,
-				nd(i,1,4)+=(my-nd(i,1,2))*s
+    INK i:
+    s=sp(i),nd(i,1,3)+=(mx-nd(i,1,1))*s,
+    nd(i,1,4)+=(my-nd(i,1,2))*s
 80    FOR j=1 TO sz:
-				   IF j>1 THEN
-							   nd(i,j,3)+=((nd(i,j-1,1)-nd(i,j,1))*s)+(nd(i,j-1,3)*dm),
-										nd(i,j,4)+=((nd(i,j-1,2)-nd(i,j,2))*s)+(nd(i,j-1,4)*dm):
-							END IF:
-							nd(i,j,3)*=fr,nd(i,j,4)*=fr,
-							nd(i,j,1)+=nd(i,j,3),
-							nd(i,j,2)+=nd(i,j,4),
-							s*=tn:
-				NEXT j
+       IF j>1 THEN
+          nd(i,j,3)+=((nd(i,j-1,1)-nd(i,j,1))*s)+(nd(i,j-1,3)*dm),
+          nd(i,j,4)+=((nd(i,j-1,2)-nd(i,j,2))*s)+(nd(i,j-1,4)*dm):
+       END IF:
+       nd(i,j,3)*=fr,nd(i,j,4)*=fr,
+       nd(i,j,1)+=nd(i,j,3),
+       nd(i,j,2)+=nd(i,j,4),
+       s*=tn:
+    NEXT j
 90    MOVE TO nd(i,1,1),nd(i,1,2):
-				FOR j=1 TO sz-2:
-				   CURVE nd(i,j,1),nd(i,j,2) TO (nd(i,j,1)+nd(i,j+1,1))*.5,(nd(i,j,2)+nd(i,j+1,2))*.5,ns:
-				NEXT j:
-				CURVE nd(i,j,1),nd(i,j,2) TO nd(i,j+1,1),nd(i,j+1,2),ns:
-	NEXT i
+    FOR j=1 TO sz-2:
+       CURVE nd(i,j,1),nd(i,j,2) TO (nd(i,j,1)+nd(i,j+1,1))*.5,(nd(i,j,2)+nd(i,j+1,2))*.5,ns:
+    NEXT j:
+    CURVE nd(i,j,1),nd(i,j,2) TO nd(i,j+1,1),nd(i,j+1,2),ns:
+ NEXT i
 100 ph+=frq,h=(ofs+SIN ph*amp) MOD 360:
-	FOR f=1 TO tr:
-	   PALETTE HSV f,(h+((90/tr)*f)) MOD 360,255-(64/tr)*f,255:
-	NEXT f:
-	WAIT SCREEN: CLS:
-	GO TO 60
+ FOR f=1 TO tr:
+    PALETTE HSV f,(h+((90/tr)*f)) MOD 360,255-(64/tr)*f,255:
+ NEXT f:
+ WAIT SCREEN: CLS:
+ GO TO 60

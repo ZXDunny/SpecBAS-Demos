@@ -4,9 +4,8 @@ PROG demos:graphics/pattern5
 CHANGED FALSE
 10 degrees: origin -400,-240 to 400,240
 20 def fn S(L)=SIN(L*9):
- dim E$=TOKEN$ "DRAW L*S,L*C TO O*T,O*D",
-        TOKEN$ "DRAW L*T,L*D TO O*S,O*C"
-
+ dim E$=TOKEN$ "DRAW L*S,L*C TO O*T,O*D,9",
+        TOKEN$ "DRAW L*T,L*D TO O*S,O*C,9"
 30 SC=3:
  FOR L=0 TO 1010*SC/2:
     O=L-40:
@@ -17,12 +16,5 @@ CHANGED FALSE
     T=fn S(Q)/SC:
     D=fn S(Q+10)/SC:
     EXECUTE E$(INT(RND*2)+1):
+    wait screen:
  NEXT L
-
-40 for x=-400 to 400 step 2;y=-240 to 240 step 2:
-    if point(x,y)=8 then fill ink int(rnd*15)+1;x,y
-50 next y;x
-
-60 wait keydown:
- cls:
- GO To 10

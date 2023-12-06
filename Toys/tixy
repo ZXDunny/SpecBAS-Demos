@@ -1,0 +1,78 @@
+ZXASCII
+AUTO -1
+PROG demos:toys/tixy
+CHANGED FALSE
+10 REM tixy
+
+20 def fn i=code inkey$|mousebtn:
+ error 49,false
+
+30 do: loop until not fn i:
+ read t$,d$: tix$=token$ t$
+
+40 sc=scrw/800,mr=8*sc,gs=16*mr*2,
+ ox=(scrw-gs)/2,oy=(scrh-gs)/2,st=MSECS
+ 
+50 paper 0: cls:
+ palette 10,255,34,68:
+ window new w,ox-mr,0,gs,oy-mr: SCREEN LOCK
+
+60 rem draw the board
+70 do:
+    window w:
+    print scale sc,sc;ink 10;''d$;ink 15;''"val "+#34+t$+#34:
+    window 0:
+    rectangle ink 227;ox-mr,oy-mr,gs,gs fill:
+    for i=0 to 255:
+       x=(i&$f),y=(i div 16),t=(msecs-st)/1000,
+       r=clamp(val tix$,-1 to 1)*mr*.9:
+       circle ink 10+(r>0)*5;ox+x*mr*2,oy+y*mr*2,r fill:
+    next i:
+    wait screen:
+    IF fn i THEN GO To 30
+80 loop
+
+90 data "sin(y/8+t)","tixy - creative code golfing",
+      "rnd<0.1","for every dot return 0 or 1"#13"to change the visibility",
+      "rnd","use a float between 0 and 1"#13"to define the size",
+      "sin t","parameter 't' is"#13"the time in seconds",
+      "i/256","param 'i' is the index"#13"of the dot (0..255)",
+      "x/16","'x' is the column index"#13"from 0 to 15",
+      "y/16","'y' is the row"#13"also from 0 to 15",
+      "y-7.5","positive numbers are white"#13"negatives are red",
+      "y-t","use the time"#13"to animate values",
+      "y-t*4","multiply the time"#13"to change the speed",
+      "choose((i mod 3)+1,1,0,-1)","create patterns using"#13"different colour",
+      "sin(t-sqr(abs(x-7.5)^2+abs(y-6)^2))","use math functions"#13"like sin or pi",
+      "sin(y/8+t)","more examples...",
+      "y-x","simple triangle",
+      "(y>x) and (14-x<y)","quarter triangle",
+      "i mod 4-y mod 4","pattern",
+      "x mod 4 and y mod 4","grid",
+      "x>3 and y>3 and x<12 and y<12","square",
+      "-(x>t and y>t and x<15-t and y<15-t)","animated square",
+      "(y-6)*(x-6)","mondrian squares",
+      "(y-4*t|0)*(x-2-t|0)","moving cross",
+      "4*t&i&x&y","sierpinski",
+      "(t*10) & (1 shl x) and y=8","binary clock",
+      "rnd*2-1","random noise",
+      "sin(i^2)","static smooth noise",
+      "cos(t+i+x*y)","animated smooth noise",
+      "sin(x/2)-sin(x-t)-y+6","waves",
+      "(x-8)*(y-8)-sin t*64","bloop bloop bloop",
+      "-.4/(pyth(x-t fmod 10,y-t fmod 8)-t fmod 2*9)","fireworks",
+      "sin(t-sqr(x*x+y*y))","ripples",
+      "choose(1+((y+t*9)&7),5463,2194,2386 else 0)&1 shl x-1","scrolling tixy font",
+      "(((x-8)/y+t*5)&1 xor 1/y*4&1)*y/5","3d checker board",
+      "y-t*3+9+3*cos(x*3-t)-5*sin(x*7)","sticky blood",
+      "1/32*tan(t/64*x*tan(i-x))","dialog with an alien",
+      "x and y<9 and y>4+sin(8*t+x*x)+x/4","spectrum analyser",
+      "(y=x) or (-(15-x=y))","diagonals",
+      "(x=0) or (x=15) or (y=0) or (y=15)","frame",
+      "8*t fmod 13-pyth(x-7.5,y-7.5)","drop",
+      "sin(2*atn((y-7.5)/(x-7.5))+5*t)","rotation",
+      "(x-y)-sin t*16","wipe",
+      "(x-y)/24-sin t","soft wipe",
+      "sin(t*5)*tan(t*7)","disco",
+      "abs(x-5)^2+abs(y-5)^2-99*sin t","breathing",
+      "iif(sin((i|17)^2+t)-.5>0,x&1,y&1)","maze"

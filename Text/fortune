@@ -30,7 +30,7 @@ CHANGED FALSE
        fort=hist(ofs+=(a$=#9)-(a$=#8 and ofs>1)):
        GO To 60
     else
-       if a$<>"" or msecs-t>1e4 then
+       if a$<>"" or (msecs-t>3e4 and ofs=mx) then
           ofs=mx:
           GO To 50
 120 loop

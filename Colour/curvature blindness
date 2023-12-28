@@ -1,0 +1,25 @@
+ZXASCII
+AUTO -1
+PROG demos:colour/curvature blindness
+CHANGED FALSE
+10 REM Curvature blindness illusion
+
+20 m,o,s=0,wc=7,rh=48,rg=8,ofs=(rh/2-(rg/2))
+
+30 POLYGON INK 15;0,0 TO SCRw/2,0 TO 0,SCRh/2 FILL
+40 polygon ink 0;scrw/2,scrh-1 to scrw-1,scrh-1 to scrw-1,scrh/2 fill
+
+50 for y=0 to scrh step rh:
+    for x=0 to scrw:
+       n=even((x+(m*wc/4*tau)+o)/(wc/2*tau)):
+       py=sin(x/wc)*4+ofs:
+       plot ink 232+(16*n);x,py+y;x,py+y+rg:
+    next x:
+    m=1-m:
+ next y:
+
+ s+=1,o+=(s mod 100<11),m=0
+
+60 wait screen: cls:
+ GO To 30
+

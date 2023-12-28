@@ -3,20 +3,18 @@ AUTO -1
 PROG demos:3d/stereopsis
 CHANGED FALSE
 10 rem Chromostereopsis
-20 palette 1,0,0,128:
-	paper 0:cls:
- cx=scrw/2,cy=scrh/2,
-	rd=15,th=(cy/3)-rd,r1=cy-8,rd=th+rd:
-	proc c(cx,cy,r1,r1-th,10):r1-=rd:
-	proc c(cx,cy,r1,r1-th,1):r1-=rd:
-	proc c(cx,cy,r1,0,10):
-	wait keydown
-30 def proc c(xc,yc,r,r2,i):
-    FOR y=-r TO r step 2:
-       x1=SQR(r*r-y*y):
-       FOR x=-x1 TO x1 step 2:
-          rectangle inverse rnd;ink i;x+xc,y+yc,2,2:
-       NEXT x:
-    NEXT y:
-				circle ink 0;xc,yc,r2 fill:
-	End proc
+20 palette 1,0,0,128: paper 0: cls
+30 b=3,bw=12,r=scrh/2,w1=(r/b)-bw,
+ wa=int w1+bw,xc=scrw/2,yc=scrh/2:
+ for x=0 to scrw-1;y=0 to scrh-1:
+       plot inverse int(rnd*2);ink 1+even b;x,y:
+ next y;x
+40 for y=-r to r:
+    x1=int sqr(r*r-y*y):
+    for x=-x1 to x1:
+       if 1 then
+          d=sqr(x*x+y*y),b=d div wa,c=d mod wa:
+          plot ink (1+even b)*int(rnd*2);inverse (c>wa-bw);x+xc,y+yc
+50    next x:
+ next y
+60 PAUSE 0

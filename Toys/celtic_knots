@@ -77,19 +77,24 @@ CHANGED FALSE
 70 rectangle ink i-8;cx-4,cy+16,gw*20+8,gh*20+8 fill:
  font fnt:
  FOR y=1 TO gh:
-    TEXT ink i;move cx,cy+(y*20);g$(y):
+    TEXT ink i;paper p;move cx,cy+(y*20);g$(y):
  NEXT y:
  if cm then
     GO SUb 120:
     fill ink i-8;cx-4,cy+16
 80 font 1:
- print paper 0; ink 13+2*(1-cm);centre txth-4;"press c to toggle colour mode";ink 15; centre txth-3;"Press any other key for new knot":
+ print paper 0; ink 13+2*(1-cm);centre txth-4;"press c to toggle colour mode, p for new palette";ink 15; centre txth-3;"Press any other key for new knot":
  do:
     wait keydown:
     a$=inkey$:
     if a$="c" then
        cm=1-cm:
        GO To 70:
+    else 
+       if a$="p" then
+          i=int(rnd*4)+12,p=int(rnd*4):
+          GO To 70:
+       end if:
     end if:
  loop until a$<>"":
  GO To 30

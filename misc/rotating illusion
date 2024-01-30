@@ -8,44 +8,42 @@ CHANGED FALSE
  xc=scrw/2,yc=scrh/2
 30 REM Set up palette
 40 FOR f=0 TO nt/4:
-    palette f,$FFFF00;f+nt/2,$FFFF00;f+nt/4,$FF;f+nt-nt/4,$FF:
- next f:
+    palette f,$D0D000;f+nt/2,$D0D000;f+nt/4,$D0;f+nt-nt/4,$D0:
+ next f:  
  palette 255,$808080;254,0:
  paper 255: ink 254
 50 REM ar$ draws an arrow
-60 ar$="U8L4E6F6L4D8L4BU4BR2P254,1" 
+60 ar$="U8L4E6F6L4D8L4BU4BR2P254,1"
 70 REM Draw the main ring
 80 cls: t=msecs:
- for f=0 to nt-1:
-    a1=a*f,a2=a*(f+1),
-    x1=r1*sin a1+xc,y1=r1*cos a1+yc,x2=r1*sin a2+xc,y2=r1*cos a2+yc,
-    x3=r2*sin a2+xc,y3=r2*cos a2+yc,x4=r2*sin a1+xc,y4=r2*cos a1+yc:
-    polygon ink f;x1,y1 to x2,y2 to x3,y3 to x4,y4 fill:
- next f
-90 REM Get stage parameters and draw arrows
-100 r1+=+.25,r2-=.25
-110 read a$,b$,c$:
+ for y=-r1 to r1;x=-r1 to r1:
+    if pyth(x,y) in [r1 to r2] then
+       plot ink (tau-(polar(x,y)+pi/2)/tau*nt) mod nt;x+xc,y+yc
+90 next x;y
+100 REM Get stage parameters and draw arrows
+110 r1+=+.25,r2-=.25
+120 read a$,b$,c$:
  if a$="" then
-    restore 190:
-    GO To 110:
+    restore 200:
+    GO To 120:
  else
     b$=token$ b$,c$=token$ c$:
     move to xc,yc: draw a$
-120 REM Draw inner and outer pixel-wide rings
-130 for f=0 to nt-1:
+130 REM Draw inner and outer pixel-wide rings
+140 for f=0 to nt-1:
     a1=a*f,a2=a*(f+1),
     x1=r1*sin a1+xc,y1=r1*cos a1+yc,x2=r1*sin a2+xc,y2=r1*cos a2+yc:
     draw ink val b$ mod nt;x1,y1 to x2,y2,a:
     x1=r2*sin a1+xc,y1=r2*cos a1+yc,x2=r2*sin a2+xc,y2=r2*cos a2+yc:
     draw ink val c$ mod nt;x1,y1 to x2,y2,a
-140 next f
-150 REM Palette cycling for the main loop.
-160 palette shl rr,0 to nt: wait screen:
-170 if inkey$<>"" or msecs-t>3e3 Then
+150 next f
+160 REM Palette cycling for the main loop.
+170 palette shl rr,0 to nt: wait screen
+180 if inkey$<>"" or msecs-t>3e3 Then
     wait keyup:
     GO To 20
  else
-    GO To 160
-180 REM Data for the stages - arrow code and expressions for inner/outer rings
-190 data "S8BM-18,-2T-90"+ar$+"BM+32,+2T90"+ar$+"BM-12,-18T180"+ar$+"BM-2,+32T0"+ar$,
+    GO To 170
+190 REM Data for the stages - arrow code and expressions for inner/outer rings
+200 data "S8BM-18,-2T-90"+ar$+"BM+32,+2T90"+ar$+"BM-12,-18T180"+ar$+"BM-2,+32T0"+ar$,
       "f-nn*3","f-nn","BM-4,+2T90"+ar$+"BM+12,-2T-90"+ar$+"BM-10,-4T0"+ar$+"BM+2,+12T180"+ar$,"f-nn","f-nn*3","S12BM+6,+2T90"+ar$,"f/2-nn*2","f/2-nn*4","BM-6,-2T-90"+ar$,"f/2-nn*4","f/2-nn*2","BM-2,+6T0"+ar$,"f/2-nn*3","f/2-nn","BM+2,-6T180"+ar$,"f/2-nn","f/2-nn*3","","",""

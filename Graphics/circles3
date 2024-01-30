@@ -6,7 +6,7 @@ CHANGED FALSE
     for i=-1 to 1 step 2:
        for y=-r+bs to r-bs step bs*2:
           x=sqr(r*r-y*y):
-          for yy=y to y+bs-3:
+          for yy=y to y+bs-2:
              draw ink iif(i>0,i1,i2);xc-x,yy+yc to x+xc,yy+yc,a*i:
           next yy:
        next y:
@@ -15,18 +15,20 @@ CHANGED FALSE
  end proc
 
 20 paper 0: cls: screen lock:
- sh=scrh/2,r=78,rs=r*2+10
+ sc=scrw/800,sh=scrh/2,r=78*sc,d=5*sc,rs=r+d
 30 dim ik=((9,10),(10,12),(12,9))
 
-40 my=sin(pi*msecs/2000)^.5,rw=0:
- for cy=0 to scrh+r step rs/1.257:
-    ikk=1+rw*2:
-    for cx=0 to scrw+r step rs:
-       proc c(cx+(rs/2*rw),cy,r,6,my,ik(ikk,1),ik(ikk,2)):
+40 my=sin(pi*msecs/2000)^.5,rw,i,cy=0:
+ do while cy<scrh:
+    ikk=1+rw*2,cx=0:
+    do while cx<scrw:
+       xx=cx+iif(odd i,rs*(pi/(2*sqr 3))+(d*1.5),0):
+       proc c(xx,cy,r,sc*6,my,ik(ikk,1),ik(ikk,2)):
        inc ikk,1,1 to 3:
-    next cx:
-    rw=1-rw:
- next cy:
+       cx+=2*rs:
+    loop:
+    cy+=sqr 3*rs,i+=1,rw=1-rw:
+ loop:
  wait screen:
  cls:
  GO To 40

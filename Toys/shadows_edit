@@ -14,7 +14,7 @@ CHANGED FALSE
 40 mx,my=0,ms=0.0625,mode=0
 50 cls 0: a$=inkey$: omx=mousex,omy=mousey
 60 mx+=(omx-mx)*ms,my+=(omy-my)*ms,d=max(keyst key_shift*dw,1),
- nx=int mx,ny=int my:
+ nx=int mx,ny=int my,onx=nx,ony=ny,omx=omx div d*d,omy=omy div d*d:
  window put graphic c,0,nx-cr,ny-cr
 70 for i=1 to nb:
     x=x(i),y=y(i),w=w(i),h=h(i),
@@ -42,7 +42,7 @@ CHANGED FALSE
        cl(i)=ci+8: GO SUb 140
 110 for j=1 to nb:
     rectangle ink cl(j);x(j),y(j),w(j),h(j) fill:
- next j: circle ink 15;nx,ny,2 fill:
+ next j: circle ink 15;onx,ony,2 fill:
  if mode=1 then
     px=min(bx1,bx2),py=min(by1,by2),pw=max(d,max(bx1,bx2)-px),ph=max(d,max(by1,by2)-py):
     rectangle ink ci;trans 1;px,py,pw,ph fill "á"

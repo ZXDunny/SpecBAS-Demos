@@ -87,7 +87,7 @@ CHANGED FALSE
     PRINT AT f+14,28;USING$("* ##",f);". [";b$(f);"] ";at f+14,48;c$:
  NEXT f:
  PRINT ''TAB 28;"Press 1,2 or 3 during simulation to"'TAB 28;"toggle colouring mode:"''TAB 28;"1: Mono"'TAB 28;"2: Colour living"'TAB 28;"3: Colour all"
-300 INPUT rule$:
+300 INPUT at 53,28;rule$:
  IF rule$="" THEN
     rule$=lastrule$:
     return

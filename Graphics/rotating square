@@ -1,0 +1,32 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/rotating square
+CHANGED FALSE
+10 nl=250,sl=400,
+ nl=ceil(nl/8)*8,as=tau/nl,cx=scrw/2,cy=scrh/2,j=0
+
+20 dim clr(nl) base 0
+30 for i=0 to nl-1:
+    clr(i)=int(rnd*16):
+ next i:
+ screen lock
+
+40 i=0:
+
+ for a=0 to tau step as:
+    ea=a fmod(tau/4),
+    r=iif(ea<=tau/8,sl/cos ea,sl/sin ea)/2,
+    x1=cx+cos a*r,y1=cy+sin a*r,a1=a+as,
+
+    ea=a1 fmod(tau/4),
+    r=iif(ea<=tau/8,sl/cos ea,sl/sin ea)/2,
+    x2=cx+cos a1*r,y2=cy+sin a1*r:
+
+    polygon ink clr((i+j) mod nl);cx,cy to x1,y1 to x2,y2 fill:
+
+    i+=1:
+ next a:
+
+ j+=1:
+ wait screen:
+ GO To 40

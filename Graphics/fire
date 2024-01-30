@@ -1,0 +1,22 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/fire
+CHANGED FALSE
+10 sc=4,s=(scrw/sc)+4,fa=640,fb=180,xo=(scrw-(s*sc))/2,yo=scrh-s*sc
+20 dim f(s,s)
+30 for i=1 to 64:
+    a=int(i/64*255):
+    palette i,a*65536;i+64,16711680+a*256;i+128,16776960+a:
+ next i
+40 graphic new b1,s,s: window graphic b1
+50 do:
+    for x=3 to s-4:
+       f(x,s)=int(rnd*fa-fb):
+       for y=s-1 to 140 step -1:
+          f(x,y)=int((f(x-1,y)+f(x,y+1)+f(x+1,y+1))/3)-1.25:
+          plot ink clamp(f(x,y),1 to 192);x,y:
+       next y:
+    next x:
+    window put graphic b1,0,xo,yo scale sc:
+    wait screen:
+ loop

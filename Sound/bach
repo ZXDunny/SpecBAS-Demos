@@ -1,0 +1,9 @@
+ZXASCII
+AUTO -1
+PROG /demos/Sound/bach
+CHANGED FALSE
+10 LET a$="UX2000W0T108O5(3&1gCEgCE)(3&1aDFaDF)(3&1gDFgDF)(3&1gCEgCE)(3&1aEAaEA)(3&1#faD#faD)(3&1gDGgDG)(3&1egCegC)(3&1egCegC)(3&1d#fCd#fC)(3&1dgbdgb)(3&1eg#Ceg#C)(3&1daDdaD)(3&1dfbdfb)(3&1cgCcgC)O4(3&1aCFaCF)(3&1aCFaCF)(3&1gbFgbF)(3&1gCEgCE)(3&1$bCE$bCE)(3&1aCEaCE)(3&1aC$EaC$E)(3&1bCDbCD)(3&1gbDgbD)(3&1gCEgCE)(3&1gCFgCF)(3&1gbFgbF)(3&1aC#FaC#F)(3&1gCGgCG)(3&1gCFgCF)(3&1gbFgbF)(3&1g$bEg$bE)3&1faCFCaCafafdfdO5N3&1gbDFDbDbfbdfedV15N9C"
+20 LET b$="O4(1&4_5E)(1&4_5D)(1&4_5D)(1&4_5E)(1&4_5E)(1&4_5D)(1&4_5D)(1&4_5C)(1&4_5C)(1&4_5a)(1&4_5b)(1&4_5$b)(1&4_5a)(1&4_5$a)(1&4_5g)(1&4_5f)(1&4_5f)(1&4_5d)(1&4_5e)(1&4_5g)(1&4_5f)(1&4_5c)(1&4_5f)(1&4_5f)(1&4_5e)(1&4_5d)(1&4_5d)(1&4_5$e)(1&4_5e)(1&4_5d)(1&4_5d)(1&4_5c)1&4_5_7c1&4_5_7$c9E"
+30 LET c$="O4N7CCCCbbCCCCCCbbbbaaddggggffffeeeeddO3ggCCCCff#f#f$a$aggggggggggggggggcc9c9c9c"
+40 play a$,b$,c$
+

@@ -1,0 +1,34 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/circle_checked
+CHANGED FALSE
+10 origin 0,0 to 320,192 flip:
+ r=68,sx=logw/scrw,sy=logh/scrh:
+ for y=4 to 138 step sy:
+    y1=71-y,x1=sqr(r*r-y1*y1),y1=y+20:
+    for x=78 to 214 step sx:
+       if x>146-x1 and x<146+x1 then
+          u=x/256-.5,v=(y/176-.5)*.69,
+          l=sqr(u*u+v*v+1),
+          dx=u/l,dy=v/l,dz=1/l,
+          de,dt=0,y1=y+20:
+          for i=0 to 50:
+             x3=de*dx,y3=de*dy,
+             z3=-3+de*dz,
+             a3=.97*y3+.26*z3,
+             z3=-.26*y3+.97*z3,
+             y3=a3,
+             a3=.97*x3-.26*z3,
+             z3=.26*x3+.97*z3,
+             x3=a3,
+             dt=sqr(x3*x3+(z3-1)*(z3-1)+y3*y3)-1:
+             if dt<.0001 then
+                i=50,c=abs int(x3*20)+int(z3*20):
+                if (c-2*int(.5*c)) then
+                   plot x,y1:
+                end if:
+             end if:
+             de+=dt:
+          next i:
+30    next x:   
+ next y

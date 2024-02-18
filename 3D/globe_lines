@@ -1,0 +1,42 @@
+ZXASCII
+AUTO -1
+PROG /demos/3d/globe_lines
+CHANGED FALSE
+10 LET a=22: LET b=22: let c=0: LET u=scrw/2: LET v=scrh/2: LET r=scrh*0.4
+20 LET a=a+.02: LET h=.5: LET b=b+.017: LET c=c+.025: LET d=tau/24
+30 LeT s1=SIN a: LET s2=SIN b: LET s3=SIN c
+40 LET c1=COS a: LET c2=COS b: LET c3=COS c
+50 LET ax=c2*c3: LET ay=-c2*s3: LET az=s2
+60 LET bx=c1*s3+s1*s2*c3
+70 LET by=c1*c3-s1*s2*s3: LET bz=-s1*c2
+80 LET cx=s1*s3-c1*s2*c3
+90 LET cy=s1*c3+c1*s2*s3: LET cz=c1*c2
+100 CIRCLE u,v,r
+110 FOR l=0 TO pi-d STEP d
+120 LET f1=0
+130 FOR p=0 TO tau STEP tau/72
+140 GO SUB 320
+150 IF yy>0 THEN LET f2=0: LET f1=0: GO TO 190
+160 LET xb=INT (u+xx+h): LET yb=INT (v+zz+h): LET f2=1
+170 IF f1=0 THEN LET x1=xb: LET y1=yb: LET f1=1: GO TO 190
+180 PLOT x1,y1: DRAW xb-x1,yb-y1: LET x1=xb: LET y1=yb: LET f1=f2
+190 NEXT p
+200 NEXT l
+210 FOR p=-pi/2+d TO pi/2-d STEP d
+220 LET f1=0
+230 FOR l=0 TO tau STEP tau/72
+240 GO SUB 320
+250 IF yy>0 THEN LET f2=0: LET f1=0: GO TO 290
+260 LET xb=INT (u+xx+h): LET yb=INT (v+zz+h): LET f2=1
+270 IF f1=0 THEN LET x1=xb: LET y1=yb: LET f1=1: GO TO 290
+280 PLOT x1,y1: DRAW xb-x1,yb-y1: LET x1=xb: LET y1=yb: LET f1=f2
+290 NEXT l
+300 NEXT p
+310 WAIT SCREEN: cls: GO To 20
+320 LET x=r*COS p*COS l
+330 LET y=r*COS p*SIN l
+340 LET z=r*SIN p
+350 LET xx=ax*x+ay*y+az*z
+360 LET yy=bx*x+by*y+bz*z
+370 LET zz=cx*x+cy*y+cz*z
+380 RETURN 

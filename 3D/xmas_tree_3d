@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG /demos/3D/xmas_tree_3d
+CHANGED FALSE
+10 d=700,z0=2500,p,q,b=-.03
+20 do:
+    b+=.03:
+    cls 0:
+    for a=0 to 20*tau step .1:
+       x=5*a*cos a,y=-a*10,z=5*a*sin a,
+       yy=(y+350)*cos b-z*sin b,zz=(y+350)*sin b+z*cos b,
+       y=yy-350,z=zz,xx=x*cos b-z*sin b,zz=x*sin b+z*cos b,
+       x=xx,z=zz,xx=x*cos b-(y+350)*sin b,yy=x*sin b+(y+350)*cos b:
+       circle ink 4;scrw/2+xx*d/(z+z0),scrh/2-(100+yy-350)*d/(z+z0)-150,1:
+    next a:
+    for a=0 to 3*tau step .1:
+       rr=100,r=60,
+       x=(rr-r)*cos(a+pi/4)+70*cos(((rr-r)/r)*a), 
+       y=50+(rr-r)*sin(a+pi/4)-70*sin(((rr-r)/r)*a),
+       z=0,yy=(y+350)*cos b-z*sin b,zz=(y+350)*sin b+z*cos b,
+       y=yy-350,z=zz,xx=x*cos b-z*sin b,zz=x*sin b+z*cos b,
+       x=xx,z=zz,xx=x*cos b-(y+350)*sin b,yy=x*sin b+(y+350)*cos b:
+       circle ink 6;scrw/2+xx*d/(z+z0),scrh/2-(100+yy-350)*d/(z+z0)-150,1:
+    next a:
+    if not b then wait keydown else wait screen
+30 loop

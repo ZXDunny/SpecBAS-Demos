@@ -1,0 +1,52 @@
+ZXASCII
+AUTO -1
+PROG /demos/3D/boxes
+CHANGED FALSE
+10 def proc box(x,y,z,w,l,h):
+    xw=x-w,wx=x+w,yh=y-h,hy=y+h,zl=z-l,lz=l+z:
+    proc proj(xw,yh,zl): plot p,q:    proc proj(wx,hy,zl): rectangle to p,q:
+    proc proj(wx,hy,lz): draw to p,q: proc proj(xw,yh,lz): rectangle to p,q:
+    proc proj(xw,yh,zl): draw to p,q: proc proj(xw,hy,zl): plot p,q:
+    proc proj(xw,hy,lz): draw to p,q: proc proj(wx,yh,zl): plot p,q:
+    proc proj(wx,yh,lz): draw to p,q:
+ end proc
+20 def proc proj(x,y,z):
+    p=scrw/2+x*d/(z+z0),q=scrh/2-y*d/(z+z0):
+ end proc
+30 paper 0: ink 15: over 8: cls: screen lock
+40 dim c$(3):
+ for g=1 to 3:
+    c$(g)="":
+    for f=1 to 4:
+       read a$:
+       c$(g)=c$(g)+a$:
+    next f:
+ next g
+50 d=300,z0=100,p,q,j=0,sz=8,f$="1213"
+60 do:
+    cls 0:
+    j+=1,cx=-8*sz,cy=8*sz,i=2:
+    for k=1 to 256:
+       if c$(val f$(((j/10) mod 4)+1),k)="1" then
+          for i=1 to 7:
+             ink 16-i:
+             proc box(cx+100*sin((i+j)*.05),cy,i*sz,sz/2,sz/2,sz/2):
+          next i
+70       cx+=sz:
+       if cx>=sz*8 then
+          cy-=sz,cx=-8*sz
+80    next k:
+    wait screen:
+ loop
+90 DATA "0000001111000000000000111100000000000111111000000000001101000000"
+100 DATA "0000001111100000000000111100000000000001100000000000001111000000"
+110 DATA "0000011111100000000001111110000000001111011100000000111110110000"
+120 DATA "0000001111000000000001110110000000000110111000000000011101110000"
+130 DATA "0000001111000000000000111100000000000111111000000000001101000000"
+140 DATA "0000001111100000000000111100000000000001100000000000001111000000"
+150 DATA "0000011011100000000001101110000000000110111000000000011101100000"
+160 DATA "0000001111000000000000011000000000000001100000000000000111000000"
+170 DATA "0000001111000000000000111100000000000111111000000000001101000000"
+180 DATA "0000001111100000000000111100000000000001100000000000001111000000"
+190 DATA "0000011111100000000011111111000000011111111110000001101111011000"
+200 DATA "0000001111100000000001110110100000001100001110000000111000110000"

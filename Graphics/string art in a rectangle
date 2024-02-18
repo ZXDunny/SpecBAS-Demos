@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/string art in a rectangle
+CHANGED FALSE
+10 PAPER 0: INK 12: CLS
+20 st=(scrw-1)/10:
+ for x=0 to scrw-1 step st:
+    for x1=0 to SCRW-1 step st:
+       draw x,0 to x1,scrh-1:
+    next x1:
+ next x

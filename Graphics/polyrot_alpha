@@ -1,18 +1,31 @@
 ZXASCII
 AUTO -1
-PROG polyrot_alpha
-10 LET npolys=50
-20 WINDOW DEPTH 0,32: DEGREES: PAPER 0: INK $FFFFFF00: CLS: SCREEN LOCK 
-30 DIM polys(npolys,7): FOR f=1 TO npolys: LET polys(f,1)=RND*SCRw: LET polys(f,2)=RND*SCRh: LET polys(f,3)=INT(RND*10)+3: LET polys(f,4)=(RND*100)+25
-40 LET pp=(128+RND*128 SHL 24)+(RND*255 SHL 16)+(RND*255 SHL 8)+RND*255: LET ik=($FF SHL 24)+(RND*255 SHL 16)+(RND*255 SHL 8)+RND*255
-50 LET polys(f,5)=pp: LET polys(f,6)=ik: LET polys(f,7)=RND*2+1
-60 NEXT f
-70 LET angle=0
-80 LET m=mSECS: FOR f=1 TO npolys
-90 LET ag=angle*polys(f,7): LET np=polys(f,3): DIM p(np,2): LET ar=360/np: FOR a=1 TO np: LET p(a,1)=SIN(ag+(a*ar))*polys(f,4)+polys(f,1): LET p(a,2)=COS(ag+(a*ar))*polys(f,4)+polys(f,2): NEXT a
-100 POLYGON ALPHA INK polys(f,5);p() FILL 
-110 INK polys(f,6): FOR a=1 TO np: LET x1=p(a,1): LET y1=p(a,2): FOR b=a TO np: LET x2=p(b,1): LET y2=p(b,2): DRAW ALPHA x1,y1 TO x2,y2: NEXT b: NEXT a
-120 NEXT f
-130 WAIT SCREEN : CLS: LET m=mSECS-m: INC angle,m/20: IF INKEY$="" THEN GO TO 80
-140 DO : LOOP UNTIL INKEY$=""
-150 RUN 
+PROG demos:graphics/polyrot_alpha
+CHANGED FALSE
+10 npolys=50,seed=msecs,angle=0,sc=scrw/800
+20 WINDOW DEPTH 0,32:
+ PAPER 0: screen lock
+30 m=mSECS:
+ FOR f=1 TO npolys:
+    randomize seed+f*f:
+    ag=angle*(RND*.04+.01)*(2*(RND<.5)-1),
+    np=INT(RND*10)+3,
+    pr=(rnd*100+25)*sc,px=rnd*scrw,py=rnd*scrh,
+    pik=RND*$FFFFFFFF|$80000000:
+    DIM p(np,2):
+    ar=tau/np:
+    FOR a=1 TO np:
+       p(a,1)=SIN(ag+(a*ar))*pr+px,
+       p(a,2)=COS(ag+(a*ar))*pr+py:
+    NEXT a:
+    POLYGON ALPHA INK pik;p() FILL:
+    INK RND*$FFFFFF|$FF000000:
+    FOR a=1 TO np;b=a TO np:
+       DRAW ALPHA p(a,1),p(a,2) TO p(b,1),p(b,2):
+    NEXT b;a:
+ NEXT f
+40 WAIT SCREEN : CLS:
+ m=mSECS-m,angle+=m/20:
+ IF INKEY$="" THEN GO TO 30
+50 DO : LOOP UNTIL INKEY$=""
+60 RUN

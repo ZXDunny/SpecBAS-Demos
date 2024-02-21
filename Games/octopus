@@ -2,11 +2,11 @@ ZXASCII
 AUTO -1
 PROG demos:games/octopus
 CHANGED FALSE
-10 a$="ê"+#20#1#0#0#0#34#20#0#0#0#0+"ç"
-20 b$="ç ê"
+10 a$="Þ"+#20#1#0#0#0#34#20#0#0#0#0+"¶"
+20 b$="¶¸Þ"
 30 k=INT(RND*(SCRw/2))+1
 40 l=INT(RND*(SCRh/2))+1
-50 c$="íªí"
+50 c$="àªà"
 60 g=INT(RND*(SCRw/2))
 70 h=INT(RND*(SCRh/2))+1
 80 GO TO 250

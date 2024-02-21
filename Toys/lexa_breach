@@ -3,7 +3,7 @@ AUTO -1
 PROG demos:toys/lexa_breach
 CHANGED FALSE
 10 REM Based on https://twitter.com/lexaloffle/status/1692955134228324736
-20 t=0: turns: origin 0,0 to 214,128: paper 0: over 8
+20 t=0: turns: origin 0,0 to 214,128: paper 0: over 8: screen lock
 25 for i=1 to 5:
    read r,g,b: palette i,r,g,b:
  next i:

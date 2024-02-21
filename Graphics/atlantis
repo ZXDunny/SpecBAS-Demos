@@ -3,7 +3,7 @@ AUTO -1
 PROG demos:graphics/atlantis
 CHANGED FALSE
 10 REM Atlantis, Originally by Tiffany Rayside
-20 screen lock:cls 0:
+20 screen lock: cls 0:
  window origin 0,-scrw/2,-scrh/2 to scrw/2,scrh/2:
  FOR f=0 TO 255:
     PALETTE f,f,f,64+(f*.75):

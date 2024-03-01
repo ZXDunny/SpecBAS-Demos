@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/swizzle
+CHANGED FALSE
+10 sw=scrw/2,sh=scrh/2,ar=scrw/scrh:
+ FOR y=0 TO scrh-1:
+    FOR x=0 TO scrw-1:
+       u=(x/sw-1)*ar,v=y/sh-1,
+       i=1-SQR(u*u+v*v),
+       i=-i*(i>0),
+       t=4*i*i*SIN i,
+       f=20*(u*cos t-v*sin t):
+       PLOT inverse f-int f;x,y
+20    NEXT x:
+ next y

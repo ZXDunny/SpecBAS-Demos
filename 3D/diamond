@@ -1,11 +1,11 @@
 ZXASCII
 AUTO -1
-PROG /demos/3D/diamond
+PROG demos:3d/diamond
 CHANGED FALSE
 10 origin flip:
  t=0,m=400,p6=pi/6:
  window depth 0,32:
- paper 0: ink $4080FFFF:
+ paper $808080: ink $4080FFFF: screen lock:
  dim ik=$200000FF,$2000FFFF;p(12,2)
 20 cls:
  t=(t+0.01):

@@ -3,6 +3,16 @@ AUTO -1
 PROG demos:text/big_font
 CHANGED FALSE
 10 REM Big text using block graphics
-20 INPUT "Give me some text: ";a$: fb=FONTBANK,w=FONTw/2
-30 FOR k=0 TO LEN a$-1: addr=CODE a$(k+1)*FONTw*FONTh
-40 FOR i=0 TO (FONTh/2)-1: FOR j=0 TO (FONTw/2)-1: PRINT AT i,j+k*w;CHR$(128+(PEEK(fb,addr)*2)+PEEK(fb,addr+1)+(PEEK(fb,addr+FONTw)*8)+(PEEK(fb,addr+FONTw+1)*4)): addr+=2: NEXT j: addr+=FONTw: NEXT i: NEXT k
+20 ink 0: paper 8: cls:
+ INPUT "Give me some text: ";a$: 
+ fb=FONTBANK,w=FONTw/2
+30 FOR k=0 TO LEN a$-1: 
+    addr=CODE a$(k+1)*FONTw*FONTh
+40    FOR i=0 TO (FONTh/2)-1: 
+       FOR j=0 TO (FONTw/2)-1: 
+          PRINT AT i,j+k*w;CHR$(128+(PEEK(fb,addr)*2)+PEEK(fb,addr+1)+(PEEK(fb,addr+FONTw)*8)+(PEEK(fb,addr+FONTw+1)*4)): 
+          addr+=2: 
+       NEXT j: 
+       addr+=FONTw: 
+    NEXT i: 
+ NEXT k

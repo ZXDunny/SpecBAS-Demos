@@ -3,7 +3,7 @@ AUTO -1
 PROG demos:misc/sincos relationship
 CHANGED FALSE
 10 rem SIN/COS relationship to circles
-20 s=.04: origin -400,-240 to 400,240: r=scrw/logw
+20 s=.04: origin -400,-240 to 400,240: r=scrw/logw,i=getopt "T_INK"
 30 for a=tau to 0 step -s
 40    cls: circle 0,0,50
 50    for x=0 to 315 step 1/r
@@ -12,7 +12,7 @@ CHANGED FALSE
 80    next x
 90    sa=sin a,ca=cos a
 100    polygon ink 6;0,0 to ca*50,sa*50 to ca*50,0 fill;
-            ink 0;0,0 to ca*50,sa*50 to ca*50,0
+            ink i;0,0 to ca*50,sa*50 to ca*50,0
 110    circle ca*50,sa*50,3 fill
 120    for x=-86 to 83 step 4/r:
        plot x,sa*50;ca*50,x:

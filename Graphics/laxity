@@ -1,0 +1,22 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/laxity
+CHANGED FALSE
+10 REM Based on a Commodore Amiga demonstration program by Laxity
+20 REM Converted to BBC BASIC by Richard Russell, 3rd March 2024.
+30 rem ported to SpecBAS by ZXDunny, 2024
+40 palette 1,255,160,0;2,0,255,255
+50 DIM x(697,2)
+60 j=4,k=2,z=0,sw=scrw/2,sh=scrh/2,sws=sh*.9
+70 do
+80    a=0
+90    FOR I=1 TO 697
+100       m=PI*(SIN(a+j)+COS(2*(a+=.009)+k))
+110       x(I,1)=sw+sws*SIN a*SIN(m+z)
+120       x(I,2)=sh+sws*COS a*COS m
+130    NEXT I
+140    cls 0: ink 1
+150    do 2: POLYGON x(): ORIGIN FLIP: ink 2: loop
+160    j+=0.008125,k+=0.0125,z+=0.0375
+170    wait screen
+180 LOOP

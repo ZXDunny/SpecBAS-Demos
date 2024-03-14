@@ -1,26 +1,28 @@
 ZXASCII
 AUTO -1
-PROG increment
+PROG demos:graphics/increment
+CHANGED FALSE
 1 REM Incrementally Linked
 2 REM  2019 Motus-Art
 3 rem https://instagram.com/motus_art
-10 paper 0: ink 15: cls
+10 paper 0: for i=1 to 255: palette hsv i,(i*1.4*3) mod 360,255,255: next i: cls
 20 cx=scrw/2,cy=scrh/2,phase=0,ml=10,
-	speed=.001/ml,elements=20*ml:
-	radians
+ speed=.001/ml,elements=20*ml,j=0:
+ radians
 30 cls:
-	for i=1 to elements:
-	   r=i*12/ml,
-				m=phase*(tau*(elements-i)),
-				x=cos m*r+cx,
-				y=sin m*r+cy:
-				circle x,y,3 fill:
-				if i>1 then
-				   draw lx,ly to x,y:
-				end if:
-				lx=x,ly=y:
-	next i:
-	phase+=speed:
-	wait screen:
-	GO To 30
-	
+ for i=1 to elements:
+    r=i*12/ml,
+    m=phase*(tau*(elements-i)),
+    x=cos m*r+cx,
+    y=sin m*r+cy:
+    ink ((i+j) mod 255)+1:
+    circle x,y,3 fill:
+    if i>1 then
+       draw lx,ly to x,y:
+    end if:
+    lx=x,ly=y:
+ next i:
+ phase+=speed,j+=1:
+ wait screen:
+ GO To 30
+

@@ -2,14 +2,14 @@ ZXASCII
 AUTO -1
 PROG demos:3d/globe_lines
 CHANGED FALSE
-10 u=scrw/2,v=scrh/2,r=scrh*0.4,d=TAU/24,e=.04,a,b,c=0
+10 u=scrw/2,v=scrh/2,r=scrh*0.4,d=TAU/24,e=.086,a,b,c=0
 20 a+=.02,b+=.017,c+=.025,
  s1=SIN a,s2=SIN b,s3=SIN c,
  c1=COS a,c2=COS b,c3=COS c,
  ax=c2*c3,ay=-c2*s3,az=s2,
  bx=c1*s3+s1*s2*c3,by=c1*c3-s1*s2*s3,bz=-s1*c2,
  cx=s1*s3-c1*s2*c3,cy=s1*c3+c1*s2*s3,cz=c1*c2
-30 cls 8: CIRCLE ink 1;u,v,r fill: ink 15: screen lock
+30 CLS: CIRCLE INK 0;u,v,r FILL: INK 8: SCREEN LOCK
 40 FOR l=0 TO pi-d STEP d:
     f1=0:
     FOR p=0 TO tau STEP e:

@@ -1,0 +1,16 @@
+ZXASCII
+AUTO -1
+PROG /demos/3D/fn_z
+CHANGED FALSE
+10 DEF FN Z(X,Y)=100*X^.5*Y/((Y+1)^2+30)*SIN(.08*((X^2+Y^2)^.5))
+20 cls 0:
+ FOR X=-300 TO 300 STEP 6:
+    FOR Y=-300 TO 300 STEP 2:
+       Z=fn Z(ABS X,ABS Y),
+       NY=-Y+X*.5+290,NZ=Z+X*.7+190:
+       draw ink 0;NY,NZ to NY,480
+30       IF Y>-300 THEN
+          draw ink ABS Z*31/80+1;NY,NZ to PY,PZ
+40       PY=NY,PZ=NZ:
+    NEXT Y:
+ NEXT X

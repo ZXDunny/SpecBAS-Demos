@@ -1,24 +1,24 @@
 ZXASCII
 AUTO -1
-PROG /demos/Graphics/sines
+PROG demos:graphics/sines
 CHANGED FALSE
-10 WINDOW DEPTH 0,32: CLS $404040
+10 paper 232: cls: screen lock
 20 def fn x=190+60*a+28*SIN ((a+1)*i)
 30 def fn y=30+60*b-28*COS ((b+1)*i)
 40 FOR a=0 TO 7;b=0 TO 7:
-	   ink HSVTORGB(((a+b)/2)*51,128,192):
-	   for i=0 TO 2*PI STEP .004:
-       PLOT fn x,fn y:
+    c=a+b*8:
+    palette c,HSVTORGB(((a+b)/2)*51,128,192):
+    for i=0 TO 2*PI STEP .004:
+       PLOT ink c;fn x,fn y:
     next i:
-	next b;a
-50 WINDOW NEW w,0,0,SCRw,SCRh TRANS 0: ink 15
+ next b;a
+50 WINDOW NEW w,0,0,SCRw,SCRh TRANS 128: ink 255
 60 i=0:
-	do:
-	   FOR a=0 TO 7;b=0 TO 7:
+ do:
+    FOR a=0 TO 7;b=0 TO 7:
        circle fn x,fn y,3 fill:
     next b;a:
-	   i+=.02:
-	   wait screen:
-	   cls 0:
-	loop
-	
+    i+=.01:
+    wait screen:
+    cls 128:
+ loop

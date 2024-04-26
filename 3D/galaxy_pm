@@ -1,0 +1,16 @@
+ZXASCII
+AUTO -1
+PROG /demos/3D/galaxy_pm
+CHANGED FALSE
+10 tm=msecs: PAPER 0: INK 15: origin 0,0 to 256,176 flip: CLS
+20 FOR I=0 TO 8E4
+30 LET S=-LN RND
+40 LET T=S*200: LET U=S*20*SIN T: LET V=S*25*COS T: LET P=S*3
+50 LET c=COS P: LET s=SIN P
+60 LET X=U*c+V*s: LET Y=-U*s+V*c: LET R=X*X+Y*Y
+70 LET Z=40*EXP (-R/1E3)*(RND-.5)
+80 LET Y=Y+Z+RND*5: LET X=X-Z*.7+RND*5
+90 LET x=X*1.4+Y*.6: LET y=X*.2+Y*.8
+100 PLOT 128+x,87+y
+110 NEXT I
+120 print at 0,0;"Time: ";(msecs-tm)/1000;" seconds"

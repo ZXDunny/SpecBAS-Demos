@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG demos:3d/cities
+CHANGED FALSE
+10 rad=125,dr=180/pi,a,r=pi*1.5:
+ stream new s,"demos:3d/citydata.txt":
+ dim p(7342,5):
+ for f=1 to 7342:
+    stream read line s,a$:
+    p=pos(",",a$),lat=val a$( to p-1)/dr,
+    p2=pos(",",a$,p+1),lon=-val a$(p+1 to p2-1)/dr,
+    pp=abs val a$(p2+1 to )/35676000,
+    cl=cos lat,sl=sin lat,c=rad*(1/sqr(cl^2+sl^2)),
+    p(f,1)=c*cl*cos lon,p(f,2)=c*cl*sin lon,p(f,3)=c*sl,
+    p(f,4)=min(pp*16384,255)+48,p(f,5)=1.2:
+ next f:
+ stream close s
+
+20 paper 0: rainbow 0 to 255
+
+30 cls:
+ PROJECT3D p() TO pts() ROTATE -r,a,0:
+ plot pts():
+ a+=.01:
+ WAIT SCREEN:
+ GO To 30

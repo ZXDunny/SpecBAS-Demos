@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/spiky_snake
+CHANGED FALSE
+10 paper 0: CLS:
+ PALETTE 0,$808080;HSV 1,0,255,255;HSV 255,359,255,255:
+ RAINBOW HSV 1 TO 255
+20 move 0,150
+30 for i=1 to scrw step .5:
+    y=cos(i*.017):
+    move to i,200+y*50:
+    rotate 15:
+    draw ink i;50:
+ next i

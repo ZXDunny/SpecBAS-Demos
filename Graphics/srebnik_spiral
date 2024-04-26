@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/srebnik_spiral
+CHANGED FALSE
+10 degrees: b=0
+20 for a=0 to 1440 step 3
+30 a2=a+b mod 32: w=(a2/60)*cos(a2*5.5)
+40 rotate to a
+50 move to scrw/2,scrh/2
+60 move (3+a/8)-w/2
+70 draw w
+80 next a
+90 wait screen
+100 b+=1: CLS: GO To 20

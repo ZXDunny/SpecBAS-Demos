@@ -1,0 +1,31 @@
+ZXASCII
+AUTO -1
+PROG /demos/Fractals/flower of life
+CHANGED FALSE
+10 paper 0: cls: ink 143:
+ dim p=((.866,.5),(.866,-.5),(0,-1),(-.866,-.5),(-.866,.5),(0,1),(.866,.5)):
+ cx=scrw/2,cy=scrh/2,r=scrh/3.75,a=pi/3
+20 for c=1 to 6:
+    vx=cx+r*p(c,1),vy=cy+r*p(c,2),
+    wx=(vx+cx+r*p(c+1,1))/2,wy=(vy+cy+r*p(c+1,2))/2:
+    proc flower(vx,vy,r/2):
+    proc flower(wx,wy,r/2):
+ next c:
+ proc flower(cx,cy,r/2)
+30 ink 14:
+ r*=1.5,b=tau/36:
+ for i=0 to 35:
+    x1=cx+r*cos(i*b),y1=cy+r*sin(i*b),
+    x2=cx+r*cos(i*b+b),y2=cy+r*sin(i*b+b):
+    draw x1,y1 to x2,y2,a:
+    draw x1,y1 to x2,y2,-a:
+ next i
+40 def proc flower(xc,yc,r):
+    i=.524:
+    do 6:
+       xa=r*cos i+xc,ya=r*sin i+yc,i+=a,
+       xb=r*cos i+xc,yb=r*sin i+yc:
+       draw xa,ya to xb,yb,a;xa,ya to xb,yb,-a;
+            xa,ya to xc,yc,a;xa,ya to xc,yc,-a:
+    loop:
+ end proc

@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/butterfly_curve
+CHANGED FALSE
+10 const e=2.71828182845905
+20 xc=scrw/2,yc=scrh/2,sc=50
+30 def fn s(x)=(10*sin x-5*sin(3*x)+sin(5*x))/16
+40 for a=0 to 600 step .01
+50    r=(e^sin a-2*cos(4*a)+fn s((2*a-pi)/24))*sc
+60    x=xc+cos a*r,y=yc-sin a*r
+70    plot x,y
+80 next a

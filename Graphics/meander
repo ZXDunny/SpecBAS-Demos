@@ -1,0 +1,22 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/meander
+CHANGED FALSE
+10 s=2,n=2,c=$20 shl 24:
+ window depth 0,32:
+ screen lock
+
+20 rectangle alpha ink c;0,0 to scrw,scrh fill:
+ t=msecs/5000,t2=t*500,m=4000,ns=m/n:
+ do n:
+    x=scrw/2,y=scrh/2:
+    for i=m to m-ns step -1:
+       d=PI/2*int(8*sin(9*(i/200+t|i/10+t))),
+       x+=cos d,y+=sin d:
+       d=hsvtorgb(((i+t2)/8) mod 360,255,255):
+       circle ink d;x,y,s;scrw-x,y,s;x,scrh-y,s;scrw-x,scrh-y,s:
+    next i:
+    m-=ns:
+ loop:
+ wait screen:
+ GO To 20

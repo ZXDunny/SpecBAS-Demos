@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/inkdrops
+CHANGED FALSE
+10 PALETTE 255,$808080:
+ PAPER 255: over 9: CLS:
+ rainbow 0 to 255:
+20 dc=50,s=scrw/800,r=50*s,cr=256/r:
+ DIM d(dc,3):
+30 FOR a=1 TO dc:
+    IF d(a,3)>1 THEN
+       CIRCLE INK (r-d(a,3))*cr;d(a,1),d(a,2),r-(d(a,3)-=s) fill
+    ELSE
+       d(a,1)=RND*SCRw,d(a,2)=RND*SCRh,d(a,3)=iif(d(a,3)=0,rnd*r,r)
+40 NEXT a:
+ WAIT SCREEN:
+ rectangle ink 1;over 12;0,0 to scrw,scrh fill:
+ GO TO 30

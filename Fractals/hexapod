@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/hexapod
+CHANGED FALSE
+10 REM ** HEXAPOD **
+20 PALETTE 0,0;1,0,255,0;30,0,23,0;31,0,32,0;255,0,32,0:
+ RAINBOW 1 TO 30;31 TO 255:
+ PAPER 0: ink 2: oVER 12
+30 dim XX=(0.98,-.15),YY=(.96,.24),XY=(-.97,.28),YX=(.9,.26),Y=(1.7,.44)
+40 paper 0: cls
+50 X,Y=0,SW=(SCRW/7)*5,SH=SCRH/2
+60 DO 750000
+70    F=(RND*100>86)+1
+80    X=XX(F)*X+XY(F)*Y
+90    Y=YX(F)*X+YY(F)*Y
+100    Y+=Y(F)
+110    plot SW+X*99.9,SH-Y*79.9
+120 LOOP

@@ -1,0 +1,16 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/lotus
+CHANGED FALSE
+10 PAPER 0: CLS 
+20 xc=SCRw/2,yc=SCRh/2,p2=pi/2,c=0
+30 for a=0 to tau step .00005
+40    r1=(1+((abs cos(3*a)+2*(.25-abs cos(3*a+p2)))/(2+8*abs cos(6*a+p2))))*50
+50    x1=xc+r1*cos a,y1=yc+r1*sin a
+60    r2=(2+((abs cos(3*a)+2*(.25-abs cos(3*a+p2)))/(2+8*abs cos(6*a+p2))))*50
+70    x2=xc+r2*cos a,y2=yc+r2*sin a
+80    r3=(3+((abs cos(6*a)+2*(.25-abs cos(6*a+p2)))/(2+8*abs cos(12*a+p2))))*50
+90    x3=xc+r3*cos a,y3=yc+r3*sin a
+100    draw ink 9;xc,yc to x1,y1;ink 10; to x2,y2;ink 12; to x3,y3
+110    c+=.0025: if c>1 then c=0: wait screen
+120 next a

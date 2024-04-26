@@ -1,6 +1,7 @@
 ZXASCII
 AUTO -1
-PROG namegen
+PROG demos:text/namegen
+CHANGED FALSE
 10 REM Fantasy Name Generator
 20 REM Translated from David Wheeler's script
 30 DEF FN r(m1,m2)=INT(RND*((m2-m1)+1))+m1
@@ -19,6 +20,8 @@ PROG namegen
 190 REM Display the name
 200 LET g$=g$+n$: LET isv=1-isv: NEXT i
 210 LET g$=UP$ g$(1)+g$(2 TO): PRINT g$
+220 pause 0
+230 run
 1000 REM Vowels and Vowel-Sounds
 1010 DATA "a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"a",7,"e",7,"i",7,"o",7,"u",7,"ae",7,"ai",7,"ao",7,"au",7,"aa",7,"ea",7,"eo",7,"eu",7,"ee",7,"eau",7,"ia",7,"io",7,"iu",7,"ii",7,"oa",7,"oe",7,"oi",7,"ou",7,"oo",7,"'",4,"y",7,"ay",7,"ay",7,"ei",7,"ei",7,"ei",7,"ua",7,"ua",7,"$$",-1
 1020 REM Consonants and compounds

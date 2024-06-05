@@ -1,0 +1,12 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/sinywavy
+CHANGED FALSE
+10 INK 0: PAPER 14: origin 0,0 to 280,176: CLS :
+ FOR m=0 TO 279 step .35:
+    FOR n=1 TO 90 STEP (m+1)*.018:
+       LET y=n*SIN n:
+       PLOT m,87+y:
+    NEXT n: 
+ NEXT m: 
+ PAUSE 0

@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG /demos/3d/cylinder
+CHANGED FALSE
+10 REM Fake cylinder mapping
+
+20 GRAPHIC NEW tex LOAD "tesselate.png":
+ gw=gfxw tex,gh=gfxh tex:
+ palette copy tex,0,256 to 0:
+ paper rgbn(0):
+ cls:
+ screen lock
+
+30 r=scrh/3,xc=SCRw/2,yc=SCRh/2,xo=0,tvi=1/r/2:
+ do:
+    tv=0:
+    for y=yc-r to yc+r:
+       for x=-r+1 to r-1:
+          plot ink gpoint(tex,(xo+(acs(x/r)/tau)*gw) mod gw,tv*gh);x+xc,y:
+       next x:
+       tv+=tvi:
+    next y:
+    xo+=1,xo%=gw:
+    wait screen:
+    cls:
+ loop

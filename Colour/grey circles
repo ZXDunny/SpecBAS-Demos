@@ -1,0 +1,23 @@
+ZXASCII
+AUTO -1
+PROG /demos/Colour/grey circles
+CHANGED FALSE
+10 DIM c=9,10,12: rd=80,i=1 
+20 for y=0 to scrh-1:
+    draw ink c(int(y/2) mod 3+1);0,y to scrw,y:
+ next y
+ 
+30 for x=1 to int(scrw/rd)-1:
+    for y=1 to int(scrh/rd)-1:
+       proc circ(x*rd,y*rd,rd/2.25,c((i+=1) mod 3+1)):
+    next y:
+ next x
+ 
+100 def proc circ(x,y,r,c):
+    ink 7:
+    for y1=-r to r:
+       xw=sqr(r*r-y1*y1),y2=y+y1:
+       if point(0,y2)<>c then
+          draw x-xw,y2 to x+xw,y2
+110    next y1:
+ end proc

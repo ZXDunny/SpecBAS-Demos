@@ -1,8 +1,21 @@
 ZXASCII
 AUTO -1
-PROG roses
-10 REM Roses
-20 DEGREES: LET hn=12,hd=12,xs=SCRw/hd,ys=SCRh/hn,s=MIN(xs,ys)/2: FOR n=1 TO hn: FOR d=1 TO hd: LET xp=d*xs-(xs/2),yp=n*ys-(ys/2)
-30 g=GCD(n,d),nd=d/g,l=180*nd*(EVEN(n/g*nd)+1)
-40 LET k=n/d: FOR a=0 TO l: LET x=(s*COS(k*a)*COS a)+xp,y=(s*COS(k*a)*SIN a)+yp: IF a=0 THEN PLOT x,y ELSE DRAW TO x,y
-50 NEXT a: NEXT d: NEXT n
+PROG demos:graphics/roses
+CHANGED FALSE
+10 REM Maurer Roses
+20 PALETTE HSV 1,0,255,255;HSV 255,359,255,255:
+ RAINBOW HSV 1 TO 255: cls 0
+30 DEGREES:
+ hn=12,hd=12,xs=SCRw/hd,ys=SCRh/hn,s=MIN(xs,ys)/3,sz=5000:
+ for b=0 to sz:
+    FOR n=1 TO hn:
+       FOR d=1 TO hd:
+          xp=d*xs-(xs/2),yp=n*ys-(ys/2)
+40          g=GCD(n,d),nd=d/g,l=180*nd*(EVEN(n/g*nd)+1)
+50          k=n/d,a=b*l/sz:
+          x=s*COS(k*a)*COS a+xp,y=s*COS(k*a)*SIN a+yp:
+          plot ink n*d*1.77;x,y:
+60       NEXT d:
+    NEXT n:
+ NEXT b:
+ PAUSE 0

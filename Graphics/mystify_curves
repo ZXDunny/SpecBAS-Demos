@@ -2,19 +2,46 @@ ZXASCII
 AUTO -1
 PROG demos:graphics/mystify_curves
 CHANGED FALSE
-10 REM Line art
-20 IF INKEY$<>"" THEN GO TO 20
-30 CLS 0
-40 LET a=0: LET b=4: LET x1,y1,x2,y2,x3,y3=0: LET dx1,dy1,dx2,dy2,dx3,dy3=-1: LET maxx=SCRw: LET maxy=SCRh: LET rmod=(RND*.5)+.5: LET gmod=(RND*.5)+.5: LET bmod=(RND*.5)+.5: RANDOMIZE mSECS: LET nl=0
-50 FOR f=0 TO 127: PALETTE f,f*2*rmod,f*2*gmod,f*2*bmod: PALETTE f+128,(127-f)*2*rmod,(127-f)*2*gmod,(127-f)*2*bmod: NEXT f
-60 DO
-70 IF x1+dx1<0 OR x1+dx1>maxx OR y1+dy1<0 OR y1+dy1>maxy OR (dx1=0 AND dy1=0) THEN LET dx1=(RND*10)-5: LET dy1=(RND*10)-5: GO TO 70
-80 IF x2+dx2<0 OR x2+dx2>maxx OR y2+dy2<0 OR y2+dy2>maxy OR (dx2=0 AND dy2=0) THEN LET dx2=(RND*10)-5: LET dy2=(RND*10)-5: GO TO 80
-90 IF x3+dx3<0 OR x3+dx3>maxx OR y3+dy3<0 OR y3+dy3>maxy OR (dx3=0 AND dy3=0) THEN LET dx3=(RND*10)-5: LET dy3=(RND*10)-5: GO TO 90
-100 INC x1,dx1: INC y1,dy1: INC x2,dx2: INC y2,dy2: INC x3,dx3: INC y3,dy3: INC a,b
-110 IF a>250 THEN LET b=-b: LET a=254
-120 IF a<5 THEN LET b=-b: LET a=4
-130 INK a
-140 CURVE x1,y1 TO x2,y2 TO x3,y3,50: CURVE SCRw-x1,y1 TO SCRw-x2,y2 TO SCRw-x3,y3,50: CURVE x1,SCRh-y1 TO x2,SCRh-y2 TO x3,SCRh-y3,50: CURVE SCRw-x1,SCRh-y1 TO SCRw-x2,SCRh-y2 TO SCRw-x3,SCRh-y3,50
-150 INC nl: PALETTE SHL 1,1 TO 255: IF nl=4 THEN do 2:WAIT SCREEN: loop: LET nl=0
-160 IF INKEY$="" THEN LOOP ELSE RUN
+10 DEF FN r=INT(RND*5)*63.9
+20 paper 0: cls:
+ ba=1 SHL (INT(RND*2)+4),p,op=1:
+ DO:
+    PALETTE p,FN r,FN r,FN r:
+    RAINBOW op TO p:
+    op=p,p+=ba:
+ LOOP UNTIL p>=256:
+ PALETTE 255,rgb 1:
+ RAINBOW op TO 255
+30 dim p=((rnd*scrw,rnd*scrh,-1,-1),(rnd*scrw,rnd*scrh,-1,-1),(rnd*scrw,rnd*scrh,-1,-1)):
+ a=5,tl=450,x$,y$=""
+40 for i=1 to 3
+50    nx=p(i,1)+p(i,3),ny=p(i,2)+p(i,4):
+    if nx<0 or nx>scrw or ny<0 or ny>scrh then
+       p(i,3),p(i,4)=rnd*10-5:
+       GO To 50
+60    p(i,1)=nx,p(i,2)=ny:
+    x$=x$+dchr$ int nx,y$=y$+dchr$ int ny:
+ next i
+70 x1=int p(1,1),y1=int p(1,2),
+ x2=int p(2,1),y2=int p(2,2),
+ x3=int p(3,1),y3=int p(3,2):
+ ink a+=iif(a<255,1,-254): 
+ go SUb 90:
+ if len x$>tl*2 then
+    x1=dcode x$(1 to 2),y1=dcode y$(1 to 2),
+    x2=dcode x$(3 to 4),y2=dcode y$(3 to 4),
+    x3=dcode x$(5 to 6),y3=dcode y$(5 to 6),
+    x$=x$(7 to ),y$=y$(7 TO ):
+    INK 0: GO SUB 90
+80 palette shl 1,1 to 255:
+ wait screen:
+ if INKEY$="" THEN
+    GO To 40
+ ELSE
+    WAIT KEYUP:
+    run
+90 CURVE x1,y1 TO x2,y2 TO x3,y3,50;
+       SCRw-x1,y1 TO SCRw-x2,y2 TO SCRw-x3,y3,50;
+       x1,SCRh-y1 TO x2,SCRh-y2 TO x3,SCRh-y3,50;
+       SCRw-x1,SCRh-y1 TO SCRw-x2,SCRh-y2 TO SCRw-x3,SCRh-y3,50:
+ return

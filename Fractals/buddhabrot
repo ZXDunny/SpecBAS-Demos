@@ -1,11 +1,31 @@
 ZXASCII
 AUTO -1
-PROG buddhabrot
+PROG demos:fractals/buddhabrot
+CHANGED FALSE
 10 REM Buddha Brot - give it a while!
-20 FOR f=1 TO 255: PALETTE HSV f,((f/0.71)+192) MOD 360,255-f,MIN(f*2,255): NEXT f: LET sw=SCRw/2: LET sh=(SCRh/3)*2: LET sz=60*(sh/120)
-30 LET niter=1000: DIM real(niter+1) BASE 0: DIM imag(niter+1) BASE 0
-40 LET x=5*RND-2.5: LET y=4*RND-2: LET im,re,re2,im2,divert=0
-50 FOR iter=0 TO niter: LET im=2*re*im+x: LET re=re2-im2+y: LET real(iter)=re: LET imag(iter)=im: LET im2=im*im: LET re2=re*re: IF re2+im2>4 THEN GO TO 70 ELSE NEXT iter
+ 
+20 FOR f=1 TO 255: 
+    PALETTE HSV f,((f/0.71)+192) MOD 360,255-f,MIN(f*2,255): 
+ NEXT f: 
+ over 12: ink 1: cls 0:
+ sw=SCRw/2,sh=(SCRh/3)*2,sz=60*(sh/120)
+ 
+30 ni=1000: 
+ DIM r(ni),i(ni)
+ 
+40 x=5*RND-2.5,y=4*RND-2,im,re,re2,im2=0
+ 
+50 FOR iter=1 TO ni: 
+    im=2*re*im+x,
+    re=re2-im2+y,
+    r(iter)=re,
+    i(iter)=im,
+    im2=im*im,
+    re2=re*re: 
+    IF re2+im2>4 THEN 
+       FoR it=1 TO iter: 
+          plot i(it)*sz+sw,r(it)*sz+sh:
+       NEXT it: 
+    ELSE 
+       NEXT iter
 60 GO TO 40
-70 FOR it=0 TO iter: LET xs=(imag(it)*sz)+sw: LET ys=(real(it)*sz)+sh: LET pp=POINT(xs,ys): IF pp<255 THEN PLOT INK pp+1;xs,ys
-80 NEXT it: GO TO 40

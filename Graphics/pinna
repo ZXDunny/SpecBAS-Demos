@@ -1,0 +1,23 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/pinna
+CHANGED FALSE
+10 REM Pinna's illusory intertwining
+
+20 sw=scrw/2,sh=scrh/2,sc=logw/800
+30 ss=25*sc,s=ss*.35,a=15*pi/180
+40 dim d=((s,s),(-s,s),(-s,-s),(s,-s));p(4,2)
+
+50 for r=75*sc to 235*sc step 50*sc:
+    cnt=int(tau*r/ss/2)*2,
+    rc=cnt*ss/tau,a=-a:
+    for i=0 to cnt-1:
+       al=2*pi*i/cnt,aa=al+a,
+       bx=sw+sin al*rc,by=sh+cos al*rc:
+       for j=1 to 4:
+          p(j,1)=bx+(d(j,1)*cos-aa)-(d(j,2)*sin-aa),
+          p(j,2)=by+(d(j,1)*sin-aa)+(d(j,2)*cos-aa):
+       next j:
+       polygon ink (i&1)*15;p():
+    next i:
+ next r

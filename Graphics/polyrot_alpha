@@ -9,18 +9,18 @@ CHANGED FALSE
  FOR f=1 TO npolys:
     randomize seed+f*f:
     ag=angle*(RND*.04+.01)*(2*(RND<.5)-1),
-    np=INT(RND*10)+3,
-    pr=(rnd*100+25)*sc,px=rnd*scrw,py=rnd*scrh,
-    pik=RND*$FFFFFFFF|$80000000:
+    np=int(rnd*10)+3,
+    pr=(rnd*100+25)*sc,px=rnd*scrw,py=rnd*scrh:
+    ink RND*$FFFFFFFF|$80000000:
     DIM p(np,2):
     ar=tau/np:
     FOR a=1 TO np:
        p(a,1)=SIN(ag+(a*ar))*pr+px,
        p(a,2)=COS(ag+(a*ar))*pr+py:
     NEXT a:
-    POLYGON ALPHA INK pik;p() FILL:
-    INK RND*$FFFFFF|$FF000000:
-    FOR a=1 TO np;b=a TO np:
+    i=RND*$FFFFFF|$FF000000:
+    POLYGON ALPHA p() FILL;alpha ink i;p(): ink i:
+    FOR a=1 TO np-1;b=a+2 TO np:
        DRAW ALPHA p(a,1),p(a,2) TO p(b,1),p(b,2):
     NEXT b;a:
  NEXT f

@@ -1,6 +1,6 @@
 ZXASCII
 AUTO -1
-PROG /chip8
+PROG demos:toys/chip8
 CHANGED FALSE
 10 rem Chip-8 Interpreter
 
@@ -76,16 +76,17 @@ CHANGED FALSE
 2000 i=nnn: return
 2100 pc=nnn+regs(0): return
 2200 regs(x)=int(rnd*255) & nn: return
-2300 timer-=timer>0,
- df=1,cx=regs(x) & 63,cy=regs(y) & 31,regs(15)=0:
+2300 timer-=timer>0,df=1,cx=regs(x) & 63,cy=regs(y) & 31,fl=0:
  for a=0 to min(n-1,31-cy):
-    db=ram(i+a),bt=256:
+    db=ram((i+a) & 4095),bt=256:
     for dx=cx to min(cx+7,63):
-       j=db&(bt/=2)>0,disp(dx,cy)~=j,regs(15)|=not disp(dx,cy):
+       j=db&(bt/=2)>0,fl|=j and disp(dx,cy),disp(dx,cy)~=j:
     next dx:
     cy+=1:
  next a:
+ regs(15)=fl:
  return
+ 
 2400 pc+=2*(keys(regs(x)&15)<>IIF(nn=158,0,1)): RETURn
 2500 GO To 2501+nn
 2508 regs(x)=timer: return
@@ -107,12 +108,13 @@ CHANGED FALSE
 
 2522 timer=regs(x): return
 2525 stimer=regs(x): return
-2531 i+=regs(x),regs(15)=i>4095,i&=4095: return
+2531 i+=regs(x)&4095: return
 2542 i=$50+(regs(x) & 15)*5: return
 2552 a$=lpad$(str$(regs(x) & 255),"0",3),
- ram(i)=val a$(1),ram(i+1)=val a$(2),ram(i+2)=val a$(3): return
-2586 for n=0 to x: ram(i+n)=regs(n): next n: i+=x-1: return
-2602 for n=0 to x: regs(n)=ram(i+n): next n: i+=x-1: return
+ ram(i & 4095)=val a$(1),ram((i+1) & 4095)=val a$(2),ram((i+2) & 4095)=val a$(3): 
+ return
+2586 for n=0 to x: ram((i+n) & 4095)=regs(n): next n: i+=x-1: return
+2602 for n=0 to x: regs(n)=ram((i+n) & 4095): next n: i+=x-1: return
 2998 return
 
 2999 rem Keyboard scanning

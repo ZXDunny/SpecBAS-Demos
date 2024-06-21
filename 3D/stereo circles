@@ -1,0 +1,25 @@
+ZXASCII
+AUTO -1
+PROG /demos/3D/stereo circles
+CHANGED FALSE
+10 paper 0: ink 15: stroke 2: cls
+20 mi=0,gx=0:
+ for f=1 to 3:
+    read maxr,minr,xo,yo,xc,yc:
+    rst=(maxr-minr)/4,
+    xs=int(((scrw-xo*2)-maxr*2)/xc),
+    ys=int(((scrh-yo*2)-maxr*2)/yc):
+    if f=1 then
+       gx=(scrw-(xs*xc))/2,gy=(scrh-(ys*yc))/4
+30    for c=1 to xc:
+       for r=1 to yc:
+          x=gx+xo+maxr+xs*(c-1),y=gy+yo-maxr+ys*r,i=mi:
+          for rr=maxr to minr step -rst:
+             circle ink i+=1;x,y,rr:
+          next rr:
+       next r:
+    next c:
+    mi+=5:
+ next f
+ 
+40 data 35,10,15,15,8,4, 30,10,50,0,7,3, 30,10,10,10,7,5

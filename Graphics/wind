@@ -4,22 +4,22 @@ PROG demos:graphics/wind
 CHANGED FALSE
 10 REM Wind by Tiffany Rayside
 20 for f=0 to 255:
-	   palette f,f,f,f:
-	next f:
-	ink 8: over 2: screen lock
+    palette f,f,f,f:
+ next f:
+ ink 8: over 12: screen lock
 30 t=0,h=scrh/2
 40 a=33,b=52*sin(t/2400):
-	do:
-	cls:
-	for i=-60 to 59:
-	   plot 0,h:
-				for j=0 to scrw-1 step 10:
-				   x=9*sin(i/9)+j+.008*j*j,
-				   y=h+j/2*sin(j/50-t/50-i/118)+(i*sin(t/190))*sin(j/25-(i+t)/65):
-							draw to x,y:
-							plot ink max(point(x,y)-8,0);over 0;x,y:
-				next j:
-	next i:
-	t+=5:
-	wait screen:
-	loop
+ do:
+ cls:
+ for i=-60 to 59:
+    plot 0,h:
+    for j=0 to scrw-1 step 10:
+       x=9*sin(i/9)+j+.008*j*j,
+       y=h+j/2*sin(j/50-t/50-i/118)+(i*sin(t/190))*sin(j/25-(i+t)/65):
+       draw to x,y:
+       plot ink max(point(x,y)-8,0);over 8;x,y:
+    next j:
+ next i:
+ t+=5:
+ wait screen:
+ loop

@@ -2,15 +2,17 @@ ZXASCII
 AUTO -1
 PROG demos:graphics/timestables
 CHANGED FALSE
-10 degrees: paper 0: window depth 0,32:
- r=SCRh/2.25,rs=r*2+1,cx=SCRw/2,cy=SCRh/2,n=180,s=360/n
+10 degrees: paper 0: window depth 0,32: 
+ r=SCRh/2.25,rs=r*2+1,cx=SCRw/2,cy=SCRh/2,n=180,s=360/n,st=3
 20 t=1:
+ STroke st:
  DO:
     rectangle alpha ink $40000000;cx-r,cy-r,rs,rs fill:
     for i=1 to n:
        a1=s*i,a2=s*i*t,ik=hsvtorgb(s*i,255,255)+$80000000:
        draw alpha ink ik;cx+sin a1*r,cy+cos a1*r to cx+sin a2*r,cy+cos a2*r:
     next i:
+    circle ink 0;cx,cy,r+st-1:
     t+=.005:
     wait screen:
  loop

@@ -11,7 +11,8 @@ CHANGED FALSE
        key_s,key_d,key_z,key_c,
        key_4,key_r,key_f,key_v:
  pc,i,timer,stimer,df,ks=0,stack$="",rs=10*scrw/800,
- xo=(scrw-64*rs)/2,yo=(scrh-32*rs)/2
+ xo=(scrw-64*rs)/2,yo=(scrh-32*rs)/2,
+ OpsPerFrame=45
 
 30 for n=80 to 159:
     read ram(n):
@@ -28,7 +29,7 @@ CHANGED FALSE
 50 rem Main loop
 
 60 GO SUb 3000:
- do 500:
+ do OpsPerFrame:
     cil=ram(pc & 4095),pc+=1,
     ci=cil*256+ram(pc & 4095),pc+=1:
     v=ci shr 12,
@@ -39,26 +40,23 @@ CHANGED FALSE
 
 70 rem end of frame
 
-80 timer-=timer>0,stimer-=stimer>0:
- if stimer>0 then beep 1/60,0 async
-90 IF df THEN GO SUb 5000
-100 WAIT SCREEN:
- GO TO 50
+80 GO SUb 6000
+100 GO TO 50
 
 900 rem Opcode handlers. Do not RENUMBER beyond this point!
 
 1008 rem 00E0
 1010 if ci=$E0 then clear disp(): df=1
- 
+
 1019 rem 00EE
-1020 if ci=$EE then pc=DCODE stack$(1 to 2): 
+1020 if ci=$EE then pc=DCODE stack$(1 to 2):
  stack$=stack$(3 to )
 1090 return
 
 1099 rem 1nnn
 1100 pc=nnn:
  return
- 
+
 1199 rem 2nnn
 1200 stack$=dchr$ pc+stack$:
  pc=nnn:
@@ -143,7 +141,7 @@ CHANGED FALSE
  return
 
 2299 rem Dxyn
-2300 timer-=timer>0,
+2300 GO SUb 6000:
  df=1,
  cx=regs(x) & 63,
  cy=regs(y) & 31,fl=0:
@@ -160,10 +158,10 @@ CHANGED FALSE
  return
 
 2399 rem Ex9E,ExA1
-2400 pc+=2*(keys(regs(x)&15)<>IIF(nn=158,0,1)):
+2400 pc+=2*(keys(regs(x)&15)=(nn=158)):
  RETURn
 
-2499 rem Fxnn 
+2499 rem Fxnn
 2500 GO To 2501+nn
 
 2507 rem Fx07
@@ -246,3 +244,10 @@ CHANGED FALSE
  next xx:
  df=1:
  return
+
+5999 rem Handle end of frame
+
+6000 timer-=timer>0,stimer-=stimer>0:
+ if stimer>0 then beep 1/60,0 async
+6010 IF df THEN GO SUb 5000
+6020 wait screen: return

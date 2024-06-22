@@ -47,85 +47,102 @@ CHANGED FALSE
 
 900 rem Opcode handlers. Do not RENUMBER beyond this point!
 
+1008 rem 00E0
 1010 if ci=$E0 then clear disp(): df=1
-1020 if ci=$EE then pc=DCODE stack$(1 to 2): stack$=stack$(3 to )
-1099 return
+ 
+1019 rem 00EE
+1020 if ci=$EE then pc=DCODE stack$(1 to 2): 
+ stack$=stack$(3 to )
+1090 return
 
+1099 rem 1nnn
 1100 pc=nnn:
  return
+ 
+1199 rem 2nnn
 1200 stack$=dchr$ pc+stack$:
  pc=nnn:
  return
 
+1299 rem 3xnn
 1300 if regs(x)=nn then pc+=2
 1390 return
 
+1388 rem 4xnn
 1400 if regs(x)<>nn then pc+=2
 1490 return
 
+1499 rem 5xy0
 1500 if regs(x)=regs(y) then pc+=2
 1590 return
 
+1599 rem 6xnn
 1600 regs(x)=nn:
  return
 
+1699 rem 7xnn
 1700 regs(x)=regs(x)+nn & 255:
  return
 
 1800 GO To 1801+n: rem 8XYn
 
 1801 regs(x)=regs(y):
- return
+ return: rem 8xy0
 
 1802 regs(x)=regs(x) | regs(y),
  regs(15)=0:
- return
+ return: rem 8xy1
 
 1803 regs(x)=regs(x) & regs(y),
  regs(15)=0:
- return
+ return: rem 8xy2
 
 1804 regs(x)=regs(x) xor regs(y),
  regs(15)=0:
- return
+ return: rem 8xy3
 
 1805 regs(x)=regs(x)+regs(y),
  regs(15)=regs(x)>255,
  regs(x)&=255:
- return
+ return: rem 8xy4
 
 1806 fl=regs(x)>=regs(y),
  regs(x)-=regs(y),
  regs(x)&=255,
  regs(15)=fl:
- return
+ return: rem 8xy5
 
 1807 fl=regs(y) & 1,
  regs(x)=regs(y) shr 1,
  regs(15)=fl:
- return
+ return: rem 8xy6
 
 1808 fl=regs(y)>=regs(x),
  regs(x)=(regs(y)-regs(x))&255,
  regs(15)=fl:
- return
+ return: rem 8xy7
 
 1815 fl=(regs(y) & 128)>0,
  regs(x)=regs(y) shL 1 & 255,
  regs(15)=fl:
- return
+ return: rem 8xyE
 
+1899 rem 9xy0
 1900 if regs(x)<>regs(y) then pc+=2
 1990 return
 
+1999 rem Annn
 2000 i=nnn: return
 
+2099 rem Bnnn
 2100 pc=nnn+regs(0):
  return
 
+2199 rem Cxnn
 2200 regs(x)=int(rnd*255) & nn:
  return
 
+2299 rem Dxyn
 2300 timer-=timer>0,
  df=1,
  cx=regs(x) & 63,
@@ -142,14 +159,18 @@ CHANGED FALSE
  regs(15)=fl:
  return
 
+2399 rem Ex9E,ExA1
 2400 pc+=2*(keys(regs(x)&15)<>IIF(nn=158,0,1)):
  RETURn
 
+2499 rem Fxnn 
 2500 GO To 2501+nn
 
+2507 rem Fx07
 2508 regs(x)=timer:
  return
 
+2510 rem Fx0A
 2511 pc-=2:
  if ks=0 then ks=1
 2512 if ks=1 then
@@ -165,30 +186,37 @@ CHANGED FALSE
     pc+=2
 2520 return
 
+2521 rem Fx15
 2522 timer=regs(x):
  return
 
+2524 rem Fx18
 2525 stimer=regs(x):
  return
 
+2530 rem Fx1E
 2531 i+=regs(x)&4095:
  return
 
+2541 rem Fx29
 2542 i=$50+(regs(x) & 15)*5:
  return
 
+2551 rem Fx33
 2552 a$=lpad$(str$(regs(x) & 255),"0",3),
  ram(i & 4095)=val a$(1),
  ram((i+1) & 4095)=val a$(2),
  ram((i+2) & 4095)=val a$(3):
  return
 
+2585 rem Fx55
 2586 for n=0 to x:
     ram((i+n) & 4095)=regs(n):
  next n:
  i+=x-1:
  return
 
+2601 rem Fx65
 2602 for n=0 to x:
     regs(n)=ram((i+n) & 4095):
  next n:

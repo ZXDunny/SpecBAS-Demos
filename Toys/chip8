@@ -23,8 +23,7 @@ CHANGED FALSE
       $F0,$80,$80,$80,$F0,$E0,$90,$90,$90,$E0,$F0,$80,$F0,$80,$F0,$F0,$80,$F0,$80,$80
 
 40 paper 230: palette 1,$FFFFFF: cls:
- GO SUb 4000:
- pc=512,cc=-1,nf=fn nf
+ GO SUb 4000
 
 50 rem Main loop
 60 do:
@@ -33,7 +32,7 @@ CHANGED FALSE
     v=ci shr 12,
     x=ci shr 8 & 15,y=ci shr 4 & 15,
     n=ci & 15,nn=ci & 255,nnn=ci & 4095:
-    cycles=40+28*((cil & $F0)>0): 
+    cycles=40+28*((cil & $F0)>0):
     GO SUb 7000:
     GO SUb 1000+v*100:
  loop
@@ -180,12 +179,12 @@ CHANGED FALSE
  cy=regs(y) & 31,fl=0,bo=cx & 7,
  pcycles=68+n*(46+20*bo),cycles=nf-mc,
  lc=max(pcycles-cycles,0)
- 
+
 2310 GO SUb 7000:
- if lc>0 then 
+ if lc>0 then
     lc-=iif(lc>nf-mc,nf-mc,lc),cycles=nf-mc:
     GO To 2310
- 
+
 2320 cycles=26:
  for a=0 to min(n-1,31-cy):
     db=ram((i+a) & 4095),bt=256,c(0),c(1)=0:
@@ -201,7 +200,7 @@ CHANGED FALSE
  next a:
  regs(15)=fl,df=1:
  GO To 7000
- 
+
 2399 rem Ex9E,ExA1
 2400 ofs=2*(keys(regs(x)&15)=(nn=158)),
  cycles=14+2*ofs,
@@ -295,8 +294,7 @@ CHANGED FALSE
 4020 for f=0 to banklen rom-1:
     ram(512+f)=peek(rom,f):
  next f
-4030 mc=3250:
- nf=fn nf:
+4030 mc=3250,pc=512,nf=fn nf:
  return
 
 4999 rem Update display
@@ -324,4 +322,4 @@ CHANGED FALSE
     mc+=1832+((stimer<>0)*4)+((timer<>0)*8),
     nf=fn nf
 7010 return
- 
+

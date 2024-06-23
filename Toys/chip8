@@ -4,15 +4,15 @@ PROG demos:toys/chip8
 CHANGED FALSE
 10 rem Chip-8 Interpreter
 
-20 option "BASE",0:
- dim ram(4096);regs(16);disp(64,32);keys(16);
+20 def fn nf=((mc+2572) div 3668)*3668+1096:
+ option "BASE",0:
+ dim ram(4096);regs(16);disp(64,32);keys(16);c(2);
      k=key_x,key_1,key_2,key_3,
        key_q,key_w,key_e,key_a,
        key_s,key_d,key_z,key_c,
        key_4,key_r,key_f,key_v:
  pc,i,timer,stimer,df,ks=0,stack$="",rs=10*scrw/800,
- xo=(scrw-64*rs)/2,yo=(scrh-32*rs)/2,
- OpsPerFrame=45
+ xo=(scrw-64*rs)/2,yo=(scrh-32*rs)/2
 
 30 for n=80 to 159:
     read ram(n):
@@ -22,154 +22,204 @@ CHANGED FALSE
       $F0,$90,$F0,$90,$F0,$F0,$90,$F0,$10,$F0,$F0,$90,$F0,$90,$90,$E0,$90,$E0,$90,$E0,
       $F0,$80,$80,$80,$F0,$E0,$90,$90,$90,$E0,$F0,$80,$F0,$80,$F0,$F0,$80,$F0,$80,$80
 
-40 paper 230: palette 1,$FFFFFF: cls: screen lock:
+40 paper 230: palette 1,$FFFFFF: cls:
  GO SUb 4000:
- pc=512,cc=-1
+ pc=512,cc=-1,nf=fn nf
 
 50 rem Main loop
-
-60 GO SUb 3000:
- do OpsPerFrame:
+60 do:
     cil=ram(pc & 4095),pc+=1,
     ci=cil*256+ram(pc & 4095),pc+=1:
     v=ci shr 12,
     x=ci shr 8 & 15,y=ci shr 4 & 15,
     n=ci & 15,nn=ci & 255,nnn=ci & 4095:
+    cycles=40+28*((cil & $F0)>0): 
+    GO SUb 7000:
     GO SUb 1000+v*100:
  loop
-
-70 rem end of frame
-
-80 GO SUb 6000
-100 GO TO 50
 
 900 rem Opcode handlers. Do not RENUMBER beyond this point!
 
 1008 rem 00E0
-1010 if ci=$E0 then clear disp(): df=1
+1010 IF ci=$E0 THEN
+    CLEAR disp():
+    df=1,cycles=3078:
+    GO To 7000
 
 1019 rem 00EE
-1020 if ci=$EE then pc=DCODE stack$(1 to 2):
- stack$=stack$(3 to )
+1020 if ci=$EE then
+    pc=DCODE stack$(1 to 2):
+    stack$=stack$(3 to ):
+    cycles=10:
+    GO To 7000
 1090 return
 
 1099 rem 1nnn
 1100 pc=nnn:
- return
+ cycles=12:
+ GO To 7000
 
 1199 rem 2nnn
 1200 stack$=dchr$ pc+stack$:
  pc=nnn:
- return
+ cycles=26:
+ GO To 7000
 
 1299 rem 3xnn
-1300 if regs(x)=nn then pc+=2
-1390 return
+1300 if regs(x)=nn then
+    pc+=2,
+    cycles=14
+ else
+    cycles=10
+1390 GO To 7000
 
 1388 rem 4xnn
-1400 if regs(x)<>nn then pc+=2
-1490 return
+1400 if regs(x)<>nn then
+    pc+=2,
+    cycles=14
+ else
+    cycles=10
+1490 GO To 7000
 
 1499 rem 5xy0
-1500 if regs(x)=regs(y) then pc+=2
-1590 return
+1500 if regs(x)=regs(y) then
+    pc+=2,
+    cycles=18
+ else
+    cycles=14
+1590 GO To 7000
 
 1599 rem 6xnn
 1600 regs(x)=nn:
- return
+ cycles=6:
+ GO To 7000
 
 1699 rem 7xnn
 1700 regs(x)=regs(x)+nn & 255:
- return
+ cycles=10:
+ GO To 7000
 
 1800 GO To 1801+n: rem 8XYn
 
 1801 regs(x)=regs(y):
- return: rem 8xy0
+ cycles=12:
+ GO to 7000: rem 8xy0
 
 1802 regs(x)=regs(x) | regs(y),
- regs(15)=0:
- return: rem 8xy1
+ regs(15)=0,
+ cycles=44:
+ GO to 7000: rem 8xy1
 
 1803 regs(x)=regs(x) & regs(y),
- regs(15)=0:
- return: rem 8xy2
+ regs(15)=0,
+ cycles=44:
+ GO to 7000: rem 8xy2
 
 1804 regs(x)=regs(x) xor regs(y),
- regs(15)=0:
- return: rem 8xy3
+ regs(15)=0,
+ cycles=44:
+ GO to 7000: rem 8xy3
 
 1805 regs(x)=regs(x)+regs(y),
  regs(15)=regs(x)>255,
- regs(x)&=255:
- return: rem 8xy4
+ regs(x)&=255,
+ cycles=44:
+ GO to 7000: rem 8xy4
 
 1806 fl=regs(x)>=regs(y),
  regs(x)-=regs(y),
  regs(x)&=255,
- regs(15)=fl:
- return: rem 8xy5
+ regs(15)=fl,
+ cycles=44:
+ GO to 7000: rem 8xy5
 
 1807 fl=regs(y) & 1,
  regs(x)=regs(y) shr 1,
- regs(15)=fl:
- return: rem 8xy6
+ regs(15)=fl,
+ cycles=44:
+ GO to 7000: rem 8xy6
 
 1808 fl=regs(y)>=regs(x),
- regs(x)=(regs(y)-regs(x))&255,
- regs(15)=fl:
- return: rem 8xy7
+ regs(x)=(regs(y)-regs(x)) & 255,
+ regs(15)=fl,
+ cycles=44:
+ GO to 7000: rem 8xy7
 
 1815 fl=(regs(y) & 128)>0,
  regs(x)=regs(y) shL 1 & 255,
- regs(15)=fl:
- return: rem 8xyE
+ regs(15)=fl,
+ cycles=44:
+ GO to 7000: rem 8xyE
 
 1899 rem 9xy0
-1900 if regs(x)<>regs(y) then pc+=2
-1990 return
+1900 if regs(x)<>regs(y) then
+    pc+=2,
+    cycles=18
+ else
+    cycles=14
+1990 GO To 7000
 
 1999 rem Annn
-2000 i=nnn: return
+2000 i=nnn,
+ cycles=12:
+ GO To 7000
 
 2099 rem Bnnn
-2100 pc=nnn+regs(0):
- return
+2100 t=nnn shr 8,
+ pc=nnn+regs(0),
+ cycles=22+2*((pc shr 8)<>t):
+ GO To 7000
 
 2199 rem Cxnn
-2200 regs(x)=int(rnd*255) & nn:
- return
+2200 regs(x)=int(rnd*255) & nn,
+ cycles=36:
+ GO To 7000:
 
 2299 rem Dxyn
-2300 GO SUb 6000:
- df=1,
- cx=regs(x) & 63,
- cy=regs(y) & 31,fl=0:
+2300 cx=regs(x) & 63,
+ cy=regs(y) & 31,fl=0,bo=cx & 7,
+ pcycles=68+n*(46+20*bo),cycles=nf-mc,
+ lc=max(pcycles-cycles,0)
+ 
+2310 GO SUb 7000:
+ if lc>0 then 
+    lc-=iif(lc>nf-mc,nf-mc,lc),cycles=nf-mc:
+    GO To 2310
+ 
+2320 cycles=26:
  for a=0 to min(n-1,31-cy):
-    db=ram((i+a) & 4095),bt=256:
+    db=ram((i+a) & 4095),bt=256,c(0),c(1)=0:
     for dx=cx to min(cx+7,63):
        j=db&(bt/=2)>0,
-       fl|=j and disp(dx,cy),
+       col=j and disp(dx,cy),fl|=col,
        disp(dx,cy)~=j:
-    next dx:
+       if col then
+          c((dx-cx+bo)>=8)=4
+2330    next dx:
     cy+=1:
+    cycles+=34+c(0)+c(1)+(16*(cx<56)):
  next a:
- regs(15)=fl:
- return
-
+ regs(15)=fl,df=1:
+ GO To 7000
+ 
 2399 rem Ex9E,ExA1
-2400 pc+=2*(keys(regs(x)&15)=(nn=158)):
- RETURn
+2400 ofs=2*(keys(regs(x)&15)=(nn=158)),
+ cycles=14+2*ofs,
+ pc+=ofs:
+ GO To 7000
 
 2499 rem Fxnn
-2500 GO To 2501+nn
+2500 cycles=4:
+ GO sub 7000:
+ GO TO 2501+nn
 
 2507 rem Fx07
-2508 regs(x)=timer:
- return
+2508 regs(x)=timer,
+ cycles=10:
+ GO To 7000
 
 2510 rem Fx0A
-2511 pc-=2:
+2511 pc-=2,cycles=nf-mc:
  if ks=0 then ks=1
 2512 if ks=1 then
     for f=0 to 15:
@@ -178,51 +228,63 @@ CHANGED FALSE
           ks=2
        end if:
     next f:
-    return
+    GO To 7000
 2513 if ks=2 and keys(regs(x))=0 then
-    ks=0:
-    pc+=2
-2520 return
+    ks=0,
+    pc+=2,
+    cycles=8
+2520 GO To 7000
 
 2521 rem Fx15
-2522 timer=regs(x):
- return
+2522 timer=regs(x),
+ cycles=6:
+ GO To 7000:
 
 2524 rem Fx18
-2525 stimer=regs(x):
- return
+2525 stimer=regs(x),
+ cycles=6:
+ GO To 7000
 
 2530 rem Fx1E
-2531 i+=regs(x)&4095:
- return
+2531 oi=i shr 8,i+=regs(x)&4095,
+ cycles=12+6*((i shr 8)<>oi):
+ GO To 7000
 
 2541 rem Fx29
-2542 i=$50+(regs(x) & 15)*5:
- return
+2542 i=$50+(regs(x) & 15)*5,
+ cycles=16:
+ GO To 7000
 
 2551 rem Fx33
-2552 a$=lpad$(str$(regs(x) & 255),"0",3),
- ram(i & 4095)=val a$(1),
- ram((i+1) & 4095)=val a$(2),
- ram((i+2) & 4095)=val a$(3):
- return
+2552 vv=regs(x) & 255,
+ v1=vv div 100,v2=(vv div 10) mod 10,v3=vv mod 10,
+ ram(i & 4095)=v1,
+ ram((i+1) & 4095)=v2,
+ ram((i+2) & 4095)=v3,
+ cycles=80+(v1+v2+v3)*16:
+ GO To 7000
 
 2585 rem Fx55
-2586 for n=0 to x:
+2586 cycles=14:
+ GO sub 7000:
+ for n=0 TO x:
     ram((i+n) & 4095)=regs(n):
+    GO SUb 7000:
  next n:
  i+=x-1:
  return
 
 2601 rem Fx65
-2602 for n=0 to x:
+2602 cycles=14:
+ GO sub 7000:
+ for n=0 TO x:
     regs(n)=ram((i+n) & 4095):
+    GO SUb 7000:
  next n:
  i+=x-1:
  return
 
 2999 rem Keyboard scanning
-
 3000 for f=0 to 15:
     keys(f)=keyst k(f):
  next f:
@@ -232,22 +294,34 @@ CHANGED FALSE
 4001 load "" bank new rom
 4020 for f=0 to banklen rom-1:
     ram(512+f)=peek(rom,f):
- next f:
+ next f
+4030 mc=3250:
+ nf=fn nf:
  return
 
 4999 rem Update display
-
 5000 for xx=0 to 63:
     for yy=0 to 31:
        rectangle ink disp(xx,yy);xx*rs+xo,yy*rs+yo,rs-1,rs-1 fill:
     next yy:
  next xx:
- df=1:
+ df=0:
  return
 
 5999 rem Handle end of frame
-
-6000 timer-=timer>0,stimer-=stimer>0:
- if stimer>0 then beep 1/60,0 async
+6000 wait screen:
+ timer-=timer>0,
+ stimer-=stimer>0:
+ if stimer>0 then beep 1/30,0 async
 6010 IF df THEN GO SUb 5000
-6020 wait screen: return
+6020 GO SUb 3000:
+ return
+
+6999 rem Add cycles to current count
+7000 mc+=cycles:
+ if mc>=nf then
+    GO SUb 6000:
+    mc+=1832+((stimer<>0)*4)+((timer<>0)*8),
+    nf=fn nf
+7010 return
+ 

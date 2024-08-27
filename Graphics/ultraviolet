@@ -4,7 +4,7 @@ PROG demos:graphics/ultraviolet
 CHANGED FALSE
 10 REM Ultraviolet
 20 RADIANS: PAPER 0: palette 0,0,0,64: stroke 2: CLS: SCREEN LOCK
-30 sz=50,ns=10,fr=.5,tr=20,dm=.25,tn=.98,ph=RND*PI*2,amp=85,frq=.015,ofs=285,md=1
+30 sz=50,ns=10,fr=.5,tr=20,dm=.25,tn=.98,ph=RND*tau,amp=85,frq=.015,ofs=285,md=1
 40 DIM sp(tr),fr(tr),nd(tr,sz,4):
  mx=MOUSEx,my=MOUSEy
 50 FOR i=1 TO tr:

@@ -1,0 +1,38 @@
+ZXASCII
+AUTO -1
+PROG /demos/toys/cityscape
+CHANGED FALSE
+10 rem Neon Nightscape inspired by Jason Anthony
+20 paper 0: ink 0: cls: ns=100,nb=50,a=rnd*3
+30 dim st(ns,3);b(nb,4)
+40 for f=1 to ns:
+    st(f,1)=rnd*scrw,st(f,2)=rnd*scrh,st(f,3)=rnd*255:
+ next f
+50 for f=1 to nb:
+    b(f,1)=(((scrw/nb)*(f+(rnd*10)-5)) div fontw)*fontw,
+    b(f,2)=((3+int(rnd*4))*fontw)+1,
+    b(f,3)=int((COS(MAP(f,1 to nb,-PI*a TO PI*a))+1)*(15+(rnd*10)-5))*fonth,
+    b(f,4)=int(rnd*15)+1:
+ next f
+60 mx=scrw*.8,my=scrh*.2
+ 
+70 cls
+80 for f=-pi to -pi*.7 step .05:
+    draw ink 15;mx,my to mx+20,my-20,f:
+ next f
+90 FOR f=1 TO ns: plot ink st(f,3);st(f,1),st(f,2): next f
+100 FOR f=1 TO nb: 
+    rectangle b(f,1),scrh-b(f,3),b(f,2),b(f,3) fill:
+    rectangle ink b(f,4);b(f,1),scrh-b(f,3),b(f,2),b(f,3):
+ next f
+
+110 for f=1 to 20:
+    n=1+int(rnd*ns):
+    st(n,3)=rnd*255:
+ next f
+120 n=1+int(rnd*nb):
+ b(n,4)=int(rnd*15)+1
+ 
+130 PAUSE 50: 
+ if inkey$="" THEN GO To 70 else run
+

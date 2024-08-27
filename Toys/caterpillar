@@ -1,0 +1,39 @@
+ZXASCII
+AUTO -1
+PROG demos:toys/caterpillar
+CHANGED FALSE
+10 rem Caterpillar 768P By Jason Anthony. 
+20 rem Updated by ZXDunny
+ 
+30 const x=0,y=1,c1=2,c2=3,c3=4,xd=5,yd=6
+40 segs=7: dim s(segs,7) base 0: mx=mousex,my=mousey
+50 for i=0 to segs-1: 
+    s(i,xd),s(i,yd)=1,s(i,c1)=2,s(i,c2)=4,s(i,c3)=6:
+ next i
+60 paper 0: ink 15: stroke 2
+70 do:
+    cls:
+    for i=0 to segs-1:
+       o=35+i*28:
+       for j=0 to 2:
+          circle ink s(i,c1+j);s(i,x)+o,s(i,y)+31,15-j*2:
+       next j:
+       s(i,x)+=s(i,xd),
+       s(i,y)+=s(i,yd)*(s(i,x)<-o+30 or s(i,x)>scrw-30-o)
+80       if s(i,x)=scrw-15-o or s(i,x)=-o+15 then s(i,xd)=-s(i,xd)
+90       for j=0 to 2:
+          if s(i,x)=scrw-15-o then
+             s(i,c1+j)+=iif(s(i,c1+j)<15,1,-13)
+100       next j
+110       if s(i,y)=scrh-65 or s(i,y)=-1 then 
+          s(i,yd)=-s(i,yd)
+120    next i:
+    sy=s(segs-1,y)+25:
+    if s(segs-1,xd)=1 then 
+       sx=s(segs-1,x)+219:
+       draw sx,sy to sx+28,sy-8;sx,sy+12 to sx+28,sy+20
+    else
+       sx=s(segs-1,x)+187:
+       draw sx,sy to sx-28,sy-8;sx,sy+12 to sx-28,sy+20
+130    wait screen:
+ loop until mousex<>mx or mousey<>my or inkey$<>""

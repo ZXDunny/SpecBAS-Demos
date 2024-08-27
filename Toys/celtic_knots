@@ -28,7 +28,7 @@ CHANGED FALSE
  font fnt:
  cm=1
 30 i=int(rnd*4)+12,p=int(rnd*4):
- paper p: ink i: cls 0:
+ paper p: ink i: cls 230:
  gw,gh=(int(rnd*9)+2)*2,
  cx=(scrw-gw*20)/2,cy=((scrh-gh*20)/2)-40:
  dim g(gw,gh),g$(gh):
@@ -83,14 +83,14 @@ CHANGED FALSE
     GO SUb 120:
     fill ink i-8;cx-4,cy+16
 80 font 1:
- print paper 0; ink 13+2*(1-cm);centre txth-4;"press c to toggle colour mode, p for new palette";ink 15; centre txth-3;"Press any other key for new knot":
+ print paper 230; ink 13+2*(1-cm);centre txth-4;"press c to toggle colour mode, p for new palette";ink 15; centre txth-3;"Press any other key for new knot":
  do:
     wait keydown:
     a$=inkey$:
     if a$="c" then
        cm=1-cm:
        GO To 70:
-    else 
+    else
        if a$="p" then
           i=int(rnd*4)+12,p=int(rnd*4):
           GO To 70:

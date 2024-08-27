@@ -1,17 +1,20 @@
 ZXASCII
 AUTO -1
-PROG sierpinski carpet
+PROG demos:fractals/sierpinski carpet
+CHANGED FALSE
 10 REM Sierpinski Carpet
 20 FOR x=-34 TO scrw-34:
     FOR y=124 TO scrh+124:
-       x1=x,y1=y
+       x1=x,y1=y,c=2
 30       IF abs x1 MOD 3<>1 or y1 MOD 3<>1 THEN
           x1=x1 DIV 3:
           y1=y1 DIV 3:
-       Else 
+          c+=1:
+       Else
           go to 40:
        end if:
        if x1>0 or y1>0 then
+          plot ink c;x+34,y-124:
           go to 30
        else
           PLOT x+34,y-124

@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG /demos/Text/c64pattern
+CHANGED FALSE
+10 REM Based on code by Jospi Kalebic
+20 paper 1: Ink 5
+30 c=0,tmp$="",p$="êëíì™ìíëê "
+40 c=c+.025
+50 For y=-29 To 30
+60    tmp$=""
+70    For x=-49 To 50
+80       m=(sqr(x*x+y*y)*c) mod 9
+90       tmp$=tmp$+p$(m+1)
+100    Next x
+110 Print at y+29,0;tmp$
+120 Next y
+130 wait screen
+140 GO TO 40

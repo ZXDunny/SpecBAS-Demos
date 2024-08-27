@@ -5,14 +5,17 @@ CHANGED FALSE
 10 rem Chip-8 Interpreter
 
 20 def fn nf=((mc+2572) div 3668)*3668+1096:
+ def fn rr(a)=iif(mode=chip8 and (a<0 or a>4095),0,ram(a & 4095)):
  option "BASE",0:
- dim ram(4096);regs(16);disp(64,32);keys(16);c(2);
+ dim ram(4096);regs(16);disp(128,64);keys(16);c(2);flst(16);
      k=key_x,key_1,key_2,key_3,
        key_q,key_w,key_e,key_a,
        key_s,key_d,key_z,key_c,
        key_4,key_r,key_f,key_v:
  pc,i,timer,stimer,df,ks=0,stack$="",rs=10*scrw/800,
- xo=(scrw-64*rs)/2,yo=(scrh-32*rs)/2
+ xo=(scrw-64*rs)/2,yo=(scrh-32*rs)/2,hires=0,csw=64,csh=32,
+ chip8=0,schip=1,schip2=2,
+ mode=chip8
 
 30 for n=80 to 159:
     read ram(n):
@@ -27,8 +30,8 @@ CHANGED FALSE
 
 50 rem Main loop
 60 do:
-    cil=ram(pc & 4095),pc+=1,
-    ci=cil*256+ram(pc & 4095),pc+=1:
+    cil=fn rr(pc),pc+=1,
+    ci=cil*256+fn rr(pc),pc+=1:
     v=ci shr 12,
     x=ci shr 8 & 15,y=ci shr 4 & 15,
     n=ci & 15,nn=ci & 255,nnn=ci & 4095:
@@ -37,20 +40,93 @@ CHANGED FALSE
     GO SUb 1000+v*100:
  loop
 
+70 def proc rw(a,v):
+    if mode=chip8 and a>0 and a<4096 then
+       ram(a)=v
+    else
+       ram(a & 4095)=v
+80 end proc
+
 900 rem Opcode handlers. Do not RENUMBER beyond this point!
 
-1008 rem 00E0
-1010 IF ci=$E0 THEN
+1000 rem 00Cn
+1010 if y=$C then
+    n=n shr ((mode<=schip) and not hires):
+    for y=csh-1 to n step -1:
+       for x=0 to csw-1:
+          disp(x,y)=disp(x,y-n):
+       next x:
+    next y:
+    for y=0 to n-1:
+       for x=0 to csw-1:
+          disp(x,y)=0:
+       next x:
+    next y:
+    return
+
+1019 rem 00E0
+1020 IF nnn=$E0 THEN
     CLEAR disp():
     df=1,cycles=3078:
     GO To 7000
 
-1019 rem 00EE
-1020 if ci=$EE then
+1029 rem 00EE
+1030 if nnn=$EE then
     pc=DCODE stack$(1 to 2):
     stack$=stack$(3 to ):
     cycles=10:
     GO To 7000
+
+1039 rem 00FB
+1040 if nnn=$FB then
+    w=4 shr ((mode<=schip) and not hires):
+    for y=0 to csh-1:
+       for x=csw-1 to w step -1:
+          disp(x,y)=disp(x-w,y):
+       next x:
+    next y:
+    for y=0 to csh-1:
+       for x=0 to w-1:
+          disp(x,y)=0:
+       next x:
+    next y
+
+1049 rem 00FC
+1050 if nnn=$FC then
+    w=4 shr ((mode<=schip) and not hires):
+    for y=0 to csh-1:
+       for x=0 to csw-(w+1):
+          disp(x,y)=disp(x+w,y):
+       next x:
+    next y:
+    for y=0 to csh-1:
+       for x=csw-w to csw-1:
+          disp(x,y)=0:
+       next x:
+    next y
+
+1059 rem 00FD
+1060 if nnn=$FD then
+    STOP
+
+1069 rem 00FE - schip
+1070 if nnn=$FE then
+    csw=64,csh=32,hires=0,
+    df=1,cycles=nf-mc: cls:
+    if mode=schip2 then
+       clear disp():
+    end if:
+    GO To 7000
+
+1079 rem 00FF - schip
+1080 if nnn=$FF then
+    csw=128,csh=64,hires=1,
+    df=1,cycles=nf-mc: cls:
+    if mode=schip2 then
+       clear disp():
+    end if:
+    GO To 7000
+
 1090 return
 
 1099 rem 1nnn
@@ -105,17 +181,17 @@ CHANGED FALSE
  GO to 7000: rem 8xy0
 
 1802 regs(x)=regs(x) | regs(y),
- regs(15)=0,
+ regs(15)*=mode>=schip,
  cycles=44:
  GO to 7000: rem 8xy1
 
 1803 regs(x)=regs(x) & regs(y),
- regs(15)=0,
+ regs(15)*=mode>=schip,
  cycles=44:
  GO to 7000: rem 8xy2
 
 1804 regs(x)=regs(x) xor regs(y),
- regs(15)=0,
+ regs(15)*=mode>=schip,
  cycles=44:
  GO to 7000: rem 8xy3
 
@@ -132,8 +208,13 @@ CHANGED FALSE
  cycles=44:
  GO to 7000: rem 8xy5
 
-1807 fl=regs(y) & 1,
- regs(x)=regs(y) shr 1,
+1807 if mode=chip8 then
+    fl=regs(y) & 1,
+    regs(x)=regs(y) shr 1
+ else
+    fl=regs(x) & 1,
+    regs(x)=regs(x) shr 1
+ end if:
  regs(15)=fl,
  cycles=44:
  GO to 7000: rem 8xy6
@@ -144,8 +225,13 @@ CHANGED FALSE
  cycles=44:
  GO to 7000: rem 8xy7
 
-1815 fl=(regs(y) & 128)>0,
- regs(x)=regs(y) shL 1 & 255,
+1815 if mode=chip8 then
+    fl=(regs(y) & 128)>0,
+    regs(x)=regs(y) shL 1 & 255:
+ else
+    fl=(regs(x) & 128)>0,
+    regs(x)=regs(x) shL 1 & 255:
+ end if:
  regs(15)=fl,
  cycles=44:
  GO to 7000: rem 8xyE
@@ -164,8 +250,12 @@ CHANGED FALSE
  GO To 7000
 
 2099 rem Bnnn
-2100 t=nnn shr 8,
- pc=nnn+regs(0),
+2100 t=nnn shr 8:
+ if mode=chip8 then
+    pc=nnn+regs(0):
+ else
+    pc=nnn+regs(x):
+ end if
  cycles=22+2*((pc shr 8)<>t):
  GO To 7000
 
@@ -175,30 +265,56 @@ CHANGED FALSE
  GO To 7000:
 
 2299 rem Dxyn
-2300 cx=regs(x) & 63,
- cy=regs(y) & 31,fl=0,bo=cx & 7,
- pcycles=68+n*(46+20*bo),cycles=nf-mc,
+
+2300 cx=regs(x) & (csw-1),
+ cy=regs(y) & (csh-1),fl=0,bo=cx & 7,
+ pcycles=68+n*(46+20*bo),cycles=(nf-mc),
  lc=max(pcycles-cycles,0)
 
-2310 GO SUb 7000:
- if lc>0 then
-    lc-=iif(lc>nf-mc,nf-mc,lc),cycles=nf-mc:
-    GO To 2310
+2310 if n=0 then
+    n=16:
+    IF hires THEN
+       GO To 2350
 
-2320 cycles=26:
- for a=0 to min(n-1,31-cy):
-    db=ram((i+a) & 4095),bt=256,c(0),c(1)=0:
-    for dx=cx to min(cx+7,63):
+2320 if mode<schip2 then
+    GO SUb 7000:
+    if lc>0 then
+       lc-=iif(lc>nf-mc,nf-mc,lc),cycles=nf-mc:
+       GO To 2310
+
+2330 cycles=26:
+ for a=0 to min(n-1,csh-cy-1):
+    db=fn rr(i+a),bt=256,c(0),c(1)=0:
+    for dx=cx to min(cx+7,csw-1):
        j=db&(bt/=2)>0,
        col=j and disp(dx,cy),fl|=col,
        disp(dx,cy)~=j:
        if col then
           c((dx-cx+bo)>=8)=4
-2330    next dx:
+2340    next dx:
     cy+=1:
     cycles+=34+c(0)+c(1)+(16*(cx<56)):
  next a:
  regs(15)=fl,df=1:
+ if mode<schip2 then
+    GO To 7000
+ else
+    cycles=0:
+    return
+
+2349 rem 16x16 schip sprite
+2350 for a=0 to min(n-1,csh-cy-1):
+    db=(fn rr(i+a*2) shl 8)+fn rr(i+1+a*2),
+    bt=65536:
+    for dx=cx to min(cx+15,csw-1):
+       j=db&(bt/=2)>0,
+       col=j and disp(dx,cy),fl|=col,
+       disp(dx,cy)~=j:
+    next dx:
+    cy+=1:
+ next a:
+ regs(15)=15,df=1:
+ cycles=8:
  GO To 7000
 
 2399 rem Ex9E,ExA1
@@ -254,12 +370,13 @@ CHANGED FALSE
  cycles=16:
  GO To 7000
 
+2549 rem Fx30
+2550 return
+
 2551 rem Fx33
 2552 vv=regs(x) & 255,
- v1=vv div 100,v2=(vv div 10) mod 10,v3=vv mod 10,
- ram(i & 4095)=v1,
- ram((i+1) & 4095)=v2,
- ram((i+2) & 4095)=v3,
+ v1=vv div 100,v2=(vv div 10) mod 10,v3=vv mod 10:
+ proc rw(i,v1);rw(i+1,v2);rw(i+2,v3):
  cycles=80+(v1+v2+v3)*16:
  GO To 7000
 
@@ -267,20 +384,32 @@ CHANGED FALSE
 2586 cycles=14:
  GO sub 7000:
  for n=0 TO x:
-    ram((i+n) & 4095)=regs(n):
+    proc rw(i+n,regs(n)):
     GO SUb 7000:
  next n:
- i+=x-1:
+ i+=(x-1)*(mode<schip):
  return
 
 2601 rem Fx65
 2602 cycles=14:
  GO sub 7000:
  for n=0 TO x:
-    regs(n)=ram((i+n) & 4095):
+    regs(n)=fn rr(i+n):
     GO SUb 7000:
  next n:
- i+=x-1:
+ i+=(x-1)*(mode<schip):
+ return
+
+2618 rem Fx75
+2619 for n=0 to x:
+    flst(n)=regs(n):
+ next n:
+ return
+
+2634 rem Fx85
+2635 for n=0 to x:
+    regs(n)=flst(n):
+ next n:
  return
 
 2999 rem Keyboard scanning
@@ -294,13 +423,14 @@ CHANGED FALSE
 4020 for f=0 to banklen rom-1:
     ram(512+f)=peek(rom,f):
  next f
-4030 mc=3250,pc=512,nf=fn nf:
+4030 mc=3250,pc=512,nf=FN nf:
  return
 
 4999 rem Update display
-5000 for xx=0 to 63:
-    for yy=0 to 31:
-       rectangle ink disp(xx,yy);xx*rs+xo,yy*rs+yo,rs-1,rs-1 fill:
+5000 rr=rs/(hires+1):
+ for xx=0 to csw-1:
+    for yy=0 to csh-1:
+       rectangle ink disp(xx,yy);xx*rr+xo,yy*rr+yo,rr-1,rr-1 fill:
     next yy:
  next xx:
  df=0:

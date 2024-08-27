@@ -1,0 +1,39 @@
+ZXASCII
+AUTO -1
+PROG /makebench
+CHANGED FALSE
+10 rem MAKE benchmark
+20 paper 0: ink 12: cls
+30 rem Start
+40 c,rn=0,ti1=msecs
+50 rem dots
+60 plot inverse c;rnd*Scrw,rnd*scrh: c=1-c,rn+=1
+70 ti2=MSECS-ti1: IF ti2<1000 THEN GO To 60 else dtc=rn
+80 rem lines
+90 c,rn=0,ti1=msecs
+100 draw inverse c;rnd*Scrw,rnd*scrh to rnd*scrw,rnd*scrh: c=1-c,rn+=1
+110 ti2=MSECS-ti1: IF ti2<1000 THEN GO To 100 else lnc=rn
+120 rem eboxes
+130 c,rn=0,ti1=msecs
+140 rectangle inverse c;rnd*Scrw,rnd*scrh,rnd*scrw,rnd*scrh: c=1-c,rn+=1
+150 ti2=MSECS-ti1: IF ti2<1000 THEN GO To 140 else ebc=rn
+160 rem fboxes
+170 c,rn=0,ti1=msecs
+180 rectangle inverse c;rnd*Scrw,rnd*scrh,rnd*scrw,rnd*scrh fill: c=1-c,rn+=1
+190 ti2=MSECS-ti1: IF ti2<1000 THEN GO To 180 else fbc=rn
+200 rem ecircs
+210 c,rn=0,ti1=msecs
+220 circle inverse c;rnd*Scrw,rnd*scrh,rnd*scrh: c=1-c,rn+=1
+230 ti2=MSECS-ti1: IF ti2<1000 THEN GO To 220 else ecc=rn
+240 rem fcircs
+250 c,rn=0,ti1=msecs
+260 circle inverse c;rnd*Scrw,rnd*scrh,rnd*scrh fill: c=1-c,rn+=1
+270 ti2=MSECS-ti1: IF ti2<1000 THEN GO To 260 else fcc=rn
+280 cls
+290 Print "MAKE Benchmark test": print "-"*19:
+ print dtc;" dots/s":
+ print lnc;" lines/s":
+ print ebc;" boxes/s":
+ print fbc;" filled boxes/s":
+ print ecc;" circles/s":
+ print fcc;" filled circles/s"

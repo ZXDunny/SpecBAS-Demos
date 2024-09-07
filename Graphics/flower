@@ -1,16 +1,21 @@
 ZXASCII
 AUTO -1
-PROG /demos/Graphics/flower
+PROG demos:graphics/flower
 CHANGED FALSE
-10 degrees: screen lock
-20 XRadius=200,YRadius=200,a=0,
- Cx=scrw/2,Cy=scrh/2,Leaves=20
-30 dim figure(360,2) base 0:
-40 for angle=0 to 359:
+10 screen lock: stroke 3
+20 Cx=scrw/2,Cy=scrh/2,
+ XRadius=200,YRadius=200,
+ Leaves=20,lim=1000,astep=tau/lim
+30 dim figure(lim,2):
+40 for a=0 to lim:
+    angle=a*astep,
     x=(20+XRadius*Cos(Leaves/2*angle))*Cos angle,
-    y=(35+YRadius*Cos(Leaves/2*angle))*Sin angle:
-    figure(angle,0)=Cx+x,
-    figure(angle,1)=Cy+y
-50 next angle
-60 polygon ink 2;figure() fill;ink 0;figure()
-
+    y=(35+YRadius*Cos(Leaves/2*angle))*Sin angle
+50    for b=a+1 to lim:
+       figure(b,1)=cx+x,
+       figure(b,2)=cy+y:
+    next b
+60    cls 50: 
+    polygon ink 2;figure() fill;ink 0;figure(): 
+    wait screen
+70 next a

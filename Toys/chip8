@@ -387,7 +387,7 @@ CHANGED FALSE
     proc rw(i+n,regs(n)):
     GO SUb 7000:
  next n:
- i+=(x-1)*(mode<schip):
+ i+=(x+1)*(mode<schip):
  return
 
 2601 rem Fx65
@@ -397,7 +397,7 @@ CHANGED FALSE
     regs(n)=fn rr(i+n):
     GO SUb 7000:
  next n:
- i+=(x-1)*(mode<schip):
+ i+=(x+1)*(mode<schip):
  return
 
 2618 rem Fx75

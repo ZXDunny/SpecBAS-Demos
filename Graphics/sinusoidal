@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG /demos/graphics/sinusoidal
+CHANGED FALSE
+10 degrees
+20 Cx=scrw/2,Cy=scrh/2,
+ Rx=400,Ry=200
+30 dim figure(360,2):
+40 for a=0 to 359:
+    R1=Rx*Cos(20*a)+10*Sin(220*a),
+    X=R1*Cos a,
+    R2=Ry*Cos(320*a)+10*Sin(20*a),
+    Y=R2*Sin a
+50    figure(a+1,1)=cx+x,
+    figure(a+1,2)=cy+y:
+60 next a
+70 cls 15:
+ polygon ink 9;figure() fill;ink 0;figure()

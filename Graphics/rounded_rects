@@ -1,0 +1,44 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/rounded_rects
+CHANGED FALSE
+10 rem rounded rects
+20 def fn rx=cx+(xn-cx)*ca-(yn-cy)*sa
+30 def fn ry=cy+(xn-cx)*sa+(yn-cy)*ca
+40 def proc rbox(x,y,w,h,r,a):
+    cx=x+w/2,cy=y+h/2,a*=pi/180,
+    ca=cos a,sa=sin a,
+
+    xn=x+r,  yn=y,     x1=fn rx,y1=fn ry,
+    xn=x+w-r,          x2=fn rx,y2=fn ry,
+    xn=x+w,  yn=y+r,   x3=fn rx,y3=fn ry,
+             yn=y+h-r, x4=fn rx,y4=fn ry,
+    xn=x+w-r,yn=y+h,   x5=fn rx,y5=fn ry,
+    xn=x+r,            x6=fn rx,y6=fn ry,
+    xn=x,    yn=y+h-r, x7=fn rx,y7=fn ry,
+             yn=y+r,   x8=fn rx,y8=fn ry:
+
+    draw x1,y1 to x2,y2: draw x2,y2 to x3,y3,pi/2:
+    draw x3,y3 to x4,y4: draw x4,y4 to x5,y5,pi/2:
+    draw x5,y5 to x6,y6: draw x6,y6 to x7,y7,pi/2:
+    draw x7,y7 to x8,y8: draw x8,y8 to x1,y1,pi/2:
+ end proc
+
+50 nb=7,angle=0:
+ stroke 3: screen lock
+
+60 dim w(nb):
+ for f=1 to nb:
+    window new w(f),0,0,scrw,scrh transparent 0:
+ next f
+
+70 angle+=1:
+ for f=nb to 1 step -1:
+    window w(nb+1-f):
+    cls 0:
+    ink 16-f:
+    proc rbox(200-f*20,190-f*20,400+f*40,100+f*40,20,angle*f/nb):
+    fill ink f;scrw/2,scrh/2:
+ next f:
+ wait screen:
+ GO To 70

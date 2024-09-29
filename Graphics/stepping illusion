@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/stepping illusion
+CHANGED FALSE
+10 SCREEN LOCK 
+20 for xa=0 to scrw step .4:
+    m=inkey$<>"":
+    cls 15-7*m:
+    for xb=0 to scrw step 16:
+       rectangle ink 7*m;xb,0 to xb+7,scrh-1 fill:
+    next xb:
+    rectangle ink 221;xa,210 to xa+32,220 fill:
+    rectangle ink 17;xa,270 to xa+32,280 fill:
+    print centre 4;paper 1; ink 14; "Press a key to reveal":
+    wait screen:
+ next xa:
+ GO To 20

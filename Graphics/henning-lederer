@@ -1,12 +1,12 @@
 ZXASCII
 AUTO -1
-PROG /demos/Graphics/henning-lederer
+PROG demos:graphics/henning-lederer
 CHANGED FALSE
 10 rem Henning Lederer effect
 20 sw,sh=300,w=32,
  tx=(scrw-sw)/2-4,ty=(scrh-sh)/2-4,
  bx=tx+sw+8,by=ty+sh+8,sh2=scrh/2,o=0
-30 paper 50: cls
+30 paper 50: screen lock : cls
 40 do:
     clip off:
     rectangle ink 0;tx,ty to bx,by fill:

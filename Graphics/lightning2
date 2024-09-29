@@ -1,0 +1,27 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/lightning2
+CHANGED FALSE
+10 paper 0: ink 200:
+ for f=1 to 255:
+    palette f,f,f,255:
+ next f
+20 cx=scrw/2,cy=scrh/2,l=5
+
+30 cls:
+ circle cx,cy,3 fill
+40 if mousebtn then
+    beep .01,-30-rnd*50:
+    sx=cx,sy=cy,c=rnd*255:
+    do:
+       if rnd*100<l then
+          sx+=sgn(mousex-sx),
+          sy+=sgn(mousey-sy)
+       else
+          sx,sy+=int(rnd*3)-1:
+       end if:
+       plot ink c;sx,sy:
+    loop until sx=mousex and sy=mousey
+50  wait screen:
+  GO To 30
+

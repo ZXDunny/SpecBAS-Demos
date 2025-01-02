@@ -1,0 +1,26 @@
+ZXASCII
+AUTO -1
+PROG /demos/Fractals/simple snowflakes
+CHANGED FALSE
+10 PAPER 0: INK 15: CLS: t6=tau/6,sx=scrw/4,sy=scrh/2
+20 for cx=sx to sx+(sx*2) step sx
+30    for cy=sy/2 to sy*2 step sy
+40       dim u=((1,3),(3,5),(4,6),(6,2),(5,1),(2,4))
+50       DEF Fn c(a)=r*cos(t6*u(c,a))
+60       def fn s(a)=r*sin(t6*u(c,a))
+70       FOR x=1 TO 80
+80          r=0,g=rnd*40
+90          IF g>32 THEN 
+             r=rnd*19 AND x<60
+100          h=rnd*400,r+=((15 AND h>390) AND x<70)
+110          FOR c=1 TO 6
+120             a=-1+(2 AND c<3),b=-1+(2 AND (c>1 AND c<4))
+130             xc=cx-x*(b AND c<5)
+140             yc=abs(cy*(1+(-2 AND c>5))+(x*TAN(2*6.021*a) AND c<5)+(x AND c>4))
+150             xd1=fn s(1),yd1=fn c(1),xd2=fn s(2),yd2=fn c(2)
+160             DRAW xc,yc,xd1,yd1;xc,yc,xd2,yd2
+170          NEXT c
+180       NEXT x
+190    next cy
+200 next cx
+210 PAUSE 200: RUN 

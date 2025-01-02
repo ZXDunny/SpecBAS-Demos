@@ -1,0 +1,15 @@
+ZXASCII
+AUTO -1
+PROG /demos/graphics/pattern3.1
+CHANGED FALSE
+10 gs=16,g=gs/2
+20 for x=0 to scrw/gs:
+    for y=0 to scrh/gs:
+       for i=0 to 1:
+          d=int(rnd*2):
+          draw x*gs+i*g+g*d,y*gs+i*g+g*not d,gs*not d,gs*d:
+       next i:
+    next y:
+ next x
+
+

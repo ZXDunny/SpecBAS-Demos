@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG /demos/Fractals/circle series
+CHANGED FALSE
+10 s=int(scrw/800+.5),w=scrh-s*2
+20 stroke s
+30 for f=14 to 1 step -1
+40    r=w/2/f,x=scrw/2-w/2+r
+50    for g=0 to f-1
+60       circle x+g*r*2,scrh/2,r
+70       wait screen
+80    next g
+90 next f

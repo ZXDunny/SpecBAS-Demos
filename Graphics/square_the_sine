@@ -1,0 +1,22 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/square_the_sine
+CHANGED FALSE
+10 cls 0:
+ sh=scrh/2,sc=16/scrw,j=1:
+ for o=1 to 14 step 2:
+    for x=0 to scrw:
+       t=x*sc,sv=0:
+       for n=1 to o step 2:
+          sv+=sin(t*n)/n:
+       next n:
+       ink j+8:
+       if x then 
+          draw to x,sh+sv*sh/2
+       else
+          plot x,sh+sv*sh/2:
+       end if:
+    next x:
+    j+=1:
+    wait screen 120:
+ next o

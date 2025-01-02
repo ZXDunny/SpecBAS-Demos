@@ -2,24 +2,24 @@ ZXASCII
 AUTO -1
 PROG demos:graphics/chaoszoom
 CHANGED FALSE
-10 FOR f=0 TO 255: 
-    PALETTE HSV f,f*1.3,255,255: 
+10 FOR f=0 TO 255:
+    PALETTE HSV f,f*1.3,255,255:
  NEXT f
-20 DIM buffer(2) BASE 0: 
- FOR f=0 TO 1: 
-    WINDOW NEW buffer(f),0,-60,800,600: 
- NEXT f: 
+20 DIM buffer(2) BASE 0:
+ FOR f=0 TO 1:
+    WINDOW NEW buffer(f),0,-60,scrw,scrh+120:
+ NEXT f:
  WINDOW HIDE buffer(1)
-30 sz=32,ps=0,xs=800/sz,ys=600/sz: 
- DIM a$(xs,ys) BASE 0: 
+30 error 38,0:
+ sz=32,ps=0,xs=scrw/sz,ys=scrH/sz:
  WINDOW buffer(0)
-40 FOR y=298 TO 302;x=284 TO 288: 
-    PLOT INK ps MOD 256;x,y: 
+40 FOR y=298 TO 302;x=284 TO 288:
+    PLOT INK ps MOD 256;x,y:
  NEXT x;y
 50 ps+=1,shift=BREV(ps,5)
-60 FOR y=0 TO ys-1;x=0 TO xs-1: 
-    WINDOW COPY buffer(0),x*sz+shift+(16-y)-x,y*sz+shift+x+(16-y),sz,sz TO buffer(1),x*sz+shift,y*sz+shift+16: 
- NEXT x;y: 
- WINDOW COPY buffer(1),0,0,800,600 TO buffer(0),0,0: 
- WAIT SCREEN: 
+60 FOR y=0 TO ys-1;x=0 TO xs-1:
+    WINDOW COPY buffer(0),x*sz+shift+(16-y)-x,y*sz+shift+x+(16-y),sz,sz TO buffer(1),x*sz+shift,y*sz+shift+16:
+ NEXT x;y:
+ WINDOW COPY buffer(1),0,0,scrw,scrh TO buffer(0),0,0:
+ WAIT SCREEN:
  GO TO 40

@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG /demos/misc/viron
+CHANGED FALSE
+10 cls 0: ink 5:
+ degrees:
+ b=200:
+ plot scrw/2+b,scrh/2-40
+20 do while b>0:
+    rotate -b:
+    draw b*2:
+    b-=1:
+    wait screen:
+ loop

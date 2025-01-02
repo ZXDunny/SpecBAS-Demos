@@ -1,10 +1,22 @@
 ZXASCII
 AUTO -1
-PROG unroman
+PROG demos:text/unroman
+CHANGED FALSE
 10 REM Decode Roman Numeral to Decimal
-20 DIM r$="M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I": DIM r=1000,900,500,400,100,90,50,40,10,9,5,4,1
-30 INPUT "Roman Numeral: ";a$: LET d=0: LET a$=UP$ a$: IF a$="" THEN GO TO 30
-40 IF NOT POS(a$(1),"MCDXLVI") THEN PRINT "Invalid character!": GO TO 30
-50 FOR i=1 TO 13: IF a$( TO LEN r$(i))=r$(i) THEN LET d=d+r(i): LET a$=a$(LEN r$(i)+1 TO)
-60 NEXT i: IF LEN a$>0 THEN GO TO 40
+20 DIM r$="M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I": 
+ DIM r=1000,900,500,400,100,90,50,40,10,9,5,4,1
+30 INPUT "Roman Numeral: ";a$: 
+ d=0,a$=UP$ a$: 
+ IF a$="" THEN 
+    GO TO 30
+40 IF NOT POS(a$(1),"MCDXLVI") THEN 
+    PRINT "Invalid character!": 
+    GO TO 30
+50 FOR i=1 TO 13: 
+    IF a$( TO LEN r$(i))=r$(i) THEN 
+       d+=r(i),
+       a$=a$(LEN r$(i)+1 TO )
+60 NEXT i: 
+ IF LEN a$>0 THEN 
+    GO TO 40
 70 PRINT d

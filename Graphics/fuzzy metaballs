@@ -1,0 +1,17 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/fuzzy metaballs
+CHANGED FALSE
+10 window size 0,240,136:
+ x1=120,y1=60,x2=120,y2=76
+
+20 def fn distance(x1,y1,x2,y2)=sqr((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1))
+30 t=msecs/500,
+ x1=(120+sin t*30),
+ x2=(120+cos t*30)
+40 for i=1 to 100:
+    x=rnd*240,y=rnd*136,
+    dist=(70/fn distance(x1,y1,x,y))+(70/fn distance(x2,y2,x,y)):
+    plot ink dist;x,y:
+ next i:
+ GO To 30

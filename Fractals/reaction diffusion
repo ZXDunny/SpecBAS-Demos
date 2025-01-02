@@ -1,0 +1,37 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/reaction diffusion
+CHANGED FALSE
+10 REM Reaction-diffusion
+20 FOR f=0 TO 255: PALETTE hsv f,f,f,f: NEXT f:
+ paper 8: cls: screen lock
+
+30 cs=8,w=scrw div cs,h=scrh div cs: dim fg(2,w,h,2)
+40 da=0.42,db=.125,f=.0545,k=.062,bf=1
+
+50 for x=1 to w:
+    for y=1 to h:
+       obf=3-bf:
+       if x=1 or y=1 or x=w or y=h then
+          fg(obf,x,y,1)=1,fg(obf,x,y,2)=0
+       else
+          a=fg(bf,x,y,1),b=fg(bf,x,y,2),r=a*b*b,
+          difa=(fg(bf,x,y-1,1)+fg(bf,x+1,y,1)+fg(bf,x-1,y,1)+fg(bf,x,y+1,1))/4-a,
+          difb=(fg(bf,x,y-1,2)+fg(bf,x+1,y,2)+fg(bf,x-1,y,2)+fg(bf,x,y+1,2))/4-b,
+          fg(obf,x,y,1)=a+da*difa-r+(1-a)*f,
+          fg(obf,x,y,2)=b+db*difb+r-(f+k)*b:
+       end if:
+       a=fg(obf,x,y,1),b=fg(obf,x,y,2),
+       i=255*(b/(a+b)):
+       rectangle ink i;cs*(x-1),cs*(y-1),cs,cs fill:
+    next y:
+ next x
+
+60 bf=3-bf,b=mousebtn=1:
+ if mousebtn<>0 then
+    x=int(mousex/cs)+1,y=int(mousey/cs)+1:
+    if x>=1 and x<=w and y>=1 and y<=h then
+       fg(bf,x,y,1)=1-b,
+       fg(bf,x,y,2)=b
+70 WAIT SCREEN:
+ GO To 50

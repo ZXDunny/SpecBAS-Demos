@@ -1,0 +1,48 @@
+ZXASCII
+AUTO -1
+PROG demos:automata/boids
+CHANGED FALSE
+10 DEF FN r(n,m)=(n+RND*(m-n))*(2*(rnd>.5)-1)
+20 num=100,sc=scrw/800,
+ vr=50*sc,pr=5*sc,
+ cf=.0005,mf=.05,af=.5,tf=.25,
+ mxs=3*sc,mns=1,
+ ma=20*sc,mv=scrh-ma,mh=scrw-ma
+30 dim b(num,4):
+ for i=1 to num:
+    b(i,1)=rnd*scrw,b(i,2)=rnd*scrh,
+    b(i,3),b(i,4)=fn r(mns,mxs):
+ next i
+40 ink 0: paper 8: stroke 3: cls
+50 for i=1 to num:
+    xpa,ypa,xva,yva,nb,cdx,cdy=0:
+    for each j in [1 to i-1,i+1 to num]:
+       dx=b(i,1)-b(j,1),dy=b(i,2)-b(j,2):
+       if abs dx<vr and abs dy<vr then
+          sd=polardist(dx,dy),nb+=1:
+          if sd<pr then
+             cdx+=dx/4,cdy+=dy/4
+          else
+             xpa+=b(j,1),ypa+=b(j,2),
+             xva+=b(j,3),yva+=b(j,4)
+60    next j
+70    if nb>0 then
+       xpa/=nb,ypa/=nb,xva/=nb,yva/=nb,
+       b(i,3)=(b(i,3)+(xpa-b(i,1))*cf+(xva-b(i,3))*mf)+cdx*af,
+       b(i,4)=(b(i,4)+(ypa-b(i,2))*cf+(yva-b(i,4))*mf)+cdy*af,
+       sp=pyth(b(i,3),b(i,4)):
+       if sp<mns then
+          b(i,3)=(b(i,3)/sp)*mns,
+          b(i,4)=(b(i,4)/sp)*mns
+       else
+          if sp>mxs then
+             b(i,3)=(b(i,3)/sp)*mxs,
+             b(i,4)=(b(i,4)/sp)*mxs
+80    plot inverse 1;b(i,1),b(i,2):
+    b(i,1)+=b(i,3),
+    b(i,2)+=b(i,4):
+90    if b(i,2)<ma then b(i,4)+=tf else if b(i,2)>mv then b(i,4)-=tf
+100    if b(i,1)<ma then b(i,3)+=tf else if b(i,1)>mh then b(i,3)-=tf
+110    plot b(i,1),b(i,2):
+ next i
+120 GO To 50

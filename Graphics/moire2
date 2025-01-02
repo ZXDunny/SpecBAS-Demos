@@ -1,0 +1,19 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/moire2
+CHANGED FALSE
+10 z=-0.000001: screen lock
+20 DEF FN s(x,y)=SIN(a*sqr(abs(x-cx)^2+abs(y-cy)^2))>0
+30 cx=scrw/2,cy=scrh/2,b=5
+40 a=.01:
+ for x=0 to scrw-1:
+    for y=0 to cy:
+       if fn s(x,y) then
+          plot x,y;x,scrh-y
+50       a+=z:
+    next y:
+ next x:
+ z+=.000001:
+ wait screen:
+ cls:
+ GO To 40

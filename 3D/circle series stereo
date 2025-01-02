@@ -1,0 +1,22 @@
+ZXASCII
+AUTO -1
+PROG demos:3d/circle series stereo
+CHANGED FALSE
+10 s=scrw/800,w=(scrw/2)-(s*64),a=0.1,ofs=-1
+20 paper 1: screen lock: cls
+30 cx=scrw/4,cy=scrh/2
+40 for i=1 to 2
+50    for f=1 to 30 step 1
+60       r=w/2/f,x=cx-w/2+r,y=cy
+70       for g=0 to f-1
+80          xn=x+g*r*2,an=a+g*0.05
+90          xn=cx+(xn-cx)*cos an-(y-cy)*sin an
+100          yn=cy+(xn-cx)*sin an+(y-cy)*cos an
+110          circle ink 225+f;xn+ofs*f/2*s,yn,r fill
+120       next g
+130    next f
+140    ofs*=-1,cx+=scrw/2
+150 next i
+160 a+=.01
+170 wait screen:
+180 GO To 20

@@ -1,0 +1,23 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/lexa-spiral
+CHANGED FALSE
+10 load "/palettes/pico8" palette
+20 sh=SCRh/2,sw=SCRw/2: screen lock
+30 turns:
+ cls 0:
+ for r=4 to scrw step 4:
+    for i=0 to 1.75 step .25:
+       q=((msecs/1000)*(1+r/32)/8) fmod 1,
+       v0=mid((q-i)*4,1,0)*r,
+       v1=mid((q-i)*4+2,1,0)*r,
+       a=i-1/8,
+       x=sw+cos a*r*0.707,
+       y=sh+sin a*r*0.707,
+       a+=3/8,u=cos a,v=sin a:
+       if v1>v0 then
+          draw ink 8+(r/4) mod 8;x+u*v0,y+v*v0 to x+u*v1,y+v*v1
+40    next i:
+ next r:
+ wait screen:
+ GO To 30

@@ -3,19 +3,19 @@ AUTO -1
 PROG demos:graphics/rotate
 CHANGED FALSE
 10 REM Rotate and Scale demo
-20 def fn i$(i)=#16+Qchr$ i
-30 PAPER 0: CLS: 
- i$="SpecBAS",j$="":
- for i=1 to 7:
-    j$=j$+fn i$(i)+i$(i):
+20 def fn i$(i)=#16+Qchr$(i mod 7+1)
+30 PAPER 0: CLS:
+ i$="WORLD! HELLO ",j$="":
+ for i=0 to len i$*4:
+    j$=j$+fn i$(i)+i$((i mod len i$)+1):
  next i:
- ELLIPSE INK 6;PAPER 8;200,100,100,50 FILL j$+"! "
- 
+ ELLIPSE INK 6;PAPER 16;200,100,100,50 FILL j$+"! "
+
 40 WINDOW GRAB a$,0,100,50,200,100
- 
-50 SCREEN LOCK : angle=180,s=1: DEGREES
-60 CLS : 
- WINDOW PUT a$,0,(SCRw/2)-(s*200/2),(SCRh/2)-(s*100/2) ROTATE SIN angle*600 SCALE s
-70 angle+=1,s=ABS(SIN(angle)*2)+0.1: 
- WAIT SCREEN: 
+
+50 SCREEN LOCK : angle=0,s=1
+60 CLS :
+ WINDOW PUT a$,0,(SCRw/2)-(s*200/2),(SCRh/2)-(s*100/2) ROTATE SIN angle*10 SCALE s
+70 angle+=.0075,s=ABS(SIN(angle)*8)+0.1:
+ WAIT SCREEN:
  GO TO 60

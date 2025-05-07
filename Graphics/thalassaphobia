@@ -1,0 +1,23 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/thalassaphobia
+CHANGED FALSE
+10 paper 0: ink 8: stroke 2: over 12:
+ for i=0 to 255:
+    palette i,i,i,i:
+ next i:
+ screen lock:
+ t=0
+20 cls:
+ t+=PI/60
+30 for i=40000 to 0 step -3:
+    x=i mod 300,
+    y=i/300,
+    k=x/12-12.5,
+    d=2*Abs(Cos(k/2)+Sin(y/4)+Cos(k/8)),
+    q=x/4+90+d*k*Cos(d-t*2+y/24),
+    c=y/79-t/8+d/8:
+    plot q*.7*Cos c+q/8*Sin(c*4)+400,q*0.7*Sin c+200:
+ next i
+40 wait screen:
+ GO To 20

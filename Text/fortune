@@ -2,7 +2,7 @@ ZXASCII
 AUTO -1
 PROG demos:text/fortune
 CHANGED FALSE
-10 LOAD "fonts:topaz" BANK new f: font f: dim hist(): ofs,mx=0:
+10 LOAD "fonts:topaz_1.2" BANK new f: font f: dim hist(): ofs,mx=0:
  palette 1,0,85,170;2,255,138,0: paper 1: scale 1,2
 20 def fn f(a$)=qcode(a$(4)+a$(3)+a$(2)+a$(1))
 30 def fn n=iif(nc!=nc,(code a$(c) & $F0) shr 4,code a$((c+=1)-1) & $F)

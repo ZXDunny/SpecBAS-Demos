@@ -1,0 +1,16 @@
+ZXASCII
+AUTO -1
+PROG /demos/3D/dotty sphere
+CHANGED FALSE
+10 np=2000,r=100
+20 dim p(np,3)
+30 for n=1 to np:
+    a=acs(2*rnd-1),b=rnd*pi*2:
+    p(n,1)=r*sin a*cos b,
+    p(n,2)=r*sin a*sin b,
+    p(n,3)=r*cos a:
+ next n
+40 cls:
+ project3d p() to d() rotate a,a,a+=.01: plot d()
+50 WAIT SCREEN:
+ GO To 40

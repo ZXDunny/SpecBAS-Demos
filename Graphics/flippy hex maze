@@ -5,7 +5,7 @@ CHANGED FALSE
 10 REM Flippy Hexagonal Maze, by zep.p8
 20 REM SpecBAS conversion by ZXDunny
 30 turns: screen lock
-40 sc=scrw/400,sz=12*sc,mw=ceil(scrw/sz)
+40 sc=scrw/400*2,sz=12*sc,mw=ceil(scrw/sz)
 50 stroke sc
 60 z=0:
  randomize 0:
@@ -14,7 +14,6 @@ CHANGED FALSE
     v=z div mw,
     x=.5+v mod 2*sz/2+u*sz,
     y=.5+v*(sz-1),
-    r=((64-x)^2+(64-y)^2)^.5,
     q=msecs/4000+rnd:
     for i=0 to 2:
        a=mid(1,2+cos q*5,3)/12+i/3,

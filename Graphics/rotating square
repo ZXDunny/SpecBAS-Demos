@@ -2,12 +2,20 @@ ZXASCII
 AUTO -1
 PROG demos:graphics/rotating square
 CHANGED FALSE
-10 nl=250,sl=400,
+10 nl=256,sl=400,ms=1 shl int(rnd*5),
  nl=ceil(nl/8)*8,as=tau/nl,cx=scrw/2,cy=scrh/2,j=0
 
-20 dim clr(nl) base 0
+20 dim clr(nl) base 0: c,n=0
 30 for i=0 to nl-1:
-    clr(i)=int(rnd*16):
+    if n>0 then 
+       n-=1
+    else
+       n=ms-1,nc=c:
+       do while nc=c:
+          c=int(rnd*16):
+       loop:
+    end if:
+    clr(i)=c:
  next i:
  screen lock
 
@@ -25,8 +33,12 @@ CHANGED FALSE
     polygon ink clr((i+j) mod nl);cx,cy to x1,y1 to x2,y2 fill:
 
     i+=1:
- next a:
+ next a
 
- j+=1:
+50 j+=1:
  wait screen:
- GO To 40
+ if inkey$="" then
+    GO To 40
+ else
+    wait keyup:
+    run

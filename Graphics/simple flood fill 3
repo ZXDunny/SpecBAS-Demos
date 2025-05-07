@@ -10,5 +10,5 @@ CHANGED FALSE
 50    if not point(x,y) then
        plot x,y:
        q$=q$+qchr$ x+qchr$(y+1)+qchr$ x+qchr$(y-1)+qchr$(x+1)+qchr$ y+qchr$(x-1)+qchr$ y
-60    m+=1: if not m mod 16 then wait screen
+60    if not (m+=1) mod 16 then wait screen
 70 LOOP

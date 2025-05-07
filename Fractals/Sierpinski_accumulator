@@ -1,8 +1,31 @@
 ZXASCII
 AUTO -1
-PROG /demos/Fractals/Sierpinski_accumulator
+PROG demos:fractals/sierpinski_accumulator
 CHANGED FALSE
-10 palette 0,8421504:for f=1 to 255:palette f,0,f,0:next f:over 2:ink 1:paper 0: cls:INPUT "Vertices? ";v: if v<=0 then stop
-20 DEGREES: sw=SCRw/2,sh=SCRh/2,a=360/v: DIM p(v,2) base 0: FOR f=0 TO v-1: p(f,0)=sh*COS(f*a)+sw,p(f,1)=sh*SIN(f*a)+sh: NEXT f
-30 x1=p(1,0),y1=p(1,1):do:p2=int(rnd*v):x2=p(p2,0),y2=p(p2,1),x=(x1+x2)/2,y=(y1+y2)/2,x1=x,y1=y:if point(x,y)<255 then plot x,y else print at 0,0;"Done.": pause 0: run
+10 palette 0,8421504:
+ for f=1 to 255:
+    palette f,0,f,0:
+ next f:
+ over 2: ink 1: paper 0: cls:
+ INPUT "Vertices? ";v: 
+ if v<=0 then 
+    stop
+20 DEGREES: 
+ sw=SCRw/2,sh=SCRh/2,a=360/v: 
+ DIM p(v,2) base 0: 
+ FOR f=0 TO v-1: 
+    p(f,0)=sh*COS(f*a)+sw,p(f,1)=sh*SIN(f*a)+sh: 
+ NEXT f
+30 x1=p(1,0),y1=p(1,1):
+ do:
+    p2=int(rnd*v),
+    x2=p(p2,0),y2=p(p2,1),
+    x=(x1+x2)*.5,y=(y1+y2)*.5,
+    x1=x,y1=y:
+    if point(x,y)<255 then 
+       plot x,y 
+    else 
+       print at 0,0;"Done.": 
+       pause 0: 
+       run
 40 loop

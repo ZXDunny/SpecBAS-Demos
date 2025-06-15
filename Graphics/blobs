@@ -1,9 +1,10 @@
 ZXASCII
 AUTO -1
-PROG blobs
+PROG demos:graphics/blobs
+CHANGED FALSE
 10 REM Blobs
 20 LET d=10,w=SCRw/d,h=SCRh/d,nblob=5: DIM blobs(nblob+1,6) BASE 0
-30 FOR i=0 TO 255: PALETTE i,255*EXP(-(((i-64)^2)/(2*(64^2)))),255*EXP(-(((i-128)^2)/(2*(64^2)))),255*EXP(-(((i-196)^2)/(2*(64^2)))): NEXT i: SCREEN LOCK 
+30 FOR i=0 TO 255: PALETTE i,(255*EXP(-(((i-64)^2)/(2*(64^2))))) mod 256,(255*EXP(-(((i-128)^2)/(2*(64^2))))) mod 256,(255*EXP(-(((i-196)^2)/(2*(64^2))))) mod 256: NEXT i: SCREEN LOCK
 40 FOR i=0 TO nblob: LET blobs(i,0)=RND*(w/2),blobs(i,1)=RND*(h/2),blobs(i,2)=(RND*8)-4,blobs(i,3)=(RND*8)-4,blobs(i,4)=2+RND*(w/8),blobs(i,5)=blobs(i,4): NEXT i
 50 FOR x=0 TO w*d STEP d: FOR y=0 TO h*d STEP d: LET c=0: FOR i=0 TO nblob: INC c,255*EXP(-(((((x/d)-blobs(i,0))^2)/(2*(blobs(i,4)^2)))+((((y/d)-blobs(i,1))^2)/(2*(blobs(i,5)^2)))))/2: NEXT i
 60 IF c>255 THEN LET c=255

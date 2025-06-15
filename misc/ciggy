@@ -1,0 +1,18 @@
+ZXASCII
+AUTO -1
+PROG /demos/misc/ciggy
+CHANGED FALSE
+10 a=1,i=0,x=200,y=300,h=10:ink 234: paper 8
+20 DO:
+    i-=.04:
+    cls 0:
+    FOR y=0 TO 305:
+       x0=SIN(y*.025+i)*y/5-y/3,
+       x1=COS(y*.0195+i)*y/5-y/5:
+       rectangle inverse a;201+x0-y/20,305-y to 201+x1+y/20,305-y fill "Þ":
+    NEXT y:
+    a=a XOR 1:
+    rectangle ink 15;x,y,200,h fill;ink 168;350,y,50,h fill;ink 10;x,y,6,h fill:
+    wait screen:
+ LOOP
+

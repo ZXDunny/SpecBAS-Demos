@@ -1,19 +1,45 @@
 ZXASCII
 AUTO -1
-PROG flagwave
+PROG demos:graphics/flagwave
+CHANGED FALSE
 10 REM Waving Flag
-20 DEGREES: screen lock:DEF FN x=phase+x/c*360+y/c*360: GO SUB 80
-30 LET c=25,e=10,st=MIN(SCRw-40,SCRh-40)/c,cx=(SCRw-40)/st,phase=0,d=c/2
-40 CLS 0: INC phase,5: FOR y=1 TO c: FOR x=1 TO cx
-50 LET xp=x*st+d,yp=y*st+d,xs=e*SIN FN x,ys=e*COS FN x
-60 CIRCLE INK GPOINT(flag,xp,yp);xp+xs,yp+ys,5 FILL
-70 NEXT x: NEXT y: WAIT SCREEN: GO TO 40
-80 REM Union flag
+ 
+20 screen lock:
+ DEF FN x=phase+x/c*tau+y/c*tau: 
+ GO SUB 80
+30 c=25,e=20,st=MIN(SCRw-40,SCRh-40)/c,cx=(SCRw-40)/st,phase=0,d=c/2
+40 CLS 0: 
+ phase+=0.075: 
+ FOR y=1 TO c: 
+    FOR x=1 TO cx
+50       xp=x*st+d,yp=y*st+d,
+       xs=e*SIN FN x,ys=e*COS FN x
+60       CIRCLE INK GPOINT(flag,xp,yp);xp+xs,yp+ys,6 FILL
+70    NEXT x: 
+ NEXT y: 
+ WAIT SCREEN: 
+ GO TO 40
+ 
+80 REM Draw a union flag
+ 
 90 GRAPHIC NEW flag,SCRw,SCRh: WINDOW GRAPHIC flag
-100 LET b=SCRh,r=SCRw,th=b/3,tth=b*2/3,ho=b/4.472,vo=b/8.944
-110 RECTANGLE INK 1;0,0 TO r,b FILL : INK 7: POLYGON 0,0 TO ho,0 TO r,b-vo TO r,b TO r-ho,b TO 0,vo FILL: POLYGON 0,b TO ho,b TO r,vo TO r,0 TO r-ho,0 TO 0,b-vo FILL
-120 LET vo=b/13.41,ho=r/3,ho2=(b/3-vo)*(r/b): INK 2: POLYGON 0,0 TO ho,th TO ho2,th TO 0,vo FILL: POLYGON r,b TO r-ho,tth TO r-ho2,tth TO r,b-vo FILL
-130 LET ho2=ho+(b/6.945): POLYGON 0,b TO ho2-ho,b TO ho2,tth TO ho,tth FILL: POLYGON r,0 TO r-ho,th TO r-ho2,th TO r-ho2+ho,0 FILL
-140 INK 7: RECTANGLE r*5/12,0 TO r*7/12,b FILL: RECTANGLE 0,b/3 TO r,b*2/3 FILL
-150 INK 2: RECTANGLE r*9/20,0 TO r*11/20,b FILL: RECTANGLE 0,b*2/5 TO r,b*3/5 FILL
-160 WINDOW 0: RETURN
+100 b=SCRh,r=SCRw,th=b/3,tth=b*2/3,ho=b/4.472,vo=b/8.944
+110 RECTANGLE INK 1;0,0 TO r,b FILL: 
+ INK 7: 
+ POLYGON 0,0 TO ho,0 TO r,b-vo TO r,b TO r-ho,b TO 0,vo FILL: 
+ polygon 0,b TO ho,b TO r,vo TO r,0 TO r-ho,0 TO 0,b-vo FILL
+120 vo=b/13.41,ho=r/3,ho2=(b/3-vo)*(r/b): 
+ INK 2: 
+ POLYGON 0,0 TO ho,th TO ho2,th TO 0,vo FILL: 
+ POLYGON r,b TO r-ho,tth TO r-ho2,tth TO r,b-vo FILL
+130 ho2=ho+(b/6.945): 
+ POLYGON 0,b TO ho2-ho,b TO ho2,tth TO ho,tth FILL: 
+ POLYGON r,0 TO r-ho,th TO r-ho2,th TO r-ho2+ho,0 FILL
+140 INK 7: 
+ RECTANGLE r*5/12,0 TO r*7/12,b FILL: 
+ RECTANGLE 0,b/3 TO r,b*2/3 FILL
+150 INK 2: 
+ RECTANGLE r*9/20,0 TO r*11/20,b FILL: 
+ RECTANGLE 0,b*2/5 TO r,b*3/5 FILL
+160 WINDOW 0: 
+ RETURN

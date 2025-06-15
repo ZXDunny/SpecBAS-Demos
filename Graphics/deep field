@@ -21,4 +21,4 @@ CHANGED FALSE
 50       PLOT INK min(5,max(0,POINT(x1,y1))+a1);x1,y1:
     NEXT i1:
  Next G
-60 PAUSE 0: RUN
+60 PAUSE 0: GO To 20

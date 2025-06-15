@@ -11,7 +11,7 @@ CHANGED FALSE
     ag=angle*(RND*.04+.01)*(2*(RND<.5)-1),
     np=int(rnd*10)+3,
     pr=(rnd*100+25)*sc,px=rnd*scrw,py=rnd*scrh:
-    ink RND*$FFFFFFFF|$80000000:
+    ink RND*$FFFFFFFF|(rnd*$80+$40) shl 24:
     DIM p(np,2):
     ar=tau/np:
     FOR a=1 TO np:

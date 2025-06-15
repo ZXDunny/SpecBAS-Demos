@@ -1,0 +1,30 @@
+ZXASCII
+AUTO -1
+PROG /demos/Fractals/julia_metal
+CHANGED FALSE
+10 PALETTE DEFAULT: RAINBOW 0 TO 255
+20 sw=scrw/2,sh=scrh/2,zm=3/scrw,dmin=.06
+30 CLS:
+ FOR a=0 TO scrw-1:
+    FOR b=0 TO 1.5*scrh:
+       x=(a-scrw)*zm,
+       y=(b-scrh)*zm,
+       i=0,d=100:
+       DO:
+          u=x*x,v=y*y:
+          IF u+v>4.8 OR i>30 OR d<dmin THEN
+             GO To 60
+40          t=u-v,
+          y=2*x*y+.156,
+          x=t-.8,
+          i+=1,
+          n=ABS(u+v-1):
+          d=min(n,d)
+50       LOOP
+60       IF d<dmin THEN
+          ink clamp(255-INT(4000*d),0 to 255):
+          plot a-scrw/2,b-scrh/2;
+               scrw+sw-1-a,scrh+sh-b:
+       END IF:
+    NEXT b:
+ NEXT a

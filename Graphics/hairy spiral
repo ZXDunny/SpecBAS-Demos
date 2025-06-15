@@ -1,0 +1,25 @@
+ZXASCII
+AUTO -1
+PROG /demos/graphics/hairy spiral
+CHANGED FALSE
+10 paper 0: ink 5: Over 12: 
+ palette default:
+ rainbow 0 to 255
+20 np=460,n=2400,m=30,k=.02
+30 for i=0 to n:
+    x,y=rnd:
+    for j=0 to m:
+       sx=int(np*x)+(scrw-np)/2,
+       sy=int(np*y)+10:
+       if j>0 then
+          draw to sx,sy
+       else
+          plot sx,sy:
+       end if:
+       xx=2*x-1,yy=2*y-1
+40       if xx then an=atn(yy/xx) else an=pi/2*sgn yy
+50       if xx<0 then an+=pi*sgn yy
+60       an+=4*pi/3+sin(6*pi*sqr(xx*xx+yy*yy))/4,
+       x+=k*cos an,y+=k*sin an
+70    next j
+80 next i

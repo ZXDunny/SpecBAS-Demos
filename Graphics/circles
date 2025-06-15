@@ -1,8 +1,9 @@
 ZXASCII
 AUTO -1
-PROG circles
+PROG demos:graphics/circles
+CHANGED FALSE
 10 RADIANS: CLS 0: OVER 1: SCREEN LOCK
-20 n=3,sw=scrw,sh=scrh:
+20 n=3,mr=16,sw=scrw,sh=scrh:
  DIM xp(n);yp(n);xpct(n);ypct(n);c(n)
 30 FOR f=1 TO n:
     GRAPHIC NEW c(f),SCRw*2,SCRh*2 TRANSPARENT 0:
@@ -23,7 +24,7 @@ PROG circles
  GO TO 50
 90 WINDOW GRAPHIC gfx: CLS 0:
  i=ik:
- FOR r=SQR(SCRw*SCRw+SCRh*SCRh) TO 16 STEP -16:
+ FOR r=SQR(SCRw*SCRw+SCRh*SCRh) TO mr STEP -mr:
     CIRCLE INK i;sw,sh,r FILL:
     i=ik-i:
  NEXT r:

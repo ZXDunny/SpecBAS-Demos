@@ -3,12 +3,37 @@ AUTO -1
 PROG demos:games/mazegen2
 CHANGED FALSE
 10 REM Maze Generator
-20 LET mw=99: LET mh=59: GO SUB 2000
-30 LET m$="ª"*mw*mh: LET b$="1"*mw+(("1"+(" "*(mw-2))+"1")*(mh-2))+("1"*mw): LET cc=mw+2: DIM of=-1,-mw,1,mw: LET m$(cc)=" ": LET stak$=QCHR$ cc: DIM nb(4)
-40 LET nn=0: FOR n=1 TO 4: IF b$(cc+of(n))<>"1" THEN IF m$(cc+(of(n)*2))<>" " THEN INC nn: LET nb(nn)=n
-50 NEXT n
-60 IF nn>0 THEN LET o=of(nb(INT(RND*nn)+1)): LET m$(cc+o)=" ": LET m$(cc+(o*2))=" ": GO SUB 1000: LET stak$=(QCHR$(cc) AND nn>1)+stak$: INC cc,o*2: GO TO 40
-70 IF stak$<>"" THEN LET cc=QCODE stak$: LET stak$=stak$(5 TO): GO TO 40
-80 PAUSE 0: RUN
-1000 LET c=cc+o: PRINT AT c DIV mw,c MOD mw;" ": LET c=cc+o*2: PRINT AT c DIV mw,c MOD mw;" ": RETURN
-2000 FOR x=1 TO mw: FOR y=0 TO mh-1: PRINT AT y,x;"ª": NEXT y: NEXT x: PRINT AT 1,2;" ": RETURN
+20 mw=99,mh=59,m$="ª"*mw*mh,b$="1"*mw+(("1"+(" "*(mw-2))+"1")*(mh-2))+("1"*mw),
+ cc=mw+2,stak$=QCHR$ cc:
+ DIM nb(4);of=-1,-mw,1,mw:
+ GO SUb 90
+
+30 nn=0:
+ FOR n=1 TO 4:
+    IF b$(cc+of(n))<>"1" then
+       if m$(cc+(of(n)*2))<>" " THEN
+          nn+=1,nb(nn)=n
+40 NEXT n
+50 IF nn>0 THEN
+    o=of(nb(INT(RND*nn)+1)),m$(cc+o)=" ",m$(cc+(o*2))=" ":
+    GO SUB 80:
+    stak$=(QCHR$(cc) AND nn>1)+stak$,cc+=o*2:
+    GO TO 30
+60 IF stak$<>"" THEN
+    cc=QCODE stak$,stak$=stak$(5 TO ):
+    GO TO 30
+70 PAUSE 0:
+ RUN
+
+80 c=cc+o:
+ PRINT AT c DIV mw,c MOD mw;" ":
+ c=cc+o*2:
+ PRINT AT c DIV mw,c MOD mw;" ":
+ RETURN
+
+90 cls 0:
+ for y=0 TO mh-1:
+    PRINT AT y,0;m$(y*mw+1 TO y*mw+mw):
+ NEXT y:
+ PRINT AT 1,2;" ":
+ RETURN

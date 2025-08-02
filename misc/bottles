@@ -2,9 +2,8 @@ ZXASCII
 AUTO -1
 PROG demos:misc/bottles
 CHANGED FALSE
-10 def fn i$(i)=
-    IIF$(i=0,"no more bottls of beer",IIF$(i=1,"1 bottle of beer",STR$ i+" bottles of beer")):
- FOR i=10 TO 1 step -1:
+10 def fn i$(i)=choose$(i+1,"no more","1" else str$ i)+" bottle"+iif$(i<>1,"s","")+" of beer"
+20 FOR i=10 TO 1 step -1:
     i$=fn i$(i):
-    PRinT i$;" on the wall,"'i$;"... Take one down, pass it around,"'FN i$(i-1);" on the wall."'':
+    PRinT i$;" on the wall,"'i$'"Take one down, pass it around,"'FN i$(i-1);" on the wall."'':
  NEXT i

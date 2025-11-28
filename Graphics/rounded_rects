@@ -36,7 +36,7 @@ CHANGED FALSE
  for f=nb to 1 step -1:
     window w(nb+1-f):
     cls 0:
-    ink 16-f:
+    ink 8+f:
     proc rbox(200-f*20,190-f*20,400+f*40,100+f*40,20,angle*f/nb):
     fill ink f;scrw/2,scrh/2:
  next f:

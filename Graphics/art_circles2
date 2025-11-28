@@ -6,7 +6,8 @@ CHANGED FALSE
  A=int(rnd*10)+2,B=int(rnd*13)+3,sc=scrw/800,sw=scrw/2,sh=scrh/2:
  FOR J=1 TO B:
     FOR I=1 TO A:
-       circle sw+60*sc*COS(360/A*I)+100*sc*COS(360/B*J),sh+sc*60*SIN(360/A*I)+sc*100*SIN(360/B*J),70*sc fill:
+       circle sw+60*sc*COS(360/A*I)+100*sc*COS(360/B*J),
+              sh+sc*60*SIN(360/A*I)+sc*100*SIN(360/B*J),70*sc fill:
     NEXT I:
  NEXT J:
  pause 250:

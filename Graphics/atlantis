@@ -14,7 +14,7 @@ CHANGED FALSE
  loop:
  oldn=n:
  ink n*5:
- over 2
+ over 12
 40 t=0,num=scrh,
  s,a,b,x,y,x1,y1,
  w=scrw/2,h=scrh/2

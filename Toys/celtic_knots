@@ -27,9 +27,9 @@ CHANGED FALSE
  next i:
  font fnt:
  cm=1
-30 i=int(rnd*4)+12,p=int(rnd*4):
+30 i=int(rnd*4)+12,p=int(rnd*4),sc=scrh/480:
  paper p: ink i: cls 230:
- gw,gh=(int(rnd*9)+2)*2,
+ gw,gh=(int(rnd*9*sc)+2)*2,
  cx=(scrw-gw*20)/2,cy=((scrh-gh*20)/2)-40:
  dim g(gw,gh),g$(gh):
  g$(1)="N"+"VO"*(gw/2-1)+"X":

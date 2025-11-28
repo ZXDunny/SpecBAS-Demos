@@ -4,7 +4,7 @@ PROG demos:graphics/deep field
 CHANGED FALSE
 10 REM Deep Field by P Malin
 20 paper 0: CLS: sc=SCRW/800:
- palette 1,$FF0000;2,$FF8000;3,$FFFF00;4,$FFFF80;5,$FFFFFF
+ palette 1,$FF0000;2,$0080FF;3,$FFFF00;4,$80FF80;5,$FFFFFF
 30 FOR G=-64*sc TO SCRW:
     t1=RND*99,q1=RND*99,
     u1=RND*scrw,v1=RND*scrh,

@@ -33,9 +33,9 @@ CHANGED FALSE
  s=6*cs+MILLISECONDS t*.006,
  m=6*cm+(6*(s/360)),
  h=30*ch+(30*(m/360)),
- s-=90,m-=90,h-=90:
+ s-=90,m-=90,h-=90,sc=12+2*(ps<>cs):
  if ps<>cs then
-    BEEP .0001,100:
+    BEEP .0001,100 async:
     ps=cs
 110 a$=TIME$(TIME,"hh:mm:ss"):
  l=svh*7.5,t=175:
@@ -55,7 +55,7 @@ CHANGED FALSE
 120    x+=sw*2+shw+10:
  NEXT i
 130 REM Draw the hands
-140 POLYGON INK 12;xc+COS(s-90)*ws,yc+SIN(s-90)*ws TO
+140 POLYGON INK sc;xc+COS(s-90)*ws,yc+SIN(s-90)*ws TO
                 xc+COS(s)*ls,yc+SIN(s)*ls TO
                 xc+COS(s+90)*ws,yc+SIN(s+90)*ws TO
                 xc+COS(s-180)*40,yc+SIN(s-180)*40 FILL line

@@ -3,22 +3,22 @@ AUTO -1
 PROG demos:fractals/bbc_pickover_julia
 CHANGED FALSE
 10 sw=scrw/2,sh=scrh/2,sc=sw/2:
-	FOR A=0 TO sw:
-    FOR B=0 TO scrh:
-       X=(A-sw)/sc,
-       Y=(B-sh)/sc,
-       I=0,
-       D=100:
-20       IF X*X+Y*Y>4 OR I>27 then
-				      GO TO 60
-30       T=X*X-Y*Y,
-       Y=2*X*Y+.156,
-       X=T-.8,
-       I=I+1:
-       IF ABS(X)<D then D=ABS(X)
-40       IF ABS(Y)<D then D=ABS(Y)
-50       GO TO 20
-60       INK 0: IF D<0.01 THEN ink 14*(D<0.1)
-70       PLOT A,B;scrw-A,scrh-B:
-    NEXT B:
-	next A
+ for i=16 to 0 step -1:
+    FOR A=0 TO sw:
+       FOR B=0 TO scrh:
+          X=(A-sw)/sc,
+          Y=(B-sh)/sc,
+          I=0,
+          D=100:
+20          IF X*X+Y*Y>4 OR I>27 then
+             GO TO 60
+30          T=X*X-Y*Y,
+          Y=2*X*Y+.156,
+          X=T-.8,
+          I=I+1:
+          IF ABS(X)<D then D=ABS(X)
+40          IF ABS(Y)<D then D=ABS(Y)
+50          GO TO 20
+60          IF D<0.01 THEN PLOT A,B;scrw-A,scrh-B
+70       NEXT B:
+    next A

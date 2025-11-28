@@ -1,0 +1,27 @@
+ZXASCII
+AUTO -1
+PROG /demos/Graphics/shiver
+CHANGED FALSE
+10 REM From code by B+
+20 PAPER 0: INK 15: STROKE 2: CLS 
+30 np=20000,t=0: screen lock
+40 dim p(np,4):
+ For i=1 To np:
+    p(i,1)=Rnd*800,
+    p(i,2)=Rnd*480,
+    p(i,3)=0.5+Rnd*1.5:
+ Next i
+50 Do:
+    t+=0.03,cN=0:
+    For i=1 To np:
+       x=p(i,1),y=p(i,2),a=p(i,3),
+       fa=(SIN(x/101+t)*COS(y/103)+COS(x/157-t*.5)*SIN(y/127)+SIN(x/83+t*.7)*SIN(y/79+t))+(Rnd-.5)*0.1,
+       s=.5+Abs(Sin(x/200+t))*1.5,
+       p(i,1)=x+Cos a*s,
+       p(i,2)=y+Sin a*s,
+       p(i,3)=a*0.98+fa*1.0007:
+       plot p(i,1),p(i,2):
+    Next i:
+    wait screen:
+    Cls:
+ Loop

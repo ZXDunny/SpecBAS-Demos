@@ -1,10 +1,10 @@
 ZXASCII
 AUTO -1
-PROG /demos/Text/handwriting
+PROG demos:text/handwriting
 CHANGED FALSE
 10 FOR f=776 TO 983: GO SUb 100: next f
 20 FOR f=520 TO 726: GO SUb 100: next f
-30 stop
+30 font update fontbank: option "chspace",0: stop
 
 100 read a: addr=f*8-1,b=256:
  do 8: poke fontbank,addr+=1,a&(b/=2)<>0: loop:

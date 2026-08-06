@@ -1,0 +1,14 @@
+ZXASCII
+AUTO -1
+PROG demos:graphics/sony
+CHANGED FALSE
+10 rem Sony
+20 data 7,6,6,7,8,8,7
+30 paper 0: ink 15: cls
+40 xo=scrw/2-72,yo=scrh/2-63:
+ for i=1 to 7:
+    read n:
+    for j=1 to n:
+       circle j*18+xo,i*18+yo,j fill:
+    next j:
+ next i

@@ -4,7 +4,7 @@ PROG demos:graphics/bubble_universe
 CHANGED FALSE
 10 const n=200,r=tau/235:
  x,y,v,t=0,rd=0.45,sz=scrh*rd,sw=scrw/sz,sh=1/rd:
- window depth 0,32: cls 0:
+ window depth 0,32: cls 0:stroke 2:
  origin -sw,-sh to sw,sh:
  screen lock:
  do:
@@ -13,7 +13,7 @@ CHANGED FALSE
        u=sin(i+v)+sin(r*i+x),
        v=cos(i+v)+cos(r*i+x),
        x=u+t:
-       circle alpha ink rgbtoint(i,j,99)+$40000000;u,v,0.006 fill:
+       plot alpha ink rgbtoint(i,j,99)+$40000000;u,v:
     next j;i:
     t+=.00625:
     wait screen:

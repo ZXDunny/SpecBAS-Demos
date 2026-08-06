@@ -1,0 +1,25 @@
+ZXASCII
+AUTO -1
+PROG demos:fractals/bouquet
+CHANGED FALSE
+10 paper 0: cls: DIM p(3,2);c=3,2,6
+20 print scale 3,3;ink 6;"Acorn User April '83"
+30 FOR A=1 TO 12
+40    ink c(int(RND*3)+1)
+50    D=RND*300+150
+60    E=RND*300+90
+70    draw 0,scrh-1 to D,E
+80    F=RND*209+300
+90    I=1:
+    FOR B=1 TO F STEP 4
+100       M=B/(RND*6+6)
+110       p(I,1)=M*SIN(B/16)+D
+120       p(I,2)=M*COS(B/16)+E
+130       I+=1:
+       IF I=4 THEN
+          POLYGON p() fill;ink 0;p():
+          p(1,1)=p(2,1),p(1,2)=p(2,2),p(2,1)=p(3,1),p(2,2)=p(3,2):
+          I=3
+140    NEXT B
+150 NEXT A
+

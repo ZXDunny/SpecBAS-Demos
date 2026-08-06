@@ -1,0 +1,11 @@
+ZXASCII
+AUTO -1
+PROG /demos/Fractals/attractor2
+CHANGED FALSE
+10 ORIGIN -.5,-1.2 TO 1.1,1.2
+20 window depth 0,32
+30 x,y=0
+40 xn=sin(x*x-y*y-5.76),yn=cos(2*x*y-4.65)
+50 plot alpha ink $0546FFFF;xn,yn
+60 x=xn,y=yn
+70 GO To 40

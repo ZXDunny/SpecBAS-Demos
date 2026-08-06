@@ -1,0 +1,13 @@
+ZXASCII
+AUTO -1
+PROG /demos/Text/doublechar
+CHANGED FALSE
+10 s$="?"
+20 PRINT at 0,0;s$
+30 FOR i=0 TO 7;j=0 TO 7
+40    IF not POINT(j,i) THEN
+       FOR k=0 TO 7;l=0 TO 7:
+          text inverse POINT(l,k)<>0;at i*8+k,j*8+l;s$:
+       NEXT l;k:
+70 NEXT j;i
+

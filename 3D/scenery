@@ -1,0 +1,230 @@
+ZXASCII
+AUTO -1
+PROG demos:3d/scenery
+CHANGED FALSE
+10 REM Scenery.
+     Adapted from a disassembly of "Scenery" for the Commodore Amiga, by Brett Casebolt. Original Diamond-square replaced with Perlin Noise, reflections and snowline added by ZXDunny 2026.
+20 s=256,cr=s/2: dim ht(s+1,s+1) base 0:
+ GO SUB 590:
+ height=2,sea=3,sun=2,horz=2:
+ GO SUB @setheight: GO SUB @setlight: GO SUB @setsea:
+ alt=175,dt=8,vm=1,rf=1,uix,uiy=16,maxht=3000
+
+30 def fn md(ca,cb,a)=((ca+cb)/2)+(a/2)*(rnd-0.5)
+40 def fn px(wx,wy,wz)=((wx-cx)*fov)/((wy-cy)*cp-(wz-cz)*sp)+logw/2
+50 def fn py(wx,wy,wz)=(((wz-cz)*cp+(wy-cy)*sp)*-fov)/((wy-cy)*cp-(wz-cz)*sp)+coffs
+
+60 nb=4,bsz=int(208/nb):
+ for f=0 to nb-1:
+    read r1,g1,b1,r2,g2,b2:
+    p1=16+f*bsz,p2=p1+bsz-1:
+    palette p1,r1,g1,b1;p2,r2,g2,b2:
+    rainbow p1 to p2:
+ next f:
+ data 7,24,7,79,140,95
+     ,23,15,7,159,143,127
+     ,23,23,23,159,159,159
+     ,159,159,159,255,255,255
+70 palette 4,31,95,175;5,111,127,255:
+ origin 0,0 to 320,200
+80 a$=qchr$ 2+qchr$ 2+dchr$ 0+dchr$ 8+#0#4#4#0
+
+90 rem Create scene
+100 cls 5:
+ GO SUB @sethorz:
+ GO SUB 110:
+ GO SUB 240:
+ GO TO 650
+
+110 rem Build landscape
+120 mat ht()=zer:
+ randomize seed:
+ xc,yc=rnd*65536,sc=s/1.5:
+ for x=0 to s;y=0 to s:
+    ht(x,y)=(octnoise(xc+x/sc,yc+y/sc,seed/1E8,16,0.5)-0.5)*maxht/2:
+ next y;x
+
+130 rem Smoothing,add peak roughness
+140 gp=0:
+ for r=1 to s-1:
+    for c=1 to s-1:
+       t=ht(r-1,c-1)+ht(r-1,c)+
+         ht(r-1,c+1)+ht(r,c-1)+
+         ht(r,c+1)+ht(r+1,c-1)+
+         ht(r+1,c)+ht(r+1,c+1)+ht(r,c):
+       sm=t/8,rgh=IIF(sm<alt*(nb-1),(rnd-0.5)*32*((max(0,sm)/maxht)^1.01),0),
+       ht(r,c)=sm+rgh,
+       gp=max(sm,gp):
+    next c:
+ next r
+
+150 rem dynamic camera position and rotation
+160 rp=sl,cx=s*4,cy=-1200:
+ for c=0 to 0:
+    for r=0 to s:
+       rp=max(rp,ht(r,c)):
+    next r:
+ next c
+
+170 k=-386,df=((s-1)*8)-cy,dn=0-cy,csl=max(sl,-100)
+180 kq=-3.86,
+ b=-(rp+csl-(kq*df)+(kq*dn)),c=(rp*csl)-(kq*df*rp)+(kq*dn*csl)+(dn*df),
+ czl=(-b-sqr(b*b-4*c))/2,
+ b=-(gp+csl-(kq*df)+(kq*dn)),c=(gp*csl)-(kq*df*gp)+(kq*dn*csl)+(dn*df),
+ czh=(-b-sqr(b*b-4*c))/2,
+ czh=max(czh,czl+1024),
+ czm=(czl+czh)/2
+190 if vm=1 then cz=czl,p=atn((cz-csl)/df),coffs=hlev
+200 if vm=2 then cz=czm,p=0,coffs=hlev-(((csl-cz)*k)/df)
+210 if vm=3 then cz=czh,p=atn((cz-csl)/df),coffs=hlev
+220 cp=cos p,sp=sin p,fc0=max(ht(0,0),csl),fwy=(s-1)*8,
+ fov=((logw/2)*((fwy-cy)*cp-(csl-cz)*sp))/(s*4)
+230 return
+
+240 rem Render terrain
+250 rectangle ink 4;0,fn py(0,(s-1)*8,sl) to logw,logh fill
+260 mxy=0:
+ for c=s-1 to 1 step -1:
+    for r=0 to s-1:
+       h00=ht(r,c),h10=ht(r+1,c),h01=ht(r,c-1),h11=ht(r+1,c-1),
+       ch00=max(h00,sl),ch10=max(h10,sl),ch01=max(h01,sl),ch11=max(h11,sl),
+       wxl=r*8,wxr=(r+1)*8,
+       wyf=c*8,wyn=(c-1)*8:
+       if wyn<=cy or wyf<=cy then GO TO 290
+270       sx00=fn px(wxl,wyf,ch00),sy00=fn py(wxl,wyf,ch00),
+       sx01=fn px(wxl,wyn,ch01),sy01=fn py(wxl,wyn,ch01),
+       sx10=fn px(wxr,wyf,ch10),sy10=fn py(wxr,wyf,ch10),
+       sx11=fn px(wxr,wyn,ch11),sy11=fn py(wxr,wyn,ch11)
+280       proc dt(wxl,wyf,h00,wxl,wyn,h01,wxr,wyn,h11,sx00,sy00,sx01,sy01,sx11,sy11):
+       proc dt(wxr,wyn,h11,wxr,wyf,h10,wxl,wyf,h00,sx11,sy11,sx10,sy10,sx00,sy00):
+       mxy=max(mxy,max(max(max(sy01,sy10),sy11),sy00))
+290    next r:
+ next c:
+ rectangle 0,mxy to logw,logh fill a$:
+ return
+
+300 rem Draw Triangle
+310 def proc dt(wx0,wy0,h0,wx1,wy1,h1,wx2,wy2,h2,sx0,sy0,sx1,sy1,sx2,sy2):
+320    nx=(wy1-wy0)*(h2-h0)-(h1-h0)*(wy2-wy0)
+330    ny=(h1-h0)*(wx2-wx0)-(wx1-wx0)*(h2-h0)
+340    nz=(wx1-wx0)*(wy2-wy0)-(wy1-wy0)*(wx2-wx0),bs=0
+350    if h0<=sl then h0=sl,bs+=1
+360    if h1<=sl then h1=sl,bs+=1
+370    if h2<=sl then h2=sl,bs+=1
+380    if bs=3 then
+       polygon sx0,sy0 to sx1,sy1 to sx2,sy2 fill a$:
+       exit proc
+390    if (cz-h0)*nz+(cy-wy0)*ny+(cx-wx0)*nx<=0 then exit proc
+400    mag2=nx*nx+ny*ny+nz*nz:
+    if mag2>0 then
+      est=(mag2/180+180)/2,
+      est=est+mag2/est,
+      sc=est*16,
+      nx=(nx*1024)/sc,
+      ny=(ny*1024)/sc,
+      nz=(nz*1024)/sc:
+    end if:
+    sun_dp=(sx*nx)+(sy*ny)+(sz*nz)
+410    local c=clamp(int(h0/alt),0 to nb-1),
+    cb=iif(c<=nb-3 and c>0,1,0.5),
+    jh=h0+INT(rnd*alt*cb)
+420    band=clamp(int(jh/alt),0 to nb-1),
+    shade=int(min(bsz-1,max(0,int(sun_dp/20)-(rnd*dt))))
+430    col=16+shade+band*bsz
+440    rsy0=2*fn py(wx0,wy0,sl)-sy0,
+    rsy1=2*fn py(wx1,wy1,sl)-sy1,
+    rsy2=2*fn py(wx2,wy2,sl)-sy2:
+    if rf then
+       polygon ink col;sx0,rsy0 to sx1,rsy1 to sx2,rsy2 fill:
+    end if:
+    polygon ink col;sx0,sy0 to sx1,sy1 to sx2,sy2 fill
+450 end proc
+
+460 rem UI Setters
+470 label @setheight
+480 maxht=choose(height,800,2000,4000,8000)
+490 return
+
+492 label @sethorz
+493 hlev=Logh/choose(horz,1.33,2,4)
+494 return
+
+500 label @setlight
+510 if sun=1 then sx=0,sy=0,sz=32: return
+520 if sun=2 then sx=-18,sy=-19,sz=18: RETURN
+530 if sun=3 then sx=18,sy=-19,sz=18: return
+540 if sun=4 then sx=0,sx=-30,sz=11: RETURN
+550 sx=0,sy=20,sz=25: return
+
+560 label @setsea
+570 sl=choose(sea,-30000,-100,0,100)
+580 return
+
+590 seed=int((rnd*15E6)+4E7): return
+
+600 label @setseed: GO SUB 590: ctrl set sedit,"text",str$ seed
+610 label @setprop:
+ seed=val ctrlget(sedit,"text"),
+ maxht=val ctrlget(hcombo,"text"),
+ sea=val ctrlget(scombo,"index"):
+ GO SUB @setsea
+
+620 xc=44,yc=76:
+ print move xc+1,yc+1;trans 1;ink 0;"Wait...";
+       move xc,yc;trans 1;ink 15;"Wait...":
+ GO SUB 110: GO SUB 640: return
+
+630 rem Draw preview
+640 rectangle ink 0;8,16,130,130:
+ xp=9:
+ for x=0 to s-1 step s/128:
+    yp=145:
+    for y=0 to s-1 step s/128:
+       h=ht(x,y),c=iif(h>sl,16+clamp(int(h/alt),0 to nb-1)*bsz+bsz/2,4):
+       plot ink c;xp,yp-=1:
+    next y:
+    xp+=1:
+ next x:
+ return
+
+650 rem Create user interface
+660 window new ui,uix,uiy,146,352 caption "Settings":
+ window decor ui,1,0,1:
+ GO SUB 640
+
+670 print move 8,150;ink 0;trans 1;"Seed";move 8,178;"Height";move 8,206;"lighting";move 8,234;"Sea level";move 8,262;"Viewpoint";move 8,290;"Horizon"
+
+680 ctrl new sedit,spedit at 8,160,114,8 set "text",str$ seed,"onaccept","gosub @setprop":
+ ctrl new sbtn,spbutton at 124,160,12,12 set "caption","?","onclick","gosub @setseed"
+690 ctrl new hcombo,spdropdown at 8,188,128,8 set "editable","1","onaccept","gosub @setprop":
+ ctrl do hcombo,"add","800","2000","4000","8000":
+ ctrl set hcombo,"text",str$ maxht
+700 ctrl new lcombo,spdropdown at 8,216,128,8:
+ ctrl do lcombo,"add","Overhead","Left","Right","Front","Back":
+ ctrl set lcombo,"index",str$ sun
+710 ctrl new scombo,spdropdown at 8,244,128,8 set "onaccept","gosub @setprop":
+ ctrl do scombo,"add","None","Low","Medium","High":
+ CTRL SET scombo,"index",str$ sea
+720 ctrl new vcombo,spdropdown at 8,272,128,8:
+ ctrl do vcombo,"add","Low","Medium","High":
+ ctrl set vcombo,"index",str$ vm
+725 ctrl new hzcombo,spdropdown at 8,300,128,8:
+ ctrl do hzcombo,"add","Low","Middle","High":
+ ctrl set hzcombo,"index",str$ horz
+730 ctrl new genbtn,spbutton at 56,328,80,12 set "caption","Render","onclick","start=1"
+
+740 start=0:
+ do:
+    pause 10:
+ loop until start
+
+750 seed=val ctrlget(sedit,"text"),
+ maxht=val ctrlget(hcombo,"text"),
+ sun=val ctrlget(lcombo,"index"),
+ vm=val ctrlget(vcombo,"index"),
+ horz=val ctrlget(hzcombo,"index"),
+ sea=val ctrlget(scombo,"index"),
+ uix=winx ui,uiy=winy ui:
+ window erase ui:
+ GO SUB @setlight;@setsea;@sethorz:
+ GO TO 90

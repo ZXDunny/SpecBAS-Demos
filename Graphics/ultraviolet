@@ -4,7 +4,7 @@ PROG demos:graphics/ultraviolet
 CHANGED FALSE
 10 REM Ultraviolet
 20 RADIANS: PAPER 0: palette 0,0,0,64: stroke 2: CLS: SCREEN LOCK
-30 sz=50,ns=10,fr=.5,tr=20,dm=.25,tn=.98,ph=RND*tau,amp=85,frq=.015,ofs=285,md=1
+30 sz=50,fr=.5,tr=20,dm=.25,tn=.98,ph=RND*tau,amp=85,frq=.015,ofs=285,md=1
 40 DIM sp(tr),fr(tr),nd(tr,sz,4):
  mx=MOUSEx,my=MOUSEy
 50 FOR i=1 TO tr:
@@ -32,9 +32,9 @@ CHANGED FALSE
     NEXT j
 90    MOVE TO nd(i,1,1),nd(i,1,2):
     FOR j=1 TO sz-2:
-       CURVE nd(i,j,1),nd(i,j,2) TO (nd(i,j,1)+nd(i,j+1,1))*.5,(nd(i,j,2)+nd(i,j+1,2))*.5,ns:
+       CURVE nd(i,j,1),nd(i,j,2) TO (nd(i,j,1)+nd(i,j+1,1))*.5,(nd(i,j,2)+nd(i,j+1,2))*.5:
     NEXT j:
-    CURVE nd(i,j,1),nd(i,j,2) TO nd(i,j+1,1),nd(i,j+1,2),ns:
+    CURVE nd(i,j,1),nd(i,j,2) TO nd(i,j+1,1),nd(i,j+1,2):
  NEXT i
 100 ph+=frq,h=(ofs+SIN ph*amp) MOD 360:
  FOR f=1 TO tr:

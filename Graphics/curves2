@@ -1,20 +1,27 @@
 ZXASCII
 AUTO -1
-PROG /demos/Graphics/curves2
+PROG demos:graphics/curves2
 CHANGED FALSE
-10 a,b,c,d,e,f,g,h=int(rnd*10)+1:
+10 a,b,c,d,e,f,g,h=int(rnd*10)+1,lim=tau/gcd(b,gcd(d,gcd(f,h))):
  a$=token$(str$ a+"*sin("+str$ b+"*t)+"+str$ c+"*cos("+str$ d+"*t)"),
  b$=token$(str$ e+"*sin("+str$ f+"*t)+"+str$ g+"*cos("+str$ h+"*t)"),
  sw=scrw/2,sh=scrh/2
-20 t=0:
- do:
+20 t=0,dt=.01,
+ x=sw+val a$*10,y=sh+val b$*10,
+ lx=x,ly=y:
+ plot x,y
+30 do:
+    t+=dt,
     x=sw+val a$*10,
-    y=sh+val b$*10:
-    if not t then
-       plot x,y
-    else
-       draw to x,y:
-30    t+=.0005,c+=1:
+    y=sh+val b$*10,
+    dx=x-lx,
+    dy=y-ly,
+    dist=sqr(dx*dx+dy*dy):
+    draw to x,y:
+    lx=x,ly=y:
+    if dist<.1 then dt*=2 else dt*=(1.5/dist)
+35    dt=clamp(dt,.00001 to .5),c+=1:
     if not c mod 100 then wait screen
 40    if inkey$<>"" then run
-50 loop
+50 loop until t>=lim
+60 pause 0: run

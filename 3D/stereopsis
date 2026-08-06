@@ -7,14 +7,13 @@ CHANGED FALSE
 30 b=3,bw=12,r=scrh/2,w1=(r/b)-bw,
  wa=int w1+bw,xc=scrw/2,yc=scrh/2:
  for x=0 to scrw-1;y=0 to scrh-1:
-       plot inverse int(rnd*2);ink 1+even b;x,y:
+    plot inverse int(rnd*2);ink 1+even b;x,y:
  next y;x
 40 for y=-r to r:
     x1=int sqr(r*r-y*y):
     for x=-x1 to x1:
-       if 1 then
-          d=sqr(x*x+y*y),b=d div wa,c=d mod wa:
-          plot ink (1+even b)*int(rnd*2);inverse (c>wa-bw);x+xc,y+yc
+       d=sqr(x*x+y*y),b=d div wa,c=d mod wa:
+       plot ink (1+even b)*int(rnd*2);inverse (c>wa-bw);x+xc,y+yc
 50    next x:
  next y
 60 PAUSE 0

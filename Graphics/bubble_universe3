@@ -2,7 +2,8 @@ ZXASCII
 AUTO -1
 PROG /demos/graphics/bubble_universe3
 CHANGED FALSE
-1 REM based on an original by @yuruyurau
+1 REM from an original by @yuruyurau
+2 REM https://x.com/yuruyurau/status/1226846058728177665
 10 const w=480,n=200:
 	x,y=0,t=9:
 	window depth 0,32:

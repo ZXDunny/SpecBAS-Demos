@@ -2,6 +2,7 @@ ZXASCII
 AUTO -1
 PROG /demos/Graphics/bubble_universe2
 CHANGED FALSE
+1 REM based on an original by @yuruyurau
 10 const w=480,m=200,r=tau:
 	x,y,t=0:
  window depth 0,32:
